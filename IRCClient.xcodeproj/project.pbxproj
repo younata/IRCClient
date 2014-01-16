@@ -19,6 +19,14 @@
 		8906F1E618867BEE00042A13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
 		8906F1EE18867BEE00042A13 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8906F1EC18867BEE00042A13 /* InfoPlist.strings */; };
 		8906F1F018867BEE00042A13 /* IRCClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1EF18867BEE00042A13 /* IRCClientTests.m */; };
+		8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1FA18867DA000042A13 /* RBIRCServer.m */; };
+		8906F1FD18867DC200042A13 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1FC18867DC200042A13 /* CFNetwork.framework */; };
+		8906F1FF18867F1F00042A13 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1FE18867F1F00042A13 /* CoreFoundation.framework */; };
+		8906F2051887562600042A13 /* RBChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F2041887562600042A13 /* RBChannelViewController.m */; };
+		8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20718878F1100042A13 /* RBIRCChannel.m */; };
+		8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20A18878FAA00042A13 /* RBIRCMessage.m */; };
+		8906F212188799C000042A13 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
+		8906F21518879A0300042A13 /* RBBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F21418879A0300042A13 /* RBBackViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +56,20 @@
 		8906F1EB18867BEE00042A13 /* IRCClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientTests-Info.plist"; sourceTree = "<group>"; };
 		8906F1ED18867BEE00042A13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8906F1EF18867BEE00042A13 /* IRCClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRCClientTests.m; sourceTree = "<group>"; };
+		8906F1F918867DA000042A13 /* RBIRCServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBIRCServer.h; sourceTree = "<group>"; };
+		8906F1FA18867DA000042A13 /* RBIRCServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCServer.m; sourceTree = "<group>"; };
+		8906F1FC18867DC200042A13 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		8906F1FE18867F1F00042A13 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		8906F2031887562600042A13 /* RBChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBChannelViewController.h; sourceTree = "<group>"; };
+		8906F2041887562600042A13 /* RBChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBChannelViewController.m; sourceTree = "<group>"; };
+		8906F20618878F1100042A13 /* RBIRCChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBIRCChannel.h; sourceTree = "<group>"; };
+		8906F20718878F1100042A13 /* RBIRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCChannel.m; sourceTree = "<group>"; };
+		8906F20918878FAA00042A13 /* RBIRCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBIRCMessage.h; sourceTree = "<group>"; };
+		8906F20A18878FAA00042A13 /* RBIRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCMessage.m; sourceTree = "<group>"; };
+		8906F210188799C000042A13 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		8906F211188799C000042A13 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		8906F21318879A0300042A13 /* RBBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBBackViewController.h; sourceTree = "<group>"; };
+		8906F21418879A0300042A13 /* RBBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBBackViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8906F1FF18867F1F00042A13 /* CoreFoundation.framework in Frameworks */,
+				8906F1FD18867DC200042A13 /* CFNetwork.framework in Frameworks */,
 				8906F1CD18867BEE00042A13 /* CoreGraphics.framework in Frameworks */,
 				8906F1CF18867BEE00042A13 /* UIKit.framework in Frameworks */,
 				8906F1CB18867BEE00042A13 /* Foundation.framework in Frameworks */,
@@ -96,6 +120,8 @@
 		8906F1C918867BEE00042A13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8906F1FE18867F1F00042A13 /* CoreFoundation.framework */,
+				8906F1FC18867DC200042A13 /* CFNetwork.framework */,
 				8906F1CA18867BEE00042A13 /* Foundation.framework */,
 				8906F1CC18867BEE00042A13 /* CoreGraphics.framework */,
 				8906F1CE18867BEE00042A13 /* UIKit.framework */,
@@ -109,6 +135,17 @@
 			children = (
 				8906F1D918867BEE00042A13 /* RBAppDelegate.h */,
 				8906F1DA18867BEE00042A13 /* RBAppDelegate.m */,
+				8906F1F918867DA000042A13 /* RBIRCServer.h */,
+				8906F1FA18867DA000042A13 /* RBIRCServer.m */,
+				8906F20618878F1100042A13 /* RBIRCChannel.h */,
+				8906F20718878F1100042A13 /* RBIRCChannel.m */,
+				8906F20918878FAA00042A13 /* RBIRCMessage.h */,
+				8906F20A18878FAA00042A13 /* RBIRCMessage.m */,
+				8906F21318879A0300042A13 /* RBBackViewController.h */,
+				8906F21418879A0300042A13 /* RBBackViewController.m */,
+				8906F2031887562600042A13 /* RBChannelViewController.h */,
+				8906F2041887562600042A13 /* RBChannelViewController.m */,
+				8906F20F188799C000042A13 /* SWRevealViewController */,
 				8906F1DC18867BEE00042A13 /* Images.xcassets */,
 				8906F1D118867BEE00042A13 /* Supporting Files */,
 			);
@@ -142,6 +179,15 @@
 				8906F1EC18867BEE00042A13 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8906F20F188799C000042A13 /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8906F210188799C000042A13 /* SWRevealViewController.h */,
+				8906F211188799C000042A13 /* SWRevealViewController.m */,
+			);
+			path = SWRevealViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,8 +286,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
+				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
+				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
+				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
+				8906F21518879A0300042A13 /* RBBackViewController.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
+				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
