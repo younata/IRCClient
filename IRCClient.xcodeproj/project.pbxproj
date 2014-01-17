@@ -18,7 +18,6 @@
 		8906F1E518867BEE00042A13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		8906F1E618867BEE00042A13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
 		8906F1EE18867BEE00042A13 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8906F1EC18867BEE00042A13 /* InfoPlist.strings */; };
-		8906F1F018867BEE00042A13 /* IRCClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1EF18867BEE00042A13 /* IRCClientTests.m */; };
 		8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1FA18867DA000042A13 /* RBIRCServer.m */; };
 		8906F1FD18867DC200042A13 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1FC18867DC200042A13 /* CFNetwork.framework */; };
 		8906F1FF18867F1F00042A13 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1FE18867F1F00042A13 /* CoreFoundation.framework */; };
@@ -56,7 +55,6 @@
 		8906F1E318867BEE00042A13 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		8906F1EB18867BEE00042A13 /* IRCClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientTests-Info.plist"; sourceTree = "<group>"; };
 		8906F1ED18867BEE00042A13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8906F1EF18867BEE00042A13 /* IRCClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRCClientTests.m; sourceTree = "<group>"; };
 		8906F1F918867DA000042A13 /* RBIRCServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBIRCServer.h; sourceTree = "<group>"; };
 		8906F1FA18867DA000042A13 /* RBIRCServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCServer.m; sourceTree = "<group>"; };
 		8906F1FC18867DC200042A13 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -168,7 +166,6 @@
 		8906F1E918867BEE00042A13 /* IRCClientTests */ = {
 			isa = PBXGroup;
 			children = (
-				8906F1EF18867BEE00042A13 /* IRCClientTests.m */,
 				8906F2161887BC7300042A13 /* RBMessageTest.m */,
 				8906F1EA18867BEE00042A13 /* Supporting Files */,
 			);
@@ -304,7 +301,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8906F1F018867BEE00042A13 /* IRCClientTests.m in Sources */,
 				8906F2171887BC7300042A13 /* RBMessageTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,6 +494,7 @@
 				8906F1F518867BEE00042A13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8906F1F618867BEE00042A13 /* Build configuration list for PBXNativeTarget "IRCClientTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +503,7 @@
 				8906F1F818867BEE00042A13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

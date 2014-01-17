@@ -27,11 +27,27 @@
     _from = userAndHost[0];
     _command = array[1];
     _to = array[2];
-    NSString *msg = [array[3] substringFromIndex:1];
+    if ([array count] == 3) {
+        if ([_to hasPrefix:@":"]) {
+            _to = [_to substringFromIndex:1];
+        }
+        _message = nil;
+        return;
+    }
+    NSString *msg = array[3];
+    if ([msg hasPrefix:@":"]) {
+        msg = [msg substringFromIndex:1];
+    }
     for (int i = 4; i < [array count]; i++) {
         msg = [[msg stringByAppendingString:@" "] stringByAppendingString:array[i]];
     }
     _message = msg;
+    if ([_command isEqualToString:@"MODE"]) { // FIXME: replace this with an enumeration.
+        _extra = [_message componentsSeparatedByString:@" "];
+    } else if ([_command isEqualToString:@"KICK"]) {
+        NSArray *arr = [_message componentsSeparatedByString:@" "];
+        _extra = @{@"target": arr[0], @"reason": [arr[1] substringFromIndex:1]};
+    }
 }
 
 -(NSString *)description

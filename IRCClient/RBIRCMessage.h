@@ -16,6 +16,7 @@
 @property (nonatomic, readonly, strong) NSString *from;
 @property (nonatomic, readonly, strong) NSString *to;
 @property (nonatomic, readonly, strong) NSString *command;
+@property (nonatomic, readonly, strong) id extra;
 
 -(instancetype)initWithRawMessage:(NSString *)raw;
 
