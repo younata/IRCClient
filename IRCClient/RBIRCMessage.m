@@ -34,4 +34,13 @@
     _message = msg;
 }
 
+-(NSString *)description
+{
+    NSString *ret = @"";
+    
+    ret = [NSString stringWithFormat:@"from: %@\nto: %@\ncommand: %@\nmessage: %@", _from, _to, _command, _message];
+    
+    return ret;
+}
+
 @end
