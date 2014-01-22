@@ -23,17 +23,13 @@
 {
     if ((self = [super init]) != nil) {
         CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)hostname, [port intValue], &readStream, &writeStream);
+        CFWriteStreamOpen(writeStream);
+        CFReadStreamOpen(readStream);
         [(__bridge_transfer NSInputStream *)readStream setDelegate:self];
         channels = [[NSMutableArray alloc] init];
+        [self connect:realname];
     }
     return self;
-}
-
--(void)joinChannel:(NSString *)channelName
-{
-    NSString *cmd = [NSString stringWithFormat:@"JOIN %@", channelName];
-    [self sendCommand:cmd];
-    [channels addObject:channelName];
 }
 
 -(void)sendCommand:(NSString *)command
@@ -51,6 +47,20 @@
         NSString *cmd = [command substringWithRange:NSMakeRange(numBytesWritten, [command length] - (2 + numBytesWritten))];
         [self sendCommand:cmd];
     }
+}
+
+-(void)connect:(NSString *)realname
+{
+    [self connect:realname withPassword:nil];
+}
+
+-(void)connect:(NSString *)realname withPassword:(NSString *)pass
+{
+    if (pass != nil || [pass length] > 0) {
+        [self sendCommand:[@"pass " stringByAppendingString:pass]];
+    }
+    [self nick:nick];
+    [self sendCommand:[NSString stringWithFormat:@"user %@ foo bar %@", nick, realname]];
 }
 
 -(void)receivedString:(NSString *)str
@@ -78,6 +88,59 @@
     CFRelease(writeStream);
     readStream = NULL;
     writeStream = NULL;
+}
+
+#pragma mark - IRC Commands
+
+-(void)nick:(NSString *)desiredNick
+{
+    nick = desiredNick;
+    [self sendCommand:[@"nick " stringByAppendingString:nick]];
+}
+
+-(void)oper:(NSString *)user password:(NSString *)password
+{
+    [self sendCommand:[NSString stringWithFormat:@"oper %@ %@", user, password]];
+}
+
+-(void)quit
+{
+    [self quit:@"IRCClient"];
+}
+
+-(void)quit:(NSString *)quitMessage
+{
+    [self sendCommand:[NSString stringWithFormat:@"quit %@", quitMessage]];
+}
+
+-(void)join:(NSString *)channelName Password:(NSString *)pass
+{
+    NSString *cmd = [NSString stringWithFormat:@"JOIN %@", channelName];
+    if (pass) {
+        cmd = [cmd stringByAppendingString:[NSString stringWithFormat:@" %@", pass]];
+    }
+    [self sendCommand:cmd];
+    [channels addObject:channelName];
+}
+
+-(void)part:(NSString *)channel
+{
+    [self part:channel message:@"IRCClient"];
+}
+
+-(void)part:(NSString *)channel message:(NSString *)message
+{
+    [self sendCommand:[NSString stringWithFormat:@"part %@ %@", channel, message]];
+}
+
+-(void)channelMode:(NSString *)channel options:(NSString *)options
+{
+    [self sendCommand:[NSString stringWithFormat:@"mode %@ %@", channel, options]];
+}
+
+-(void)topic:(NSString *)channel topic:(NSString *)topic
+{
+    [self sendCommand:[NSString stringWithFormat:@"topic %@ %@", channel, topic]];
 }
 
 #pragma mark - NSStreamDelegate

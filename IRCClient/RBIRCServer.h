@@ -31,8 +31,10 @@
 
 @property (nonatomic, weak) id<RBIRCServerDelegate> delegate;
 
--(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname;
--(void)joinChannel:(NSString *)channelName;
+-(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname password:(NSString *)password;
 -(void)sendCommand:(NSString *)command;
+-(void)connect:(NSString *)realname;
+-(void)connect:(NSString *)realname withPassword:(NSString *)pass;
+-(void)join:(NSString *)channelName;
 
 @end
