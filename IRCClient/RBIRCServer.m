@@ -19,6 +19,8 @@
 
 @implementation RBIRCServer
 
+@synthesize channels;
+
 -(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname
 {
     if ((self = [super init]) != nil) {
@@ -26,7 +28,7 @@
         CFWriteStreamOpen(writeStream);
         CFReadStreamOpen(readStream);
         [(__bridge_transfer NSInputStream *)readStream setDelegate:self];
-        channels = [[NSMutableArray alloc] init];
+        channels = [[NSMutableDictionary alloc] init];
         [self connect:realname];
     }
     return self;
@@ -70,11 +72,12 @@
     } else {
         RBIRCMessage *msg = [[RBIRCMessage alloc] initWithRawMessage:str];
         RBIRCChannel *ch = [[RBIRCChannel alloc] initWithName:[msg to]];
-        if ([channels containsObject:ch]) {
-            RBIRCChannel *channel = channels[[channels indexOfObject:ch]];
+        if (channels[[msg to]] != nil) {
+            RBIRCChannel *channel = channels[[msg to]];
             [channel logMessage:msg];
         } else {
-            [channels addObject:ch];
+            [channels setObject:ch forKey:[msg to]];
+            ch.server = self;
             [ch logMessage:msg];
         }
     }
@@ -113,14 +116,20 @@
     [self sendCommand:[NSString stringWithFormat:@"quit %@", quitMessage]];
 }
 
+-(void)join:(NSString *)channelName
+{
+    [self join:channelName Password:nil];
+}
+
 -(void)join:(NSString *)channelName Password:(NSString *)pass
 {
-    NSString *cmd = [NSString stringWithFormat:@"JOIN %@", channelName];
-    if (pass) {
-        cmd = [cmd stringByAppendingString:[NSString stringWithFormat:@" %@", pass]];
+    if (channels[channelName] != nil) {
+        return;
     }
-    [self sendCommand:cmd];
-    [channels addObject:channelName];
+    RBIRCChannel *c = [[RBIRCChannel alloc] initWithName:channelName];
+    c.server = self;
+    [c join:channelName];
+    [channels setObject:c forKey:channelName];
 }
 
 -(void)part:(NSString *)channel
@@ -130,12 +139,17 @@
 
 -(void)part:(NSString *)channel message:(NSString *)message
 {
+    if (channels[channel] == nil) {
+        return;
+    }
+    [channels[channel] part:message];
     [self sendCommand:[NSString stringWithFormat:@"part %@ %@", channel, message]];
+    [channels removeObjectForKey:channel];
 }
 
 -(void)channelMode:(NSString *)channel options:(NSString *)options
 {
-    [self sendCommand:[NSString stringWithFormat:@"mode %@ %@", channel, options]];
+    [channels[channel] mode:options];
 }
 
 -(void)topic:(NSString *)channel topic:(NSString *)topic

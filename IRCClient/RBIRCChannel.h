@@ -9,13 +9,23 @@
 #import <Foundation/Foundation.h>
 
 @class RBIRCMessage;
+@class RBIRCServer;
 
 @interface RBIRCChannel : NSObject
 
 @property (nonatomic, readonly, strong) NSString *name;
 @property (nonatomic, readonly, strong) NSMutableArray *log;
+@property (nonatomic, strong) RBIRCServer *server;
 
 -(instancetype)initWithName:(NSString *)name;
 -(void)logMessage:(RBIRCMessage *)message;
+
+-(void)join:(NSString *)password;
+
+-(void)part:(NSString *)message;
+
+-(void)mode:(NSString *)options;
+
+-(void)topic:(NSString *)topic;
 
 @end

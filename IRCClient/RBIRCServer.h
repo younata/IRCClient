@@ -26,10 +26,11 @@
     NSMutableArray *commandQueue;
     
     NSString *nick;
-    NSMutableArray *channels;
+    NSMutableDictionary *channels;
 }
 
 @property (nonatomic, weak) id<RBIRCServerDelegate> delegate;
+@property (nonatomic, readonly, strong) NSMutableDictionary *channels;
 
 -(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname password:(NSString *)password;
 -(void)sendCommand:(NSString *)command;
