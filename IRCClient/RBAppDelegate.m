@@ -11,6 +11,9 @@
 #import "RBServerViewController.h"
 #import "RBChannelViewController.h"
 
+@interface RBAppDelegate ()<SWRevealViewControllerDelegate>
+@end
+
 @implementation RBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -24,8 +27,17 @@
     RBChannelViewController *channelVC = [[RBChannelViewController alloc] init];
     [serverVC setDelegate:channelVC];
     
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:channelVC];
+    
     SWRevealViewController *viewController = [[SWRevealViewController alloc] initWithRearViewController:serverVC
-                                                                                    frontViewController:channelVC];
+                                                                                    frontViewController:nc];
+    //viewController.delegate = self;
+    
+    //[channelVC.view addGestureRecognizer:[viewController panGestureRecognizer]];
+    //[channelVC.view addGestureRecognizer:[viewController tapGestureRecognizer]];
+    
+    [serverVC setRevealController:viewController];
+    [channelVC setRevealController:viewController];
     
     self.window.rootViewController = viewController;
     

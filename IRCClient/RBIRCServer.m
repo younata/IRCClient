@@ -20,16 +20,20 @@
 @implementation RBIRCServer
 
 @synthesize channels;
+@synthesize nick;
 
--(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname
+-(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nickname realname:(NSString *)realname password:(NSString *)password
 {
     if ((self = [super init]) != nil) {
-        CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)hostname, [port intValue], &readStream, &writeStream);
-        CFWriteStreamOpen(writeStream);
-        CFReadStreamOpen(readStream);
-        [(__bridge_transfer NSInputStream *)readStream setDelegate:self];
-        channels = [[NSMutableDictionary alloc] init];
-        [self connect:realname];
+        self.nick = nickname;
+        self.hostname = hostname;
+        self.port = port;
+        self.useSSL = useSSL;
+        self.realname = realname;
+        self.password = password;
+        _connected = NO;
+        
+        _delegates = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -43,12 +47,29 @@
         NSLog(@"Error Writing to stream: %@", (__bridge_transfer NSError *)error);
     } else if (numBytesWritten == 0) {
         if (CFWriteStreamGetStatus(writeStream) == kCFStreamStatusAtEnd) {
-            [self.delegate IRCServerConnectionDidDisconnect:self];
+            for (id<RBIRCServerDelegate> del in self.delegates) {
+                [del IRCServerConnectionDidDisconnect:self];
+            }
         }
     } else if (numBytesWritten != [command length]) {
         NSString *cmd = [command substringWithRange:NSMakeRange(numBytesWritten, [command length] - (2 + numBytesWritten))];
         [self sendCommand:cmd];
     }
+}
+
+-(void)addDelegate:(id<RBIRCServerDelegate>)object
+{
+    [self.delegates addObject:object];
+}
+
+-(void)rmDelegate:(id<RBIRCServerDelegate>)object
+{
+    [self.delegates removeObject:object];
+}
+
+-(void)connect
+{
+    [self connect:self.realname withPassword:self.password];
 }
 
 -(void)connect:(NSString *)realname
@@ -58,11 +79,17 @@
 
 -(void)connect:(NSString *)realname withPassword:(NSString *)pass
 {
+    CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)self.hostname, [self.port intValue], &readStream, &writeStream);
+    CFWriteStreamOpen(writeStream);
+    CFReadStreamOpen(readStream);
+    [(__bridge_transfer NSInputStream *)readStream setDelegate:self];
+    channels = [[NSMutableDictionary alloc] init];
     if (pass != nil || [pass length] > 0) {
         [self sendCommand:[@"pass " stringByAppendingString:pass]];
     }
     [self nick:nick];
-    [self sendCommand:[NSString stringWithFormat:@"user %@ foo bar %@", nick, realname]];
+    [self sendCommand:[NSString stringWithFormat:@"user %@ foo bar %@", self.nick, realname]];
+    _connected = YES;
 }
 
 -(void)receivedString:(NSString *)str
@@ -80,15 +107,22 @@
             ch.server = self;
             [ch logMessage:msg];
         }
+        for (id<RBIRCServerDelegate>del in self.delegates) {
+            [del IRCServer:self handleMessage:msg];
+        }
     }
 }
 
 -(void)dealloc
 {
-    CFReadStreamClose(readStream);
-    CFWriteStreamClose(writeStream);
-    CFRelease(readStream);
-    CFRelease(writeStream);
+    if (readStream != NULL) {
+        if (CFReadStreamGetStatus(readStream) == kCFStreamStatusOpen) {
+            CFReadStreamClose(readStream);
+            CFWriteStreamClose(writeStream);
+        }
+        CFRelease(readStream);
+        CFRelease(writeStream);
+    }
     readStream = NULL;
     writeStream = NULL;
 }
@@ -172,7 +206,9 @@
                     [self receivedString:str];
                     
                 } else if (numBytesRead < 0) {
-                    [self.delegate IRCServer:self errorReadingFromStream:(__bridge_transfer NSError *)CFReadStreamCopyError(readStream)];
+                    for (id<RBIRCServerDelegate>del in self.delegates) {
+                        [del IRCServer:self errorReadingFromStream:(__bridge_transfer NSError *)CFReadStreamCopyError(readStream)];
+                    }
                     //CFErrorRef error = CFReadStreamCopyError(readStream);
                     //NSLog(@"Error reading from stream: %@", (__bridge_transfer NSError *)error);
                 }

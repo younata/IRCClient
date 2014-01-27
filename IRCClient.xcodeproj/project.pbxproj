@@ -17,7 +17,6 @@
 		8906F1E418867BEE00042A13 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1E318867BEE00042A13 /* XCTest.framework */; };
 		8906F1E518867BEE00042A13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		8906F1E618867BEE00042A13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
-		8906F1EE18867BEE00042A13 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8906F1EC18867BEE00042A13 /* InfoPlist.strings */; };
 		8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1FA18867DA000042A13 /* RBIRCServer.m */; };
 		8906F1FD18867DC200042A13 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1FC18867DC200042A13 /* CFNetwork.framework */; };
 		8906F1FF18867F1F00042A13 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1FE18867F1F00042A13 /* CoreFoundation.framework */; };
@@ -25,8 +24,27 @@
 		8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20718878F1100042A13 /* RBIRCChannel.m */; };
 		8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20A18878FAA00042A13 /* RBIRCMessage.m */; };
 		8906F212188799C000042A13 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
-		8906F2171887BC7300042A13 /* RBMessageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F2161887BC7300042A13 /* RBMessageTest.m */; };
+		891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
+		891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
+		891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
+		891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 891B01E9189650DA00B2D848 /* InfoPlist.strings */; };
+		891B01ED189650DA00B2D848 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 891B01EC189650DA00B2D848 /* main.m */; };
+		891B01F1189650DB00B2D848 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891B01F0189650DB00B2D848 /* Cedar-iOS.framework */; };
+		891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */; };
+		891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1DA18867BEE00042A13 /* RBAppDelegate.m */; };
+		891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1FA18867DA000042A13 /* RBIRCServer.m */; };
+		891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20718878F1100042A13 /* RBIRCChannel.m */; };
+		891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20A18878FAA00042A13 /* RBIRCMessage.m */; };
+		891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
+		891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
+		891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
+		891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F2041887562600042A13 /* RBChannelViewController.m */; };
+		891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
+		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
+		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
+		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
+		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,8 +71,6 @@
 		8906F1DC18867BEE00042A13 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8906F1E218867BEE00042A13 /* IRCClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IRCClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8906F1E318867BEE00042A13 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		8906F1EB18867BEE00042A13 /* IRCClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientTests-Info.plist"; sourceTree = "<group>"; };
-		8906F1ED18867BEE00042A13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8906F1F918867DA000042A13 /* RBIRCServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBIRCServer.h; sourceTree = "<group>"; };
 		8906F1FA18867DA000042A13 /* RBIRCServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCServer.m; sourceTree = "<group>"; };
 		8906F1FC18867DC200042A13 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -67,10 +83,24 @@
 		8906F20A18878FAA00042A13 /* RBIRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCMessage.m; sourceTree = "<group>"; };
 		8906F210188799C000042A13 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		8906F211188799C000042A13 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		8906F2161887BC7300042A13 /* RBMessageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBMessageTest.m; sourceTree = "<group>"; };
+		891B01E2189650DA00B2D848 /* IRCClientSpecs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRCClientSpecs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		891B01E8189650DA00B2D848 /* IRCClientSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientSpecs-Info.plist"; sourceTree = "<group>"; };
+		891B01EA189650DA00B2D848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		891B01EC189650DA00B2D848 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		891B01EE189650DA00B2D848 /* IRCClientSpecs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRCClientSpecs-Prefix.pch"; sourceTree = "<group>"; };
+		891B01EF189650DA00B2D848 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
+		891B01F0189650DB00B2D848 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
+		891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCMessageSpec.mm; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
+		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
+		896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
+		89C46E45189600A9006068DC /* RBTextFieldServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextFieldServerCell.h; sourceTree = "<group>"; };
+		89C46E46189600A9006068DC /* RBTextFieldServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextFieldServerCell.m; sourceTree = "<group>"; };
+		89C46E4818960C96006068DC /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
+		89C46E4918960C96006068DC /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
+		89C46E4C189646AE006068DC /* RBIRCServerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBIRCServerDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +126,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		891B01DF189650DA00B2D848 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */,
+				891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */,
+				891B01F1189650DB00B2D848 /* Cedar-iOS.framework in Frameworks */,
+				891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -103,7 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				8906F1D018867BEE00042A13 /* IRCClient */,
-				8906F1E918867BEE00042A13 /* IRCClientTests */,
+				891B01E6189650DA00B2D848 /* IRCClientSpecs */,
 				8906F1C918867BEE00042A13 /* Frameworks */,
 				8906F1C818867BEE00042A13 /* Products */,
 			);
@@ -114,6 +155,7 @@
 			children = (
 				8906F1C718867BEE00042A13 /* IRCClient.app */,
 				8906F1E218867BEE00042A13 /* IRCClientTests.xctest */,
+				891B01E2189650DA00B2D848 /* IRCClientSpecs.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,17 +178,8 @@
 			children = (
 				8906F1D918867BEE00042A13 /* RBAppDelegate.h */,
 				8906F1DA18867BEE00042A13 /* RBAppDelegate.m */,
-				8906F1F918867DA000042A13 /* RBIRCServer.h */,
-				8906F1FA18867DA000042A13 /* RBIRCServer.m */,
-				8906F20618878F1100042A13 /* RBIRCChannel.h */,
-				8906F20718878F1100042A13 /* RBIRCChannel.m */,
-				8906F20918878FAA00042A13 /* RBIRCMessage.h */,
-				8906F20A18878FAA00042A13 /* RBIRCMessage.m */,
-				896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */,
-				896BD17C1895D30100EC91EA /* RBServerViewController.h */,
-				896BD17D1895D30100EC91EA /* RBServerViewController.m */,
-				8906F2031887562600042A13 /* RBChannelViewController.h */,
-				8906F2041887562600042A13 /* RBChannelViewController.m */,
+				89C46E431895F89A006068DC /* IRC Backend */,
+				89C46E441895F8A2006068DC /* Views and Controllers */,
 				8906F20F188799C000042A13 /* SWRevealViewController */,
 				8906F1DC18867BEE00042A13 /* Images.xcassets */,
 				8906F1D118867BEE00042A13 /* Supporting Files */,
@@ -165,31 +198,67 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		8906F1E918867BEE00042A13 /* IRCClientTests */ = {
-			isa = PBXGroup;
-			children = (
-				8906F2161887BC7300042A13 /* RBMessageTest.m */,
-				8906F1EA18867BEE00042A13 /* Supporting Files */,
-			);
-			path = IRCClientTests;
-			sourceTree = "<group>";
-		};
-		8906F1EA18867BEE00042A13 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				8906F1EB18867BEE00042A13 /* IRCClientTests-Info.plist */,
-				8906F1EC18867BEE00042A13 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		8906F20F188799C000042A13 /* SWRevealViewController */ = {
 			isa = PBXGroup;
 			children = (
 				8906F210188799C000042A13 /* SWRevealViewController.h */,
 				8906F211188799C000042A13 /* SWRevealViewController.m */,
+				89C46E4818960C96006068DC /* reveal-icon.png */,
+				89C46E4918960C96006068DC /* reveal-icon@2x.png */,
 			);
 			path = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		891B01E6189650DA00B2D848 /* IRCClientSpecs */ = {
+			isa = PBXGroup;
+			children = (
+				891B01EF189650DA00B2D848 /* Rakefile */,
+				891B01F0189650DB00B2D848 /* Cedar-iOS.framework */,
+				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
+				891B01E7189650DA00B2D848 /* Supporting Files */,
+			);
+			path = IRCClientSpecs;
+			sourceTree = "<group>";
+		};
+		891B01E7189650DA00B2D848 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				891B01E8189650DA00B2D848 /* IRCClientSpecs-Info.plist */,
+				891B01E9189650DA00B2D848 /* InfoPlist.strings */,
+				891B01EC189650DA00B2D848 /* main.m */,
+				891B01EE189650DA00B2D848 /* IRCClientSpecs-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		89C46E431895F89A006068DC /* IRC Backend */ = {
+			isa = PBXGroup;
+			children = (
+				89C46E4C189646AE006068DC /* RBIRCServerDelegate.h */,
+				8906F1F918867DA000042A13 /* RBIRCServer.h */,
+				8906F1FA18867DA000042A13 /* RBIRCServer.m */,
+				8906F20618878F1100042A13 /* RBIRCChannel.h */,
+				8906F20718878F1100042A13 /* RBIRCChannel.m */,
+				8906F20918878FAA00042A13 /* RBIRCMessage.h */,
+				8906F20A18878FAA00042A13 /* RBIRCMessage.m */,
+			);
+			name = "IRC Backend";
+			sourceTree = "<group>";
+		};
+		89C46E441895F8A2006068DC /* Views and Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */,
+				89C46E45189600A9006068DC /* RBTextFieldServerCell.h */,
+				89C46E46189600A9006068DC /* RBTextFieldServerCell.m */,
+				896BD17C1895D30100EC91EA /* RBServerViewController.h */,
+				896BD17D1895D30100EC91EA /* RBServerViewController.m */,
+				896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */,
+				896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */,
+				8906F2031887562600042A13 /* RBChannelViewController.h */,
+				8906F2041887562600042A13 /* RBChannelViewController.m */,
+			);
+			name = "Views and Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +299,23 @@
 			productReference = 8906F1E218867BEE00042A13 /* IRCClientTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		891B01E1189650DA00B2D848 /* IRCClientSpecs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 891B01F6189650DB00B2D848 /* Build configuration list for PBXNativeTarget "IRCClientSpecs" */;
+			buildPhases = (
+				891B01DE189650DA00B2D848 /* Sources */,
+				891B01DF189650DA00B2D848 /* Frameworks */,
+				891B01E0189650DA00B2D848 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IRCClientSpecs;
+			productName = IRCClientSpecs;
+			productReference = 891B01E2189650DA00B2D848 /* IRCClientSpecs.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -241,7 +327,7 @@
 				ORGANIZATIONNAME = "Rachel Brindle";
 				TargetAttributes = {
 					8906F1E118867BEE00042A13 = {
-						TestTargetID = 8906F1C618867BEE00042A13;
+						TestTargetID = 891B01E1189650DA00B2D848;
 					};
 				};
 			};
@@ -259,6 +345,7 @@
 			targets = (
 				8906F1C618867BEE00042A13 /* IRCClient */,
 				8906F1E118867BEE00042A13 /* IRCClientTests */,
+				891B01E1189650DA00B2D848 /* IRCClientSpecs */,
 			);
 		};
 /* End PBXProject section */
@@ -268,8 +355,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */,
 				8906F1D518867BEE00042A13 /* InfoPlist.strings in Resources */,
 				8906F1DD18867BEE00042A13 /* Images.xcassets in Resources */,
+				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,7 +366,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8906F1EE18867BEE00042A13 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		891B01E0189650DA00B2D848 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,8 +386,10 @@
 			files = (
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
+				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
 				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
+				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
@@ -303,7 +401,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8906F2171887BC7300042A13 /* RBMessageTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		891B01DE189650DA00B2D848 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
+				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
+				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
+				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
+				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
+				891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */,
+				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,
+				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
+				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
+				891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */,
+				891B01ED189650DA00B2D848 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,10 +441,10 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		8906F1EC18867BEE00042A13 /* InfoPlist.strings */ = {
+		891B01E9189650DA00B2D848 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8906F1ED18867BEE00042A13 /* en */,
+				891B01EA189650DA00B2D848 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -443,7 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IRCClient.app/IRCClient";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IRCClientSpecs.app/IRCClientSpecs";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -466,7 +581,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IRCClient.app/IRCClient";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/IRCClientSpecs.app/IRCClientSpecs";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -478,6 +593,55 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		891B01F4189650DB00B2D848 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/you/Desktop/dev/IRCClient/IRCClientSpecs/Frameworks,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IRCClientSpecs/IRCClientSpecs-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "IRCClientSpecs/IRCClientSpecs-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		891B01F5189650DB00B2D848 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/you/Desktop/dev/IRCClient/IRCClientSpecs/Frameworks,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IRCClientSpecs/IRCClientSpecs-Prefix.pch";
+				INFOPLIST_FILE = "IRCClientSpecs/IRCClientSpecs-Info.plist";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lstdc++",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
@@ -510,6 +674,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		891B01F6189650DB00B2D848 /* Build configuration list for PBXNativeTarget "IRCClientSpecs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				891B01F4189650DB00B2D848 /* Debug */,
+				891B01F5189650DB00B2D848 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

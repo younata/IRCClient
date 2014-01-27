@@ -9,6 +9,7 @@
 #import "RBChannelViewController.h"
 #import "RBIRCChannel.h"
 #import "RBIRCMessage.h"
+#import "SWRevealViewController.h"
 
 @interface RBChannelViewController ()
 
@@ -34,6 +35,11 @@ static NSString *CellIdentifier = @"Cell";
     
     CGFloat height = self.view.frame.size.height;
     CGFloat width = self.view.frame.size.width;
+    
+    [self.revealController panGestureRecognizer];
+    [self.revealController tapGestureRecognizer];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon"] style:UIBarButtonItemStylePlain target:self.revealController action:@selector(revealToggle:)];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, height-32) style:UITableViewStylePlain];
     self.tableView.delegate = self;
