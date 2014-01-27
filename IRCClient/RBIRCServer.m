@@ -183,4 +183,16 @@
     }
 }
 
+#pragma mark - Keyed subscripting
+
+-(id)objectForKeyedSubscript:(id <NSCopying>)key
+{
+    return self.channels[key];
+}
+
+-(void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key
+{
+    self.channels[key] = obj;
+}
+
 @end

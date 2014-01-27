@@ -25,8 +25,8 @@
 		8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20718878F1100042A13 /* RBIRCChannel.m */; };
 		8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20A18878FAA00042A13 /* RBIRCMessage.m */; };
 		8906F212188799C000042A13 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
-		8906F21518879A0300042A13 /* RBBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F21418879A0300042A13 /* RBBackViewController.m */; };
 		8906F2171887BC7300042A13 /* RBMessageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F2161887BC7300042A13 /* RBMessageTest.m */; };
+		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,9 +67,10 @@
 		8906F20A18878FAA00042A13 /* RBIRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCMessage.m; sourceTree = "<group>"; };
 		8906F210188799C000042A13 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		8906F211188799C000042A13 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		8906F21318879A0300042A13 /* RBBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBBackViewController.h; sourceTree = "<group>"; };
-		8906F21418879A0300042A13 /* RBBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBBackViewController.m; sourceTree = "<group>"; };
 		8906F2161887BC7300042A13 /* RBMessageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBMessageTest.m; sourceTree = "<group>"; };
+		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
+		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
+		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,8 +142,9 @@
 				8906F20718878F1100042A13 /* RBIRCChannel.m */,
 				8906F20918878FAA00042A13 /* RBIRCMessage.h */,
 				8906F20A18878FAA00042A13 /* RBIRCMessage.m */,
-				8906F21318879A0300042A13 /* RBBackViewController.h */,
-				8906F21418879A0300042A13 /* RBBackViewController.m */,
+				896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */,
+				896BD17C1895D30100EC91EA /* RBServerViewController.h */,
+				896BD17D1895D30100EC91EA /* RBServerViewController.m */,
 				8906F2031887562600042A13 /* RBChannelViewController.h */,
 				8906F2041887562600042A13 /* RBChannelViewController.m */,
 				8906F20F188799C000042A13 /* SWRevealViewController */,
@@ -291,7 +293,7 @@
 				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
-				8906F21518879A0300042A13 /* RBBackViewController.m in Sources */,
+				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
 			);
@@ -415,7 +417,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRCClient/IRCClient-Prefix.pch";
 				INFOPLIST_FILE = "IRCClient/IRCClient-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -428,7 +432,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRCClient/IRCClient-Prefix.pch";
 				INFOPLIST_FILE = "IRCClient/IRCClient-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

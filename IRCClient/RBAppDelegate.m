@@ -7,6 +7,9 @@
 //
 
 #import "RBAppDelegate.h"
+#import "SWRevealViewController.h"
+#import "RBServerViewController.h"
+#import "RBChannelViewController.h"
 
 @implementation RBAppDelegate
 
@@ -16,6 +19,16 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    RBServerViewController *serverVC = [[RBServerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    RBChannelViewController *channelVC = [[RBChannelViewController alloc] init];
+    [serverVC setDelegate:channelVC];
+    
+    SWRevealViewController *viewController = [[SWRevealViewController alloc] initWithRearViewController:serverVC
+                                                                                    frontViewController:channelVC];
+    
+    self.window.rootViewController = viewController;
+    
     return YES;
 }
 

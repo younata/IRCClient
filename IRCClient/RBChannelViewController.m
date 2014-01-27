@@ -14,6 +14,8 @@
 
 @end
 
+static NSString *CellIdentifier = @"Cell";
+
 @implementation RBChannelViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,11 +31,21 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-    tableView.delegate = self;
-    tableView.dataSource = self;
     
-    [self.view addSubview:tableView];
+    CGFloat height = self.view.frame.size.height;
+    CGFloat width = self.view.frame.size.width;
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, height-32) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    
+    self.input = [[UITextField alloc] initWithFrame:CGRectMake(0, height - 32, width, 32)];
+    self.input.borderStyle = UITextBorderStyleLine;
+    self.input.returnKeyType = UIReturnKeySend;
+    self.input.delegate = self;
+        
+    [self.view addSubview:self.tableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,11 +62,14 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *ret = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@""];
-    RBIRCMessage *msg = [[_channel log] objectAtIndex:indexPath.row];
+    UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    RBIRCMessage *msg = [[self.channel log] objectAtIndex:indexPath.row];
+    /*
     NSString *s = [msg to];
     s = [[s stringByAppendingString:@": "] stringByAppendingString:[msg message]];
-    ret.textLabel.text = s;
+     */
+    ret.textLabel.text = [msg message];
+    ret.detailTextLabel.text = [msg to];
     return ret;
 }
 
@@ -72,6 +87,20 @@
 }
  */
 
+#pragma mark - RBServerVCDelegate
+
+-(void)server:(RBIRCServer *)server didChangeChannel:(RBIRCChannel *)newChannel
+{
+    // FIXME
+}
+
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    
+    return YES;
+}
 
 
 @end

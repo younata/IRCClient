@@ -31,11 +31,15 @@
 
 @property (nonatomic, weak) id<RBIRCServerDelegate> delegate;
 @property (nonatomic, readonly, strong) NSMutableDictionary *channels;
+@property (nonatomic, copy) NSString *serverName;
 
 -(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname password:(NSString *)password;
 -(void)sendCommand:(NSString *)command;
 -(void)connect:(NSString *)realname;
 -(void)connect:(NSString *)realname withPassword:(NSString *)pass;
 -(void)join:(NSString *)channelName;
+
+-(id)objectForKeyedSubscript:(id <NSCopying>)key;
+-(void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
 
 @end
