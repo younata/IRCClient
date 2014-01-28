@@ -48,35 +48,4 @@
     [_log addObject:message];
 }
 
-#pragma mark - Channel
-
--(void)join:(NSString *)pass
-{
-    NSString *cmd = [NSString stringWithFormat:@"JOIN %@", _name];
-    if (pass) {
-        cmd = [cmd stringByAppendingString:[NSString stringWithFormat:@" %@", pass]];
-    }
-    [_server sendCommand:cmd];
-}
-
--(void)part:(NSString *)message
-{
-    [_server sendCommand:[NSString stringWithFormat:@"part %@ %@", _name, message]];
-}
-
--(void)mode:(NSString *)options
-{
-    [_server sendCommand:[NSString stringWithFormat:@"mode %@ %@", _name, options]];
-}
-
--(void)topic:(NSString *)topic
-{
-    [_server sendCommand:[NSString stringWithFormat:@"topic %@ %@", _name, topic]];
-}
-
--(NSString *)description
-{
-    return [NSString stringWithFormat:@"Channel '%@' on server '%@'", self.name, self.server.serverName];
-}
-
 @end

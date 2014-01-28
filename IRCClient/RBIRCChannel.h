@@ -22,12 +22,4 @@
 -(instancetype)initWithName:(NSString *)name;
 -(void)logMessage:(RBIRCMessage *)message;
 
--(void)join:(NSString *)password;
-
--(void)part:(NSString *)message;
-
--(void)mode:(NSString *)options;
-
--(void)topic:(NSString *)topic;
-
 @end

@@ -43,6 +43,7 @@
 		891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */; };
 		891B02061896D5CD00B2D848 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 891B02051896D5CD00B2D848 /* NSData+string.m */; };
 		891B02071896D5CD00B2D848 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 891B02051896D5CD00B2D848 /* NSData+string.m */; };
+		891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
@@ -97,6 +98,7 @@
 		891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCServerSpec.mm; sourceTree = "<group>"; };
 		891B02041896D5CD00B2D848 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+string.h"; path = "IRCClient/NSData+string.h"; sourceTree = "<group>"; };
 		891B02051896D5CD00B2D848 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+string.m"; path = "IRCClient/NSData+string.m"; sourceTree = "<group>"; };
+		891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBChannelViewControllerSpec.mm; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				891B01F0189650DB00B2D848 /* Cedar-iOS.framework */,
 				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
+				891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */,
 				891B01E7189650DA00B2D848 /* Supporting Files */,
 			);
 			path = IRCClientSpecs;
@@ -431,6 +434,7 @@
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
+				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */,
 				891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */,
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,

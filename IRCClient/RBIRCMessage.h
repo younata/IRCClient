@@ -16,6 +16,9 @@ typedef enum {
     IRCMessageTypeMode,
     IRCMessageTypeKick,
     IRCMessageTypeTopic,
+    IRCMessageTypeNick,
+    IRCMessageTypeOper,
+    IRCMessageTypeQuit,
     IRCMessageTypeUnknown
 } IRCMessageType;
 

@@ -188,7 +188,6 @@
         }
         return;
     }
-    [channels[channel] part:message];
     [self sendCommand:[NSString stringWithFormat:@"part %@ :%@", channel, message]];
     [channels removeObjectForKey:channel];
 }

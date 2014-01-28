@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RBServerVCDelegate.h"
 
-@class RBIRCChannel;
+@class RBIRCServer;
 @class RBServerViewController;
 @class SWRevealViewController;
 
@@ -18,7 +18,9 @@
 @property (nonatomic, strong) UITextField *input;
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, weak) RBIRCChannel *channel;
+@property (nonatomic, copy) NSString *channel;
+
+@property (nonatomic, weak) RBIRCServer *server;
 @property (nonatomic, weak) RBServerViewController *serverView;
 @property (nonatomic, weak) SWRevealViewController *revealController;
 

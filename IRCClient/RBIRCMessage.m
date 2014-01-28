@@ -25,6 +25,14 @@
             return @"MODE";
         case IRCMessageTypeKick:
             return @"KICK";
+        case IRCMessageTypeTopic:
+            return @"TOPIC";
+        case IRCMessageTypeOper:
+            return @"OPER";
+        case IRCMessageTypeNick:
+            return @"NICK";
+        case IRCMessageTypeQuit:
+            return @"QUIT";
         case IRCMessageTypeUnknown:
             return @"";
     }
@@ -39,7 +47,12 @@
                                    @"privmsg": @(IRCMessageTypePrivmsg),
                                    @"notice": @(IRCMessageTypeNotice),
                                    @"mode": @(IRCMessageTypeMode),
-                                   @"kick": @(IRCMessageTypeKick)};
+                                   @"kick": @(IRCMessageTypeKick),
+                                   @"topic": @(IRCMessageTypeTopic),
+                                   @"oper": @(IRCMessageTypeOper),
+                                   @"nick": @(IRCMessageTypeNick),
+                                   @"quit": @(IRCMessageTypeQuit)
+                                   };
     if ([[messageTypes allKeys] containsObject:messageString]) {
         return [messageTypes[messageString] intValue];
     }
