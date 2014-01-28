@@ -14,11 +14,14 @@
 
 @interface RBIRCServer : NSObject <NSStreamDelegate>
 {
-    CFReadStreamRef readStream;
-    CFWriteStreamRef writeStream;
+    NSInputStream *readStream;
+    NSOutputStream *writeStream;
     
     NSMutableArray *commandQueue;
 }
+
+@property (nonatomic) NSInputStream *readStream;
+@property (nonatomic) NSOutputStream *writeStream;
 
 @property (nonatomic, readonly, strong) NSMutableArray *delegates;
 @property (nonatomic, readonly, strong) NSMutableDictionary *channels;
@@ -42,8 +45,35 @@
 -(void)connect:(NSString *)realname;
 -(void)connect:(NSString *)realname withPassword:(NSString *)pass;
 
--(void)join:(NSString *)channelName;
+-(void)receivedString:(NSString *)str;
 
+// irc commands.
+-(void)nick:(NSString *)desiredNick;
+
+-(void)oper:(NSString *)user password:(NSString *)password;
+
+-(void)quit;
+-(void)quit:(NSString *)quitMessage;
+
+-(void)join:(NSString *)channelName;
+-(void)join:(NSString *)channelName Password:(NSString *)pass;
+
+-(void)part:(NSString *)channel;
+-(void)part:(NSString *)channel message:(NSString *)message;
+
+-(void)mode:(NSString *)target options:(NSArray *)options;
+
+-(void)kick:(NSString *)channel target:(NSString *)target;
+-(void)kick:(NSString *)channel target:(NSString *)target reason:(NSString *)reason;
+
+-(void)topic:(NSString *)channel topic:(NSString *)topic;
+
+-(void)privmsg:(NSString *)target contents:(NSString *)message;
+-(void)notice:(NSString *)target contents:(NSString *)message;
+
+-(void)sendIRCMessage:(RBIRCMessage *)message;
+
+// yay making things easier...
 -(id)objectForKeyedSubscript:(id <NSCopying>)key;
 -(void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
 

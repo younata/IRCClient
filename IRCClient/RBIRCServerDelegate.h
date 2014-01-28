@@ -17,4 +17,6 @@
 
 -(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message;
 
+-(void)IRCServer:(RBIRCServer *)server invalidCommand:(NSError *)error;
+
 @end

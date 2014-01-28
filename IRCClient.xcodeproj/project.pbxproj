@@ -40,6 +40,9 @@
 		891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
 		891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F2041887562600042A13 /* RBChannelViewController.m */; };
 		891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
+		891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */; };
+		891B02061896D5CD00B2D848 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 891B02051896D5CD00B2D848 /* NSData+string.m */; };
+		891B02071896D5CD00B2D848 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 891B02051896D5CD00B2D848 /* NSData+string.m */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
@@ -91,6 +94,9 @@
 		891B01EF189650DA00B2D848 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
 		891B01F0189650DB00B2D848 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCMessageSpec.mm; sourceTree = "<group>"; };
+		891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCServerSpec.mm; sourceTree = "<group>"; };
+		891B02041896D5CD00B2D848 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+string.h"; path = "IRCClient/NSData+string.h"; sourceTree = "<group>"; };
+		891B02051896D5CD00B2D848 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+string.m"; path = "IRCClient/NSData+string.m"; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
+				891B02081896D65C00B2D848 /* Categories */,
 				8906F1D018867BEE00042A13 /* IRCClient */,
 				891B01E6189650DA00B2D848 /* IRCClientSpecs */,
 				8906F1C918867BEE00042A13 /* Frameworks */,
@@ -215,6 +222,7 @@
 				891B01EF189650DA00B2D848 /* Rakefile */,
 				891B01F0189650DB00B2D848 /* Cedar-iOS.framework */,
 				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
+				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				891B01E7189650DA00B2D848 /* Supporting Files */,
 			);
 			path = IRCClientSpecs;
@@ -229,6 +237,15 @@
 				891B01EE189650DA00B2D848 /* IRCClientSpecs-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		891B02081896D65C00B2D848 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				891B02041896D5CD00B2D848 /* NSData+string.h */,
+				891B02051896D5CD00B2D848 /* NSData+string.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		89C46E431895F89A006068DC /* IRC Backend */ = {
@@ -392,6 +409,7 @@
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
+				891B02061896D5CD00B2D848 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
 			);
@@ -414,11 +432,13 @@
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
 				891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */,
+				891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */,
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
 				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
 				891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */,
 				891B01ED189650DA00B2D848 /* main.m in Sources */,
+				891B02071896D5CD00B2D848 /* NSData+string.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

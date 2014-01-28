@@ -95,4 +95,9 @@
     return ret;
 }
 
+-(NSString *)debugDescription
+{
+    return [self description];
+}
+
 @end

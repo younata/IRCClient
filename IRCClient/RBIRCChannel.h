@@ -15,7 +15,9 @@
 
 @property (nonatomic, readonly, strong) NSString *name;
 @property (nonatomic, readonly, strong) NSMutableArray *log;
-@property (nonatomic, strong) RBIRCServer *server;
+@property (nonatomic, readonly, strong) NSMutableArray *names;
+@property (nonatomic, weak) RBIRCServer *server;
+@property (nonatomic, copy) NSString *topic;
 
 -(instancetype)initWithName:(NSString *)name;
 -(void)logMessage:(RBIRCMessage *)message;

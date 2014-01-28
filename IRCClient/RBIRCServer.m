@@ -10,17 +10,22 @@
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
 
-@interface RBIRCServer ()
-{
-    NSString *standardPrefix;
-}
-
-@end
-
 @implementation RBIRCServer
+
+@synthesize readStream;
+@synthesize writeStream;
 
 @synthesize channels;
 @synthesize nick;
+
+-(instancetype)init
+{
+    if ((self = [super init])) {
+        _delegates = [[NSMutableArray alloc] init];
+        channels = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
 
 -(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nickname realname:(NSString *)realname password:(NSString *)password
 {
@@ -34,6 +39,7 @@
         _connected = NO;
         
         _delegates = [[NSMutableArray alloc] init];
+        channels = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -41,12 +47,12 @@
 -(void)sendCommand:(NSString *)command
 {
     command = [command stringByAppendingString:@"\r\n"];
-    signed long numBytesWritten = CFWriteStreamWrite(writeStream, (const unsigned char *)[command UTF8String], [command length]);
+    signed long numBytesWritten = [writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
     if (numBytesWritten < 0) {
-        CFErrorRef error = CFWriteStreamCopyError(writeStream);
-        NSLog(@"Error Writing to stream: %@", (__bridge_transfer NSError *)error);
+        NSError *error = [writeStream streamError];
+        NSLog(@"Error Writing to stream: %@", error);
     } else if (numBytesWritten == 0) {
-        if (CFWriteStreamGetStatus(writeStream) == kCFStreamStatusAtEnd) {
+        if ([writeStream streamStatus] == kCFStreamStatusAtEnd) {
             for (id<RBIRCServerDelegate> del in self.delegates) {
                 [del IRCServerConnectionDidDisconnect:self];
             }
@@ -79,15 +85,16 @@
 
 -(void)connect:(NSString *)realname withPassword:(NSString *)pass
 {
-    CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)self.hostname, [self.port intValue], &readStream, &writeStream);
-    CFWriteStreamOpen(writeStream);
-    CFReadStreamOpen(readStream);
-    [(__bridge_transfer NSInputStream *)readStream setDelegate:self];
+    //CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)self.hostname, [self.port intValue], &readStream, &writeStream);
+    
+    [writeStream open];
+    [readStream open];
+    [readStream setDelegate:self];
     channels = [[NSMutableDictionary alloc] init];
     if (pass != nil || [pass length] > 0) {
         [self sendCommand:[@"pass " stringByAppendingString:pass]];
     }
-    [self nick:nick];
+    [self nick:self.nick];
     [self sendCommand:[NSString stringWithFormat:@"user %@ foo bar %@", self.nick, realname]];
     _connected = YES;
 }
@@ -116,12 +123,10 @@
 -(void)dealloc
 {
     if (readStream != NULL) {
-        if (CFReadStreamGetStatus(readStream) == kCFStreamStatusOpen) {
-            CFReadStreamClose(readStream);
-            CFWriteStreamClose(writeStream);
+        if ([readStream streamStatus] == kCFStreamStatusOpen) {
+            [readStream close];
+            [writeStream close];
         }
-        CFRelease(readStream);
-        CFRelease(writeStream);
     }
     readStream = NULL;
     writeStream = NULL;
@@ -131,8 +136,8 @@
 
 -(void)nick:(NSString *)desiredNick
 {
-    nick = desiredNick;
-    [self sendCommand:[@"nick " stringByAppendingString:nick]];
+    self.nick = desiredNick;
+    [self sendCommand:[@"nick " stringByAppendingString:self.nick]];
 }
 
 -(void)oper:(NSString *)user password:(NSString *)password
@@ -162,8 +167,12 @@
     }
     RBIRCChannel *c = [[RBIRCChannel alloc] initWithName:channelName];
     c.server = self;
-    [c join:channelName];
     [channels setObject:c forKey:channelName];
+    NSString *msg = [NSString stringWithFormat:@"join %@", channelName];
+    if (pass != nil && pass.length > 0) {
+        msg = [NSString stringWithFormat:@"%@ %@", msg, pass];
+    }
+    [self sendCommand:msg];
 }
 
 -(void)part:(NSString *)channel
@@ -174,21 +183,101 @@
 -(void)part:(NSString *)channel message:(NSString *)message
 {
     if (channels[channel] == nil) {
+        for (id<RBIRCServerDelegate>del in self.delegates) {
+            [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Part Command" code:1 userInfo:nil]];
+        }
         return;
     }
     [channels[channel] part:message];
-    [self sendCommand:[NSString stringWithFormat:@"part %@ %@", channel, message]];
+    [self sendCommand:[NSString stringWithFormat:@"part %@ :%@", channel, message]];
     [channels removeObjectForKey:channel];
 }
 
--(void)channelMode:(NSString *)channel options:(NSString *)options
+-(void)mode:(NSString *)target options:(NSArray *)options
 {
-    [channels[channel] mode:options];
+    if ([target hasPrefix:@"#"] || [target hasPrefix:@"&"]) {
+        if (channels[target] == nil) {
+            for (id<RBIRCServerDelegate>del in self.delegates) {
+                [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Mode Command" code:1 userInfo:nil]];
+            }
+            return;
+        }
+    }
+    NSString *msg = [NSString stringWithFormat:@"mode %@", target];
+    for (NSString *s in options) {
+        msg = [NSString stringWithFormat:@"%@ %@", msg, s];
+    }
+    [self sendCommand:msg];
+}
+
+-(void)kick:(NSString *)channel target:(NSString *)target
+{
+    [self kick:channel target:target reason:self.nick];
+}
+
+-(void)kick:(NSString *)channel target:(NSString *)target reason:(NSString *)reason
+{
+    if (channels[channel] == nil) {
+        for (id<RBIRCServerDelegate>del in self.delegates) {
+            [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Kick Command" code:1 userInfo:nil]];
+        }
+        return;
+    }
+    NSString *msg = [NSString stringWithFormat:@"kick %@ %@ :%@", channel, target, reason];
+    [self sendCommand:msg];
 }
 
 -(void)topic:(NSString *)channel topic:(NSString *)topic
 {
-    [self sendCommand:[NSString stringWithFormat:@"topic %@ %@", channel, topic]];
+    if (channels[channel] == nil) {
+        for (id<RBIRCServerDelegate>del in self.delegates) {
+            [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Topic Command" code:1 userInfo:nil]];
+        }
+        return;
+    }
+    [self sendCommand:[NSString stringWithFormat:@"topic %@ :%@", channel, topic]];
+}
+
+-(void)privmsg:(NSString *)target contents:(NSString *)message
+{
+    [self sendCommand:[NSString stringWithFormat:@"privmsg %@ :%@", target, message]];
+}
+
+-(void)notice:(NSString *)target contents:(NSString *)message
+{
+    [self sendCommand:[NSString stringWithFormat:@"notice %@ :%@", target, message]];
+}
+
+-(void)sendIRCMessage:(RBIRCMessage *)message
+{
+    switch (message.command) {
+        case IRCMessageTypeJoin:
+            [self join:message.to];
+            break;
+        case IRCMessageTypePart:
+            [self part:message.to message:message.message];
+            break;
+        case IRCMessageTypePrivmsg:
+            [self privmsg:message.to contents:message.message];
+            break;
+        case IRCMessageTypeNotice:
+            [self notice:message.to contents:message.message];
+            break;
+        case IRCMessageTypeMode: {
+            [self mode:message.to options:message.extra];
+            break;
+        }
+        case IRCMessageTypeKick: {
+            [self kick:message.to target:message.extra[@"target"] reason:message.extra[@"reason"]];
+            break;
+        }
+        case IRCMessageTypeTopic:
+            [self topic:message.to topic:message.message];
+            break;
+        case IRCMessageTypeUnknown:
+        default:
+            break;
+    }
 }
 
 #pragma mark - NSStreamDelegate
@@ -199,18 +288,16 @@
         case NSStreamEventHasBytesAvailable: {
             uint8_t buffer[513];
             buffer[512] = 0;
-            signed long numBytesRead = CFReadStreamRead(readStream, buffer, 512);
+            buffer[0] = 0;
+            signed long numBytesRead = [(NSInputStream *)aStream read:buffer maxLength:512];
             do {
                 if (numBytesRead > 0) {
                     NSString *str = [NSString stringWithUTF8String:(const char *)buffer];
                     [self receivedString:str];
-                    
                 } else if (numBytesRead < 0) {
                     for (id<RBIRCServerDelegate>del in self.delegates) {
-                        [del IRCServer:self errorReadingFromStream:(__bridge_transfer NSError *)CFReadStreamCopyError(readStream)];
+                        [del IRCServer:self errorReadingFromStream:[readStream streamError]];
                     }
-                    //CFErrorRef error = CFReadStreamCopyError(readStream);
-                    //NSLog(@"Error reading from stream: %@", (__bridge_transfer NSError *)error);
                 }
             } while (numBytesRead > 0);
             break;
@@ -229,6 +316,11 @@
 -(void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key
 {
     self.channels[key] = obj;
+}
+
+-(NSString *)description
+{
+    return self.serverName;
 }
 
 @end

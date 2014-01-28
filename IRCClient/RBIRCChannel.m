@@ -8,6 +8,7 @@
 
 #import "RBIRCChannel.h"
 #import "RBIRCServer.h"
+#import "RBIRCMessage.h"
 
 @implementation RBIRCChannel
 
@@ -16,6 +17,7 @@
     if ((self = [super init]) != nil) {
         _name = name;
         _log = [[NSMutableArray alloc] init];
+        _names = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -27,6 +29,22 @@
 
 -(void)logMessage:(RBIRCMessage *)message
 {
+    if (message.command == IRCMessageTypeTopic) {
+        self.topic = message.message;
+    } else if (message.command == IRCMessageTypeJoin) {
+        if ([message.from isEqualToString:self.server.nick]) {
+            // execute a /names command.
+        } else {
+            [self.names addObject:message.from];
+        }
+    } else if (message.command == IRCMessageTypePart) {
+        if ([message.from isEqualToString:self.server.nick]) {
+            // should not have recieved this.
+            NSLog(@"Error: Recieved a self part");
+        } else {
+            [self.names removeObject:message.from];
+        }
+    }
     [_log addObject:message];
 }
 
@@ -54,6 +72,11 @@
 -(void)topic:(NSString *)topic
 {
     [_server sendCommand:[NSString stringWithFormat:@"topic %@ %@", _name, topic]];
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"Channel '%@' on server '%@'", self.name, self.server.serverName];
 }
 
 @end

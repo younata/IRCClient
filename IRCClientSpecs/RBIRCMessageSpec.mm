@@ -15,7 +15,7 @@ describe(@"RBIRCMessage", ^{
         msg.message should be_nil;
         msg.from should equal(@"foobar");
         msg.to should equal(@"#boats");
-        msg.command should equal(IRCMessageTypeJoin));
+        msg.command should equal(IRCMessageTypeJoin);
     });
     
     it(@"should interpret private messages properly", ^{
@@ -50,7 +50,7 @@ describe(@"RBIRCMessage", ^{
         msg = [[RBIRCMessage alloc] initWithRawMessage:test];
         
         msg.message should equal(@"+b foobar!*@*");
-        msg.extra should be_instance_of([NSArray class]);
+        msg.extra should be_instance_of([NSArray class]).or_any_subclass();
         msg.extra[0] should equal(@"+b");
         msg.extra[1] should equal(@"foobar!*@*");
         msg.from should equal(@"You");
@@ -62,7 +62,7 @@ describe(@"RBIRCMessage", ^{
         test = @":You!Rachel@hide-DEA18147.com KICK #foo foobar :You";
         msg = [[RBIRCMessage alloc] initWithRawMessage:test];
         msg.message should equal(@"foobar :You");
-        msg.extra should be_instance_of([NSDictionary class]);
+        msg.extra should be_instance_of([NSDictionary class]).or_any_subclass();
         msg.extra[@"target"] should equal(@"foobar");
         msg.extra[@"reason"] should equal(@"You");
         msg.from should equal(@"You");
