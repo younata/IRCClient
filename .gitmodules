@@ -1,0 +1,3 @@
+[submodule "RBCategories"]
+	path = RBCategories
+	url = https://github.com/younata/RBCategories.git

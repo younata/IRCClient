@@ -18,6 +18,7 @@
     NSOutputStream *writeStream;
     
     NSMutableArray *commandQueue;
+    void (^onConnect)(void);
 }
 
 @property (nonatomic, strong) NSInputStream *readStream;

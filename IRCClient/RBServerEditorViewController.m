@@ -9,6 +9,7 @@
 #import "RBServerEditorViewController.h"
 
 #import "RBIRCServer.h"
+#import "NSString+isNilOrEmpty.h"
 
 @interface RBServerEditorViewController ()
 
@@ -29,11 +30,22 @@
 {
     [super viewDidLoad];
     
+    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:sv];
+    sv.scrollEnabled = NO;
+    
     CGFloat width = self.view.frame.size.width / 2;
-    //CGFloat height = self.view.frame.size.height;
     
     CGFloat h = 40.0;
+    
     CGFloat w = 480.0;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        w = 280.0;
+        sv.scrollEnabled = YES;
+        sv.contentSize = CGSizeMake(self.view.frame.size.width, 800);
+    }
+    
     CGFloat w2 = w / 2;
     
     CGFloat y = 100;
@@ -41,7 +53,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, 40, w, 40)];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = @"New Server";
-    [self.view addSubview:label];
+    [sv addSubview:label];
     
     self.serverName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y, w, h)];
     self.serverHostname = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + (h + 20), w, h)];
@@ -50,7 +62,7 @@
     UILabel *sslLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 3 * (h + 20), 120, h)];
     sslLabel.text = @"Use SSL?";
     sslLabel.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:sslLabel];
+    [sv addSubview:sslLabel];
     
     self.serverSSL = [[UISwitch alloc] initWithFrame:CGRectZero];
     CGFloat uiswidth = self.serverSSL.frame.size.width;
@@ -61,11 +73,11 @@
     self.serverPassword = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 6 * (h + 20), w, h)];
     
     self.saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.saveButton.frame = CGRectMake(width + 10, y + 7 * (h + 20) + 20, 90, 80);
+    self.saveButton.frame = CGRectMake(width + 10, y + 7 * (h + 20), 90, 80);
     [self.saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.cancelButton.frame = CGRectMake(width - 100, y + 7 * (h + 20) + 20, 90, 80);
+    self.cancelButton.frame = CGRectMake(width - 100, y + 7 * (h + 20), 90, 80);
     [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
     [self.cancelButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
@@ -121,7 +133,7 @@
                         self.serverPassword,
                         self.saveButton,
                         self.cancelButton]) {
-        [self.view addSubview:v];
+        [sv addSubview:v];
     }
 }
 
@@ -134,8 +146,12 @@
 {
     self.server.serverName = self.serverName.text;
     self.server.nick = self.serverNick.text;
+    if (![self.server.nick hasContent]) {
+        self.serverNick.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"A username is required" attributes:@{NSForegroundColorAttributeName: [UIColor redColor]}];
+        return; // need a nick.
+    }
     
-    if (self.server.serverName == nil || [self.server.serverName isEqualToString:@""]) {
+    if (![self.server.serverName hasContent]) {
         self.server.serverName = self.serverHostname.text;
     }
     
@@ -145,6 +161,16 @@
         self.server.useSSL = self.serverSSL.on;
         self.server.realname = self.serverRealName.text;
         self.server.password = self.serverPassword.text;
+        
+        if (![self.server.hostname hasContent]) {
+            self.server.hostname = self.serverHostname.placeholder;
+        }
+        if (![self.server.port hasContent]) {
+            self.server.port = self.serverPort.placeholder;
+        }
+        if (![self.server.realname hasContent]) {
+            self.server.realname = self.serverRealName.placeholder;
+        }
         
         [self.server connect];
     }

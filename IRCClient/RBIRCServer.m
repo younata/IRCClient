@@ -11,6 +11,12 @@
 #import "RBIRCChannel.h"
 #import "NSStream+remoteHost.h"
 
+@interface RBIRCServer ()
+
+@property (nonatomic, readwrite) BOOL connected;
+
+@end
+
 @implementation RBIRCServer
 
 @synthesize readStream;
@@ -112,20 +118,34 @@
     self.readStream = is;
     self.writeStream = os;
     
+    [self.readStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [self.writeStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    
+    if (self.useSSL) {
+        [self.readStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
+        [self.writeStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
+    }
+    
+    [self.readStream setDelegate:self];
+    [self.writeStream setDelegate:self];
+    
     [self.writeStream open];
     [self.readStream open];
     
-    NSAssert(self.writeStream.streamStatus == NSStreamStatusOpen || self.writeStream.streamStatus == NSStreamStatusOpening, @"write status should be open");
-    NSAssert(self.readStream.streamStatus == NSStreamStatusOpen || self.writeStream.streamStatus == NSStreamStatusOpening, @"read status should be open");
-    
-    [self.readStream setDelegate:self];
     channels = [[NSMutableDictionary alloc] init];
-    if (pass != nil || [pass length] > 0) {
-        [self sendCommand:[@"pass " stringByAppendingString:pass]];
-    }
-    [self nick:self.nick];
-    [self sendCommand:[NSString stringWithFormat:@"user %@ foo bar %@", self.nick, realname]];
-    _connected = YES;
+    
+    RBIRCServer *theSelf = (RBIRCServer *)self;
+    onConnect = ^{
+        if (pass != nil || [pass length] > 0) {
+            [theSelf sendCommand:[@"pass " stringByAppendingString:pass]];
+        }
+        [theSelf nick:theSelf.nick];
+        [theSelf sendCommand:[NSString stringWithFormat:@"user %@ foo bar %@", theSelf.nick, realname]];
+        theSelf.connected = YES;
+        for (id<RBIRCServerDelegate> del in theSelf.delegates) {
+            [del IRCServerDidConnect:theSelf];
+        }
+    };
 }
 
 -(void)receivedString:(NSString *)str
@@ -314,6 +334,12 @@
 -(void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
 {
     switch (eventCode) {
+        case NSStreamEventOpenCompleted: {
+            if ([aStream isKindOfClass:[NSOutputStream class]]) {
+                onConnect();
+            }
+            break;
+        }
         case NSStreamEventHasBytesAvailable: {
             uint8_t buffer[513];
             buffer[512] = 0;
@@ -330,7 +356,8 @@
                 }
             } while (numBytesRead > 0);
             break;
-        } default:
+        }
+        default:
             break;
     }
 }

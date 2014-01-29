@@ -41,14 +41,13 @@
 		891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F2041887562600042A13 /* RBChannelViewController.m */; };
 		891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
 		891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */; };
-		891B02061896D5CD00B2D848 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 891B02051896D5CD00B2D848 /* NSData+string.m */; };
-		891B02071896D5CD00B2D848 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 891B02051896D5CD00B2D848 /* NSData+string.m */; };
 		891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */; };
 		891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
 		899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */; };
-		899B2A761898DC5E0008FED3 /* NSStream+remoteHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A751898DC5E0008FED3 /* NSStream+remoteHost.m */; };
+		899B2A8F189912220008FED3 /* RBCategories in Resources */ = {isa = PBXBuildFile; fileRef = 899B2A8E189912220008FED3 /* RBCategories */; };
+		899B2A90189912220008FED3 /* RBCategories in Resources */ = {isa = PBXBuildFile; fileRef = 899B2A8E189912220008FED3 /* RBCategories */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
@@ -99,8 +98,6 @@
 		891B01F0189650DB00B2D848 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCMessageSpec.mm; sourceTree = "<group>"; };
 		891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCServerSpec.mm; sourceTree = "<group>"; };
-		891B02041896D5CD00B2D848 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+string.h"; path = "IRCClient/NSData+string.h"; sourceTree = "<group>"; };
-		891B02051896D5CD00B2D848 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+string.m"; path = "IRCClient/NSData+string.m"; sourceTree = "<group>"; };
 		891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBChannelViewControllerSpec.mm; sourceTree = "<group>"; };
 		891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerViewControllerSpec.mm; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
@@ -109,8 +106,7 @@
 		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
 		896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
 		899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerEditorViewControllerSpec.mm; sourceTree = "<group>"; };
-		899B2A741898DC5E0008FED3 /* NSStream+remoteHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSStream+remoteHost.h"; sourceTree = "<group>"; };
-		899B2A751898DC5E0008FED3 /* NSStream+remoteHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSStream+remoteHost.m"; sourceTree = "<group>"; };
+		899B2A8E189912220008FED3 /* RBCategories */ = {isa = PBXFileReference; lastKnownFileType = folder; path = RBCategories; sourceTree = "<group>"; };
 		89C46E45189600A9006068DC /* RBTextFieldServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextFieldServerCell.h; sourceTree = "<group>"; };
 		89C46E46189600A9006068DC /* RBTextFieldServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextFieldServerCell.m; sourceTree = "<group>"; };
 		89C46E4818960C96006068DC /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
@@ -158,7 +154,7 @@
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
-				891B02081896D65C00B2D848 /* Categories */,
+				899B2A8E189912220008FED3 /* RBCategories */,
 				8906F1D018867BEE00042A13 /* IRCClient */,
 				891B01E6189650DA00B2D848 /* IRCClientSpecs */,
 				8906F1C918867BEE00042A13 /* Frameworks */,
@@ -249,17 +245,6 @@
 				891B01EE189650DA00B2D848 /* IRCClientSpecs-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		891B02081896D65C00B2D848 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				891B02041896D5CD00B2D848 /* NSData+string.h */,
-				891B02051896D5CD00B2D848 /* NSData+string.m */,
-				899B2A741898DC5E0008FED3 /* NSStream+remoteHost.h */,
-				899B2A751898DC5E0008FED3 /* NSStream+remoteHost.m */,
-			);
-			name = Categories;
 			sourceTree = "<group>";
 		};
 		89C46E431895F89A006068DC /* IRC Backend */ = {
@@ -390,6 +375,7 @@
 				8906F1D518867BEE00042A13 /* InfoPlist.strings in Resources */,
 				8906F1DD18867BEE00042A13 /* Images.xcassets in Resources */,
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
+				899B2A8F189912220008FED3 /* RBCategories in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,6 +390,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				899B2A90189912220008FED3 /* RBCategories in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,9 +410,7 @@
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
-				891B02061896D5CD00B2D848 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
-				899B2A761898DC5E0008FED3 /* NSStream+remoteHost.m in Sources */,
 				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,7 +440,6 @@
 				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
 				891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */,
 				891B01ED189650DA00B2D848 /* main.m in Sources */,
-				891B02071896D5CD00B2D848 /* NSData+string.m in Sources */,
 				899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
