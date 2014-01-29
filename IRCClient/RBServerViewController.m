@@ -81,6 +81,7 @@ static NSString *textFieldCell = @"textFieldCell";
             RBTextFieldServerCell *c = (RBTextFieldServerCell *)cell;
             c.textField.placeholder = @"Join a channel";
             c.data = server;
+            c.textField.delegate = self;
         }
     }
     
@@ -110,11 +111,13 @@ static NSString *textFieldCell = @"textFieldCell";
     
     if (section < [self.servers count]) {
         RBIRCServer *server = self.servers[section];
-        if (row != 0) {
+        if (row != 0 && row <= server.channels.count) {
             NSArray *channels = [server.channels allKeys];
             NSString *ch = channels[row - 1];
             RBIRCChannel *channel = server[ch];
             [self.delegate server:server didChangeChannel:channel];
+        } else if (row > server.channels.count) {
+            ;
         } else {
             editor = [[RBServerEditorViewController alloc] init];
             editor.server = server;
@@ -146,15 +149,14 @@ static NSString *textFieldCell = @"textFieldCell";
     if (textField.text == nil || [textField.text isEqualToString:@""])
         return YES;
     for (UITableViewCell *c in self.tableView.visibleCells) {
-        for (UIView *v in c.contentView.subviews) {
-            if ([v isEqual:textField]) {
-                if ([c isKindOfClass:[RBTextFieldServerCell class]]) {
-                    RBTextFieldServerCell *cell = (RBTextFieldServerCell*)c;
-                    RBIRCServer *server = cell.data;
-                    [server join:textField.text];
-                    [self.delegate server:server didChangeChannel:server[textField.text]];
-                }
-            }
+        if (![c isKindOfClass:[RBTextFieldServerCell class]])
+            continue;
+        RBTextFieldServerCell *cell = (RBTextFieldServerCell*)c;
+        UITextField *tf = [cell textField];
+        if ([tf isEqual:textField]) {
+            RBIRCServer *server = cell.data;
+            [server join:textField.text];
+            [self.delegate server:server didChangeChannel:server[textField.text]];
         }
     }
     return YES;

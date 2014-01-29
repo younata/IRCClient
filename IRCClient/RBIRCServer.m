@@ -9,6 +9,7 @@
 #import "RBIRCServer.h"
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
+#import "NSStream+remoteHost.h"
 
 @implementation RBIRCServer
 
@@ -43,6 +44,25 @@
     }
     return self;
 }
+
+/*
+-(BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[RBIRCServer class]])
+        return NO;
+    RBIRCServer *s = (RBIRCServer *)object;
+    if ([self.serverName isEqualToString:s.serverName])
+        if ([self.nick isEqualToString:s.nick])
+            if ([self.hostname isEqualToString:s.hostname])
+                if ([self.port isEqualToString:s.port])
+                    if ([self.realname isEqualToString:s.realname])
+                        if ([self.password isEqualToString:s.password])
+                            if (self.useSSL == s.useSSL)
+                                if (self.connected == s.connected)
+                                    return YES;
+    return NO;
+}
+ */
 
 -(void)sendCommand:(NSString *)command
 {
@@ -85,11 +105,20 @@
 
 -(void)connect:(NSString *)realname withPassword:(NSString *)pass
 {
-    //CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)self.hostname, [self.port intValue], &readStream, &writeStream);
+    NSInputStream *is;
+    NSOutputStream *os;
+    [NSStream getStreamsToHost:self.hostname port:self.port inputStream:&is outputStream:&os];
     
-    [writeStream open];
-    [readStream open];
-    [readStream setDelegate:self];
+    self.readStream = is;
+    self.writeStream = os;
+    
+    [self.writeStream open];
+    [self.readStream open];
+    
+    NSAssert(self.writeStream.streamStatus == NSStreamStatusOpen || self.writeStream.streamStatus == NSStreamStatusOpening, @"write status should be open");
+    NSAssert(self.readStream.streamStatus == NSStreamStatusOpen || self.writeStream.streamStatus == NSStreamStatusOpening, @"read status should be open");
+    
+    [self.readStream setDelegate:self];
     channels = [[NSMutableDictionary alloc] init];
     if (pass != nil || [pass length] > 0) {
         [self sendCommand:[@"pass " stringByAppendingString:pass]];
@@ -101,6 +130,7 @@
 
 -(void)receivedString:(NSString *)str
 {
+    NSLog(@"%@", str); // Debug!
     if ([str hasPrefix:@"PING"]) { // quickly handle pings.
         [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
     } else {

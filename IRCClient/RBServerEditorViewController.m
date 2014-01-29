@@ -99,10 +99,17 @@
         self.serverPassword.placeholder = @"****";
     }
     
-    for (UITextField *tf in @[self.serverName, self.serverHostname, self.serverPort, self.serverNick, self.serverRealName, self.serverPassword]) {
+    for (UITextField *tf in @[self.serverName,
+                              self.serverHostname,
+                              self.serverPort,
+                              self.serverNick,
+                              self.serverRealName,
+                              self.serverPassword]) {
         [tf setBorderStyle:UITextBorderStyleLine];
-        UIColor *color = [[UIColor darkTextColor] colorWithAlphaComponent:0.7];
-        [tf setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:tf.placeholder attributes:@{NSForegroundColorAttributeName: color}]];
+        if (!self.server.connected) {
+            UIColor *color = [[UIColor darkTextColor] colorWithAlphaComponent:0.7];
+            [tf setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:tf.placeholder attributes:@{NSForegroundColorAttributeName: color}]];
+        }
     }
     
     for (UIView *v in @[self.serverName,
@@ -127,6 +134,10 @@
 {
     self.server.serverName = self.serverName.text;
     self.server.nick = self.serverNick.text;
+    
+    if (self.server.serverName == nil || [self.server.serverName isEqualToString:@""]) {
+        self.server.serverName = self.serverHostname.text;
+    }
     
     if (!self.server.connected) {
         self.server.hostname = self.serverHostname.text;

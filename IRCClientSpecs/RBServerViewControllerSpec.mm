@@ -3,6 +3,7 @@
 #import "RBIRCChannel.h"
 #import "RBServerEditorViewController.h"
 #import "RBServerVCDelegate.h"
+#import "RBTextFieldServerCell.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -74,6 +75,44 @@ describe(@"RBServerViewController", ^{
             subject.delegate should have_received("server:didChangeChannel:").with(subject.servers[0], Arguments::anything);
             subject.tableView should have_received("deselectRowAtIndexPath:animated:").with(ip, Arguments::anything);
 
+        });
+    });
+    
+    describe(@"joining a new channel", ^{
+        __block RBIRCServer *server;
+        beforeEach(^{
+            server = nice_fake_for([RBIRCServer class]);
+            server stub_method("serverName").and_return(@"test server");
+            server stub_method("channels").and_return(@{});
+            server stub_method("join:");
+            spy_on(server);
+            [subject.servers addObject:server];
+            [subject.tableView reloadData];
+            [subject view];
+        });
+        
+        it(@"should be a member of RBTextFieldServerCell", ^{
+            UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            cell should be_instance_of([RBTextFieldServerCell class]);
+        });
+        
+        it(@"should not respond to touching", ^{
+            //[subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            // yeah, I have no idea. nothing should really happen...
+        });
+        
+        it(@"should join a channel on return, if there is text in that cell...", ^{
+            NSLog(@"%@", subject.tableView.visibleCells);
+            RBTextFieldServerCell *cell = (RBTextFieldServerCell *)[subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            [subject textFieldShouldReturn:cell.textField];
+            server should_not have_received("join:");
+            
+            [(id<CedarDouble>) server reset_sent_messages];
+            
+            cell.textField.text = @"#foo";
+            NSLog(@"%@", subject.tableView.visibleCells);
+            [subject textFieldShouldReturn:cell.textField];
+            server should have_received("join:").with(@"#foo");
         });
     });
 });

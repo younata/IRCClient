@@ -17,6 +17,7 @@
         // Initialization code
         
         self.textField = [[UITextField alloc] initWithFrame:CGRectInset(self.contentView.frame, 4, 4)];
+        [self.contentView addSubview:self.textField];
     }
     return self;
 }
@@ -26,6 +27,11 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"TextFieldServerCell with data '%@' and textfield '%@'", self.data, self.textField];
 }
 
 @end

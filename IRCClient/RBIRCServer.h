@@ -20,8 +20,8 @@
     NSMutableArray *commandQueue;
 }
 
-@property (nonatomic) NSInputStream *readStream;
-@property (nonatomic) NSOutputStream *writeStream;
+@property (nonatomic, strong) NSInputStream *readStream;
+@property (nonatomic, strong) NSOutputStream *writeStream;
 
 @property (nonatomic, readonly, strong) NSMutableArray *delegates;
 @property (nonatomic, readonly, strong) NSMutableDictionary *channels;
