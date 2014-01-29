@@ -74,12 +74,9 @@ static NSString *CellIdentifier = @"Cell";
 {
     UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     RBIRCMessage *msg = [[self.server[self.channel] log] objectAtIndex:indexPath.row];
-    /*
-    NSString *s = [msg to];
-    s = [[s stringByAppendingString:@": "] stringByAppendingString:[msg message]];
-     */
-    ret.textLabel.text = [msg message];
-    ret.detailTextLabel.text = [msg to];
+    ret.textLabel.text = [NSString stringWithFormat:@"%@: %@", msg.from, msg.message];
+    //ret.textLabel.text = [msg message];
+    //ret.detailTextLabel.text = [msg to];
     return ret;
 }
 
@@ -102,6 +99,8 @@ static NSString *CellIdentifier = @"Cell";
 -(void)server:(RBIRCServer *)server didChangeChannel:(RBIRCChannel *)newChannel
 {
     // FIXME
+    self.channel = newChannel.name;
+    self.navigationItem.title = newChannel.name;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -180,5 +179,46 @@ static NSString *CellIdentifier = @"Cell";
     return YES;
 }
 
+#pragma mark - RBIRCServerDelegate
+
+-(void)IRCServerConnectionDidDisconnect:(RBIRCServer *)server
+{
+    // meh.
+}
+
+-(void)IRCServer:(RBIRCServer *)server errorReadingFromStream:(NSError *)error
+{
+    // meh.
+}
+
+-(void)IRCServer:(RBIRCServer *)server invalidCommand:(NSError *)error
+{
+    // meh.
+}
+
+-(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message
+{
+    if ([message.to isEqualToString:self.channel]) {
+        BOOL shouldScroll = NO;
+        NSInteger section = 0;
+        NSInteger row = [self tableView:self.tableView numberOfRowsInSection:0] - 2; // -1 for index, another -1 because we just added to it.
+        
+        for (NSIndexPath *ip in [self.tableView indexPathsForVisibleRows]) {
+            if (ip.section < section)
+                continue;
+            else if (ip.section > section)
+                break;
+            if (ip.row == row) {
+                shouldScroll = YES;
+                break;
+            }
+        }
+        
+        [self.tableView reloadData];
+        if (shouldScroll) {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }
+    }
+}
 
 @end

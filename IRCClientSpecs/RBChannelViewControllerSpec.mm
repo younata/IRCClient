@@ -1,6 +1,7 @@
 #import "RBChannelViewController.h"
 #import "RBIRCServer.h"
 #import "RBIRCMessage.h"
+#import "RBIRCChannel.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -99,6 +100,81 @@ describe(@"RBChannelViewController", ^{
             subject.input.text = @"hello world";
             [subject textFieldShouldReturn:subject.input];
             server should have_received("privmsg:contents:").with(channel, @"hello world");
+        });
+    });
+    
+    RBIRCMessage *(^createMessage)() = ^RBIRCMessage*(){
+        RBIRCMessage *msg = fake_for([RBIRCMessage class]);
+        msg stub_method("message").and_return(@"Hello world");
+        msg stub_method("from").and_return(@"testuser");
+        msg stub_method("to").and_return(channel);
+        msg stub_method("command").and_return(IRCMessageTypePrivmsg);
+        msg stub_method("timestamp").and_return([NSDate date]);
+        
+        return msg;
+    };
+    
+    describe(@"RBServerVCDelegate responses", ^{
+        it(@"should change channels", ^{
+            RBIRCServer *server = nice_fake_for([RBIRCServer class]);
+            RBIRCChannel *ircChannel = nice_fake_for([RBIRCChannel class]);
+            server stub_method("serverName").and_return(@"Test Server");
+            ircChannel stub_method("name").and_return(@"#hello");
+            [subject server:server didChangeChannel:ircChannel];
+            subject.channel should equal(ircChannel.name);
+            subject.navigationItem.title should equal(ircChannel.name);
+        });
+    });
+    
+    describe(@"displaying messages", ^{
+        __block RBIRCChannel *ircChannel;
+        __block NSMutableArray *log;
+        beforeEach(^{
+            RBIRCServer *server = fake_for([RBIRCServer class]);
+            ircChannel = nice_fake_for([RBIRCChannel class]);
+            RBIRCMessage *msg = createMessage();
+            log = [[NSMutableArray alloc] init];
+            [log addObject:msg];
+            
+            ircChannel stub_method("name").and_return(channel);
+            ircChannel stub_method("log").and_return(log);
+            
+            server stub_method("channels").and_return(@{channel: ircChannel});
+            server stub_method("objectForKeyedSubscript:").and_return(ircChannel);
+            
+            spy_on(subject.tableView);
+            
+            subject.server = server;
+            subject.channel = channel;
+            [subject.tableView reloadData];
+        });
+        
+        it(@"should display existing messages", ^{
+            [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(log.count);
+            UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            cell.textLabel.text should equal(@"testuser: Hello world");
+        });
+        
+        it(@"should respond to incoming messages when viewing the bottom", ^{
+            NSInteger i = log.count;
+            [log addObject:createMessage()];
+            [subject IRCServer:subject.server handleMessage:createMessage()];
+            [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(i + 1);
+            log.count should equal(i+1);
+            subject.tableView should have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with([NSIndexPath indexPathForRow:i inSection:0], UITableViewScrollPositionBottom, YES);
+        });
+        
+        it(@"should respond to incoming messages when not viewing the top", ^{
+            for (int i = 0; i < 50; i++) {
+                [log addObject:createMessage()];
+            }
+            [subject tableView:subject.tableView numberOfRowsInSection:0] should be_gte(50);
+            [subject.tableView reloadData];
+            [subject.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            [(id<CedarDouble>)subject.tableView reset_sent_messages];
+            
+            [subject IRCServer:subject.server handleMessage:createMessage()];
+            subject.tableView should_not have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with([NSIndexPath indexPathForRow:log.count - 1 inSection:0], UITableViewScrollPositionBottom, YES);
         });
     });
 });

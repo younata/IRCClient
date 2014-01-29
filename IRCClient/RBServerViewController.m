@@ -73,7 +73,7 @@ static NSString *textFieldCell = @"textFieldCell";
     } else {
         RBIRCServer *server = self.servers[section];
         NSArray *channels = [server.channels allKeys];
-        if (row != 0 || row != [server.channels count] + 1) {
+        if (row != 0 && row != [server.channels count] + 1) {
             cell.textLabel.text = channels[row - 1];
         } else if (row == 0) {
             cell.textLabel.text = server.serverName;
@@ -87,12 +87,14 @@ static NSString *textFieldCell = @"textFieldCell";
     return cell;
 }
 
+/*
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == self.servers.count)
         return @"";
     return [self.servers[section] serverName];
 }
+ */
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -106,7 +108,7 @@ static NSString *textFieldCell = @"textFieldCell";
     
     RBServerEditorViewController *editor = nil;
     
-    if (section > [self.servers count]) {
+    if (section < [self.servers count]) {
         RBIRCServer *server = self.servers[section];
         if (row != 0) {
             NSArray *channels = [server.channels allKeys];
@@ -134,6 +136,7 @@ static NSString *textFieldCell = @"textFieldCell";
     if (editor) {
         [self presentViewController:editor animated:YES completion:nil];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 #pragma mark - UITextFieldDelegate

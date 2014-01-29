@@ -47,6 +47,7 @@
 		891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
+		899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
@@ -106,6 +107,7 @@
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
 		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
 		896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
+		899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerEditorViewControllerSpec.mm; sourceTree = "<group>"; };
 		89C46E45189600A9006068DC /* RBTextFieldServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextFieldServerCell.h; sourceTree = "<group>"; };
 		89C46E46189600A9006068DC /* RBTextFieldServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextFieldServerCell.m; sourceTree = "<group>"; };
 		89C46E4818960C96006068DC /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */,
 				891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */,
+				899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */,
 				891B01E7189650DA00B2D848 /* Supporting Files */,
 			);
 			path = IRCClientSpecs;
@@ -447,6 +450,7 @@
 				891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */,
 				891B01ED189650DA00B2D848 /* main.m in Sources */,
 				891B02071896D5CD00B2D848 /* NSData+string.m in Sources */,
+				899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,6 +714,7 @@
 				891B01F5189650DB00B2D848 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

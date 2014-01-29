@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "RBServerVCDelegate.h"
+#import "RBIRCServerDelegate.h"
 
 @class RBIRCServer;
 @class RBServerViewController;
 @class SWRevealViewController;
 
-@interface RBChannelViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RBServerVCDelegate>
+@interface RBChannelViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RBIRCServerDelegate, RBServerVCDelegate>
 
 @property (nonatomic, strong) UITextField *input;
 @property (nonatomic, strong) UITableView *tableView;
