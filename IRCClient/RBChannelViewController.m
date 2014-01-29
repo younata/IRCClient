@@ -13,6 +13,7 @@
 #import "SWRevealViewController.h"
 
 @interface RBChannelViewController ()
+@property (nonatomic) CGRect originalFrame;
 
 @end
 
@@ -34,15 +35,21 @@ static NSString *CellIdentifier = @"Cell";
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.originalFrame = self.view.frame;
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     CGFloat height = self.view.frame.size.height;
     CGFloat width = self.view.frame.size.width;
     
-    CGFloat inputHeight = 60;
+    CGFloat inputHeight = 40;
     
     [self.revealController panGestureRecognizer];
     [self.revealController tapGestureRecognizer];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon"] style:UIBarButtonItemStylePlain target:self.revealController action:@selector(revealToggle:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon"]
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(revealButtonPressed:)];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, height-inputHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -56,12 +63,70 @@ static NSString *CellIdentifier = @"Cell";
     self.input.delegate = self;
     
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.input];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:UIKeyboardDidShowNotification];
+    [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:UIKeyboardDidHideNotification];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)revealButtonPressed:(id)sender
+{
+    [self.input resignFirstResponder];
+    [self.revealController revealToggle:sender];
+}
+
+-(NSInteger)getKeyboardHeight:(NSNotification *)notification
+{
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    NSInteger keyboardHeight = keyboardFrameBeginRect.size.height;
+    return keyboardHeight;
+}
+
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        CGFloat height = self.originalFrame.size.height;
+        CGFloat width = self.originalFrame.size.width;
+        CGFloat inputHeight = 40;
+        
+        self.view.frame = self.originalFrame;
+        self.tableView.frame = CGRectMake(0, 0, width, height - inputHeight);
+        self.input.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
+    }];
+}
+
+-(void)keyboardDidShow:(NSNotification *)notification
+{
+    NSInteger kh = [self getKeyboardHeight:notification];
+    [UIView animateWithDuration:0.25 animations:^{
+        CGFloat height = self.originalFrame.size.height - kh;
+        CGFloat width = self.originalFrame.size.width;
+        CGFloat inputHeight = 40;
+        
+        self.view.frame = CGRectMake(0, 0, self.originalFrame.size.width, height);
+        
+        self.tableView.frame = CGRectMake(0, 0, width, height - inputHeight);
+        self.input.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
+    }];
 }
 
 #pragma mark - UITableViewDataSource
