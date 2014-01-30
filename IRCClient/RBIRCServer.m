@@ -10,6 +10,7 @@
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
 #import "NSStream+remoteHost.h"
+#import "NSString+isNilOrEmpty.h"
 
 @interface RBIRCServer ()
 
@@ -80,7 +81,8 @@
     } else if (numBytesWritten == 0) {
         if ([writeStream streamStatus] == kCFStreamStatusAtEnd) {
             for (id<RBIRCServerDelegate> del in self.delegates) {
-                [del IRCServerConnectionDidDisconnect:self];
+                if ([del respondsToSelector:@selector(IRCServerConnectionDidDisconnect:)])
+                    [del IRCServerConnectionDidDisconnect:self];
             }
         }
     } else if (numBytesWritten != [command length]) {
@@ -136,14 +138,15 @@
     
     RBIRCServer *theSelf = (RBIRCServer *)self;
     onConnect = ^{
-        if (pass != nil || [pass length] > 0) {
+        if ([pass hasContent]) {
             [theSelf sendCommand:[@"pass " stringByAppendingString:pass]];
         }
         [theSelf nick:theSelf.nick];
         [theSelf sendCommand:[NSString stringWithFormat:@"user %@ foo bar %@", theSelf.nick, realname]];
         theSelf.connected = YES;
         for (id<RBIRCServerDelegate> del in theSelf.delegates) {
-            [del IRCServerDidConnect:theSelf];
+            if ([del respondsToSelector:@selector(IRCServerDidConnect:)])
+                [del IRCServerDidConnect:theSelf];
         }
     };
 }
@@ -165,7 +168,8 @@
             [ch logMessage:msg];
         }
         for (id<RBIRCServerDelegate>del in self.delegates) {
-            [del IRCServer:self handleMessage:msg];
+            if ([del respondsToSelector:@selector(IRCServer:handleMessage:)])
+                [del IRCServer:self handleMessage:msg];
         }
     }
 }
@@ -234,7 +238,8 @@
 {
     if (channels[channel] == nil) {
         for (id<RBIRCServerDelegate>del in self.delegates) {
-            [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Part Command" code:1 userInfo:nil]];
+            if ([del respondsToSelector:@selector(IRCServer:invalidCommand:)])
+                [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Part Command" code:1 userInfo:nil]];
         }
         return;
     }
@@ -247,7 +252,8 @@
     if ([target hasPrefix:@"#"] || [target hasPrefix:@"&"]) {
         if (channels[target] == nil) {
             for (id<RBIRCServerDelegate>del in self.delegates) {
-                [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Mode Command" code:1 userInfo:nil]];
+                if ([del respondsToSelector:@selector(IRCServer:invalidCommand:)])
+                    [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Mode Command" code:1 userInfo:nil]];
             }
             return;
         }
@@ -268,7 +274,8 @@
 {
     if (channels[channel] == nil) {
         for (id<RBIRCServerDelegate>del in self.delegates) {
-            [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Kick Command" code:1 userInfo:nil]];
+            if ([del respondsToSelector:@selector(IRCServer:invalidCommand:)])
+                [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Kick Command" code:1 userInfo:nil]];
         }
         return;
     }
@@ -280,7 +287,8 @@
 {
     if (channels[channel] == nil) {
         for (id<RBIRCServerDelegate>del in self.delegates) {
-            [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Topic Command" code:1 userInfo:nil]];
+            if ([del respondsToSelector:@selector(IRCServer:invalidCommand:)])
+                [del IRCServer:self invalidCommand:[NSError errorWithDomain:@"Invalid Topic Command" code:1 userInfo:nil]];
         }
         return;
     }
@@ -336,7 +344,7 @@
     switch (eventCode) {
         case NSStreamEventOpenCompleted: {
             if ([aStream isKindOfClass:[NSOutputStream class]]) {
-                onConnect();
+                dispatch_async(dispatch_queue_create("", NULL), onConnect);
             }
             break;
         }
@@ -351,7 +359,8 @@
                     [self receivedString:str];
                 } else if (numBytesRead < 0) {
                     for (id<RBIRCServerDelegate>del in self.delegates) {
-                        [del IRCServer:self errorReadingFromStream:[readStream streamError]];
+                        if ([del respondsToSelector:@selector(IRCServer:errorReadingFromStream:)])
+                            [del IRCServer:self errorReadingFromStream:[readStream streamError]];
                     }
                 }
             } while (numBytesRead > 0);

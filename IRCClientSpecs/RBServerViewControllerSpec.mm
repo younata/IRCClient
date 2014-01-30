@@ -102,7 +102,6 @@ describe(@"RBServerViewController", ^{
         });
         
         it(@"should join a channel on return, if there is text in that cell...", ^{
-            NSLog(@"%@", subject.tableView.visibleCells);
             RBTextFieldServerCell *cell = (RBTextFieldServerCell *)[subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
             [subject textFieldShouldReturn:cell.textField];
             server should_not have_received("join:");
@@ -110,7 +109,6 @@ describe(@"RBServerViewController", ^{
             [(id<CedarDouble>) server reset_sent_messages];
             
             cell.textField.text = @"#foo";
-            NSLog(@"%@", subject.tableView.visibleCells);
             [subject textFieldShouldReturn:cell.textField];
             server should have_received("join:").with(@"#foo");
         });

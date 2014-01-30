@@ -12,6 +12,7 @@
 @class RBIRCMessage;
 @protocol RBIRCServerDelegate <NSObject>
 
+@optional
 -(void)IRCServerDidConnect:(RBIRCServer *)server;
 -(void)IRCServerConnectionDidDisconnect:(RBIRCServer *)server;
 -(void)IRCServer:(RBIRCServer *)server errorReadingFromStream:(NSError *)error;

@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "RBIRCServerDelegate.h"
+
 @class RBIRCServer;
 
-@interface RBServerEditorViewController : UIViewController
+@interface RBServerEditorViewController : UIViewController <RBIRCServerDelegate>
 
 @property (nonatomic, weak) RBIRCServer *server;
 

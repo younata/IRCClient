@@ -13,6 +13,8 @@
 #import "RBServerEditorViewController.h"
 #import "RBTextFieldServerCell.h"
 
+#import "RBIRCServerDelegate.h"
+
 @interface RBServerViewController ()
 
 @end
@@ -130,7 +132,7 @@ static NSString *textFieldCell = @"textFieldCell";
         __weak RBServerEditorViewController *theEditor = editor;
         __weak RBServerViewController *theSelf = self;
         editor.onCancel = ^{
-            if (!theEditor.server.connected) {
+            if (!(theEditor.server.connected || theEditor.server.readStream.streamStatus == NSStreamStatusOpening)) {
                 [theSelf.servers removeObject:theEditor.server];
             }
             [self.tableView reloadData];
@@ -160,6 +162,13 @@ static NSString *textFieldCell = @"textFieldCell";
         }
     }
     return YES;
+}
+
+#pragma mark - RBIRCServerDelegate
+
+-(void)IRCserverDidConnect:(RBIRCServer *)server
+{
+    
 }
 
 @end

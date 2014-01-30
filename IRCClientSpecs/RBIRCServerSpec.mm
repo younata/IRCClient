@@ -18,34 +18,12 @@ describe(@"RBIRCServer", ^{
     beforeEach(^{
         subject = [[RBIRCServer alloc] init];
         subject.serverName = @"Test server";
-        NSOutputStream *os = nice_fake_for([NSOutputStream class]);
-        subject.writeStream = os;
         delegate = nice_fake_for(@protocol(RBIRCServerDelegate));
         [subject addDelegate:delegate];
         spy_on(subject);
-        spy_on(os);
         
-        os stub_method("write:maxLength:").with(Arguments::anything, Arguments::anything).and_do(^(NSInvocation *invocation){
-            NSInteger i;
-            [invocation getArgument:&i atIndex:3];
-            [invocation setReturnValue:&i];
-        });
-        os stub_method("open");
-        
-        
-        NSInputStream *is = nice_fake_for([NSInputStream class]);
-        is stub_method("hasBytesAvailable").and_return(YES);
-        is stub_method("read:maxLength:").with(Arguments::anything, Arguments::anything).and_do(^(NSInvocation *invocation) {
-            uint8_t buffer[513];
-            [invocation getArgument:(void *)buffer atIndex:2];
-            strncpy((char *)buffer, (const char *)[msg UTF8String], 512);
-            NSInteger i = 0;//[msg length];
-            [invocation setReturnValue:&i];
-        });
-        is stub_method("open");
-        is stub_method("setDelegate:").with(Arguments::anything);
-        
-        subject.readStream = is;
+        spy_on(subject.readStream);
+        spy_on(subject.writeStream);
         
         msg = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :how are you\r\n"];
     });
@@ -65,17 +43,39 @@ describe(@"RBIRCServer", ^{
         subject.channels.count should be_gte(0);
     });
     
+    describe(@"connecting to an actual server", ^{
+        beforeEach(^{
+            subject.nick = @"TestUser";
+            subject.hostname = @"localhost";
+            subject.realname = @"testuser";
+            subject.password = @"";
+        });
+        
+        /*
+        it(@"should connect to an ssl secured server", ^{
+            subject.useSSL = YES;
+            subject.port = @"6697";
+            [subject connect];
+        });
+        
+        it(@"should connect to a plain-text server", ^{
+            subject.useSSL = NO;
+            subject.port = @"6667";
+            [subject connect];
+        });
+         */
+    });
+    
+    /*
     it(@"should connect", ^{
         subject.nick = @"testname";
         [subject connect:@"testname" withPassword:nil];
-        subject.writeStream should have_received("open");
-        subject.readStream should have_received("open");
-        subject.readStream should have_received("setDelegate:").with(subject);
         subject should have_received("nick:").with(@"testname");
         subject should have_received("sendCommand:").with(@"nick testname");
         subject should have_received("sendCommand:").with(@"user testname foo bar testname");
         subject.connected should be_truthy;
     });
+     */
     
     describe(@"sending server commands", ^{
         it(@"should send raw commands", ^{
