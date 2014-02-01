@@ -51,19 +51,19 @@ describe(@"RBIRCServer", ^{
             subject.password = @"";
         });
         
-        /*
+        /* Later...
         it(@"should connect to an ssl secured server", ^{
             subject.useSSL = YES;
             subject.port = @"6697";
             [subject connect];
         });
+         */
         
         it(@"should connect to a plain-text server", ^{
             subject.useSSL = NO;
             subject.port = @"6667";
             [subject connect];
         });
-         */
     });
     
     /*
