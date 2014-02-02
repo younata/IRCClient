@@ -13,6 +13,9 @@
 
 @interface RBServerEditorViewController ()
 
+@property (nonatomic) CGRect originalFrame;
+@property (nonatomic, strong) UIScrollView *scrollView;
+
 @end
 
 @implementation RBServerEditorViewController
@@ -30,9 +33,11 @@
 {
     [super viewDidLoad];
     
-    UIScrollView *sv = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:sv];
-    sv.scrollEnabled = YES;
+    self.originalFrame = self.view.frame;
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:self.scrollView];
+    self.scrollView.scrollEnabled = YES;
     
     CGFloat width = self.view.frame.size.width / 2;
     
@@ -42,7 +47,7 @@
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         w = 280.0;
-        sv.contentSize = CGSizeMake(self.view.frame.size.width, 800);
+        self.scrollView.contentSize = self.view.frame.size;
     }
     
     CGFloat w2 = w / 2;
@@ -52,7 +57,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, 40, w, 40)];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = @"New Server";
-    [sv addSubview:label];
+    [self.scrollView addSubview:label];
     
     self.serverName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y, w, h)];
     self.serverHostname = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + (h + 20), w, h)];
@@ -61,7 +66,7 @@
     UILabel *sslLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 3 * (h + 20), 120, h)];
     sslLabel.text = @"Use SSL?";
     sslLabel.textAlignment = NSTextAlignmentLeft;
-    [sv addSubview:sslLabel];
+    [self.scrollView addSubview:sslLabel];
     
     self.serverSSL = [[UISwitch alloc] initWithFrame:CGRectZero];
     CGFloat uiswidth = self.serverSSL.frame.size.width;
@@ -70,13 +75,14 @@
     self.serverNick = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 4 * (h + 20), w, h)];
     self.serverRealName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 5 * (h + 20), w, h)];
     self.serverPassword = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 6 * (h + 20), w, h)];
+    self.serverPassword.secureTextEntry = YES;
     
     self.saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.saveButton.frame = CGRectMake(width + 10, y + 7 * (h + 20), 90, 80);
+    self.saveButton.frame = CGRectMake(width + 10, y + 7 * (h + 20) - 20, 90, 80);
     [self.saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.cancelButton.frame = CGRectMake(width - 100, y + 7 * (h + 20), 90, 80);
+    self.cancelButton.frame = CGRectMake(width - 100, y + 7 * (h + 20) - 20, 90, 80);
     [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
     [self.cancelButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
@@ -117,10 +123,13 @@
                               self.serverRealName,
                               self.serverPassword]) {
         [tf setBorderStyle:UITextBorderStyleLine];
+        /*
         if (!self.server.connected) {
             UIColor *color = [[UIColor darkTextColor] colorWithAlphaComponent:0.7];
             [tf setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:tf.placeholder attributes:@{NSForegroundColorAttributeName: color}]];
         }
+         */
+        [tf setDelegate:self];
     }
     
     for (UIView *v in @[self.serverName,
@@ -132,8 +141,21 @@
                         self.serverPassword,
                         self.saveButton,
                         self.cancelButton]) {
-        [sv addSubview:v];
+        [self.scrollView addSubview:v];
     }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)dismiss
@@ -152,6 +174,9 @@
     
     if (![self.server.serverName hasContent]) {
         self.server.serverName = self.serverHostname.text;
+        if (![self.server.serverName hasContent]) {
+            self.server.serverName = self.serverHostname.placeholder;
+        }
     }
     
     if (!self.server.connected) {
@@ -176,4 +201,34 @@
     [self dismiss];
 }
 
+
+
+-(NSInteger)getKeyboardHeight:(NSNotification *)notification
+{
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    NSInteger keyboardHeight = keyboardFrameBeginRect.size.height;
+    return keyboardHeight;
+}
+
+-(void)keyboardDidHide:(NSNotification *)notification
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        self.view.frame = self.originalFrame;
+        self.scrollView.frame = self.view.frame;
+    }];
+}
+
+-(void)keyboardDidShow:(NSNotification *)notification
+{
+    NSInteger kh = [self getKeyboardHeight:notification];
+    [UIView animateWithDuration:0.25 animations:^{
+        CGFloat height = self.originalFrame.size.height - kh;
+        
+        self.view.frame = CGRectMake(0, 0, self.originalFrame.size.width, height);
+        
+        self.scrollView.frame = self.view.frame;
+    }];
+}
 @end

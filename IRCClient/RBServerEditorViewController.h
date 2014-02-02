@@ -12,7 +12,7 @@
 
 @class RBIRCServer;
 
-@interface RBServerEditorViewController : UIViewController <RBIRCServerDelegate>
+@interface RBServerEditorViewController : UIViewController <RBIRCServerDelegate, UITextFieldDelegate>
 
 @property (nonatomic, weak) RBIRCServer *server;
 
