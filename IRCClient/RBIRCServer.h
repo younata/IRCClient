@@ -10,6 +10,10 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <CFNetwork/CFNetwork.h>
 
+#ifdef DEBUG
+#include <semaphore.h>
+#endif
+
 #import "RBIRCServerDelegate.h"
 
 @interface RBIRCServer : NSObject <NSStreamDelegate>
@@ -33,6 +37,7 @@
 @property (nonatomic, strong) NSString *port;
 @property (nonatomic, strong) NSString *realname;
 @property (nonatomic, strong) NSString *password;
+@property (nonatomic, strong) NSLock *debugLock;
 @property (nonatomic) BOOL useSSL;
 @property (nonatomic, readonly) BOOL connected;
 
@@ -77,5 +82,8 @@
 // yay making things easier...
 -(id)objectForKeyedSubscript:(id <NSCopying>)key;
 -(void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
+
+// OH god, does cedar spying really need this?
+-(void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode;
 
 @end

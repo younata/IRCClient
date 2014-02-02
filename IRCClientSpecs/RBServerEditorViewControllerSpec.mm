@@ -57,7 +57,14 @@ describe(@"RBServerEditorViewController", ^{
             [subject.saveButton titleForState:UIControlStateNormal] should equal(@"Connect");
         });
         
+        it(@"should not connect if no username is given", ^{
+            [subject.saveButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+            subject should have_received("save");
+            server should_not have_received("connect");
+        });
+        
         it(@"should connect on save", ^{
+            server stub_method("nick").and_return(@"testusername");
             [subject.saveButton sendActionsForControlEvents:UIControlEventTouchUpInside];
             subject should have_received("save");
             server should have_received("connect");

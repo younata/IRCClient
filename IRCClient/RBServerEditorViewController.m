@@ -32,7 +32,7 @@
     
     UIScrollView *sv = [[UIScrollView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:sv];
-    sv.scrollEnabled = NO;
+    sv.scrollEnabled = YES;
     
     CGFloat width = self.view.frame.size.width / 2;
     
@@ -42,7 +42,6 @@
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         w = 280.0;
-        sv.scrollEnabled = YES;
         sv.contentSize = CGSizeMake(self.view.frame.size.width, 800);
     }
     

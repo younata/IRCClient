@@ -102,7 +102,13 @@ describe(@"RBServerViewController", ^{
         });
         
         it(@"should join a channel on return, if there is text in that cell...", ^{
-            RBTextFieldServerCell *cell = (RBTextFieldServerCell *)[subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            RBTextFieldServerCell *cell;
+            for (UITableViewCell *c in subject.tableView.visibleCells) {
+                if (![c isKindOfClass:[RBTextFieldServerCell class]])
+                    continue;
+                cell = (RBTextFieldServerCell*)c;
+            }
+            cell.data should_not be_nil;
             [subject textFieldShouldReturn:cell.textField];
             server should_not have_received("join:");
             

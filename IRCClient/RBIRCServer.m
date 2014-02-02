@@ -12,6 +12,8 @@
 #import "NSStream+remoteHost.h"
 #import "NSString+isNilOrEmpty.h"
 
+#define RBIRCServerLog @"ServerLog"
+
 @interface RBIRCServer ()
 
 @property (nonatomic, readwrite) BOOL connected;
@@ -29,8 +31,7 @@
 -(instancetype)init
 {
     if ((self = [super init])) {
-        _delegates = [[NSMutableArray alloc] init];
-        channels = [[NSMutableDictionary alloc] init];
+        [self commonInit];
     }
     return self;
 }
@@ -46,10 +47,17 @@
         self.password = password;
         _connected = NO;
         
-        _delegates = [[NSMutableArray alloc] init];
-        channels = [[NSMutableDictionary alloc] init];
+        [self commonInit];
     }
     return self;
+}
+
+-(void)commonInit
+{
+    _delegates = [[NSMutableArray alloc] init];
+    channels = [[NSMutableDictionary alloc] init];
+    RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
+    [channels setObject:serverLog forKey:RBIRCServerLog];
 }
 
 /*
@@ -120,10 +128,8 @@
     self.readStream = is;
     self.writeStream = os;
     
-    dispatch_async(dispatch_queue_create("networkAsync", NULL), ^{
-        [self.readStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        [self.writeStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    });
+    [self.readStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    [self.writeStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
     if (self.useSSL) {
         [self.readStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
@@ -135,8 +141,6 @@
     
     [self.writeStream open];
     [self.readStream open];
-    
-    channels = [[NSMutableDictionary alloc] init];
     
     RBIRCServer *theSelf = (RBIRCServer *)self;
     onConnect = ^{
@@ -150,6 +154,8 @@
             if ([del respondsToSelector:@selector(IRCServerDidConnect:)])
                 [del IRCServerDidConnect:theSelf];
         }
+        if (theSelf.debugLock)
+            [theSelf.debugLock unlock];
     };
 }
 
@@ -160,15 +166,20 @@
         [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
     } else {
         RBIRCMessage *msg = [[RBIRCMessage alloc] initWithRawMessage:str];
-        RBIRCChannel *ch = [[RBIRCChannel alloc] initWithName:[msg to]];
-        if (channels[[msg to]] != nil) {
-            RBIRCChannel *channel = channels[[msg to]];
-            [channel logMessage:msg];
+        RBIRCChannel *ch;
+        if (![[msg to] hasContent] || [[msg to] isEqualToString:@"*"]) {
+            ch = [channels objectForKey:RBIRCServerLog];
         } else {
-            [channels setObject:ch forKey:[msg to]];
-            ch.server = self;
-            [ch logMessage:msg];
+            if (channels[[msg to]] != nil) {
+                ch = channels[[msg to]];
+            } else {
+                ch = [[RBIRCChannel alloc] initWithName:[msg to]];
+                [channels setObject:ch forKey:[msg to]];
+                ch.server = self;
+            }
         }
+        [ch logMessage:msg];
+        
         for (id<RBIRCServerDelegate>del in self.delegates) {
             if ([del respondsToSelector:@selector(IRCServer:handleMessage:)])
                 [del IRCServer:self handleMessage:msg];
@@ -354,8 +365,9 @@
             uint8_t buffer[513];
             buffer[512] = 0;
             buffer[0] = 0;
-            signed long numBytesRead = [(NSInputStream *)aStream read:buffer maxLength:512];
+            signed long numBytesRead;
             do {
+                numBytesRead = [(NSInputStream *)aStream read:buffer maxLength:512];
                 if (numBytesRead > 0) {
                     NSString *str = [NSString stringWithUTF8String:(const char *)buffer];
                     [self receivedString:str];

@@ -155,7 +155,7 @@ static NSString *textFieldCell = @"textFieldCell";
             continue;
         RBTextFieldServerCell *cell = (RBTextFieldServerCell*)c;
         UITextField *tf = [cell textField];
-        if ([tf isEqual:textField]) {
+        if ([tf.text isEqualToString:textField.text]) {
             RBIRCServer *server = cell.data;
             [server join:textField.text];
             [self.delegate server:server didChangeChannel:server[textField.text]];
