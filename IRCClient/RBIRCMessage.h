@@ -24,13 +24,13 @@ typedef enum {
 
 @interface RBIRCMessage : NSObject
 
-@property (nonatomic, readonly, strong) NSDate *timestamp; // arrival time
-@property (nonatomic, readonly, strong) NSString *message;
-@property (nonatomic, readonly, strong) NSString *rawMessage;
-@property (nonatomic, readonly, strong) NSString *from;
-@property (nonatomic, readonly, strong) NSString *to;
-@property (nonatomic, readonly) IRCMessageType command;
-@property (nonatomic, readonly, strong) id extra;
+@property (nonatomic, strong) NSDate *timestamp; // arrival time
+@property (nonatomic, strong) NSString *message;
+@property (nonatomic, strong) NSString *rawMessage;
+@property (nonatomic, strong) NSString *from;
+@property (nonatomic, strong) NSString *to;
+@property (nonatomic) IRCMessageType command;
+@property (nonatomic, strong) id extra;
 
 +(NSString *)getMessageStringForType:(IRCMessageType)messagetype;
 +(IRCMessageType)getMessageTypeForString:(NSString *)messageString;

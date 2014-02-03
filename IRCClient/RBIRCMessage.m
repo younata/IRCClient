@@ -102,15 +102,19 @@
 -(NSString *)description
 {
     NSString *ret = @"";
-    
-    ret = [NSString stringWithFormat:@"from: %@\nto: %@\ncommand: %@\nmessage: %@", _from, _to, [RBIRCMessage getMessageStringForType:self.command], _message];
-    
+    if (!self.from)
+        return self.rawMessage;
+    ret = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
     return ret;
 }
 
 -(NSString *)debugDescription
 {
-    return [self description];
+    NSString *ret = @"";
+    
+    ret = [NSString stringWithFormat:@"from: %@\nto: %@\ncommand: %@\nmessage: %@", _from, _to, [RBIRCMessage getMessageStringForType:self.command], _message];
+    
+    return ret;
 }
 
 @end

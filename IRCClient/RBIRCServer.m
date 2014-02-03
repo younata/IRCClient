@@ -161,8 +161,7 @@
 
 -(void)receivedString:(NSString *)str
 {
-    printf("%s", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
-    fflush(stdout);
+    printf("%s\n", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
     if ([str hasPrefix:@"PING"]) { // quickly handle pings.
         [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
     } else {
@@ -179,6 +178,8 @@
         RBIRCChannel *ch;
         if (![[msg to] hasContent] || [[msg to] isEqualToString:@"*"]) {
             ch = [channels objectForKey:RBIRCServerLog];
+            msg.message = msg.rawMessage;
+            msg.to = RBIRCServerLog;
         } else {
             if (channels[[msg to]] != nil) {
                 ch = channels[[msg to]];
@@ -375,22 +376,18 @@
             uint8_t buffer[513];
             buffer[512] = 0;
             buffer[0] = 0;
-            signed long numBytesRead;
-            do {
-                numBytesRead = [(NSInputStream *)aStream read:buffer maxLength:512];
+            signed long numBytesRead = [(NSInputStream *)aStream read:buffer maxLength:512];
                 if (numBytesRead > 0) {
                     NSString *str = [NSString stringWithUTF8String:(const char *)buffer];
-                    numBytesRead -= str.length;
-                    if (str == nil)
-                        continue;
-                    [self receivedString:str];
+                    if (str != nil) {
+                        [self receivedString:str];
+                    }
                 } else if (numBytesRead < 0) {
                     for (id<RBIRCServerDelegate>del in self.delegates) {
                         if ([del respondsToSelector:@selector(IRCServer:errorReadingFromStream:)])
                             [del IRCServer:self errorReadingFromStream:[readStream streamError]];
                     }
                 }
-            } while (numBytesRead > 0);
             break;
         }
         default:
