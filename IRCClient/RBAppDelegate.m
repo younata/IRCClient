@@ -38,7 +38,6 @@
     
     [serverVC setRevealController:viewController];
     [channelVC setRevealController:viewController];
-    channelVC.useText = YES;
     
     self.window.rootViewController = viewController;
     

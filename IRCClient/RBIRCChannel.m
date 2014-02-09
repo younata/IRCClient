@@ -22,6 +22,26 @@
     return self;
 }
 
+-(instancetype)initWithCoder:(NSCoder *)decoder
+{
+    if ((self = [super init]) != nil) {
+        _name = [decoder decodeObjectForKey:@"name"];
+        _log = [[NSMutableArray alloc] init];
+        _names = [[NSMutableArray alloc] init];
+        
+        self.server = nil;
+        self.topic = nil;
+        self.connectOnStartup = [decoder decodeObjectForKey:@"connectOnStartup"];
+    }
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.name forKey:@"name"];
+    [coder encodeBool:self.connectOnStartup forKey:@"connectOnStartup"];
+}
+
 -(BOOL)isEqual:(id)object
 {
     return ([object isKindOfClass:[RBIRCChannel class]] && [[object name] isEqualToString:_name]);

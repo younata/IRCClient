@@ -62,8 +62,8 @@
 -(instancetype)initWithRawMessage:(NSString *)raw
 {
     if ((self = [super init]) != nil) {
-        _rawMessage = raw;
-        _timestamp = [NSDate date];
+        self.rawMessage = raw;
+        self.timestamp = [NSDate date];
         [self parseRawMessage];
     }
     return self;
@@ -71,16 +71,16 @@
 
 -(void)parseRawMessage
 {
-    NSArray *array = [_rawMessage componentsSeparatedByString:@" "];
+    NSArray *array = [self.rawMessage componentsSeparatedByString:@" "];
     NSArray *userAndHost = [[array[0] substringFromIndex:1] componentsSeparatedByString:@"!"];
-    _from = userAndHost[0];
-    _command = [RBIRCMessage getMessageTypeForString:array[1]];
-    _to = array[2];
+    self.from = userAndHost[0];
+    self.command = [RBIRCMessage getMessageTypeForString:array[1]];
+    self.to = array[2];
     if ([array count] == 3) {
-        if ([_to hasPrefix:@":"]) {
-            _to = [_to substringFromIndex:1];
+        if ([self.to hasPrefix:@":"]) {
+            self.to = [self.to substringFromIndex:1];
         }
-        _message = nil;
+        self.message = nil;
         return;
     }
     NSString *msg = array[3];
@@ -90,12 +90,12 @@
     for (int i = 4; i < [array count]; i++) {
         msg = [[msg stringByAppendingString:@" "] stringByAppendingString:array[i]];
     }
-    _message = msg;
+    self.message = msg;
     if (self.command == IRCMessageTypeMode) {
-        _extra = [_message componentsSeparatedByString:@" "];
+        self.extra = [self.message componentsSeparatedByString:@" "];
     } else if (self.command == IRCMessageTypeKick) {
-        NSArray *arr = [_message componentsSeparatedByString:@" "];
-        _extra = @{@"target": arr[0], @"reason": [arr[1] substringFromIndex:1]};
+        NSArray *arr = [self.message componentsSeparatedByString:@" "];
+        self.extra = @{@"target": arr[0], @"reason": [arr[1] substringFromIndex:1]};
     }
 }
 
@@ -112,7 +112,7 @@
 {
     NSString *ret = @"";
     
-    ret = [NSString stringWithFormat:@"from: %@\nto: %@\ncommand: %@\nmessage: %@", _from, _to, [RBIRCMessage getMessageStringForType:self.command], _message];
+    ret = [NSString stringWithFormat:@"from: %@\nto: %@\ncommand: %@\nmessage: %@", self.from, self.to, [RBIRCMessage getMessageStringForType:self.command], self.message];
     
     return ret;
 }

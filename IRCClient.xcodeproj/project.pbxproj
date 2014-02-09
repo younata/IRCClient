@@ -45,6 +45,9 @@
 		891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
+		898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
+		898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
+		898132CF18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */; };
 		899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */; };
 		899B2A9E189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
 		899B2A9F189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
@@ -111,6 +114,10 @@
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
 		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
 		896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
+		898132C918A72264004AEBE9 /* RBReconnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBReconnectViewController.h; sourceTree = "<group>"; };
+		898132CA18A72264004AEBE9 /* RBReconnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBReconnectViewController.m; sourceTree = "<group>"; };
+		898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBReconnectViewControllerSpec.mm; sourceTree = "<group>"; };
+		898132D018A74F19004AEBE9 /* RBConfigurationKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBConfigurationKeys.h; sourceTree = "<group>"; };
 		899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerEditorViewControllerSpec.mm; sourceTree = "<group>"; };
 		899B2A95189913840008FED3 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+string.h"; sourceTree = "<group>"; };
 		899B2A96189913840008FED3 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+string.m"; sourceTree = "<group>"; };
@@ -202,6 +209,7 @@
 			children = (
 				8906F1D918867BEE00042A13 /* RBAppDelegate.h */,
 				8906F1DA18867BEE00042A13 /* RBAppDelegate.m */,
+				898132D018A74F19004AEBE9 /* RBConfigurationKeys.h */,
 				89C46E431895F89A006068DC /* IRC Backend */,
 				89C46E441895F8A2006068DC /* Views and Controllers */,
 				8906F20F188799C000042A13 /* SWRevealViewController */,
@@ -243,6 +251,7 @@
 				891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */,
 				891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */,
 				899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */,
+				898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */,
 				891B01E7189650DA00B2D848 /* Supporting Files */,
 			);
 			path = IRCClientSpecs;
@@ -323,6 +332,8 @@
 				896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */,
 				8906F2031887562600042A13 /* RBChannelViewController.h */,
 				8906F2041887562600042A13 /* RBChannelViewController.m */,
+				898132C918A72264004AEBE9 /* RBReconnectViewController.h */,
+				898132CA18A72264004AEBE9 /* RBReconnectViewController.m */,
 			);
 			name = "Views and Controllers";
 			sourceTree = "<group>";
@@ -452,6 +463,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
@@ -493,7 +505,9 @@
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
 				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
+				898132CF18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm in Sources */,
 				891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */,
+				898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
 				891B01ED189650DA00B2D848 /* main.m in Sources */,
 				899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */,

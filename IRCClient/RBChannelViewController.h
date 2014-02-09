@@ -18,9 +18,6 @@
 
 @property (nonatomic, strong) UITextField *input;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UITextView *textView;
-
-@property (nonatomic) BOOL useText;
 
 @property (nonatomic, copy) NSString *channel;
 

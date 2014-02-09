@@ -50,17 +50,11 @@ static NSString *CellIdentifier = @"Cell";
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(revealButtonPressed:)];
-    
-    if (!self.useText) {
-        self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, width, height-inputHeight)];
-        self.textView.editable = NO;
-        self.textView.font = [UIFont systemFontOfSize:12.0]; // Debug purposes only, of course.
-    } else {
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, height-inputHeight) style:UITableViewStylePlain];
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    }
+
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, height-inputHeight) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     
     self.input = [[UITextField alloc] initWithFrame:CGRectMake(0, height - inputHeight, width, inputHeight)];
     self.input.borderStyle = UITextBorderStyleLine;
@@ -68,11 +62,7 @@ static NSString *CellIdentifier = @"Cell";
     self.input.backgroundColor = [UIColor whiteColor];
     self.input.delegate = self;
     
-    if (self.useText) {
-        [self.view addSubview:self.textView];
-    } else {
-        [self.view addSubview:self.tableView];
-    }
+    [self.view addSubview:self.tableView];
     [self.view addSubview:self.input];
 }
 
@@ -119,7 +109,6 @@ static NSString *CellIdentifier = @"Cell";
         
         self.view.frame = self.originalFrame;
         self.tableView.frame = CGRectMake(0, 0, width, height - inputHeight);
-        self.textView.frame = CGRectMake(0, 0, width, height - inputHeight);
         self.input.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
     }];
 }
@@ -135,7 +124,6 @@ static NSString *CellIdentifier = @"Cell";
         self.view.frame = CGRectMake(0, 0, self.originalFrame.size.width, height);
         
         self.tableView.frame = CGRectMake(0, 0, width, height - inputHeight);
-        self.textView.frame = CGRectMake(0, 0, width, height - inputHeight);
         self.input.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
     }];
 }
@@ -151,6 +139,9 @@ static NSString *CellIdentifier = @"Cell";
     UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     RBIRCMessage *msg = [[self.server[self.channel] log] objectAtIndex:indexPath.row];
     ret.textLabel.text = [NSString stringWithFormat:@"%@: %@", msg.from, msg.message];
+    ret.textLabel.font = [UIFont systemFontOfSize:14];
+    ret.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    ret.textLabel.numberOfLines = 0;
     //ret.textLabel.text = [msg message];
     //ret.detailTextLabel.text = [msg to];
     return ret;
@@ -262,28 +253,24 @@ static NSString *CellIdentifier = @"Cell";
 -(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message
 {
     if ([message.to isEqualToString:self.channel]) {
-        if (self.useText) {
-            self.textView.text = [NSString stringWithFormat:@"%@\n%@", self.textView.text, [message description]];
-        } else {
-            BOOL shouldScroll = NO;
-            NSInteger section = 0;
-            NSInteger row = [self tableView:self.tableView numberOfRowsInSection:0] - 2; // -1 for index, another -1 because we just added to it.
-            
-            for (NSIndexPath *ip in [self.tableView indexPathsForVisibleRows]) {
-                if (ip.section < section)
-                    continue;
-                else if (ip.section > section)
-                    break;
-                if (ip.row == row) {
-                    shouldScroll = YES;
-                    break;
-                }
+        BOOL shouldScroll = NO;
+        NSInteger section = 0;
+        NSInteger row = [self tableView:self.tableView numberOfRowsInSection:0] - 2; // -1 for index, another -1 because we just added to it.
+        
+        for (NSIndexPath *ip in [self.tableView indexPathsForVisibleRows]) {
+            if (ip.section < section)
+                continue;
+            else if (ip.section > section)
+                break;
+            if (ip.row == row) {
+                shouldScroll = YES;
+                break;
             }
-            
-            [self.tableView reloadData];
-            if (shouldScroll) {
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            }
+        }
+        
+        [self.tableView reloadData];
+        if (shouldScroll) {
+            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
     }
 }

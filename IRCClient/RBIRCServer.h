@@ -16,7 +16,7 @@
 
 #import "RBIRCServerDelegate.h"
 
-@interface RBIRCServer : NSObject <NSStreamDelegate>
+@interface RBIRCServer : NSObject <NSStreamDelegate, NSCoding>
 {
     NSInputStream *readStream;
     NSOutputStream *writeStream;
@@ -40,6 +40,8 @@
 @property (nonatomic, strong) NSLock *debugLock;
 @property (nonatomic) BOOL useSSL;
 @property (nonatomic, readonly) BOOL connected;
+
+@property (nonatomic) BOOL connectOnStartup;
 
 -(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname password:(NSString *)password;
 -(void)sendCommand:(NSString *)command;

@@ -1,5 +1,6 @@
 #import "RBServerEditorViewController.h"
 #import "RBIRCServer.h"
+#import "RBConfigurationKeys.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -34,6 +35,23 @@ describe(@"RBServerEditorViewController", ^{
         [subject.cancelButton sendActionsForControlEvents:UIControlEventTouchUpInside];
         
         subject should_not have_received("save");
+    });
+    
+    it(@"should write any changes to standard user defaults", ^{
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
+        server = [[RBIRCServer alloc] initWithHostname:@"localhost"
+                                                   ssl:YES
+                                                  port:@"6697"
+                                                  nick:@"testnick"
+                                              realname:@"testnick"
+                                              password:nil];
+        subject.server = server;
+        [subject view];
+        [subject save];
+        NSArray *a = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+        a should_not be_empty;
+        RBIRCServer *s = [[RBIRCServer alloc] initWithCoder:[NSKeyedUnarchiver unarchiveObjectWithData:a.firstObject]];
+        [server isEqual:s] should be_truthy;
     });
     
     describe(@"when connecting to a new server", ^{

@@ -17,6 +17,7 @@
 @interface RBIRCServer ()
 
 @property (nonatomic, readwrite) BOOL connected;
+@property (nonatomic, strong) NSMutableArray *commandQueue;
 
 @end
 
@@ -52,15 +53,67 @@
     return self;
 }
 
+-(instancetype)initWithCoder:(NSCoder *)decoder
+{
+    if ((self = [super init]) != nil) {
+        self.serverName = [decoder decodeObjectForKey:@"serverName"];
+        self.nick = [decoder decodeObjectForKey:@"nickname"];
+        self.hostname = [decoder decodeObjectForKey:@"hostname"];
+        self.port = [decoder decodeObjectForKey:@"port"];
+        self.useSSL = [decoder decodeBoolForKey:@"useSSL"];
+        self.realname = [decoder decodeObjectForKey:@"realname"];
+        self.password = [decoder decodeObjectForKey:@"password"];
+        
+        self.connectOnStartup = [decoder decodeObjectForKey:@"connectOnStartup"];
+        channels = [decoder decodeObjectForKey:@"channels"];
+        _delegates = [[NSMutableArray alloc] init];
+        
+        self.commandQueue = [[NSMutableArray alloc] init];
+        
+        if (self.connectOnStartup) {
+            [self connect];
+            for (NSString *key in self.channels.allKeys) {
+                if ([key isEqualToString:RBIRCServerLog]) {
+                    continue;
+                }
+                RBIRCChannel *channel = self.channels[key];
+                if (channel.connectOnStartup) {
+                    NSString *s = [NSString stringWithFormat:@"join %@", key];
+                    if ([channel.password hasContent]) {
+                        s = [NSString stringWithFormat:@"%@ %@", s, channel.password];
+                    }
+                    s = [NSString stringWithFormat:@"%@\r\n", s];
+                    [self.commandQueue addObject:s];
+                }
+            }
+        }
+    }
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeObject:self.serverName forKey:@"serverName"];
+    [coder encodeObject:self.nick forKey:@"nickname"];
+    [coder encodeObject:self.hostname forKey:@"hostname"];
+    [coder encodeObject:self.port forKey:@"port"];
+    [coder encodeBool:self.useSSL forKey:@"useSSL"];
+    [coder encodeObject:self.realname forKey:@"realname"];
+    [coder encodeObject:self.password forKey:@"password"];
+    
+    [coder encodeBool:self.connectOnStartup forKey:@"connectOnStartup"];
+    [coder encodeObject:self.channels forKey:@"channels"];
+}
+
 -(void)commonInit
 {
     _delegates = [[NSMutableArray alloc] init];
     channels = [[NSMutableDictionary alloc] init];
     RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
+    serverLog.connectOnStartup = YES;
     [channels setObject:serverLog forKey:RBIRCServerLog];
 }
 
-/*
 -(BOOL)isEqual:(id)object
 {
     if (![object isKindOfClass:[RBIRCServer class]])
@@ -73,11 +126,9 @@
                     if ([self.realname isEqualToString:s.realname])
                         if ([self.password isEqualToString:s.password])
                             if (self.useSSL == s.useSSL)
-                                if (self.connected == s.connected)
-                                    return YES;
+                                return YES;
     return NO;
 }
- */
 
 -(void)sendCommand:(NSString *)command
 {
