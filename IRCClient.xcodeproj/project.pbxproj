@@ -48,6 +48,7 @@
 		898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CF18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */; };
+		898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */; };
 		899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */; };
 		899B2A9E189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
 		899B2A9F189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
@@ -118,6 +119,7 @@
 		898132CA18A72264004AEBE9 /* RBReconnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBReconnectViewController.m; sourceTree = "<group>"; };
 		898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBReconnectViewControllerSpec.mm; sourceTree = "<group>"; };
 		898132D018A74F19004AEBE9 /* RBConfigurationKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBConfigurationKeys.h; sourceTree = "<group>"; };
+		898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCChannelSpec.mm; sourceTree = "<group>"; };
 		899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerEditorViewControllerSpec.mm; sourceTree = "<group>"; };
 		899B2A95189913840008FED3 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+string.h"; sourceTree = "<group>"; };
 		899B2A96189913840008FED3 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+string.m"; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				891B01F0189650DB00B2D848 /* Cedar-iOS.framework */,
 				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
+				898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */,
 				891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */,
 				891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */,
 				899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */,
@@ -498,6 +501,7 @@
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
+				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				899B2A9F189913840008FED3 /* NSData+string.m in Sources */,
 				891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */,

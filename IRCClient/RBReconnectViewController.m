@@ -7,6 +7,9 @@
 //
 
 #import "RBReconnectViewController.h"
+#import "RBConfigurationKeys.h"
+#import "RBIRCServer.h"
+#import "RBIRCChannel.h"
 
 @interface RBReconnectViewController ()
 
@@ -20,7 +23,7 @@ static NSString *CellIdentifier = @"Cell";
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.servers = @{};
+        self.servers = @[];
     }
     return self;
 }
@@ -30,18 +33,25 @@ static NSString *CellIdentifier = @"Cell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    [self reloadServerData];
+}
+
+-(void)reloadServerData
+{
+    NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+    self.servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.servers.allKeys count] + 1;
+    return [self.servers count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.servers.allKeys.count;
+    return [(RBIRCServer*)self.servers[section] channels].allKeys.count; // + 1 for servername, - 1 for server log
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -51,7 +61,36 @@ static NSString *CellIdentifier = @"Cell";
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     
+    RBIRCServer *server = self.servers[section];
+    NSArray *channelKeys = server.channels.allKeys;
+    
+    channelKeys = [channelKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
+        NSString *a = (NSString *)obj1;
+        NSString *b = (NSString *)obj2;
+        
+        if ([a isEqualToString:RBIRCServerLog])
+            return NSOrderedAscending;
+        else if ([b isEqualToString:RBIRCServerLog])
+            return NSOrderedDescending;
+        return [a compare:b];
+    }];
+    
+    NSLog(@"%@", channelKeys);
+    
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectZero];
+    cell.accessoryView = s;
+    [cell layoutSubviews];
+    if (row > 0) {
+        cell.indentationLevel = 1;
+        RBIRCChannel *channel = server.channels[channelKeys[row]];
+        cell.textLabel.text = channel.name;
+        s.on = channel.connectOnStartup;
+    } else {
+        cell.textLabel.text = server.serverName;
+        s.on = server.connectOnStartup;
+    }
     
     return cell;
 }

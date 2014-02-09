@@ -48,9 +48,10 @@ describe(@"RBServerEditorViewController", ^{
         subject.server = server;
         [subject view];
         [subject save];
-        NSArray *a = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+        NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+        NSArray *a = [NSKeyedUnarchiver unarchiveObjectWithData:d];
         a should_not be_empty;
-        RBIRCServer *s = [[RBIRCServer alloc] initWithCoder:[NSKeyedUnarchiver unarchiveObjectWithData:a.firstObject]];
+        RBIRCServer *s = a.firstObject;
         [server isEqual:s] should be_truthy;
     });
     

@@ -18,6 +18,7 @@
         _name = name;
         _log = [[NSMutableArray alloc] init];
         _names = [[NSMutableArray alloc] init];
+        self.connectOnStartup = YES;
     }
     return self;
 }
@@ -31,7 +32,7 @@
         
         self.server = nil;
         self.topic = nil;
-        self.connectOnStartup = [decoder decodeObjectForKey:@"connectOnStartup"];
+        self.connectOnStartup = [decoder decodeBoolForKey:@"connectOnStartup"];
     }
     return self;
 }

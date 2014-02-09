@@ -10,6 +10,6 @@
 
 @interface RBReconnectViewController : UITableViewController
 
-@property (nonatomic, strong) NSDictionary *servers;
+@property (nonatomic, strong) NSArray *servers;
 
 @end

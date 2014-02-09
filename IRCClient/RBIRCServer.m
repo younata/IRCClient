@@ -12,8 +12,6 @@
 #import "NSStream+remoteHost.h"
 #import "NSString+isNilOrEmpty.h"
 
-#define RBIRCServerLog @"ServerLog"
-
 @interface RBIRCServer ()
 
 @property (nonatomic, readwrite) BOOL connected;
@@ -64,7 +62,7 @@
         self.realname = [decoder decodeObjectForKey:@"realname"];
         self.password = [decoder decodeObjectForKey:@"password"];
         
-        self.connectOnStartup = [decoder decodeObjectForKey:@"connectOnStartup"];
+        self.connectOnStartup = [decoder decodeBoolForKey:@"connectOnStartup"];
         channels = [decoder decodeObjectForKey:@"channels"];
         _delegates = [[NSMutableArray alloc] init];
         
@@ -112,6 +110,8 @@
     RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
     serverLog.connectOnStartup = YES;
     [channels setObject:serverLog forKey:RBIRCServerLog];
+    
+    self.connectOnStartup = YES;
 }
 
 -(BOOL)isEqual:(id)object

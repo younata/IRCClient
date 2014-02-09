@@ -30,6 +30,20 @@ describe(@"RBIRCServer", ^{
         subject.delegates.count should be_gte(1);
     });
     
+    it(@"should default to reconnect on startup", ^{
+        subject.connectOnStartup should be_truthy;
+    });
+    
+    it(@"should handle loading from NSUserDefaults correctly", ^{
+        RBIRCServer *server = [[RBIRCServer alloc] initWithHostname:@"testServer" ssl:YES port:@"6697" nick:@"testnick" realname:@"testnick" password:@""];
+        server.nick = @"testnick";
+        server.serverName = @"server";
+        NSData *d = [NSKeyedArchiver archivedDataWithRootObject:server];
+        RBIRCServer *s = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+        [s isEqual:server] should be_truthy;
+        s.connectOnStartup should equal(server.connectOnStartup);
+    });
+    
     it(@"should handle stream events", ^{
         [subject stream:subject.readStream handleEvent:NSStreamEventHasBytesAvailable];
         //subject should have_received("receivedString:").with(msg);
@@ -40,39 +54,6 @@ describe(@"RBIRCServer", ^{
         delegate should have_received("IRCServer:handleMessage:").with(subject).and_with(Arguments::any([RBIRCMessage class]));
         subject.channels.count should be_gte(0);
     });
-    
-    /*
-     // Testing this is annoying.
-     // Just going to do the "hope and pray it works"
-     // Someone better than I should fix this.
-    describe(@"connecting to an actual server", ^{
-        __block NSLock *lock;
-        beforeEach(^{
-            subject.nick = @"TestUser";
-            subject.hostname = @"localhost";
-            subject.realname = @"testuser";
-            subject.password = @"";
-            subject.debugLock = [[NSLock alloc] init];
-            [subject.debugLock lock];
-        });
-        
-        afterEach(^{
-            [lock unlock];
-        });
-        
-        it(@"should connect to a plain-text server", ^{
-            subject.useSSL = NO;
-            subject.port = @"6667";
-            dispatch_queue_t queue = dispatch_queue_create("debugqueue", NULL);
-            dispatch_async(queue, ^{
-                [subject connect];
-            });
-            [subject.debugLock lock];
-            subject.connected should be_truthy;
-            subject.writeStream.streamStatus should equal(NSStreamStatusOpen);
-        });
-    });
-*/
     
     describe(@"sending server commands", ^{
         it(@"should send raw commands", ^{

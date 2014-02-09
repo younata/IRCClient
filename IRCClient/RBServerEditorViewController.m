@@ -8,6 +8,8 @@
 
 #import "RBServerEditorViewController.h"
 
+#import "RBConfigurationKeys.h"
+
 #import "RBIRCServer.h"
 #import "NSString+isNilOrEmpty.h"
 
@@ -95,26 +97,25 @@
                                self.serverPassword]) {
             [c setEnabled:NO];
         }
-        self.serverName.text = self.server.serverName;
-        self.serverHostname.text = self.server.hostname;
-        self.serverPort.text = self.server.port;
         self.serverSSL.on = self.server.useSSL;
-        self.serverNick.text = self.server.nick;
-        self.serverRealName.text = self.server.realname;
-        self.serverPassword.text = self.server.password;
         label.text = @"Edit Server";
     } else {
         [self.saveButton setTitle:@"Connect" forState:UIControlStateNormal];
-        //UIColor *color = [[UIColor darkTextColor] colorWithAlphaComponent:0.7];
-        //self.serverName.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Server Name" attributes:@{NSForegroundColorAttributeName: color}];
-        self.serverName.placeholder = @"ServerName";
-        self.serverHostname.placeholder = @"irc.freenode.net";
-        self.serverPort.placeholder = @"6697";
         self.serverSSL.on = YES;
-        self.serverNick.placeholder = @"username";
-        self.serverRealName.placeholder = @"iOS";
-        self.serverPassword.placeholder = @"****";
     }
+    self.serverName.placeholder = @"ServerName";
+    self.serverHostname.placeholder = @"irc.freenode.net";
+    self.serverPort.placeholder = @"6697";
+    self.serverNick.placeholder = @"username";
+    self.serverRealName.placeholder = @"iOS";
+    self.serverPassword.placeholder = @"****";
+    
+    self.serverName.text = self.server.serverName;
+    self.serverHostname.text = self.server.hostname;
+    self.serverPort.text = self.server.port;
+    self.serverNick.text = self.server.nick;
+    self.serverRealName.text = self.server.realname;
+    self.serverPassword.text = self.server.password;
     
     for (UITextField *tf in @[self.serverName,
                               self.serverHostname,
@@ -123,12 +124,6 @@
                               self.serverRealName,
                               self.serverPassword]) {
         [tf setBorderStyle:UITextBorderStyleLine];
-        /*
-        if (!self.server.connected) {
-            UIColor *color = [[UIColor darkTextColor] colorWithAlphaComponent:0.7];
-            [tf setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:tf.placeholder attributes:@{NSForegroundColorAttributeName: color}]];
-        }
-         */
         [tf setDelegate:self];
     }
     
@@ -165,6 +160,14 @@
 
 - (void)save
 {
+    NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers]];
+    NSMutableArray *marr = [[NSMutableArray alloc] init];
+    for (RBIRCServer *s in arr) {
+        if (![self.server isEqual:s]) {
+            [marr addObject:s];
+        }
+    }
+    
     self.server.serverName = self.serverName.text;
     self.server.nick = self.serverNick.text;
     if (![self.server.nick hasContent]) {
@@ -198,6 +201,11 @@
         
         [self.server connect];
     }
+    
+    [marr addObject:self.server];
+    NSData *d = [NSKeyedArchiver archivedDataWithRootObject:marr];
+    [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+    
     [self dismiss];
 }
 

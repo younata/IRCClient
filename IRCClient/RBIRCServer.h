@@ -10,11 +10,9 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <CFNetwork/CFNetwork.h>
 
-#ifdef DEBUG
-#include <semaphore.h>
-#endif
-
 #import "RBIRCServerDelegate.h"
+
+#define RBIRCServerLog @"ServerLog"
 
 @interface RBIRCServer : NSObject <NSStreamDelegate, NSCoding>
 {

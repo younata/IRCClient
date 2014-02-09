@@ -22,6 +22,10 @@ describe(@"RBReconnectViewController", ^{
         [[NSUserDefaults standardUserDefaults] setObject:Nil forKey:RBConfigServers];
     });
     
+    it(@"should have a tableview", ^{
+        subject.tableView should_not be_nil;
+    });
+    
     describe(@"initial startup, nothing set", ^{
         beforeEach(^{
             [[NSUserDefaults standardUserDefaults] setObject:Nil forKey:RBConfigServers];
@@ -43,8 +47,8 @@ describe(@"RBReconnectViewController", ^{
         static NSString *serverName = @"localhost";
         
         void (^saveServer)(RBIRCServer *) = ^(RBIRCServer *s){
-            NSArray *array = @[[NSKeyedArchiver archivedDataWithRootObject:s]];
-            [[NSUserDefaults standardUserDefaults] setObject:array forKey:RBConfigServers];
+            NSData *d = [NSKeyedArchiver archivedDataWithRootObject:@[s]];
+            [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
         };
         
         beforeEach(^{
@@ -54,22 +58,32 @@ describe(@"RBReconnectViewController", ^{
                                                       nick:@"testnick"
                                                   realname:@"testuser"
                                                   password:nil];
+            server.serverName = serverName;
             saveServer(server);
+        });
+        
+        it(@"should have at least one section and at least one row in the first section", ^{
+            [subject.tableView.dataSource numberOfSectionsInTableView:subject.tableView] should be_gte(1);
+            [subject.tableView.dataSource tableView:subject.tableView numberOfRowsInSection:0] should be_gte(1);
+            server.connectOnStartup should be_truthy;
         });
         
         it(@"should have the first cell in a server's section be the server name", ^{
             [subject view];
-            UITableViewCell *cell = [subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            UITableViewCell *cell = [subject.tableView.dataSource tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            cell should_not be_nil;
             cell.textLabel.text should equal(serverName);
-            [(UISwitch *)cell.accessoryView isOn] should be_truthy;
+            cell.accessoryView should be_instance_of([UISwitch class]);
+            [(UISwitch *)cell.accessoryView isOn] should equal(server.connectOnStartup);
         });
         
         it(@"should have the second and later cells in a server's section be channels in the server", ^{
             [server join:@"#test"];
             saveServer(server);
             [subject view];
-            UITableViewCell *cell = [subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            UITableViewCell *cell = [subject.tableView.dataSource tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
             cell.textLabel.text should equal(@"#test");
+            cell.accessoryView should be_instance_of([UISwitch class]);
             [(UISwitch *)cell.accessoryView isOn] should be_truthy;
         });
     });
