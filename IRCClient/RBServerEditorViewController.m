@@ -79,12 +79,20 @@
     self.serverPassword = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 6 * (h + 20), w, h)];
     self.serverPassword.secureTextEntry = YES;
     
+    self.serverConnectOnStartup = [[UISwitch alloc] initWithFrame:CGRectZero];
+    uiswidth = self.serverConnectOnStartup.frame.size.width;
+    self.serverSSL.frame = CGRectMake(width + (w2 - uiswidth), y + 7 * (h + 20), uiswidth, h);
+    UILabel *connectOnStartupLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 7 * (h + 20), 120, h)];
+    connectOnStartupLabel.text = @"Connect on startup?";
+    connectOnStartupLabel.textAlignment = NSTextAlignmentLeft;
+    [self.scrollView addSubview:connectOnStartupLabel];
+    
     self.saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.saveButton.frame = CGRectMake(width + 10, y + 7 * (h + 20) - 20, 90, 80);
+    self.saveButton.frame = CGRectMake(width + 10, y + 8 * (h + 20) - 20, 90, 80);
     [self.saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.cancelButton.frame = CGRectMake(width - 100, y + 7 * (h + 20) - 20, 90, 80);
+    self.cancelButton.frame = CGRectMake(width - 100, y + 8 * (h + 20) - 20, 90, 80);
     [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
     [self.cancelButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     

@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UITextField *serverNick;
 @property (nonatomic, strong) UITextField *serverRealName;
 @property (nonatomic, strong) UITextField *serverPassword;
+@property (nonatomic, strong) UISwitch *serverConnectOnStartup;
 
 @property (nonatomic, strong) UIButton *saveButton;
 @property (nonatomic, strong) UIButton *cancelButton;

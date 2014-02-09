@@ -34,12 +34,54 @@ static NSString *CellIdentifier = @"Cell";
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self reloadServerData];
+    [self.tableView reloadData];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
 }
 
 -(void)reloadServerData
 {
     NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
-    self.servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+    if (d == nil) {
+        self.servers = @[];
+    } else {
+        self.servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+    }
+}
+
+-(void)save
+{
+    NSData *d;
+    for (UITableViewCell *cell in self.tableView.visibleCells) {
+        NSIndexPath *path = [self.tableView indexPathForCell:cell];
+        UISwitch *s = (UISwitch *)cell.accessoryView;
+        RBIRCServer *server = self.servers[path.section];
+        if (path.row == 0) {
+            [server setConnectOnStartup:[s isOn]];
+        } else {
+            NSString *key = cell.textLabel.text;
+            RBIRCChannel *channel = server.channels[key];
+            [channel setConnectOnStartup:[s isOn]];
+        }
+    }
+    d = [NSKeyedArchiver archivedDataWithRootObject:self.servers];
+    [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(NSArray *)sortChannelKeys:(NSArray *)channelKeys
+{
+    return [channelKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
+        NSString *a = (NSString *)obj1;
+        NSString *b = (NSString *)obj2;
+        
+        if ([a isEqualToString:RBIRCServerLog])
+            return NSOrderedAscending;
+        else if ([b isEqualToString:RBIRCServerLog])
+            return NSOrderedDescending;
+        return [a compare:b];
+    }];
 }
 
 #pragma mark - Table view data source
@@ -64,18 +106,7 @@ static NSString *CellIdentifier = @"Cell";
     RBIRCServer *server = self.servers[section];
     NSArray *channelKeys = server.channels.allKeys;
     
-    channelKeys = [channelKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
-        NSString *a = (NSString *)obj1;
-        NSString *b = (NSString *)obj2;
-        
-        if ([a isEqualToString:RBIRCServerLog])
-            return NSOrderedAscending;
-        else if ([b isEqualToString:RBIRCServerLog])
-            return NSOrderedDescending;
-        return [a compare:b];
-    }];
-    
-    NSLog(@"%@", channelKeys);
+    channelKeys = [self sortChannelKeys:channelKeys];
     
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -95,15 +126,6 @@ static NSString *CellIdentifier = @"Cell";
     return cell;
 }
 
-/*
- - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
- {
- if (section == self.servers.count)
- return @"";
- return [self.servers[section] serverName];
- }
- */
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return (indexPath.section != self.servers.count);
@@ -111,9 +133,6 @@ static NSString *CellIdentifier = @"Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
-
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 

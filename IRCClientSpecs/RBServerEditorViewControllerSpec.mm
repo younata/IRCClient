@@ -24,10 +24,11 @@ describe(@"RBServerEditorViewController", ^{
         [subject.cancelButton titleForState:UIControlStateNormal] should equal(@"Cancel");
     });
     
-    it(@"should enable servername and nick always", ^{
+    it(@"should always enable servername, nick, and connectOnStartup", ^{
         [subject view];
         subject.serverName.enabled should be_truthy;
         subject.serverName.enabled should be_truthy;
+        subject.serverConnectOnStartup.enabled should be_truthy;
     });
     
     it(@"should do nothing on cancel", ^{

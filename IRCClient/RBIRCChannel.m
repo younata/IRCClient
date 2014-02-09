@@ -69,4 +69,9 @@
     [_log addObject:message];
 }
 
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@: connect: %@", self.name, self.connectOnStartup ? @"YES" : @"NO"];
+}
+
 @end

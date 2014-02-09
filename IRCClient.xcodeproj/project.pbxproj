@@ -49,6 +49,13 @@
 		898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CF18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */; };
 		898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */; };
+		898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132D418A787D1004AEBE9 /* RBConfigViewController.m */; };
+		898132D618A787D1004AEBE9 /* RBConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132D418A787D1004AEBE9 /* RBConfigViewController.m */; };
+		898132D918A78980004AEBE9 /* RBConfigViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132D818A78980004AEBE9 /* RBConfigViewControllerSpec.mm */; };
+		898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132E018A78ABC004AEBE9 /* UIButton+buttonWithFrame.m */; };
+		898132E218A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132E018A78ABC004AEBE9 /* UIButton+buttonWithFrame.m */; };
+		898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132E418A78B10004AEBE9 /* NSString+contains.m */; };
+		898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132E418A78B10004AEBE9 /* NSString+contains.m */; };
 		899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */; };
 		899B2A9E189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
 		899B2A9F189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
@@ -120,6 +127,13 @@
 		898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBReconnectViewControllerSpec.mm; sourceTree = "<group>"; };
 		898132D018A74F19004AEBE9 /* RBConfigurationKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBConfigurationKeys.h; sourceTree = "<group>"; };
 		898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCChannelSpec.mm; sourceTree = "<group>"; };
+		898132D318A787D1004AEBE9 /* RBConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBConfigViewController.h; sourceTree = "<group>"; };
+		898132D418A787D1004AEBE9 /* RBConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBConfigViewController.m; sourceTree = "<group>"; };
+		898132D818A78980004AEBE9 /* RBConfigViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBConfigViewControllerSpec.mm; sourceTree = "<group>"; };
+		898132DF18A78ABC004AEBE9 /* UIButton+buttonWithFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+buttonWithFrame.h"; sourceTree = "<group>"; };
+		898132E018A78ABC004AEBE9 /* UIButton+buttonWithFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+buttonWithFrame.m"; sourceTree = "<group>"; };
+		898132E318A78B10004AEBE9 /* NSString+contains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+contains.h"; sourceTree = "<group>"; };
+		898132E418A78B10004AEBE9 /* NSString+contains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+contains.m"; sourceTree = "<group>"; };
 		899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerEditorViewControllerSpec.mm; sourceTree = "<group>"; };
 		899B2A95189913840008FED3 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+string.h"; sourceTree = "<group>"; };
 		899B2A96189913840008FED3 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+string.m"; sourceTree = "<group>"; };
@@ -255,6 +269,7 @@
 				891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */,
 				899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */,
 				898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */,
+				898132D818A78980004AEBE9 /* RBConfigViewControllerSpec.mm */,
 				891B01E7189650DA00B2D848 /* Supporting Files */,
 			);
 			path = IRCClientSpecs;
@@ -271,9 +286,30 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		898132D718A787E9004AEBE9 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				898132D318A787D1004AEBE9 /* RBConfigViewController.h */,
+				898132D418A787D1004AEBE9 /* RBConfigViewController.m */,
+				898132C918A72264004AEBE9 /* RBReconnectViewController.h */,
+				898132CA18A72264004AEBE9 /* RBReconnectViewController.m */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		898132DE18A78ABC004AEBE9 /* UIButton */ = {
+			isa = PBXGroup;
+			children = (
+				898132DF18A78ABC004AEBE9 /* UIButton+buttonWithFrame.h */,
+				898132E018A78ABC004AEBE9 /* UIButton+buttonWithFrame.m */,
+			);
+			path = UIButton;
+			sourceTree = "<group>";
+		};
 		899B2A93189913840008FED3 /* RBCategories */ = {
 			isa = PBXGroup;
 			children = (
+				898132DE18A78ABC004AEBE9 /* UIButton */,
 				899B2A94189913840008FED3 /* NSData */,
 				899B2A97189913840008FED3 /* NSStream */,
 				899B2A9A189913840008FED3 /* NSString */,
@@ -303,6 +339,8 @@
 		899B2A9A189913840008FED3 /* NSString */ = {
 			isa = PBXGroup;
 			children = (
+				898132E318A78B10004AEBE9 /* NSString+contains.h */,
+				898132E418A78B10004AEBE9 /* NSString+contains.m */,
 				899B2A9B189913840008FED3 /* NSString+isNilOrEmpty.h */,
 				899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */,
 			);
@@ -335,8 +373,7 @@
 				896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */,
 				8906F2031887562600042A13 /* RBChannelViewController.h */,
 				8906F2041887562600042A13 /* RBChannelViewController.m */,
-				898132C918A72264004AEBE9 /* RBReconnectViewController.h */,
-				898132CA18A72264004AEBE9 /* RBReconnectViewController.m */,
+				898132D718A787E9004AEBE9 /* Config */,
 			);
 			name = "Views and Controllers";
 			sourceTree = "<group>";
@@ -466,7 +503,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
+				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
+				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
@@ -497,6 +537,7 @@
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
+				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
@@ -514,6 +555,9 @@
 				898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
 				891B01ED189650DA00B2D848 /* main.m in Sources */,
 				899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */,
+				898132D618A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
+				898132D918A78980004AEBE9 /* RBConfigViewControllerSpec.mm in Sources */,
+				898132E218A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

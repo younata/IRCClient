@@ -12,4 +12,7 @@
 
 @property (nonatomic, strong) NSArray *servers;
 
+-(void)reloadServerData;
+-(void)save;
+
 @end

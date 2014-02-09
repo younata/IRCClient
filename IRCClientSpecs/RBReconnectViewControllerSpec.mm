@@ -1,6 +1,7 @@
 #import "RBReconnectViewController.h"
 #import "RBConfigurationKeys.h"
 #import "RBIRCServer.h"
+#import "RBIRCChannel.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -85,6 +86,22 @@ describe(@"RBReconnectViewController", ^{
             cell.textLabel.text should equal(@"#test");
             cell.accessoryView should be_instance_of([UISwitch class]);
             [(UISwitch *)cell.accessoryView isOn] should be_truthy;
+        });
+        
+        it(@"should save changes", ^{
+            [server join:@"#test"];
+            saveServer(server);
+            [subject view];
+            for (UITableViewCell *cell in subject.tableView.visibleCells) {
+                if ([cell.textLabel.text isEqualToString:@"#test"]) {
+                    [(UISwitch *)cell.accessoryView setOn:NO];
+                }
+            }
+            [subject save];
+            NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+            NSArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+            RBIRCServer *s = servers.firstObject;
+            [(RBIRCChannel *)s.channels[@"#test"] connectOnStartup] should be_falsy;
         });
     });
 });
