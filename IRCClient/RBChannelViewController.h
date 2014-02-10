@@ -14,10 +14,14 @@
 @class RBServerViewController;
 @class SWRevealViewController;
 
-@interface RBChannelViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RBIRCServerDelegate, RBServerVCDelegate>
+@interface RBChannelViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RBIRCServerDelegate, RBServerVCDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) UITextField *input;
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) UIButton *inputCommands;
+
+@property (nonatomic, strong) UIActionSheet *actionSheet;
 
 @property (nonatomic, copy) NSString *channel;
 

@@ -3,6 +3,8 @@
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
 
+#import "UIActionSheet+allButtonTitles.h"
+
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
@@ -35,6 +37,43 @@ describe(@"RBChannelViewController", ^{
     });
     
     describe(@"text input", ^{
+        describe(@"easily input commands", ^{
+            beforeEach(^{
+                // UIActionSheets have exceptions with this... :/
+                @try {
+                    [subject.inputCommands sendActionsForControlEvents:UIControlEventTouchUpInside];
+                } @catch (NSException *e) {
+                    ; // nope
+                }
+            });
+            
+            it(@"should have a button which brings up a menu for possible commands", ^{
+                // I actually don't think this will ever actually show..
+                subject.actionSheet should_not be_nil;
+            });
+            
+            it(@"should have a button for most of the commands listed in IRCMessageType", ^{
+                NSArray *arr = [subject.actionSheet allButtonTitles];
+                for (NSString *str in @[@"notice", @"mode", @"kick", @"topic", @"nick", @"quit"]) {
+                    arr should contain(str);
+                }
+            });
+            
+            it(@"should prepend text to the input field when a button is pressed", ^{
+                NSString *str = [subject.actionSheet buttonTitleAtIndex:1];
+                [subject.actionSheet.delegate actionSheet:subject.actionSheet didDismissWithButtonIndex:1];
+                
+                [subject.input.text hasPrefix:[NSString stringWithFormat:@"/%@", str]] should be_truthy;
+            });
+            
+            it(@"should not prepend text if cancel is pressed", ^{
+                [subject.actionSheet.delegate actionSheet:subject.actionSheet didDismissWithButtonIndex:subject.actionSheet.cancelButtonIndex];
+                
+                subject.input.text.length should equal(0);
+            });
+            
+        });
+        
         it(@"should nick", ^{
             subject.input.text = @"/nick";
             [subject textFieldShouldReturn:subject.input];

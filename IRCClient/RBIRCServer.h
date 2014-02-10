@@ -19,7 +19,6 @@
     NSInputStream *readStream;
     NSOutputStream *writeStream;
     
-    NSMutableArray *commandQueue;
     void (^onConnect)(void);
 }
 

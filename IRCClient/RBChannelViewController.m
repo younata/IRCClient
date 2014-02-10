@@ -7,6 +7,9 @@
 //
 
 #import "RBChannelViewController.h"
+
+#import "UIButton+buttonWithFrame.h"
+
 #import "RBIRCServer.h"
 #import "RBIRCChannel.h"
 #import "RBIRCMessage.h"
@@ -15,6 +18,7 @@
 
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
+@property (nonatomic, strong) UIView *borderView;
 
 @end
 
@@ -65,14 +69,28 @@ static NSString *CellIdentifier = @"Cell";
     self.tableView.dataSource = self;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     
-    self.input = [[UITextField alloc] initWithFrame:CGRectMake(0, height - inputHeight, width, inputHeight)];
-    self.input.borderStyle = UITextBorderStyleLine;
+    // bunch of view shit to make the interface look not-shit.
+    self.borderView = [[UIView alloc] initWithFrame:CGRectMake(0, height - inputHeight, width, inputHeight)];
+    self.borderView.backgroundColor = [UIColor blackColor];
+    UIView *inputView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, width, inputHeight - 1)];
+    inputView.backgroundColor = [UIColor whiteColor];
+    [self.borderView addSubview:inputView];
+    
+    self.input = [[UITextField alloc] initWithFrame:CGRectMake(4, 0, width - 28, inputHeight - 1)];
+    self.input.placeholder = @"Message";
     self.input.returnKeyType = UIReturnKeySend;
     self.input.backgroundColor = [UIColor whiteColor];
     self.input.delegate = self;
     
+    self.inputCommands = [UIButton systemButtonWithFrame:CGRectMake(width - 24, 0, 20, inputHeight - 1)];
+    [self.inputCommands setTitle:@"+" forState:UIControlStateNormal];
+    self.inputCommands.titleLabel.font = [UIFont systemFontOfSize:20];
+    [self.inputCommands addTarget:self action:@selector(showInputCommands) forControlEvents:UIControlEventTouchUpInside];
+    [inputView addSubview:self.inputCommands];
+    [inputView addSubview:self.input];
+    
     [self.view addSubview:self.tableView];
-    [self.view addSubview:self.input];
+    [self.view addSubview:self.borderView];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -86,6 +104,22 @@ static NSString *CellIdentifier = @"Cell";
 {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)showInputCommands
+{
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:@"Commands"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:nil];
+    self.actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
+    
+    for (NSString *str in @[@"notice", @"mode", @"kick", @"topic", @"nick", @"quit"]) {
+        [self.actionSheet addButtonWithTitle:str];
+    }
+    
+    [self.actionSheet showFromRect:self.inputCommands.frame inView:self.view animated:YES];
 }
 
 -(void)revealButtonPressed:(id)sender
@@ -122,7 +156,7 @@ static NSString *CellIdentifier = @"Cell";
         
         self.view.frame = self.originalFrame;
         self.tableView.frame = CGRectMake(0, 0, width, height - inputHeight);
-        self.input.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
+        self.borderView.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
     }];
 }
 
@@ -137,7 +171,7 @@ static NSString *CellIdentifier = @"Cell";
         self.view.frame = CGRectMake(0, 0, self.originalFrame.size.width, height);
         
         self.tableView.frame = CGRectMake(0, 0, width, height - inputHeight);
-        self.input.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
+        self.borderView.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
     }];
 }
 
@@ -286,6 +320,18 @@ static NSString *CellIdentifier = @"Cell";
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
     }
+}
+
+#pragma mark - UIActionSheetDelegate
+
+-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if ([actionSheet cancelButtonIndex] == buttonIndex)
+        return;
+    NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    NSString *str = [NSString stringWithFormat:@"/%@ ", title];
+    
+    self.input.text = [str stringByAppendingString:self.input.text];
 }
 
 @end
