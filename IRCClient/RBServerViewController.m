@@ -159,6 +159,7 @@ static NSString *textFieldCell = @"textFieldCell";
             RBIRCServer *server = cell.data;
             [server join:textField.text];
             [self.delegate server:server didChangeChannel:server[textField.text]];
+            [self.tableView reloadData];
         }
     }
     return YES;

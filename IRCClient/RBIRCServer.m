@@ -11,11 +11,13 @@
 #import "RBIRCChannel.h"
 #import "NSStream+remoteHost.h"
 #import "NSString+isNilOrEmpty.h"
+#import "NSString+contains.h"
 
 @interface RBIRCServer ()
 
 @property (nonatomic, readwrite) BOOL connected;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
+@property (nonatomic, strong) NSMutableString *incompleteMessages;
 
 @end
 
@@ -68,6 +70,8 @@
         
         self.commandQueue = [[NSMutableArray alloc] init];
         
+        self.incompleteMessages = [[NSMutableString alloc] init];
+        
         if (self.connectOnStartup) {
             [self connect];
             for (NSString *key in self.channels.allKeys) {
@@ -110,6 +114,7 @@
     RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
     serverLog.connectOnStartup = YES;
     [channels setObject:serverLog forKey:RBIRCServerLog];
+    self.incompleteMessages = [[NSMutableString alloc] init];
     
     self.connectOnStartup = YES;
 }
@@ -212,8 +217,8 @@
 
 -(void)receivedString:(NSString *)str
 {
-    printf("%s\n", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
-    if ([str hasPrefix:@"PING"]) { // quickly handle pings.
+    //printf("%s\n", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
+    if ([str containsSubstring:@"PING"]) { // quickly handle pings.
         [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
     } else {
         RBIRCMessage *msg;
@@ -227,7 +232,7 @@
         if (!msg)
             return;
         RBIRCChannel *ch;
-        if (![[msg to] hasContent] || [[msg to] isEqualToString:@"*"]) {
+        if (![[msg to] hasContent] || [[msg to] isEqualToString:@"*"] || [[msg to] isEqualToString:self.nick]) {
             ch = [channels objectForKey:RBIRCServerLog];
             msg.message = msg.rawMessage;
             msg.to = RBIRCServerLog;
@@ -430,8 +435,15 @@
             signed long numBytesRead = [(NSInputStream *)aStream read:buffer maxLength:512];
                 if (numBytesRead > 0) {
                     NSString *str = [NSString stringWithUTF8String:(const char *)buffer];
-                    if (str != nil) {
-                        [self receivedString:str];
+                    if ([str hasContent]) {
+                        NSLog(@"%@", str);
+                        [self.incompleteMessages appendString:str];
+                        while ([self.incompleteMessages containsSubstring:@"\r\n"]) {
+                            NSRange range = [self.incompleteMessages rangeOfString:@"\r\n"];
+                            str = [self.incompleteMessages substringToIndex:range.location + 2];
+                            [self.incompleteMessages deleteCharactersInRange:[self.incompleteMessages rangeOfString:str]];
+                            [self receivedString:str];
+                        }
                     }
                 } else if (numBytesRead < 0) {
                     for (id<RBIRCServerDelegate>del in self.delegates) {

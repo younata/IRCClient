@@ -189,9 +189,30 @@ static NSString *CellIdentifier = @"Cell";
     ret.textLabel.font = [UIFont systemFontOfSize:14];
     ret.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     ret.textLabel.numberOfLines = 0;
+    [ret layoutSubviews];
     //ret.textLabel.text = [msg message];
     //ret.detailTextLabel.text = [msg to];
     return ret;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
+    label.numberOfLines = 0;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    if (indexPath.row >= [self.server[self.channel] log].count) {
+        return 40.0;
+    }
+    RBIRCMessage *msg = [[self.server[self.channel] log] objectAtIndex:indexPath.row];
+    label.text = [NSString stringWithFormat:@"%@: %@", msg.from, msg.message];
+    CGSize requiredSize = [label.text sizeWithFont:label.font constrainedToSize:label.frame.size lineBreakMode:label.lineBreakMode]; // deprecated but fuck it.
+    
+    return requiredSize.height;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40.0;
 }
 
 #pragma mark - RBServerVCDelegate
