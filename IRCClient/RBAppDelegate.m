@@ -11,6 +11,8 @@
 #import "RBServerViewController.h"
 #import "RBChannelViewController.h"
 
+#import "RBConfigurationKeys.h"
+
 @interface RBAppDelegate ()<SWRevealViewControllerDelegate>
 @end
 
@@ -31,13 +33,14 @@
     
     SWRevealViewController *viewController = [[SWRevealViewController alloc] initWithRearViewController:serverVC
                                                                                     frontViewController:nc];
-    //viewController.delegate = self;
-    
-    //[channelVC.view addGestureRecognizer:[viewController panGestureRecognizer]];
-    //[channelVC.view addGestureRecognizer:[viewController tapGestureRecognizer]];
     
     [serverVC setRevealController:viewController];
     [channelVC setRevealController:viewController];
+    
+    NSData *serverData = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+    if (serverData) {
+        serverVC.servers = [NSKeyedUnarchiver unarchiveObjectWithData:serverData];
+    }
     
     self.window.rootViewController = viewController;
     

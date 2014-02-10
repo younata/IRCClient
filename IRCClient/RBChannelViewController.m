@@ -11,6 +11,7 @@
 #import "RBIRCChannel.h"
 #import "RBIRCMessage.h"
 #import "SWRevealViewController.h"
+#import "RBConfigViewController.h"
 
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
@@ -50,6 +51,14 @@ static NSString *CellIdentifier = @"Cell";
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(revealButtonPressed:)];
+    
+    
+    //self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings"
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self
+                                                                             action:@selector(showSettings)];
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, height-inputHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -79,16 +88,20 @@ static NSString *CellIdentifier = @"Cell";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 -(void)revealButtonPressed:(id)sender
 {
     [self.input resignFirstResponder];
     [self.revealController revealToggle:sender];
+}
+
+-(void)showSettings
+{
+    [self.input resignFirstResponder];
+    
+    RBConfigViewController *cvc = [[RBConfigViewController alloc] init];
+    
+    UINavigationController *newNC = [[UINavigationController alloc] initWithRootViewController:cvc];
+    [self presentViewController:newNC animated:YES completion:nil];
 }
 
 -(NSInteger)getKeyboardHeight:(NSNotification *)notification

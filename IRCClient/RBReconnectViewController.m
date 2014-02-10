@@ -36,6 +36,8 @@ static NSString *CellIdentifier = @"Cell";
     [self reloadServerData];
     [self.tableView reloadData];
     
+    self.navigationItem.title = @"Connect on Startup";
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
 }
 

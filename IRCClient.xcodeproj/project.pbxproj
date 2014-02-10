@@ -56,6 +56,7 @@
 		898132E218A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132E018A78ABC004AEBE9 /* UIButton+buttonWithFrame.m */; };
 		898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132E418A78B10004AEBE9 /* NSString+contains.m */; };
 		898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132E418A78B10004AEBE9 /* NSString+contains.m */; };
+		898132E818A86E0C004AEBE9 /* RBAppDelegateSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */; };
 		899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */; };
 		899B2A9E189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
 		899B2A9F189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
@@ -134,6 +135,7 @@
 		898132E018A78ABC004AEBE9 /* UIButton+buttonWithFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+buttonWithFrame.m"; sourceTree = "<group>"; };
 		898132E318A78B10004AEBE9 /* NSString+contains.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+contains.h"; sourceTree = "<group>"; };
 		898132E418A78B10004AEBE9 /* NSString+contains.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+contains.m"; sourceTree = "<group>"; };
+		898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBAppDelegateSpec.mm; sourceTree = "<group>"; };
 		899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerEditorViewControllerSpec.mm; sourceTree = "<group>"; };
 		899B2A95189913840008FED3 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+string.h"; sourceTree = "<group>"; };
 		899B2A96189913840008FED3 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+string.m"; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			children = (
 				891B01EF189650DA00B2D848 /* Rakefile */,
 				891B01F0189650DB00B2D848 /* Cedar-iOS.framework */,
+				898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */,
 				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */,
@@ -545,6 +548,7 @@
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				899B2A9F189913840008FED3 /* NSData+string.m in Sources */,
+				898132E818A86E0C004AEBE9 /* RBAppDelegateSpec.mm in Sources */,
 				891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */,
 				891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */,
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,

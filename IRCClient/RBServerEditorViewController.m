@@ -54,45 +54,48 @@
     
     CGFloat w2 = w / 2;
     
-    CGFloat y = 100;
+    CGFloat y = 80;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, 40, w, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, 20, w, 40)];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = @"New Server";
+    if ([self.server.serverName hasContent]) {
+        label.text = @"Edit Server";
+    }
     [self.scrollView addSubview:label];
     
     self.serverName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y, w, h)];
-    self.serverHostname = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + (h + 20), w, h)];
-    self.serverPort = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 2 * (h + 20), w, h)];
+    self.serverHostname = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + (h + 10), w, h)];
+    self.serverPort = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 2 * (h + 10), w, h)];
     
-    UILabel *sslLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 3 * (h + 20), 120, h)];
+    UILabel *sslLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 3 * (h + 10), 120, h)];
     sslLabel.text = @"Use SSL?";
     sslLabel.textAlignment = NSTextAlignmentLeft;
     [self.scrollView addSubview:sslLabel];
     
     self.serverSSL = [[UISwitch alloc] initWithFrame:CGRectZero];
     CGFloat uiswidth = self.serverSSL.frame.size.width;
-    self.serverSSL.frame = CGRectMake(width + (w2 - uiswidth), y + 3 * (h + 20), uiswidth, h);
+    self.serverSSL.frame = CGRectMake(width + (w2 - uiswidth), y + 3 * (h + 10), uiswidth, h);
     
-    self.serverNick = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 4 * (h + 20), w, h)];
-    self.serverRealName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 5 * (h + 20), w, h)];
-    self.serverPassword = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 6 * (h + 20), w, h)];
+    self.serverNick = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 4 * (h + 10), w, h)];
+    self.serverRealName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 5 * (h + 10), w, h)];
+    self.serverPassword = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 6 * (h + 10), w, h)];
     self.serverPassword.secureTextEntry = YES;
     
     self.serverConnectOnStartup = [[UISwitch alloc] initWithFrame:CGRectZero];
-    uiswidth = self.serverConnectOnStartup.frame.size.width;
-    self.serverSSL.frame = CGRectMake(width + (w2 - uiswidth), y + 7 * (h + 20), uiswidth, h);
-    UILabel *connectOnStartupLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 7 * (h + 20), 120, h)];
+    self.serverConnectOnStartup.frame = CGRectMake(width + (w2 - uiswidth), y + 7 * (h + 10), uiswidth, h);
+    self.serverConnectOnStartup.on = YES;
+    UILabel *connectOnStartupLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 7 * (h + 10), 160, h)];
     connectOnStartupLabel.text = @"Connect on startup?";
     connectOnStartupLabel.textAlignment = NSTextAlignmentLeft;
     [self.scrollView addSubview:connectOnStartupLabel];
     
     self.saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.saveButton.frame = CGRectMake(width + 10, y + 8 * (h + 20) - 20, 90, 80);
+    self.saveButton.frame = CGRectMake(width + 10, y + 8 * (h + 10) - 20, 90, 80);
     [self.saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.cancelButton.frame = CGRectMake(width - 100, y + 8 * (h + 20) - 20, 90, 80);
+    self.cancelButton.frame = CGRectMake(width - 100, y + 8 * (h + 10) - 20, 90, 80);
     [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
     [self.cancelButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
@@ -142,6 +145,7 @@
                         self.serverNick,
                         self.serverRealName,
                         self.serverPassword,
+                        self.serverConnectOnStartup,
                         self.saveButton,
                         self.cancelButton]) {
         [self.scrollView addSubview:v];

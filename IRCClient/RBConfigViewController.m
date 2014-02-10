@@ -36,7 +36,10 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
     
-    self.reconnectButton = [UIButton systemButtonWithFrame:CGRectZero];
+    CGFloat width = self.view.frame.size.width;
+    
+    self.reconnectButton = [UIButton systemButtonWithFrame:CGRectMake(0, 80, width, 40)];
+    self.reconnectButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.reconnectButton setTitle:@"Connect on Startup" forState:UIControlStateNormal];
     [self.reconnectButton addTarget:self action:@selector(pushReconnect) forControlEvents:UIControlEventTouchUpInside];
     
