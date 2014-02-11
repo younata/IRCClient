@@ -71,7 +71,7 @@ static NSString *textFieldCell = @"textFieldCell";
     }
     
     if (section == [self.servers count]) {
-        cell.textLabel.text = @"New Server";
+        cell.textLabel.text = NSLocalizedString(@"New Server", nil);
     } else {
         RBIRCServer *server = self.servers[section];
         NSArray *channels = [server.channels allKeys];
@@ -81,7 +81,7 @@ static NSString *textFieldCell = @"textFieldCell";
             cell.textLabel.text = server.serverName;
         } else {
             RBTextFieldServerCell *c = (RBTextFieldServerCell *)cell;
-            c.textField.placeholder = @"Join a channel";
+            c.textField.placeholder = NSLocalizedString(@"Join a channel", nil);
             c.data = server;
             c.textField.delegate = self;
         }

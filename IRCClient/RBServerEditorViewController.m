@@ -58,9 +58,9 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, 20, w, 40)];
     label.textAlignment = NSTextAlignmentCenter;
-    label.text = @"New Server";
+    label.text = NSLocalizedString(@"New Server", nil);
     if ([self.server.serverName hasContent]) {
-        label.text = @"Edit Server";
+        label.text = NSLocalizedString(@"Edit Server", nil);
     }
     [self.scrollView addSubview:label];
     
@@ -69,7 +69,7 @@
     self.serverPort = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 2 * (h + 10), w, h)];
     
     UILabel *sslLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 3 * (h + 10), 120, h)];
-    sslLabel.text = @"Use SSL?";
+    sslLabel.text = NSLocalizedString(@"Use SSL?", nil);
     sslLabel.textAlignment = NSTextAlignmentLeft;
     [self.scrollView addSubview:sslLabel];
     
@@ -86,7 +86,7 @@
     self.serverConnectOnStartup.frame = CGRectMake(width + (w2 - uiswidth), y + 7 * (h + 10), uiswidth, h);
     self.serverConnectOnStartup.on = YES;
     UILabel *connectOnStartupLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 7 * (h + 10), 160, h)];
-    connectOnStartupLabel.text = @"Connect on startup?";
+    connectOnStartupLabel.text = NSLocalizedString(@"Connect on startup?", nil);
     connectOnStartupLabel.textAlignment = NSTextAlignmentLeft;
     [self.scrollView addSubview:connectOnStartupLabel];
     
@@ -96,11 +96,11 @@
     
     self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
     self.cancelButton.frame = CGRectMake(width - 100, y + 8 * (h + 10) - 20, 90, 80);
-    [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    [self.cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
     [self.cancelButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     
     if (self.server.connected) {
-        [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
+        [self.saveButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
         for (UIControl *c in @[self.serverHostname,
                                self.serverPort,
                                self.serverSSL,
@@ -109,15 +109,14 @@
             [c setEnabled:NO];
         }
         self.serverSSL.on = self.server.useSSL;
-        label.text = @"Edit Server";
     } else {
-        [self.saveButton setTitle:@"Connect" forState:UIControlStateNormal];
+        [self.saveButton setTitle:NSLocalizedString(@"Connect", nil) forState:UIControlStateNormal];
         self.serverSSL.on = YES;
     }
-    self.serverName.placeholder = @"ServerName";
+    self.serverName.placeholder = NSLocalizedString(@"ServerName", nil);
     self.serverHostname.placeholder = @"irc.freenode.net";
     self.serverPort.placeholder = @"6697";
-    self.serverNick.placeholder = @"username";
+    self.serverNick.placeholder = NSLocalizedString(@"username", nil);
     self.serverRealName.placeholder = @"iOS";
     self.serverPassword.placeholder = @"****";
     
@@ -183,7 +182,7 @@
     self.server.serverName = self.serverName.text;
     self.server.nick = self.serverNick.text;
     if (![self.server.nick hasContent]) {
-        self.serverNick.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"A username is required" attributes:@{NSForegroundColorAttributeName: [UIColor redColor]}];
+        self.serverNick.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"A username is required", nil) attributes:@{NSForegroundColorAttributeName: [UIColor redColor]}];
         return; // need a nick.
     }
     

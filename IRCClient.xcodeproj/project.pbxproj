@@ -59,6 +59,8 @@
 		898132E818A86E0C004AEBE9 /* RBAppDelegateSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */; };
 		898132F218A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132ED18A89085004AEBE9 /* UIActionSheet+allButtonTitles.m */; };
 		898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132ED18A89085004AEBE9 /* UIActionSheet+allButtonTitles.m */; };
+		898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 898132F518A99EDF004AEBE9 /* Localizable.strings */; };
+		898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 898132F518A99EDF004AEBE9 /* Localizable.strings */; };
 		899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */; };
 		899B2A9E189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
 		899B2A9F189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
@@ -140,6 +142,7 @@
 		898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBAppDelegateSpec.mm; sourceTree = "<group>"; };
 		898132EC18A89085004AEBE9 /* UIActionSheet+allButtonTitles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+allButtonTitles.h"; sourceTree = "<group>"; };
 		898132ED18A89085004AEBE9 /* UIActionSheet+allButtonTitles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+allButtonTitles.m"; sourceTree = "<group>"; };
+		898132F618A99EDF004AEBE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerEditorViewControllerSpec.mm; sourceTree = "<group>"; };
 		899B2A95189913840008FED3 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+string.h"; sourceTree = "<group>"; };
 		899B2A96189913840008FED3 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+string.m"; sourceTree = "<group>"; };
@@ -244,6 +247,7 @@
 		8906F1D118867BEE00042A13 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				898132F418A99EDF004AEBE9 /* en.lproj */,
 				8906F1D218867BEE00042A13 /* IRCClient-Info.plist */,
 				8906F1D318867BEE00042A13 /* InfoPlist.strings */,
 				8906F1D618867BEE00042A13 /* main.m */,
@@ -320,6 +324,15 @@
 				898132ED18A89085004AEBE9 /* UIActionSheet+allButtonTitles.m */,
 			);
 			path = UIActionSheet;
+			sourceTree = "<group>";
+		};
+		898132F418A99EDF004AEBE9 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				898132F518A99EDF004AEBE9 /* Localizable.strings */,
+			);
+			name = en.lproj;
+			path = ../en.lproj;
 			sourceTree = "<group>";
 		};
 		899B2A93189913840008FED3 /* RBCategories */ = {
@@ -490,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */,
+				898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				8906F1D518867BEE00042A13 /* InfoPlist.strings in Resources */,
 				899B2AA4189913840008FED3 /* README.md in Resources */,
 				8906F1DD18867BEE00042A13 /* Images.xcassets in Resources */,
@@ -509,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				899B2AA5189913840008FED3 /* README.md in Resources */,
+				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,6 +622,14 @@
 				891B01EA189650DA00B2D848 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		898132F518A99EDF004AEBE9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				898132F618A99EDF004AEBE9 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

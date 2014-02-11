@@ -32,15 +32,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.navigationItem.title = @"Configure";
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    self.navigationItem.title = NSLocalizedString(@"Configure", nil);
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", nil) style:UIBarButtonItemStylePlain target:self action:@selector(save)];
     
     CGFloat width = self.view.frame.size.width;
     
     self.reconnectButton = [UIButton systemButtonWithFrame:CGRectMake(0, 80, width, 40)];
     self.reconnectButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [self.reconnectButton setTitle:@"Connect on Startup" forState:UIControlStateNormal];
+    [self.reconnectButton setTitle:NSLocalizedString(@"Connect on Startup", nil) forState:UIControlStateNormal];
     [self.reconnectButton addTarget:self action:@selector(pushReconnect) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:self.reconnectButton];

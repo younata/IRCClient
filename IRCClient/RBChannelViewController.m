@@ -59,7 +59,7 @@ static NSString *CellIdentifier = @"Cell";
     
     //self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings"
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Settings", nil)
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(showSettings)];
@@ -77,7 +77,7 @@ static NSString *CellIdentifier = @"Cell";
     [self.borderView addSubview:inputView];
     
     self.input = [[UITextField alloc] initWithFrame:CGRectMake(4, 0, width - 28, inputHeight - 1)];
-    self.input.placeholder = @"Message";
+    self.input.placeholder = NSLocalizedString(@"Message", nil);
     self.input.returnKeyType = UIReturnKeySend;
     self.input.backgroundColor = [UIColor whiteColor];
     self.input.delegate = self;
@@ -108,9 +108,9 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)showInputCommands
 {
-    self.actionSheet = [[UIActionSheet alloc] initWithTitle:@"Commands"
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Commands", nil)
                                                    delegate:self
-                                          cancelButtonTitle:@"Cancel"
+                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                      destructiveButtonTitle:nil
                                           otherButtonTitles:nil];
     self.actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
@@ -175,6 +175,19 @@ static NSString *CellIdentifier = @"Cell";
     }];
 }
 
+-(NSAttributedString *)attributedStringForIndex:(NSInteger)index
+{
+    if ([self.server[self.channel] log].count <= index)
+        return nil;
+    RBIRCMessage *msg = [[self.server[self.channel] log] objectAtIndex:index];
+    NSString *str = [NSString stringWithFormat:@"%@: %@", msg.from, msg.message];
+    if ([self.channel isEqualToString:RBIRCServerLog]) {
+        str = msg.message;
+    }
+    NSAttributedString *text = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    return text;
+}
+
 #pragma mark - UITableViewDataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -184,9 +197,7 @@ static NSString *CellIdentifier = @"Cell";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    RBIRCMessage *msg = [[self.server[self.channel] log] objectAtIndex:indexPath.row];
-    ret.textLabel.text = [NSString stringWithFormat:@"%@: %@", msg.from, msg.message];
-    ret.textLabel.font = [UIFont systemFontOfSize:14];
+    ret.textLabel.attributedText = [self attributedStringForIndex:indexPath.row];
     ret.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     ret.textLabel.numberOfLines = 0;
     [ret layoutSubviews];
@@ -197,22 +208,17 @@ static NSString *CellIdentifier = @"Cell";
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
     if (indexPath.row >= [self.server[self.channel] log].count) {
         return 40.0;
     }
-    RBIRCMessage *msg = [[self.server[self.channel] log] objectAtIndex:indexPath.row];
-    label.text = [NSString stringWithFormat:@"%@: %@", msg.from, msg.message];
-    CGSize requiredSize = [label.text sizeWithFont:label.font constrainedToSize:label.frame.size lineBreakMode:label.lineBreakMode]; // deprecated but fuck it.
     
-    return requiredSize.height;
-}
-
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 40.0;
+    NSAttributedString *text = [self attributedStringForIndex:indexPath.row];
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, CGFLOAT_MAX)
+                                             options:options
+                                             context:nil];
+    
+    return boundingRect.size.height + 20;
 }
 
 #pragma mark - RBServerVCDelegate
