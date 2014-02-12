@@ -91,6 +91,8 @@ static NSString *CellIdentifier = @"Cell";
     
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.borderView];
+    
+    [self revealButtonPressed:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -218,13 +220,15 @@ static NSString *CellIdentifier = @"Cell";
                                              options:options
                                              context:nil];
     
-    return boundingRect.size.height + 20;
+    return boundingRect.size.height * 1.2;
 }
 
 #pragma mark - RBServerVCDelegate
 
 -(void)server:(RBIRCServer *)server didChangeChannel:(RBIRCChannel *)newChannel
 {
+    [self.server rmDelegate:self];
+    [server addDelegate:self];
     self.server = server;
     self.channel = newChannel.name;
     self.navigationItem.title = newChannel.name;
@@ -303,7 +307,17 @@ static NSString *CellIdentifier = @"Cell";
         }
     } else {
         [self.server privmsg:self.channel contents:str];
+        self.input.text = @"";
+        RBIRCMessage *msg = [[RBIRCMessage alloc] init];
+        msg.from = self.server.nick;
+        msg.to = self.channel;
+        msg.message = str;
+        msg.command = IRCMessageTypePrivmsg;
+        msg.rawMessage = [NSString stringWithFormat:@"PRIVMSG %@ %@", msg.to, str];
+        [[self.server[self.channel] log] addObject:msg];
+        [self.tableView reloadData];
     }
+    
     return YES;
 }
 
@@ -326,6 +340,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message
 {
+    [self.tableView reloadData];
     if ([message.to isEqualToString:self.channel]) {
         BOOL shouldScroll = NO;
         NSInteger section = 0;
@@ -342,7 +357,6 @@ static NSString *CellIdentifier = @"Cell";
             }
         }
         
-        [self.tableView reloadData];
         if (shouldScroll) {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }

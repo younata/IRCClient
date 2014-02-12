@@ -25,7 +25,7 @@
 @property (nonatomic, strong) NSInputStream *readStream;
 @property (nonatomic, strong) NSOutputStream *writeStream;
 
-@property (nonatomic, readonly, strong) NSMutableArray *delegates;
+@property (nonatomic, readonly, strong) NSMutableSet *delegates;
 @property (nonatomic, readonly, strong) NSMutableDictionary *channels;
 @property (nonatomic, copy) NSString *serverName;
 

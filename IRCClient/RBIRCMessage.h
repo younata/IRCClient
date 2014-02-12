@@ -10,6 +10,7 @@
 
 typedef enum {
     IRCMessageTypeJoin = 0,
+    IRCMessageTypePing,
     IRCMessageTypePart,
     IRCMessageTypePrivmsg,
     IRCMessageTypeNotice,

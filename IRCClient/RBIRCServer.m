@@ -66,7 +66,7 @@
         
         self.connectOnStartup = [decoder decodeBoolForKey:@"connectOnStartup"];
         channels = [decoder decodeObjectForKey:@"channels"];
-        _delegates = [[NSMutableArray alloc] init];
+        _delegates = [[NSMutableSet alloc] init];
         
         self.commandQueue = [[NSMutableArray alloc] init];
         
@@ -109,7 +109,7 @@
 
 -(void)commonInit
 {
-    _delegates = [[NSMutableArray alloc] init];
+    _delegates = [[NSMutableSet alloc] init];
     channels = [[NSMutableDictionary alloc] init];
     RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
     serverLog.connectOnStartup = YES;
@@ -142,6 +142,9 @@
     if (numBytesWritten < 0) {
         NSError *error = [writeStream streamError];
         NSLog(@"Error Writing to stream: %@", error);
+        self.connected = NO;
+        [self.writeStream close];
+        [self.readStream close];
     } else if (numBytesWritten == 0) {
         if ([writeStream streamStatus] == kCFStreamStatusAtEnd) {
             for (id<RBIRCServerDelegate> del in self.delegates) {
@@ -162,7 +165,9 @@
 
 -(void)rmDelegate:(id<RBIRCServerDelegate>)object
 {
-    [self.delegates removeObject:object];
+    if ([self.delegates containsObject:object]) {
+        [self.delegates removeObject:object];
+    }
 }
 
 -(void)connect
@@ -188,8 +193,14 @@
     [self.writeStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
     if (self.useSSL) {
+        NSDictionary *settings = @{(__bridge_transfer NSString *)kCFStreamSSLAllowsAnyRoot: @(YES),
+                                   (__bridge_transfer NSString *)kCFStreamSSLAllowsExpiredCertificates: @(YES),
+                                   (__bridge_transfer NSString *)kCFStreamSSLAllowsExpiredRoots: @(YES)};
         [self.readStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
         [self.writeStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
+        CFReadStreamSetProperty((__bridge_retained CFReadStreamRef)self.readStream, kCFStreamPropertySSLSettings, (__bridge_retained CFDictionaryRef)settings);
+        CFWriteStreamSetProperty((__bridge_retained CFWriteStreamRef)self.writeStream, kCFStreamPropertySSLSettings, (__bridge_retained CFDictionaryRef)settings);
+
     }
     
     [self.readStream setDelegate:self];
@@ -217,39 +228,42 @@
 
 -(void)receivedString:(NSString *)str
 {
-    //printf("%s\n", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
-    if ([str containsSubstring:@"PING"]) { // quickly handle pings.
-        [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
+    printf("recv'd: %s", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
+    //if ([str containsSubstring:@"PING"]) { // quickly handle pings.
+    //    [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
+    RBIRCMessage *msg;
+    @try {
+        msg = [[RBIRCMessage alloc] initWithRawMessage:str];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"error parsing message '%@'\nException: %@", str, exception); // I'm bad and I should feel bad.
+        msg = nil;
+    }
+    if (!msg) {
+        msg = [[RBIRCMessage alloc] init];
+        msg.to = RBIRCServerLog;
+        msg.message = str;
+        msg.rawMessage = str;
+    }
+    RBIRCChannel *ch;
+    if (![[msg to] hasContent] || [[msg to] isEqualToString:@"*"] || [[msg to] isEqualToString:self.nick]) {
+        ch = [channels objectForKey:RBIRCServerLog];
+        msg.message = msg.rawMessage;
+        msg.to = RBIRCServerLog;
     } else {
-        RBIRCMessage *msg;
-        @try {
-            msg = [[RBIRCMessage alloc] initWithRawMessage:str];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"error parsing message '%@'\nException: %@", str, exception); // I'm bad and I should feel bad.
-            msg = nil;
-        }
-        if (!msg)
-            return;
-        RBIRCChannel *ch;
-        if (![[msg to] hasContent] || [[msg to] isEqualToString:@"*"] || [[msg to] isEqualToString:self.nick]) {
-            ch = [channels objectForKey:RBIRCServerLog];
-            msg.message = msg.rawMessage;
-            msg.to = RBIRCServerLog;
+        if (channels[[msg to]] != nil) {
+            ch = channels[[msg to]];
         } else {
-            if (channels[[msg to]] != nil) {
-                ch = channels[[msg to]];
-            } else {
-                ch = [[RBIRCChannel alloc] initWithName:[msg to]];
-                [channels setObject:ch forKey:[msg to]];
-                ch.server = self;
-            }
+            ch = [[RBIRCChannel alloc] initWithName:[msg to]];
+            [channels setObject:ch forKey:[msg to]];
+            ch.server = self;
         }
-        [ch logMessage:msg];
-        
-        for (id<RBIRCServerDelegate>del in self.delegates) {
-            if ([del respondsToSelector:@selector(IRCServer:handleMessage:)])
-                [del IRCServer:self handleMessage:msg];
+    }
+    [ch logMessage:msg];
+    
+    for (id<RBIRCServerDelegate>del in self.delegates) {
+        if ([del respondsToSelector:@selector(IRCServer:handleMessage:)]) {
+            [del IRCServer:self handleMessage:msg];
         }
     }
 }
@@ -436,7 +450,6 @@
                 if (numBytesRead > 0) {
                     NSString *str = [NSString stringWithUTF8String:(const char *)buffer];
                     if ([str hasContent]) {
-                        NSLog(@"%@", str);
                         [self.incompleteMessages appendString:str];
                         while ([self.incompleteMessages containsSubstring:@"\r\n"]) {
                             NSRange range = [self.incompleteMessages rangeOfString:@"\r\n"];

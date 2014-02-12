@@ -62,6 +62,7 @@
     if ([self.server.serverName hasContent]) {
         label.text = NSLocalizedString(@"Edit Server", nil);
     }
+    
     [self.scrollView addSubview:label];
     
     self.serverName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y, w, h)];
@@ -84,7 +85,7 @@
     
     self.serverConnectOnStartup = [[UISwitch alloc] initWithFrame:CGRectZero];
     self.serverConnectOnStartup.frame = CGRectMake(width + (w2 - uiswidth), y + 7 * (h + 10), uiswidth, h);
-    self.serverConnectOnStartup.on = YES;
+    self.serverConnectOnStartup.on = self.server.connectOnStartup;
     UILabel *connectOnStartupLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 7 * (h + 10), 160, h)];
     connectOnStartupLabel.text = NSLocalizedString(@"Connect on startup?", nil);
     connectOnStartupLabel.textAlignment = NSTextAlignmentLeft;
