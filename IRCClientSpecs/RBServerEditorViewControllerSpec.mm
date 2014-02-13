@@ -98,11 +98,6 @@ describe(@"RBServerEditorViewController", ^{
         });
         
         it(@"should gray out unchangeable things", ^{
-            subject.serverHostname.enabled should be_falsy;
-            subject.serverPort.enabled should be_falsy;
-            subject.serverSSL.enabled should be_falsy;
-            subject.serverRealName.enabled should be_falsy;
-            subject.serverPassword.enabled should be_falsy;
             [subject.saveButton titleForState:UIControlStateNormal] should equal(@"Save");
         });
     });

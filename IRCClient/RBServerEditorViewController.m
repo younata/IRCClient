@@ -102,13 +102,6 @@
     
     if (self.server.connected) {
         [self.saveButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
-        for (UIControl *c in @[self.serverHostname,
-                               self.serverPort,
-                               self.serverSSL,
-                               self.serverRealName,
-                               self.serverPassword]) {
-            [c setEnabled:NO];
-        }
         self.serverSSL.on = self.server.useSSL;
     } else {
         [self.saveButton setTitle:NSLocalizedString(@"Connect", nil) forState:UIControlStateNormal];
@@ -194,23 +187,24 @@
         }
     }
     
+    self.server.hostname = self.serverHostname.text;
+    self.server.port = self.serverPort.text;
+    self.server.useSSL = self.serverSSL.on;
+    self.server.realname = self.serverRealName.text;
+    self.server.password = self.serverPassword.text;
+    
+    if (![self.server.hostname hasContent]) {
+        self.server.hostname = self.serverHostname.placeholder;
+    }
+    if (![self.server.port hasContent]) {
+        self.server.port = self.serverPort.placeholder;
+    }
+    if (![self.server.realname hasContent]) {
+        self.server.realname = self.serverRealName.placeholder;
+    }
+    
     if (!self.server.connected) {
-        self.server.hostname = self.serverHostname.text;
-        self.server.port = self.serverPort.text;
-        self.server.useSSL = self.serverSSL.on;
-        self.server.realname = self.serverRealName.text;
-        self.server.password = self.serverPassword.text;
-        
-        if (![self.server.hostname hasContent]) {
-            self.server.hostname = self.serverHostname.placeholder;
-        }
-        if (![self.server.port hasContent]) {
-            self.server.port = self.serverPort.placeholder;
-        }
-        if (![self.server.realname hasContent]) {
-            self.server.realname = self.serverRealName.placeholder;
-        }
-        
+
         [self.server connect];
     }
     
