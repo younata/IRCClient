@@ -97,7 +97,7 @@ describe(@"RBServerEditorViewController", ^{
             [subject view];
         });
         
-        it(@"should gray out unchangeable things", ^{
+        it(@"should title the connect button 'Save'", ^{
             [subject.saveButton titleForState:UIControlStateNormal] should equal(@"Save");
         });
     });

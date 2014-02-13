@@ -121,7 +121,11 @@ static NSString *CellIdentifier = @"Cell";
         [self.actionSheet addButtonWithTitle:str];
     }
     
-    [self.actionSheet showFromRect:self.inputCommands.frame inView:self.view animated:YES];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
+        [self.actionSheet showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
+    } else {
+        [self.actionSheet showFromRect:self.inputCommands.frame inView:self.view animated:YES];
+    }
 }
 
 -(void)revealButtonPressed:(id)sender
@@ -360,12 +364,14 @@ static NSString *CellIdentifier = @"Cell";
         if (shouldScroll) {
             [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         }
+    } else {
+        NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
     }
 }
 
 #pragma mark - UIActionSheetDelegate
 
--(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if ([actionSheet cancelButtonIndex] == buttonIndex)
         return;

@@ -29,4 +29,6 @@
 @property (nonatomic, weak) RBServerViewController *serverView;
 @property (nonatomic, weak) SWRevealViewController *revealController;
 
+-(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message;
+
 @end

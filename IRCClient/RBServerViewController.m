@@ -184,11 +184,13 @@ static NSString *textFieldCell = @"textFieldCell";
         UITextField *tf = [cell textField];
         if ([tf.text isEqualToString:textField.text]) {
             RBIRCServer *server = cell.data;
-            [server join:textField.text];
-            [self.delegate server:server didChangeChannel:server[textField.text]];
+            NSString *str = [tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            [server join:str];
+            [self.delegate server:server didChangeChannel:server[str]];
             [self.tableView reloadData];
         }
     }
+    textField.text = @"";
     return YES;
 }
 

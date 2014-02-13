@@ -137,6 +137,7 @@
 
 -(void)sendCommand:(NSString *)command
 {
+    printf("sending: '%s'\n", command.UTF8String);
     command = [command stringByAppendingString:@"\r\n"];
     signed long numBytesWritten = [writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
     if (numBytesWritten < 0) {
@@ -229,8 +230,10 @@
 -(void)receivedString:(NSString *)str
 {
     printf("recv'd: %s", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
-    //if ([str containsSubstring:@"PING"]) { // quickly handle pings.
-    //    [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
+    if ([str hasPrefix:@"PING"]) { // quickly handle pings.
+        [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
+        return;
+    }
     RBIRCMessage *msg;
     @try {
         msg = [[RBIRCMessage alloc] initWithRawMessage:str];
@@ -447,23 +450,26 @@
             buffer[512] = 0;
             buffer[0] = 0;
             signed long numBytesRead = [(NSInputStream *)aStream read:buffer maxLength:512];
-                if (numBytesRead > 0) {
-                    NSString *str = [NSString stringWithUTF8String:(const char *)buffer];
-                    if ([str hasContent]) {
-                        [self.incompleteMessages appendString:str];
-                        while ([self.incompleteMessages containsSubstring:@"\r\n"]) {
-                            NSRange range = [self.incompleteMessages rangeOfString:@"\r\n"];
-                            str = [self.incompleteMessages substringToIndex:range.location + 2];
-                            [self.incompleteMessages deleteCharactersInRange:[self.incompleteMessages rangeOfString:str]];
-                            [self receivedString:str];
-                        }
+            buffer[numBytesRead] = 0;
+            if (numBytesRead > 0) {
+                NSString *str = [NSString stringWithUTF8String:(const char *)buffer];
+                if ([str hasContent]) {
+                    [self.incompleteMessages appendString:str];
+                    while ([self.incompleteMessages containsSubstring:@"\r\n"]) {
+                        NSRange range = [self.incompleteMessages rangeOfString:@"\r\n"];
+                        str = [self.incompleteMessages substringToIndex:range.location + 2];
+                        [self.incompleteMessages deleteCharactersInRange:[self.incompleteMessages rangeOfString:str]];
+                        [self receivedString:str];
                     }
-                } else if (numBytesRead < 0) {
-                    for (id<RBIRCServerDelegate>del in self.delegates) {
-                        if ([del respondsToSelector:@selector(IRCServer:errorReadingFromStream:)])
-                            [del IRCServer:self errorReadingFromStream:[readStream streamError]];
-                    }
+                } else {
+                    printf("%s\n", buffer);
                 }
+            } else if (numBytesRead < 0) {
+                for (id<RBIRCServerDelegate>del in self.delegates) {
+                    if ([del respondsToSelector:@selector(IRCServer:errorReadingFromStream:)])
+                        [del IRCServer:self errorReadingFromStream:[readStream streamError]];
+                }
+            }
             break;
         }
         default:

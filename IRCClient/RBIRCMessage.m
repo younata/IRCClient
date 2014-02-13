@@ -62,6 +62,7 @@
 -(instancetype)initWithRawMessage:(NSString *)raw
 {
     if ((self = [super init]) != nil) {
+        raw = [raw stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         self.rawMessage = raw;
         self.timestamp = [NSDate date];
         [self parseRawMessage];

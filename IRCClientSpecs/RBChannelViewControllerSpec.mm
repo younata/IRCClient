@@ -158,7 +158,7 @@ describe(@"RBChannelViewController", ^{
             RBIRCServer *server = nice_fake_for([RBIRCServer class]);
             RBIRCChannel *ircChannel = nice_fake_for([RBIRCChannel class]);
             server stub_method("serverName").and_return(@"Test Server");
-            ircChannel stub_method("name").and_return(@"#hello");
+            ircChannel stub_method("name").and_return(@"testuser");
             [subject server:server didChangeChannel:ircChannel];
             subject.channel should equal(ircChannel.name);
             subject.navigationItem.title should equal(ircChannel.name);
@@ -214,6 +214,16 @@ describe(@"RBChannelViewController", ^{
             
             [subject IRCServer:subject.server handleMessage:createMessage()];
             subject.tableView should_not have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with([NSIndexPath indexPathForRow:log.count - 1 inSection:0], UITableViewScrollPositionBottom, YES);
+        });
+        
+        it(@"should display new messages as they're arrived", ^{
+            NSInteger rows = [subject.tableView numberOfRowsInSection:0];
+            subject.channel = @"#foo";
+            RBIRCMessage *msg = createMessage();
+            [log addObject:msg];
+            [subject IRCServer:subject.server handleMessage:msg];
+            [subject.tableView numberOfRowsInSection:0] should equal(rows+1);
+            
         });
     });
 });
