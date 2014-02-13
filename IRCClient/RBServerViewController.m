@@ -90,18 +90,45 @@ static NSString *textFieldCell = @"textFieldCell";
     return cell;
 }
 
-/*
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section == self.servers.count)
-        return @"";
-    return [self.servers[section] serverName];
-}
- */
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (indexPath.section != self.servers.count);
+    if (indexPath.section == self.servers.count)
+        return NO;
+    NSString *channelName = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
+    if ([channelName isEqualToString:RBIRCServerLog])
+        return NO;
+    return YES;
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == self.servers.count)
+        return UITableViewCellEditingStyleNone;
+    NSString *channelName = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
+    if ([channelName isEqualToString:RBIRCServerLog])
+        return UITableViewCellEditingStyleNone;
+    return UITableViewCellEditingStyleDelete;
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle != UITableViewCellEditingStyleDelete)
+        return;
+    NSInteger section = indexPath.section;
+    if (section == self.servers.count)
+        return;
+    RBIRCServer *server = self.servers[section];
+    NSInteger row = indexPath.row;
+    if (row == 0) {
+        [server quit];
+        [self.servers removeObject:server];
+    } else {
+        NSString *channelName = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
+        if ([channelName isEqualToString:RBIRCServerLog])
+            return;
+        [server part:channelName];
+    }
+    [tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
