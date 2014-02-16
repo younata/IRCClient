@@ -57,6 +57,14 @@ describe(@"RBIRCMessage", ^{
         msg.from should equal(@"You");
         msg.targets[0] should equal(@"#foo");
         msg.command should equal(IRCMessageTypeMode);
+        
+        msg = createMsg(@":YouiOS MODE YouiOS :+iwxz");
+        msg.message should equal(@"+iwxz");
+        msg.extra should be_instance_of([NSArray class]).or_any_subclass();
+        msg.extra[0] should equal(@[@"+iwxz"]);
+        msg.targets[0] should equal(@"YouiOS");
+        msg.from should equal(@"YouiOS");
+        msg.command should equal(IRCMessageTypeMode);
     });
     
     it(@"should interpret kicks properly", ^{

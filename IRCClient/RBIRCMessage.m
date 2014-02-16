@@ -157,10 +157,16 @@
             break;
         case IRCMessageTypeMode: {
             NSMutableArray *modes = [[NSMutableArray alloc] init];
+            if (params.count == 1) {
+                [params addObject:trailing]; // fucking unrealircd...
+                self.message = trailing;
+            }
             int i = 1; // params[0] is targets...
             while ([params[i] hasPrefix:@"+"] || [params[i] hasPrefix:@"-"]) {
                 [modes addObject:params[i]];
                 i++;
+                if (i == params.count)
+                    break;
             }
             if ([self.targets[0] hasPrefix:@"#"] || [self.targets[0] hasPrefix:@"&"]) {
                 self.extra = [@[modes] arrayByAddingObjectsFromArray:[params subarrayWithRange:NSMakeRange(i, params.count - i)]];
