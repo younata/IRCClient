@@ -20,6 +20,8 @@ typedef enum {
     IRCMessageTypeNick,
     IRCMessageTypeOper,
     IRCMessageTypeQuit,
+    IRCMessageTypeNames,
+    IRCMessageTypeInvite,
     IRCMessageTypeUnknown
 } IRCMessageType;
 
@@ -29,8 +31,9 @@ typedef enum {
 @property (nonatomic, strong) NSString *message;
 @property (nonatomic, strong) NSString *rawMessage;
 @property (nonatomic, strong) NSString *from;
-@property (nonatomic, strong) NSString *to;
+@property (nonatomic, strong) NSMutableArray *targets;
 @property (nonatomic) IRCMessageType command;
+@property (nonatomic) NSInteger commandNumber;
 @property (nonatomic, strong) id extra;
 
 +(NSString *)getMessageStringForType:(IRCMessageType)messagetype;

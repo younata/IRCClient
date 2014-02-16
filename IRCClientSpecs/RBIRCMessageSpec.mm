@@ -1,4 +1,5 @@
 #import "RBIRCMessage.h"
+#import "NSString+isNilOrEmpty.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -7,67 +8,69 @@ SPEC_BEGIN(RBIRCMessageSpec)
 
 describe(@"RBIRCMessage", ^{
     __block RBIRCMessage *msg;
-    __block NSString *test;
+    
+    RBIRCMessage *(^createMsg)(NSString *) = ^RBIRCMessage *(NSString *str){
+        str = [NSString stringWithFormat:@"%@\r\n", str];
+        RBIRCMessage *ret = [[RBIRCMessage alloc] initWithRawMessage:str];
+        NSLog(@"%@", ret.debugDescription);
+        return ret;
+    };
 
     it(@"should interpret joins properly", ^{
-        test = @":foobar!foo@hide-ECFE1E4F.dsl.mindspring.com JOIN :#boats";
-        msg = [[RBIRCMessage alloc] initWithRawMessage:test];
-        msg.message should be_nil;
+        msg = createMsg(@":foobar!foo@hide-ECFE1E4F.dsl.mindspring.com JOIN #boats");
+        msg.message.hasContent should be_falsy;
         msg.from should equal(@"foobar");
-        msg.to should equal(@"#boats");
+        msg.targets[0] should equal(@"#boats");
         msg.command should equal(IRCMessageTypeJoin);
     });
     
     it(@"should interpret private messages properly", ^{
-        test = @":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :how are you";
-        msg = [[RBIRCMessage alloc] initWithRawMessage:test];
+        msg = createMsg(@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :how are you");
         msg.message should equal(@"how are you");
         msg.from should equal(@"ik");
-        msg.to should equal(@"#boats");
+        msg.targets[0] should equal(@"#boats");
         msg.command should equal(IRCMessageTypePrivmsg);
     });
     
     it(@"should interpret notices properly", ^{
-        test = @":You!Rachel@hide-DEA18147.com NOTICE foobar :test";
-        msg = [[RBIRCMessage alloc] initWithRawMessage:test];
+        msg = createMsg(@":You!Rachel@hide-DEA18147.com NOTICE foobar :test");
         msg.message should equal(@"test");
         msg.from should equal(@"You");
-        msg.to should equal(@"foobar");
+        msg.targets[0] should equal(@"foobar");
         msg.command should equal(IRCMessageTypeNotice);
     });
     
     it(@"should interpret parts properly", ^{
-        test = @":You!Rachel@hide-DEA18147.com PART #foo :test";
-        msg = [[RBIRCMessage alloc] initWithRawMessage:test];
+        msg = createMsg(@":You!Rachel@hide-DEA18147.com PART #foo :test");
         msg.message should equal(@"test");
         msg.from should equal(@"You");
-        msg.to should equal(@"#foo");
+        msg.targets[0] should equal(@"#foo");
         msg.command should equal(IRCMessageTypePart);
     });
     
     it(@"should interpret modes properly", ^{
-        test = @":You!Rachel@hide-DEA18147.com MODE #foo +b foobar!*@*"; // ban
-        msg = [[RBIRCMessage alloc] initWithRawMessage:test];
-        
+        msg = createMsg(@":You!Rachel@hide-DEA18147.com MODE #foo +b foobar!*@*");
         msg.message should equal(@"+b foobar!*@*");
         msg.extra should be_instance_of([NSArray class]).or_any_subclass();
-        msg.extra[0] should equal(@"+b");
+        msg.extra[0] should equal(@[@"+b"]);
         msg.extra[1] should equal(@"foobar!*@*");
         msg.from should equal(@"You");
-        msg.to should equal(@"#foo");
+        msg.targets[0] should equal(@"#foo");
         msg.command should equal(IRCMessageTypeMode);
     });
     
     it(@"should interpret kicks properly", ^{
-        test = @":You!Rachel@hide-DEA18147.com KICK #foo foobar :You";
-        msg = [[RBIRCMessage alloc] initWithRawMessage:test];
+        msg = createMsg(@":You!Rachel@hide-DEA18147.com KICK #foo foobar :You");
         msg.message should equal(@"foobar :You");
         msg.extra should be_instance_of([NSDictionary class]).or_any_subclass();
-        msg.extra[@"target"] should equal(@"foobar");
-        msg.extra[@"reason"] should equal(@"You");
         msg.from should equal(@"You");
-        msg.to should equal(@"#foo");
+        msg.targets[0] should equal(@"#foo");
         msg.command should equal(IRCMessageTypeKick);
+    });
+    
+    it(@"should interpret pings properly", ^{
+        msg = createMsg(@"PING :EF0896");
+        msg.message should equal(@"EF0896");
     });
 });
 

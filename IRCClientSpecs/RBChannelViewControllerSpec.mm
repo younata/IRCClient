@@ -61,13 +61,13 @@ describe(@"RBChannelViewController", ^{
             
             it(@"should prepend text to the input field when a button is pressed", ^{
                 NSString *str = [subject.actionSheet buttonTitleAtIndex:1];
-                [subject.actionSheet.delegate actionSheet:subject.actionSheet didDismissWithButtonIndex:1];
+                [subject actionSheet:subject.actionSheet didDismissWithButtonIndex:1];
                 
                 [subject.input.text hasPrefix:[NSString stringWithFormat:@"/%@", str]] should be_truthy;
             });
             
             it(@"should not prepend text if cancel is pressed", ^{
-                [subject.actionSheet.delegate actionSheet:subject.actionSheet didDismissWithButtonIndex:subject.actionSheet.cancelButtonIndex];
+                [subject actionSheet:subject.actionSheet didDismissWithButtonIndex:subject.actionSheet.cancelButtonIndex];
                 
                 subject.input.text.length should equal(0);
             });
@@ -143,12 +143,12 @@ describe(@"RBChannelViewController", ^{
     });
     
     RBIRCMessage *(^createMessage)() = ^RBIRCMessage*(){
-        RBIRCMessage *msg = fake_for([RBIRCMessage class]);
-        msg stub_method("message").and_return(@"Hello world");
-        msg stub_method("from").and_return(@"testuser");
-        msg stub_method("to").and_return(channel);
-        msg stub_method("command").and_return(IRCMessageTypePrivmsg);
-        msg stub_method("timestamp").and_return([NSDate date]);
+        RBIRCMessage *msg = [[RBIRCMessage alloc] init];
+        msg.message = @"Hello world";
+        msg.from = @"testuser";
+        msg.targets = [@[channel] mutableCopy];
+        msg.command = IRCMessageTypePrivmsg;
+        msg.timestamp = [NSDate date];
         
         return msg;
     };

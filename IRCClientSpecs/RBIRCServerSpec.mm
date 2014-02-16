@@ -55,6 +55,12 @@ describe(@"RBIRCServer", ^{
         subject.channels.count should be_gte(0);
     });
     
+    it(@"should notify delegates of disconnect", ^{
+        delegate stub_method(@selector(IRCServerConnectionDidDisconnect:));
+        [subject stream:nil handleEvent:NSStreamEventEndEncountered];
+        delegate should have_received(@selector(IRCServerConnectionDidDisconnect:));
+    });
+    
     describe(@"sending server commands", ^{
         it(@"should send raw commands", ^{
             [subject sendCommand:[msg substringToIndex:msg.length - 2]];

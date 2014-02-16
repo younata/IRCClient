@@ -30,5 +30,6 @@
 @property (nonatomic, weak) SWRevealViewController *revealController;
 
 -(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message;
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;
 
 @end

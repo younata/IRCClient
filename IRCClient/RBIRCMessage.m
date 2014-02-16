@@ -7,6 +7,7 @@
 //
 
 #import "RBIRCMessage.h"
+#import "NSString+contains.h"
 
 @implementation RBIRCMessage
 
@@ -33,6 +34,12 @@
             return @"NICK";
         case IRCMessageTypeQuit:
             return @"QUIT";
+        case IRCMessageTypePing:
+            return @"PING";
+        case IRCMessageTypeNames:
+            return @"NAMES";
+        case IRCMessageTypeInvite:
+            return @"INVITE";
         case IRCMessageTypeUnknown:
             return @"";
     }
@@ -51,7 +58,10 @@
                                    @"topic": @(IRCMessageTypeTopic),
                                    @"oper": @(IRCMessageTypeOper),
                                    @"nick": @(IRCMessageTypeNick),
-                                   @"quit": @(IRCMessageTypeQuit)
+                                   @"quit": @(IRCMessageTypeQuit),
+                                   @"ping": @(IRCMessageTypePing),
+                                   @"invite": @(IRCMessageTypeInvite),
+                                   @"names": @(IRCMessageTypeNames)
                                    };
     if ([[messageTypes allKeys] containsObject:messageString]) {
         return [messageTypes[messageString] intValue];
@@ -65,6 +75,7 @@
         raw = [raw stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         self.rawMessage = raw;
         self.timestamp = [NSDate date];
+        self.commandNumber = -1;
         [self parseRawMessage];
     }
     return self;
@@ -73,30 +84,115 @@
 -(void)parseRawMessage
 {
     NSArray *array = [self.rawMessage componentsSeparatedByString:@" "];
-    NSArray *userAndHost = [[array[0] substringFromIndex:1] componentsSeparatedByString:@"!"];
-    self.from = userAndHost[0];
-    self.command = [RBIRCMessage getMessageTypeForString:array[1]];
-    self.to = array[2];
-    if ([array count] == 3) {
-        if ([self.to hasPrefix:@":"]) {
-            self.to = [self.to substringFromIndex:1];
+    NSString *name = nil;
+    NSString *user = nil;
+    NSString *host = nil;
+    NSInteger idx = 0;
+    NSInteger location;
+    if ([self.rawMessage hasPrefix:@":"]) {
+        NSString *prefixString = [array[0] substringFromIndex:1];
+        if (![prefixString containsSubstring:@"!"] && ![prefixString containsSubstring:@"@"]) {
+            name = prefixString;
+        } else if ([prefixString containsSubstring:@"!"] && ![prefixString containsSubstring:@"@"]) {
+            location = [prefixString rangeOfString:@"!"].location;
+            name = [prefixString substringToIndex:location];
+            user = [prefixString substringFromIndex:location+1];
+        } else if (![prefixString containsSubstring:@"!"] && [prefixString containsSubstring:@"@"]) {
+            location = [prefixString rangeOfString:@"@"].location;
+            name = [prefixString substringToIndex:location];
+            host = [prefixString substringFromIndex:location+1];
+        } else {
+            location = [prefixString rangeOfString:@"!"].location;
+            name = [prefixString substringToIndex:location];
+            location++;
+            NSInteger location2 = [prefixString rangeOfString:@"@"].location;
+            NSRange range = NSMakeRange(location, location2 - location);
+            user = [prefixString substringWithRange:range];
+            host = [prefixString substringFromIndex:location2+1];
         }
-        self.message = nil;
-        return;
+        idx++;
     }
-    NSString *msg = array[3];
-    if ([msg hasPrefix:@":"]) {
-        msg = [msg substringFromIndex:1];
+    self.from = name;
+    NSString *command = array[idx];
+    idx++;
+    if ([command integerValue] == 0) {
+        self.command = [RBIRCMessage getMessageTypeForString:command];
+    } else {
+        self.command = IRCMessageTypeUnknown;
+        self.commandNumber = [command integerValue];
     }
-    for (int i = 4; i < [array count]; i++) {
-        msg = [[msg stringByAppendingString:@" "] stringByAppendingString:array[i]];
+    
+    NSMutableArray *params = [[NSMutableArray alloc] init];
+    
+    NSString *paramsString = [[[array subarrayWithRange:NSMakeRange(idx, array.count - idx)] componentsJoinedByString:@" "] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *originalParamsString = paramsString;
+    
+    NSString *trailing = nil;
+    while (![paramsString hasPrefix:@":"]) {
+        location = [paramsString rangeOfString:@" "].location;
+        if (![paramsString containsSubstring:@" "]) {
+            [params addObject:paramsString];
+            break;
+        }
+        [params addObject:[paramsString substringToIndex:location]];
+        paramsString = [paramsString substringFromIndex:location+1];
     }
-    self.message = msg;
-    if (self.command == IRCMessageTypeMode) {
-        self.extra = [self.message componentsSeparatedByString:@" "];
-    } else if (self.command == IRCMessageTypeKick) {
-        NSArray *arr = [self.message componentsSeparatedByString:@" "];
-        self.extra = @{@"target": arr[0], @"reason": [arr[1] substringFromIndex:1]};
+    
+    trailing = [paramsString substringFromIndex:1];
+    
+    if (params.count != 0) {
+        self.targets = [[params[0] componentsSeparatedByString:@","] mutableCopy];
+        self.message = [[params subarrayWithRange:NSMakeRange(1, params.count - 1)] componentsJoinedByString:@" "];
+    }
+    
+    switch (self.command) {
+        case IRCMessageTypeJoin:
+            break;
+        case IRCMessageTypePart:
+            self.message = trailing;
+            break;
+        case IRCMessageTypeNotice:
+        case IRCMessageTypePrivmsg:
+            self.message = trailing;
+            break;
+        case IRCMessageTypeMode: {
+            NSMutableArray *modes = [[NSMutableArray alloc] init];
+            int i = 1; // params[0] is targets...
+            while ([params[i] hasPrefix:@"+"] || [params[i] hasPrefix:@"-"]) {
+                [modes addObject:params[i]];
+                i++;
+            }
+            if ([self.targets[0] hasPrefix:@"#"] || [self.targets[0] hasPrefix:@"&"]) {
+                self.extra = [@[modes] arrayByAddingObjectsFromArray:[params subarrayWithRange:NSMakeRange(i, params.count - i)]];
+            } else {
+                self.extra = @[modes];
+            }
+            break;
+        }
+        case IRCMessageTypeKick:
+            self.extra = @{params[1]: trailing};
+            self.message = [NSString stringWithFormat:@"%@ :%@", params[1], trailing];
+            break;
+        case IRCMessageTypeTopic:
+            self.message = [params componentsJoinedByString:@" "];
+            break;
+        case IRCMessageTypeOper: // shouldn't have to handle
+            break;
+        case IRCMessageTypeNick:
+            self.message = params[0]; // hopcount is server...
+            break;
+        case IRCMessageTypeQuit:
+            self.message = originalParamsString;
+            break;
+        case IRCMessageTypePing:
+            self.message = trailing;
+            break;
+        case IRCMessageTypeNames:
+            break;
+        case IRCMessageTypeInvite:
+            break;
+        case IRCMessageTypeUnknown:
+            break;
     }
 }
 
@@ -113,7 +209,10 @@
 {
     NSString *ret = @"";
     
-    ret = [NSString stringWithFormat:@"from: %@\nto: %@\ncommand: %@\nmessage: %@", self.from, self.to, [RBIRCMessage getMessageStringForType:self.command], self.message];
+    ret = [NSString stringWithFormat:@"from: '%@'\nto: '%@'\ncommand: '%@'\nmessage: '%@'", self.from, self.targets, [RBIRCMessage getMessageStringForType:self.command], self.message];
+    if (self.extra) {
+        ret = [NSString stringWithFormat:@"%@\nextra: '%@'", ret, self.extra];
+    }
     
     return ret;
 }

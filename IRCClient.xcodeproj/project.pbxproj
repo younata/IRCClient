@@ -155,6 +155,7 @@
 		899B2A9B189913840008FED3 /* NSString+isNilOrEmpty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+isNilOrEmpty.h"; sourceTree = "<group>"; };
 		899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+isNilOrEmpty.m"; sourceTree = "<group>"; };
 		899B2A9D189913840008FED3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		89A4579A18AE1DAF003454AC /* IRCNumericReplies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRCNumericReplies.h; sourceTree = "<group>"; };
 		89C46E45189600A9006068DC /* RBTextFieldServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextFieldServerCell.h; sourceTree = "<group>"; };
 		89C46E46189600A9006068DC /* RBTextFieldServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextFieldServerCell.m; sourceTree = "<group>"; };
 		89C46E4818960C96006068DC /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
@@ -278,9 +279,9 @@
 				891B01EF189650DA00B2D848 /* Rakefile */,
 				891B01F0189650DB00B2D848 /* Cedar-iOS.framework */,
 				898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */,
-				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */,
+				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
 				891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */,
 				891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */,
 				899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */,
@@ -401,6 +402,7 @@
 				8906F20718878F1100042A13 /* RBIRCChannel.m */,
 				8906F20918878FAA00042A13 /* RBIRCMessage.h */,
 				8906F20A18878FAA00042A13 /* RBIRCMessage.m */,
+				89A4579A18AE1DAF003454AC /* IRCNumericReplies.h */,
 			);
 			name = "IRC Backend";
 			sourceTree = "<group>";

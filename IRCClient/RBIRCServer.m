@@ -230,10 +230,8 @@
 -(void)receivedString:(NSString *)str
 {
     printf("recv'd: %s", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
-    if ([str hasPrefix:@"PING"]) { // quickly handle pings.
-        [self sendCommand:[str stringByReplacingOccurrencesOfString:@"PING" withString:@"PONG"]];
+    if ([str hasPrefix:@"ERROR"])
         return;
-    }
     RBIRCMessage *msg;
     @try {
         msg = [[RBIRCMessage alloc] initWithRawMessage:str];
@@ -244,25 +242,33 @@
     }
     if (!msg) {
         msg = [[RBIRCMessage alloc] init];
-        msg.to = RBIRCServerLog;
+        msg.targets = [@[RBIRCServerLog] mutableCopy];
         msg.message = str;
         msg.rawMessage = str;
     }
-    RBIRCChannel *ch;
-    if (![[msg to] hasContent] || [[msg to] isEqualToString:@"*"] || [[msg to] isEqualToString:self.nick]) {
-        ch = [channels objectForKey:RBIRCServerLog];
-        msg.message = msg.rawMessage;
-        msg.to = RBIRCServerLog;
-    } else {
-        if (channels[[msg to]] != nil) {
-            ch = channels[[msg to]];
-        } else {
-            ch = [[RBIRCChannel alloc] initWithName:[msg to]];
-            [channels setObject:ch forKey:[msg to]];
-            ch.server = self;
-        }
+    if (msg.command == IRCMessageTypePing) {
+        [self sendCommand:[NSString stringWithFormat:@"PONG %@", msg.message]];
+        return;
     }
-    [ch logMessage:msg];
+    RBIRCChannel *ch;
+    for (int i = 0; i < msg.targets.count; i++) {
+        NSString *to = msg.targets[i];
+        if (![to hasContent] || [to isEqualToString:@"*"] || [to isEqualToString:self.nick]) {
+            ch = [channels objectForKey:RBIRCServerLog];
+            msg.message = msg.rawMessage;
+            to = RBIRCServerLog;
+            msg.targets[i] = to;
+        } else {
+            if (channels[to] != nil) {
+                ch = channels[to];
+            } else {
+                ch = [[RBIRCChannel alloc] initWithName:to];
+                [channels setObject:ch forKey:to];
+                ch.server = self;
+            }
+        }
+        [ch logMessage:msg];
+    }
     
     for (id<RBIRCServerDelegate>del in self.delegates) {
         if ([del respondsToSelector:@selector(IRCServer:handleMessage:)]) {
@@ -406,27 +412,41 @@
 {
     switch (message.command) {
         case IRCMessageTypeJoin:
-            [self join:message.to];
+            for (NSString *to in message.targets) {
+                [self join:to];
+            }
             break;
         case IRCMessageTypePart:
-            [self part:message.to message:message.message];
+            for (NSString *to in message.targets) {
+                [self part:to message:message.message];
+            }
             break;
         case IRCMessageTypePrivmsg:
-            [self privmsg:message.to contents:message.message];
+            for (NSString *to in message.targets) {
+                [self privmsg:to contents:message.message];
+            }
             break;
         case IRCMessageTypeNotice:
-            [self notice:message.to contents:message.message];
+            for (NSString *to in message.targets) {
+                [self notice:to contents:message.message];
+            }
             break;
         case IRCMessageTypeMode: {
-            [self mode:message.to options:message.extra];
+            for (NSString *to in message.targets) {
+                [self mode:to options:message.extra];
+            }
             break;
         }
         case IRCMessageTypeKick: {
-            [self kick:message.to target:message.extra[@"target"] reason:message.extra[@"reason"]];
+            for (NSString *to in message.targets) {
+                [self kick:to target:message.extra[@"target"] reason:message.extra[@"reason"]];
+            }
             break;
         }
         case IRCMessageTypeTopic:
-            [self topic:message.to topic:message.message];
+            for (NSString *to in message.targets) {
+                [self topic:to topic:message.message];
+            }
             break;
         case IRCMessageTypeUnknown:
         default:
@@ -472,6 +492,21 @@
             }
             break;
         }
+        case NSStreamEventErrorOccurred:
+            for (id<RBIRCServerDelegate>del in self.delegates) {
+                if ([del respondsToSelector:@selector(IRCServer:errorReadingFromStream:)])
+                    [del IRCServer:self errorReadingFromStream:aStream.streamError];
+            }
+            break;
+        case NSStreamEventEndEncountered:
+            [self.writeStream close];
+            [self.readStream close];
+            self.connected = NO;
+            for (id<RBIRCServerDelegate>del in self.delegates) {
+                if ([del respondsToSelector:@selector(IRCServerConnectionDidDisconnect:)])
+                    [del IRCServerConnectionDidDisconnect:self];
+            }
+            break;
         default:
             break;
     }

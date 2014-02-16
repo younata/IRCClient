@@ -121,10 +121,13 @@ static NSString *CellIdentifier = @"Cell";
         [self.actionSheet addButtonWithTitle:str];
     }
     
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
-        [self.actionSheet showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
+    UIActionSheet *as = self.actionSheet;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [as showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
     } else {
-        [self.actionSheet showFromRect:self.inputCommands.frame inView:self.view animated:YES];
+        UIButton *ic = self.inputCommands;
+        CGRect rect = [ic frame];
+        [as showFromRect:rect inView:self.view animated:YES];
     }
 }
 
@@ -314,10 +317,10 @@ static NSString *CellIdentifier = @"Cell";
         self.input.text = @"";
         RBIRCMessage *msg = [[RBIRCMessage alloc] init];
         msg.from = self.server.nick;
-        msg.to = self.channel;
+        msg.targets = [@[self.channel] mutableCopy];
         msg.message = str;
         msg.command = IRCMessageTypePrivmsg;
-        msg.rawMessage = [NSString stringWithFormat:@"PRIVMSG %@ %@", msg.to, str];
+        msg.rawMessage = [NSString stringWithFormat:@"PRIVMSG %@ %@", msg.targets[0], str];
         [[self.server[self.channel] log] addObject:msg];
         [self.tableView reloadData];
     }
@@ -345,27 +348,29 @@ static NSString *CellIdentifier = @"Cell";
 -(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message
 {
     [self.tableView reloadData];
-    if ([message.to isEqualToString:self.channel]) {
-        BOOL shouldScroll = NO;
-        NSInteger section = 0;
-        NSInteger row = [self tableView:self.tableView numberOfRowsInSection:0] - 2; // -1 for index, another -1 because we just added to it.
-        
-        for (NSIndexPath *ip in [self.tableView indexPathsForVisibleRows]) {
-            if (ip.section < section)
-                continue;
-            else if (ip.section > section)
-                break;
-            if (ip.row == row) {
-                shouldScroll = YES;
-                break;
+    for (NSString *to in message.targets) {
+        if ([to isEqualToString:self.channel]) {
+            BOOL shouldScroll = NO;
+            NSInteger section = 0;
+            NSInteger row = [self tableView:self.tableView numberOfRowsInSection:0] - 2; // -1 for index, another -1 because we just added to it.
+            
+            for (NSIndexPath *ip in [self.tableView indexPathsForVisibleRows]) {
+                if (ip.section < section)
+                    continue;
+                else if (ip.section > section)
+                    break;
+                if (ip.row == row) {
+                    shouldScroll = YES;
+                    break;
+                }
             }
+            
+            if (shouldScroll) {
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
+        } else {
+            NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
         }
-        
-        if (shouldScroll) {
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        }
-    } else {
-        NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
     }
 }
 
