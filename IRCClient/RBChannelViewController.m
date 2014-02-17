@@ -93,6 +93,10 @@ static NSString *CellIdentifier = @"Cell";
     [self.view addSubview:self.borderView];
     
     [self revealButtonPressed:nil];
+    
+    if (!self.server.connected) {
+        [self disconnect];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -228,18 +232,6 @@ static NSString *CellIdentifier = @"Cell";
     return boundingRect.size.height * 1.2;
 }
 
-#pragma mark - RBServerVCDelegate
-
--(void)server:(RBIRCServer *)server didChangeChannel:(RBIRCChannel *)newChannel
-{
-    [self.server rmDelegate:self];
-    [server addDelegate:self];
-    self.server = server;
-    self.channel = newChannel.name;
-    self.navigationItem.title = newChannel.name;
-    [self.tableView reloadData];
-}
-
 #pragma mark - UITextFieldDelegate
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -326,11 +318,36 @@ static NSString *CellIdentifier = @"Cell";
     return YES;
 }
 
+-(void)disconnect
+{
+    self.navigationItem.title = @"Disconnected";
+    self.input.enabled = NO;
+    self.inputCommands.enabled = NO;
+}
+
+#pragma mark - RBServerVCDelegate
+
+-(void)server:(RBIRCServer *)server didChangeChannel:(RBIRCChannel *)newChannel
+{
+    [self.server rmDelegate:self];
+    [server addDelegate:self];
+    self.server = server;
+    self.channel = newChannel.name;
+    self.navigationItem.title = newChannel.name;
+    if (!self.server.connected) {
+        [self disconnect];
+    }
+    [self.tableView reloadData];
+}
+
 #pragma mark - RBIRCServerDelegate
 
 -(void)IRCServerConnectionDidDisconnect:(RBIRCServer *)server
 {
-    // meh.
+    if (![self.server isEqual:server]) {
+        return;
+    }
+    [self disconnect];
 }
 
 -(void)IRCServer:(RBIRCServer *)server errorReadingFromStream:(NSError *)error

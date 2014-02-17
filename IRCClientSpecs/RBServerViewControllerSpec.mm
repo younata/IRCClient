@@ -35,6 +35,34 @@ describe(@"RBServerViewController", ^{
         subject.tableView should have_received("deselectRowAtIndexPath:animated:").with(ip, Arguments::anything);
     });
     
+    describe(@"disconnects", ^{
+        __block RBIRCServer *server;
+        beforeEach(^{
+            server = nice_fake_for([RBIRCServer class]);
+            server stub_method("nick").and_return(@"testnick");
+            server stub_method("nick:").with(Arguments::any([NSString class]));
+            server stub_method("oper:password:").with(Arguments::any([NSString class]), Arguments::any([NSString class]));
+            server stub_method("quit");
+            server stub_method("quit:").with(Arguments::any([NSString class]));
+            server stub_method("mode:options:").with(Arguments::any([NSString class]), Arguments::any([NSArray class]));
+            server stub_method("kick:target:").with(Arguments::any([NSString class]), Arguments::any([NSString class]));
+            server stub_method("kick:target:reason:").with(Arguments::any([NSString class]), Arguments::any([NSString class]), Arguments::any([NSString class]));
+            server stub_method("privmsg:contents:").with(Arguments::any([NSString class]), Arguments::any([NSString class]));
+            server stub_method("connected").and_return(NO);
+            
+            subject.servers = [@[server] mutableCopy];
+            [subject.tableView reloadData];
+        });
+        
+        it(@"should gray out all cells in this section", ^{
+            NSInteger l = [subject.tableView numberOfRowsInSection:0];
+            for (int i = 0; i < l; i++) {
+                UITableViewCell *cell = [subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+                cell.textLabel.textColor should equal([UIColor lightTextColor]);
+            }
+        });
+    });
+    
     describe(@"server connections", ^{
         __block RBIRCChannel *c;
         beforeEach(^{

@@ -74,6 +74,9 @@ static NSString *textFieldCell = @"textFieldCell";
         cell.textLabel.text = NSLocalizedString(@"New Server", nil);
     } else {
         RBIRCServer *server = self.servers[section];
+        if (!server.connected) {
+            cell.textLabel.textColor = [UIColor lightTextColor];
+        }
         NSArray *channels = [server.channels allKeys];
         if (row != 0 && row != [server.channels count] + 1) {
             cell.textLabel.text = channels[row - 1];

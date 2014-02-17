@@ -32,7 +32,6 @@ describe(@"RBChannelViewController", ^{
         server stub_method("kick:target:").with(Arguments::any([NSString class]), Arguments::any([NSString class]));
         server stub_method("kick:target:reason:").with(Arguments::any([NSString class]), Arguments::any([NSString class]), Arguments::any([NSString class]));
         server stub_method("privmsg:contents:").with(Arguments::any([NSString class]), Arguments::any([NSString class]));
-        spy_on(server);
         subject.server = server;
     });
     
@@ -167,10 +166,11 @@ describe(@"RBChannelViewController", ^{
     describe(@"disconnects", ^{
         beforeEach(^{
             [subject IRCServerConnectionDidDisconnect:subject.server];
+            subject.server stub_method("connected").and_return(NO);
         });
         
         it(@"should display disconnected", ^{
-            subject.navigationItem.title should equal("Disconnected");
+            subject.navigationItem.title should equal(@"Disconnected");
         });
         
         it(@"should still display disconnected on channel change", ^{
@@ -184,11 +184,6 @@ describe(@"RBChannelViewController", ^{
         it(@"should disable text input", ^{
             subject.input.enabled should be_falsy;
             subject.inputCommands.enabled should be_falsy;
-        });
-        
-        it(@"should display a reconnect button", ^{
-            UIBarButtonItem *item = subject.navigationItem.rightBarButtonItems[0];
-            item.title should equal(@"reconnect");
         });
     });
     
