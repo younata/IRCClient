@@ -161,7 +161,13 @@ describe(@"RBChannelViewController", ^{
             ircChannel stub_method("name").and_return(@"testuser");
             [subject server:server didChangeChannel:ircChannel];
             subject.channel should equal(ircChannel.name);
-            subject.navigationItem.title should equal(ircChannel.name);
+        });
+    });
+    
+    describe(@"RBIRCServerDelegate responses", ^{
+        it(@"should display disconnects", ^{
+            [subject IRCServerConnectionDidDisconnect:subject.server];
+            subject.navigationItem.title should equal("Disconnected");
         });
     });
     

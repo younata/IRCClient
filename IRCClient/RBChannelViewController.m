@@ -125,9 +125,7 @@ static NSString *CellIdentifier = @"Cell";
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         [as showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
     } else {
-        UIButton *ic = self.inputCommands;
-        CGRect rect = [ic frame];
-        [as showFromRect:rect inView:self.view animated:YES];
+        [as showInView:self.view.superview];
     }
 }
 
