@@ -158,16 +158,37 @@ describe(@"RBChannelViewController", ^{
             RBIRCServer *server = nice_fake_for([RBIRCServer class]);
             RBIRCChannel *ircChannel = nice_fake_for([RBIRCChannel class]);
             server stub_method("serverName").and_return(@"Test Server");
-            ircChannel stub_method("name").and_return(@"testuser");
+            ircChannel stub_method("name").and_return(@"#testuser");
             [subject server:server didChangeChannel:ircChannel];
             subject.channel should equal(ircChannel.name);
         });
     });
     
-    describe(@"RBIRCServerDelegate responses", ^{
-        it(@"should display disconnects", ^{
+    describe(@"disconnects", ^{
+        beforeEach(^{
             [subject IRCServerConnectionDidDisconnect:subject.server];
+        });
+        
+        it(@"should display disconnected", ^{
             subject.navigationItem.title should equal("Disconnected");
+        });
+        
+        it(@"should still display disconnected on channel change", ^{
+            RBIRCChannel *ircChannel = nice_fake_for([RBIRCChannel class]);
+            ircChannel stub_method("name").and_return(@"#testchannel");
+            [subject server:subject.server didChangeChannel:ircChannel];
+            subject.channel should equal(ircChannel.name);
+            subject.navigationItem.title should equal(@"Disconnected");
+        });
+        
+        it(@"should disable text input", ^{
+            subject.input.enabled should be_falsy;
+            subject.inputCommands.enabled should be_falsy;
+        });
+        
+        it(@"should display a reconnect button", ^{
+            UIBarButtonItem *item = subject.navigationItem.rightBarButtonItems[0];
+            item.title should equal(@"reconnect");
         });
     });
     
