@@ -58,7 +58,7 @@ describe(@"RBServerViewController", ^{
             NSInteger l = [subject.tableView numberOfRowsInSection:0];
             for (int i = 0; i < l; i++) {
                 UITableViewCell *cell = [subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-                cell.textLabel.textColor should equal([UIColor lightTextColor]);
+                cell.textLabel.textColor should equal([[UIColor darkTextColor] colorWithAlphaComponent:0.5]);
             }
         });
     });

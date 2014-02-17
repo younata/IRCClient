@@ -41,6 +41,19 @@ static NSString *textFieldCell = @"textFieldCell";
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
 }
 
+-(void)setServers:(NSMutableArray *)servers
+{
+    for (RBIRCServer *server in _servers) {
+        for (id<RBIRCServerDelegate> del in server.delegates) {
+            [server rmDelegate:self];
+        }
+    }
+    _servers = servers;
+    for (RBIRCServer *server in servers) {
+        [server addDelegate:self];
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -75,7 +88,9 @@ static NSString *textFieldCell = @"textFieldCell";
     } else {
         RBIRCServer *server = self.servers[section];
         if (!server.connected) {
-            cell.textLabel.textColor = [UIColor lightTextColor];
+            cell.textLabel.textColor = [[UIColor darkTextColor] colorWithAlphaComponent:0.5];
+        } else {
+            cell.textLabel.textColor = [UIColor darkTextColor];
         }
         NSArray *channels = [server.channels allKeys];
         if (row != 0 && row != [server.channels count] + 1) {
@@ -199,9 +214,10 @@ static NSString *textFieldCell = @"textFieldCell";
 
 #pragma mark - RBIRCServerDelegate
 
--(void)IRCserverDidConnect:(RBIRCServer *)server
+-(void)IRCServerDidConnect:(RBIRCServer *)server
 {
-    
+    NSLog(@"%@ - %@", server.serverName, server.connected ? @"Connected" : @"Not Connected");
+    [self.tableView reloadData];
 }
 
 @end
