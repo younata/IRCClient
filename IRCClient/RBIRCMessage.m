@@ -8,6 +8,7 @@
 
 #import "RBIRCMessage.h"
 #import "NSString+contains.h"
+#import "RBIRCServer.h" // just for RBIRCServerLog...
 
 @implementation RBIRCMessage
 
@@ -77,6 +78,7 @@
         self.timestamp = [NSDate date];
         self.commandNumber = -1;
         [self parseRawMessage];
+        [self attributedMessage];
     }
     return self;
 }
@@ -205,7 +207,7 @@
 -(NSString *)description
 {
     NSString *ret = @"";
-    if (!self.from)
+    if (!self.from || [self.from isEqualToString:RBIRCServerLog])
         return self.rawMessage;
     ret = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
     return ret;
@@ -221,6 +223,15 @@
     }
     
     return ret;
+}
+
+-(NSAttributedString *)attributedMessage
+{
+    if (_attributedMessage) {
+        _attributedMessage = [[NSAttributedString alloc] initWithString:[self description] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    }
+    
+    return _attributedMessage;
 }
 
 @end

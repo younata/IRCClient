@@ -191,12 +191,7 @@ static NSString *CellIdentifier = @"Cell";
     if ([self.server[self.channel] log].count <= index)
         return nil;
     RBIRCMessage *msg = [[self.server[self.channel] log] objectAtIndex:index];
-    NSString *str = [NSString stringWithFormat:@"%@: %@", msg.from, msg.message];
-    if ([self.channel isEqualToString:RBIRCServerLog]) {
-        str = msg.message;
-    }
-    NSAttributedString *text = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
-    return text;
+    return msg.attributedMessage;
 }
 
 #pragma mark - UITableViewDataSource

@@ -35,6 +35,7 @@ typedef enum {
 @property (nonatomic) IRCMessageType command;
 @property (nonatomic) NSInteger commandNumber;
 @property (nonatomic, strong) id extra;
+@property (nonatomic, strong) NSAttributedString *attributedMessage;
 
 +(NSString *)getMessageStringForType:(IRCMessageType)messagetype;
 +(IRCMessageType)getMessageTypeForString:(NSString *)messageString;
