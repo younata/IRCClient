@@ -5,6 +5,8 @@
 #import "RBServerVCDelegate.h"
 #import "RBTextFieldServerCell.h"
 
+#import "RBConfigurationKeys.h"
+
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
@@ -12,8 +14,20 @@ SPEC_BEGIN(RBServerViewControllerSpec)
 
 describe(@"RBServerViewController", ^{
     __block RBServerViewController *subject;
+    __block RBIRCServer *server;
+    
+    RBIRCServer *(^newServer)(void) = ^RBIRCServer*{
+        RBIRCServer *s = [[RBIRCServer alloc] initWithHostname:@"localhost" ssl:NO port:@"6667" nick:@"testnick" realname:@"testname" password:nil];
+        s.serverName = @"test server";
+        return s;
+    };
+    
+    BOOL (^serverContainsChannel)(RBIRCServer *, NSString *) = ^BOOL(RBIRCServer *server, NSString *channelName){
+        return [server.channels objectForKey:channelName] != nil;
+    };
 
     beforeEach(^{
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
         subject = [[RBServerViewController alloc] init];
         [subject view];
         
@@ -36,7 +50,6 @@ describe(@"RBServerViewController", ^{
     });
     
     describe(@"disconnects", ^{
-        __block RBIRCServer *server;
         beforeEach(^{
             server = nice_fake_for([RBIRCServer class]);
             server stub_method("nick").and_return(@"testnick");
@@ -106,45 +119,109 @@ describe(@"RBServerViewController", ^{
         });
     });
     
-    describe(@"joining a new channel", ^{
-        __block RBIRCServer *server;
+    describe(@"new channel cell", ^{
         beforeEach(^{
-            server = nice_fake_for([RBIRCServer class]);
-            server stub_method("serverName").and_return(@"test server");
-            server stub_method("channels").and_return(@{});
-            server stub_method("join:");
+            server = newServer();
+            
             spy_on(server);
+            
             [subject.servers addObject:server];
             [subject.tableView reloadData];
             [subject view];
         });
         
         it(@"should be a member of RBTextFieldServerCell", ^{
-            UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
             cell should be_instance_of([RBTextFieldServerCell class]);
         });
         
-        it(@"should not respond to touching", ^{
-            //[subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-            // yeah, I have no idea. nothing should really happen...
+        describe(@"joining", ^{
+            static NSString *chName = @"#foo";
+            beforeEach(^{
+                [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
+                RBTextFieldServerCell *cell;
+                for (UITableViewCell *c in subject.tableView.visibleCells) {
+                    if (![c isKindOfClass:[RBTextFieldServerCell class]])
+                        continue;
+                    cell = (RBTextFieldServerCell*)c;
+                }
+                cell.textField.text = chName;
+                [subject textFieldShouldReturn:cell.textField];
+            });
+            
+            it(@"should actually join", ^{
+                server should have_received("join:").with(chName);
+                server.channels.count should be_gte(1);
+                serverContainsChannel(server, chName) should be_truthy;
+            });
+            
+            it(@"should save the change to the internal database", ^{
+                NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+                d should_not be_nil;
+                NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+                servers.count should be_gte(1);
+                BOOL actuallyDidSave = YES;
+                for (RBIRCServer *s in servers) {
+                    actuallyDidSave = serverContainsChannel(s, chName);
+                    if (actuallyDidSave)
+                        break;
+                }
+                actuallyDidSave should be_truthy;
+            });
+        });
+    });
+    
+    describe(@"Parting a channel", ^{
+        static NSString *chName = @"#foo";
+        beforeEach(^{
+            server = newServer();
+            
+            RBIRCChannel *channel = [[RBIRCChannel alloc] initWithName:chName];
+            [server.channels setObject:channel forKey:chName];
+            
+            NSMutableArray *arr = [@[server] mutableCopy];
+            NSData *d = [NSKeyedArchiver archivedDataWithRootObject:arr];
+            [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+            subject.servers = arr;
+            [subject.tableView reloadData];
+            NSIndexPath *indexPath = nil;
+            for (int i = 1; i < [subject tableView:subject.tableView numberOfRowsInSection:0]; i++) {
+                indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:indexPath];
+                if ([cell.textLabel.text isEqualToString:chName]) {
+                    break;
+                }
+                indexPath = nil;
+            }
+            if (indexPath) {
+                [subject tableView:subject.tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
+            }
         });
         
-        it(@"should join a channel on return, if there is text in that cell...", ^{
-            RBTextFieldServerCell *cell;
-            for (UITableViewCell *c in subject.tableView.visibleCells) {
-                if (![c isKindOfClass:[RBTextFieldServerCell class]])
-                    continue;
-                cell = (RBTextFieldServerCell*)c;
+        it(@"should remove the channel cell from the view", ^{
+            NSArray *cells = [subject.tableView visibleCells];
+            BOOL containsChannel = NO;
+            for (UITableViewCell *cell in cells) {
+                containsChannel = [cell.textLabel.text isEqualToString:chName];
+                if (containsChannel) {
+                    break;
+                }
             }
-            cell.data should_not be_nil;
-            [subject textFieldShouldReturn:cell.textField];
-            server should_not have_received("join:");
-            
-            [(id<CedarDouble>) server reset_sent_messages];
-            
-            cell.textField.text = @"#foo";
-            [subject textFieldShouldReturn:cell.textField];
-            server should have_received("join:").with(@"#foo");
+            containsChannel should be_falsy;
+        });
+        
+        it(@"should remove the channel from the internal database", ^{
+            NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+            d should_not be_nil;
+            NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+            servers.count should be_gte(1);
+            BOOL actuallyDidSave = YES;
+            for (RBIRCServer *s in servers) {
+                actuallyDidSave = serverContainsChannel(s, chName);
+                if (actuallyDidSave)
+                    break;
+            }
+            actuallyDidSave should be_falsy;
         });
     });
 });

@@ -12,7 +12,7 @@ describe(@"RBIRCMessage", ^{
     RBIRCMessage *(^createMsg)(NSString *) = ^RBIRCMessage *(NSString *str){
         str = [NSString stringWithFormat:@"%@\r\n", str];
         RBIRCMessage *ret = [[RBIRCMessage alloc] initWithRawMessage:str];
-        NSLog(@"%@", ret.debugDescription);
+        //NSLog(@"%@", ret.debugDescription);
         return ret;
     };
 

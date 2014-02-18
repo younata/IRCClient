@@ -15,6 +15,8 @@
 
 #import "RBIRCServerDelegate.h"
 
+#import "RBConfigurationKeys.h"
+
 @interface RBServerViewController ()
 
 @end
@@ -52,6 +54,12 @@ static NSString *textFieldCell = @"textFieldCell";
     for (RBIRCServer *server in servers) {
         [server addDelegate:self];
     }
+}
+
+-(void)saveServerData
+{
+    NSData *d = [NSKeyedArchiver archivedDataWithRootObject:self.servers];
+    [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
 }
 
 #pragma mark - Table view data source
@@ -146,6 +154,7 @@ static NSString *textFieldCell = @"textFieldCell";
             return;
         [server part:channelName];
     }
+    [self saveServerData];
     [tableView reloadData];
 }
 
@@ -206,6 +215,8 @@ static NSString *textFieldCell = @"textFieldCell";
             [server join:str];
             [self.delegate server:server didChangeChannel:server[str]];
             [self.tableView reloadData];
+            
+            [self saveServerData];
         }
     }
     textField.text = @"";

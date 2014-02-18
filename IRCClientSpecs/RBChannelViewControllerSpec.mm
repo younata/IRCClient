@@ -213,7 +213,7 @@ describe(@"RBChannelViewController", ^{
         it(@"should display existing messages", ^{
             [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(log.count);
             UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            cell.textLabel.text should equal(@"testuser: Hello world");
+            cell.textLabel.attributedText.string should equal(@"testuser: Hello world");
         });
         
         it(@"should respond to incoming messages when viewing the bottom", ^{

@@ -207,8 +207,6 @@ static NSString *CellIdentifier = @"Cell";
     ret.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
     ret.textLabel.numberOfLines = 0;
     [ret layoutSubviews];
-    //ret.textLabel.text = [msg message];
-    //ret.detailTextLabel.text = [msg to];
     return ret;
 }
 
@@ -385,6 +383,11 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 #pragma mark - UIActionSheetDelegate
+
+-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [self actionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
+}
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
