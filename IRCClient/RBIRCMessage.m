@@ -227,7 +227,7 @@
 
 -(NSAttributedString *)attributedMessage
 {
-    if (_attributedMessage) {
+    if (!_attributedMessage) {
         _attributedMessage = [[NSAttributedString alloc] initWithString:[self description] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
     }
     
