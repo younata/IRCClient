@@ -22,6 +22,14 @@ typedef enum {
     IRCMessageTypeQuit,
     IRCMessageTypeNames,
     IRCMessageTypeInvite,
+    IRCMessageTypeCTCPFinger,
+    IRCMessageTypeCTCPVersion,
+    IRCMessageTypeCTCPSource,
+    IRCMessageTypeCTCPUserInfo,
+    IRCMessageTypeCTCPClientInfo,
+    IRCMessageTypeCTCPPing,
+    IRCMessageTypeCTCPTime,
+    IRCMessageTypeCTCPErrMsg,
     IRCMessageTypeUnknown
 } IRCMessageType;
 

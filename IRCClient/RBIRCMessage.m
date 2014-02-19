@@ -9,6 +9,7 @@
 #import "RBIRCMessage.h"
 #import "NSString+contains.h"
 #import "RBIRCServer.h" // just for RBIRCServerLog...
+#import "RBConfigurationKeys.h"
 
 @implementation RBIRCMessage
 
@@ -41,6 +42,20 @@
             return @"NAMES";
         case IRCMessageTypeInvite:
             return @"INVITE";
+        case IRCMessageTypeCTCPFinger:
+            return @"FINGER";
+        case IRCMessageTypeCTCPVersion:
+            return @"VERSION";
+        case IRCMessageTypeCTCPSource:
+            return @"SOURCE";
+        case IRCMessageTypeCTCPUserInfo:
+            return @"USERINFO";
+        case IRCMessageTypeCTCPClientInfo:
+            return @"CLIENTINFO";
+        case IRCMessageTypeCTCPPing:
+            return @"PING";
+        case IRCMessageTypeCTCPTime:
+            return @"TIME";
         case IRCMessageTypeUnknown:
             return @"";
     }
@@ -62,7 +77,14 @@
                                    @"quit": @(IRCMessageTypeQuit),
                                    @"ping": @(IRCMessageTypePing),
                                    @"invite": @(IRCMessageTypeInvite),
-                                   @"names": @(IRCMessageTypeNames)
+                                   @"names": @(IRCMessageTypeNames),
+                                   @"finger": @(IRCMessageTypeCTCPFinger),
+                                   @"version": @(IRCMessageTypeCTCPVersion),
+                                   @"source": @(IRCMessageTypeCTCPSource),
+                                   @"userinfo": @(IRCMessageTypeCTCPUserInfo),
+                                   @"clientinfo": @(IRCMessageTypeCTCPClientInfo),
+                                   @"ping": @(IRCMessageTypeCTCPPing),
+                                   @"time": @(IRCMessageTypeCTCPTime)
                                    };
     if ([[messageTypes allKeys] containsObject:messageString]) {
         return [messageTypes[messageString] intValue];
@@ -156,6 +178,7 @@
         case IRCMessageTypeNotice:
         case IRCMessageTypePrivmsg:
             self.message = trailing;
+            [self parseCTCP];
             break;
         case IRCMessageTypeMode: {
             NSMutableArray *modes = [[NSMutableArray alloc] init];
@@ -200,6 +223,83 @@
         case IRCMessageTypeInvite:
             break;
         case IRCMessageTypeUnknown:
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)parseCTCP
+{
+    NSString *msg = self.message;
+    NSString *delim = [NSString stringWithFormat:@"%c", 1];
+    if ([msg characterAtIndex:0] != 1) {
+        return; // not up to spec, but this passes my tests.
+    }
+    NSString *rest = [msg substringFromIndex:1];
+    NSRange range = [rest rangeOfString:delim];
+    rest = [rest substringWithRange:NSMakeRange(0, range.location)];
+    self.command = [RBIRCMessage getMessageTypeForString:rest];
+    if ([rest hasPrefix:@"PING"]) {
+        self.command = IRCMessageTypeCTCPPing;
+    }
+    if (self.command == IRCMessageTypeUnknown) {
+        if ([rest hasPrefix:@"ACTION"]) {
+            NSString *contents = [rest substringFromIndex:7];
+            NSString *message = [NSString stringWithFormat:@"%@ %@", self.from, contents];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        } else {
+            self.command = IRCMessageTypeCTCPErrMsg;
+            self.extra = @"Unrecognized CTCP command";
+        }
+        return;
+    }
+    NSString *repl = nil;
+    switch (self.command) {
+        case IRCMessageTypeCTCPFinger:
+            repl = [[NSUserDefaults standardUserDefaults] objectForKey:RBCTCPFinger];
+            if (repl) {
+                self.extra = repl;
+            } else {
+                self.extra = @"Unknown";
+            }
+            self.extra = [@":" stringByAppendingString:self.extra];
+            break;
+        case IRCMessageTypeCTCPVersion: {
+            repl = [[NSUserDefaults standardUserDefaults] objectForKey:RBCTCPVersion];
+            if (repl) {
+                self.extra = repl;
+            } else {
+                NSDictionary *info = [[NSBundle mainBundle] infoDictionary]; // I actually want this in english...
+                NSString *appname = [info objectForKey:@"CFBundleDisplayName"];
+                NSString *version = [info objectForKey:@"CFBundleVersion"];
+                NSString *iOSVersion = [UIDevice currentDevice].systemName;
+                self.extra = [NSString stringWithFormat:@"%@:%@:%@", appname, version, iOSVersion];
+            }
+            break;
+        } case IRCMessageTypeCTCPSource:
+            self.extra = @"https://github.com/younata/IRCClient/";
+            break;
+        case IRCMessageTypeCTCPUserInfo:
+            repl = [[NSUserDefaults standardUserDefaults] objectForKey:RBCTCPUserInfo];
+            if (repl) {
+                self.extra = repl;
+            } else {
+                self.extra = @"Unknown";
+            }
+            self.extra = [@":" stringByAppendingString:self.extra];
+            break;
+        case IRCMessageTypeCTCPClientInfo:
+            self.extra = @"FINGER VERSION SOURCE USERINFO CLIENTINFO PING TIME";
+            break;
+        case IRCMessageTypeCTCPPing:
+            self.extra = [rest substringFromIndex:5];
+            break;
+        case IRCMessageTypeCTCPTime: {
+            NSDate *now = [NSDate date];
+            self.extra = [now descriptionWithLocale:[NSLocale currentLocale]];
+            break;
+        } default:
             break;
     }
 }

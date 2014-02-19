@@ -275,6 +275,21 @@
             [del IRCServer:self handleMessage:msg];
         }
     }
+    
+    switch (msg.command) {
+        case IRCMessageTypeCTCPFinger:
+        case IRCMessageTypeCTCPVersion:
+        case IRCMessageTypeCTCPSource:
+        case IRCMessageTypeCTCPUserInfo:
+        case IRCMessageTypeCTCPClientInfo:
+        case IRCMessageTypeCTCPPing:
+        case IRCMessageTypeCTCPTime: {
+            NSString *ret = [NSString stringWithFormat:@"NOTICE %@ :%c%@ %@%c\r\n", msg.from, 1, [RBIRCMessage getMessageStringForType:msg.command], msg.extra, 1];
+            [self sendCommand:ret];
+            break;
+        } default:
+            break;
+    }
 }
 
 -(void)dealloc

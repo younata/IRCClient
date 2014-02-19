@@ -189,7 +189,8 @@ static NSString *textFieldCell = @"textFieldCell";
             if (!(theEditor.server.connected || theEditor.server.readStream.streamStatus == NSStreamStatusOpening)) {
                 [theSelf.servers removeObject:theEditor.server];
             }
-            [self.tableView reloadData];
+            [theSelf.tableView reloadData];
+            [theSelf saveServerData];
         };
     }
     if (editor) {

@@ -80,6 +80,64 @@ describe(@"RBIRCMessage", ^{
         msg = createMsg(@"PING :EF0896");
         msg.message should equal(@"EF0896");
     });
+    
+    describe(@"Client to Client Protocol (CTCP)", ^{
+        NSString *delim = [NSString stringWithFormat:@"%c", 1];
+        // DIIIICK.
+        describe(@"Extended data", ^{
+            it(@"should ACTION", ^{
+                NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :%@ACTION dies.%@", delim, delim];
+                msg = createMsg(str);
+                msg.attributedMessage.string should equal(@"ik dies.");
+            });
+            it(@"should DCC", PENDING); // No one I know actually uses this.
+            it(@"should SED", PENDING); // I can't actually find a spec for this.
+            // Also, NO ONE USES THIS.
+        });
+        describe(@"request/repl pairs", ^{
+            it(@"should FINGER", ^{ // gigidy
+                NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG test :%@FINGER%@", delim, delim];
+                msg = createMsg(str);
+                msg.command should equal(IRCMessageTypeCTCPFinger);
+            });
+            
+            it(@"should VERSION", ^{
+                NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG test :%@VERSION%@", delim, delim];
+                msg = createMsg(str);
+                msg.command should equal(IRCMessageTypeCTCPVersion);
+            });
+            
+            it(@"should SOURCE", ^{
+                NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG test :%@SOURCE%@", delim, delim];
+                msg = createMsg(str);
+                msg.command should equal(IRCMessageTypeCTCPSource);
+            });
+            
+            it(@"should USERINFO", ^{
+                NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG test :%@USERINFO%@", delim, delim];
+                msg = createMsg(str);
+                msg.command should equal(IRCMessageTypeCTCPUserInfo);
+            });
+            
+            it(@"should CLIENTINFO", ^{
+                NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG test :%@CLIENTINFO%@", delim, delim];
+                msg = createMsg(str);
+                msg.command should equal(IRCMessageTypeCTCPClientInfo);
+            });
+            
+            it(@"should PING", ^{
+                NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG test :%@PING 123456789%@", delim, delim];
+                msg = createMsg(str);
+                msg.command should equal(IRCMessageTypeCTCPPing);
+            });
+            
+            it(@"should TIME", ^{
+                NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG test :%@TIME%@", delim, delim];
+                msg = createMsg(str);
+                msg.command should equal(IRCMessageTypeCTCPTime);
+            });
+        });
+    });
 });
 
 SPEC_END

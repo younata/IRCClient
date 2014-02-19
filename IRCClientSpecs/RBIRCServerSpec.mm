@@ -154,6 +154,60 @@ describe(@"RBIRCServer", ^{
             checkSend(@"notice target :hello world");
         });
     });
+    
+    describe(@"sending CTCP responses", ^{
+        NSString *delim = [NSString stringWithFormat:@"%c", 1];
+        
+        __block NSString *str;
+        
+        NSString *(^createCTCPMessage)(NSString *) = ^NSString *(NSString *command){
+            return [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG test :%@%@%@\r\n", delim, command, delim];
+        };
+        NSString *(^createCTCPResponse)(NSString *) = ^NSString *(NSString *response){
+            return [NSString stringWithFormat:@"NOTICE ik :%@%@%@\r\n", delim, response, delim];
+        };
+        beforeEach(^{
+            subject.nick = @"test";
+            spy_on(subject);
+        });
+        
+        it(@"should FINGER", ^{
+            str = createCTCPMessage(@"FINGER");
+            [subject receivedString:str];
+            subject should have_received("sendCommand:").with(createCTCPResponse(@"FINGER :Unknown"));
+        });
+        
+        it(@"should VERSION", ^{
+            str = createCTCPMessage(@"VERSION");
+            [subject receivedString:str];
+            subject should have_received("sendCommand:").with(Arguments::any([NSString class]));
+        });
+        
+        it(@"should SOURCE", ^{
+            [subject receivedString:createCTCPMessage(@"SOURCE")];
+            subject should have_received("sendCommand:").with(createCTCPResponse(@"SOURCE https://github.com/younata/IRCClient/"));
+        });
+        
+        it(@"should USERINFO", ^{
+            [subject receivedString:createCTCPMessage(@"USERINFO")];
+            subject should have_received("sendCommand:").with(createCTCPResponse(@"USERINFO :Unknown"));
+        });
+        
+        it(@"should CLIENTINFO", ^{
+            [subject receivedString:createCTCPMessage(@"CLIENTINFO")];
+            subject should have_received("sendCommand:").with(createCTCPResponse(@"CLIENTINFO FINGER VERSION SOURCE USERINFO CLIENTINFO PING TIME"));
+        });
+        
+        it(@"should PING", ^{
+            [subject receivedString:createCTCPMessage(@"PING 123456789")];
+            subject should have_received("sendCommand:").with(createCTCPResponse(@"PING 123456789"));
+        });
+        
+        it(@"should TIME", ^{
+            [subject receivedString:createCTCPMessage(@"TIME")];
+            subject should have_received("sendCommand:");
+        });
+    });
 });
 
 SPEC_END
