@@ -8,6 +8,8 @@
 
 #import "RBServerViewController.h"
 #import "RBIRCServer.h"
+#import "RBIRCChannel.h"
+#import "RBIRCMessage.h"
 
 #import "RBServerVCDelegate.h"
 #import "RBServerEditorViewController.h"
@@ -62,6 +64,16 @@ static NSString *textFieldCell = @"textFieldCell";
     [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
 }
 
+-(NSArray *)sortChannelsForServer:(RBIRCServer *)server
+{
+    NSMutableArray *channels = [server.channels.allKeys mutableCopy];
+    [channels removeObject:RBIRCServerLog];
+    NSArray *ret = [channels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
+        return [(NSString *)obj1 compare:(NSString *)obj2];
+    }];
+    return [@[server.serverName, RBIRCServerLog] arrayByAddingObjectsFromArray:ret];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -75,7 +87,7 @@ static NSString *textFieldCell = @"textFieldCell";
         return 1;
     }
     RBIRCServer *server = self.servers[section];
-    return [server.channels count] + 2;
+    return [self sortChannelsForServer:server].count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -100,16 +112,15 @@ static NSString *textFieldCell = @"textFieldCell";
         } else {
             cell.textLabel.textColor = [UIColor darkTextColor];
         }
-        NSArray *channels = [server.channels allKeys];
-        if (row != 0 && row != [server.channels count] + 1) {
-            cell.textLabel.text = channels[row - 1];
-        } else if (row == 0) {
-            cell.textLabel.text = server.serverName;
-        } else {
+        NSArray *channels = [self sortChannelsForServer:server];
+        if (row == channels.count) {
             RBTextFieldServerCell *c = (RBTextFieldServerCell *)cell;
             c.textField.placeholder = NSLocalizedString(@"Join a channel", nil);
             c.data = server;
             c.textField.delegate = self;
+            cell = c;
+        } else {
+            cell.textLabel.text = channels[row];
         }
     }
     
@@ -152,7 +163,9 @@ static NSString *textFieldCell = @"textFieldCell";
         NSString *channelName = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
         if ([channelName isEqualToString:RBIRCServerLog])
             return;
-        [server part:channelName];
+        if (([channelName hasPrefix:@"#"] || [channelName hasPrefix:@"&"])) {
+            [server part:channelName];
+        }
     }
     [self saveServerData];
     [tableView reloadData];
@@ -230,6 +243,14 @@ static NSString *textFieldCell = @"textFieldCell";
 {
     NSLog(@"%@ - %@", server.serverName, server.connected ? @"Connected" : @"Not Connected");
     [self.tableView reloadData];
+}
+
+-(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message
+{
+    NSString *to = message.targets[0];
+    if ((![server[to] isChannel] || message.command == IRCMessageTypeJoin)) {
+        [self.tableView reloadData];
+    }
 }
 
 @end

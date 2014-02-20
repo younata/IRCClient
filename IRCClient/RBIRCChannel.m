@@ -69,6 +69,11 @@
     [_log addObject:message];
 }
 
+-(BOOL)isChannel
+{
+    return [self.name hasPrefix:@"#"] || [self.name hasPrefix:@"&"];
+}
+
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"%@: connect: %@", self.name, self.connectOnStartup ? @"YES" : @"NO"];

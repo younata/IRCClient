@@ -10,6 +10,7 @@
 #import "NSString+contains.h"
 #import "RBIRCServer.h" // just for RBIRCServerLog...
 #import "RBConfigurationKeys.h"
+#import "UIDevice+Categories.h"
 
 @implementation RBIRCMessage
 
@@ -276,8 +277,9 @@
                 NSDictionary *info = [[NSBundle mainBundle] infoDictionary]; // I actually want this in english...
                 NSString *appname = [info objectForKey:@"CFBundleDisplayName"];
                 NSString *version = [info objectForKey:@"CFBundleVersion"];
-                NSString *iOSVersion = [UIDevice currentDevice].systemName;
-                self.extra = [NSString stringWithFormat:@"%@:%@:%@", appname, version, iOSVersion];
+                UIDevice *cd = [UIDevice currentDevice];
+                NSString *device = [NSString stringWithFormat:@"%@ %@ on an %@", cd.systemName, cd.systemVersion, cd.platformString];
+                self.extra = [NSString stringWithFormat:@"%@ version %@ running on %@", appname, version, device];
             }
             break;
         } case IRCMessageTypeCTCPSource:

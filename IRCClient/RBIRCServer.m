@@ -79,7 +79,7 @@
                     continue;
                 }
                 RBIRCChannel *channel = self.channels[key];
-                if (channel.connectOnStartup) {
+                if (channel.connectOnStartup && channel.isChannel) {
                     NSString *s = [NSString stringWithFormat:@"join %@", key];
                     if ([channel.password hasContent]) {
                         s = [NSString stringWithFormat:@"%@ %@", s, channel.password];
@@ -252,13 +252,24 @@
         [self sendCommand:[NSString stringWithFormat:@"PONG %@", msg.message]];
         return;
     }
+    
+    if (([msg.from containsSubstring:self.hostname]) && (msg.commandNumber == 1)) {
+        while (self.commandQueue.count > 0) {
+            [self sendCommand:self.commandQueue.lastObject];
+            [self.commandQueue removeLastObject];
+        }
+    }
+    
     RBIRCChannel *ch;
     for (int i = 0; i < msg.targets.count; i++) {
         NSString *to = msg.targets[i];
         if ([to isEqualToString:self.nick]) {
             to = msg.from;
         }
-        if (![to hasContent] || [to isEqualToString:@"*"]) {
+        if (msg.command == IRCMessageTypeNotice) {
+            to = nil;
+        }
+        if (![to hasContent] || [to isEqualToString:@"*"] || [to isEqualToString:@"AUTH"] || [to containsSubstring:self.hostname]) {
             ch = [channels objectForKey:RBIRCServerLog];
             msg.message = msg.rawMessage;
             to = RBIRCServerLog;

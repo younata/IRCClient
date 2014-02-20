@@ -24,5 +24,6 @@
 
 -(instancetype)initWithName:(NSString *)name;
 -(void)logMessage:(RBIRCMessage *)message;
+-(BOOL)isChannel; // or PM...
 
 @end

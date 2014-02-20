@@ -24,6 +24,14 @@
 		8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20718878F1100042A13 /* RBIRCChannel.m */; };
 		8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20A18878FAA00042A13 /* RBIRCMessage.m */; };
 		8906F212188799C000042A13 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
+		8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBB718B5B3B1004DFBAB /* UIDevice-Hardware.m */; };
+		8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBB718B5B3B1004DFBAB /* UIDevice-Hardware.m */; };
+		8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBB18B5B3B1004DFBAB /* UIDevice-Orientation.m */; };
+		8908DBC518B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBB18B5B3B1004DFBAB /* UIDevice-Orientation.m */; };
+		8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBD18B5B3B1004DFBAB /* UIDevice-Reachability.m */; };
+		8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBD18B5B3B1004DFBAB /* UIDevice-Reachability.m */; };
+		8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
+		8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
 		891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
 		891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
@@ -113,6 +121,15 @@
 		8906F20A18878FAA00042A13 /* RBIRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCMessage.m; sourceTree = "<group>"; };
 		8906F210188799C000042A13 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		8906F211188799C000042A13 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		8908DBB618B5B3B1004DFBAB /* UIDevice-Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Hardware.h"; sourceTree = "<group>"; };
+		8908DBB718B5B3B1004DFBAB /* UIDevice-Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Hardware.m"; sourceTree = "<group>"; };
+		8908DBBA18B5B3B1004DFBAB /* UIDevice-Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Orientation.h"; sourceTree = "<group>"; };
+		8908DBBB18B5B3B1004DFBAB /* UIDevice-Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Orientation.m"; sourceTree = "<group>"; };
+		8908DBBC18B5B3B1004DFBAB /* UIDevice-Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Reachability.h"; sourceTree = "<group>"; };
+		8908DBBD18B5B3B1004DFBAB /* UIDevice-Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Reachability.m"; sourceTree = "<group>"; };
+		8908DBC818B5B3CC004DFBAB /* UIDevice+Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Categories.h"; sourceTree = "<group>"; };
+		8908DBC918B5B3E8004DFBAB /* wwanconnect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wwanconnect.c; sourceTree = "<group>"; };
+		8908DBCA18B5B3E8004DFBAB /* wwanconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wwanconnect.h; sourceTree = "<group>"; };
 		891B01E2189650DA00B2D848 /* IRCClientSpecs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRCClientSpecs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		891B01E8189650DA00B2D848 /* IRCClientSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientSpecs-Info.plist"; sourceTree = "<group>"; };
 		891B01EA189650DA00B2D848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -203,6 +220,7 @@
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
+				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
 				898132FD18A9A274004AEBE9 /* UIView+AutoLayout */,
 				899B2A93189913840008FED3 /* RBCategories */,
 				8906F1D018867BEE00042A13 /* IRCClient */,
@@ -271,6 +289,22 @@
 				89C46E4918960C96006068DC /* reveal-icon@2x.png */,
 			);
 			path = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		8908DBB318B5B39D004DFBAB /* UIDevice Categories */ = {
+			isa = PBXGroup;
+			children = (
+				8908DBC918B5B3E8004DFBAB /* wwanconnect.c */,
+				8908DBCA18B5B3E8004DFBAB /* wwanconnect.h */,
+				8908DBB618B5B3B1004DFBAB /* UIDevice-Hardware.h */,
+				8908DBB718B5B3B1004DFBAB /* UIDevice-Hardware.m */,
+				8908DBBA18B5B3B1004DFBAB /* UIDevice-Orientation.h */,
+				8908DBBB18B5B3B1004DFBAB /* UIDevice-Orientation.m */,
+				8908DBBC18B5B3B1004DFBAB /* UIDevice-Reachability.h */,
+				8908DBBD18B5B3B1004DFBAB /* UIDevice-Reachability.m */,
+				8908DBC818B5B3CC004DFBAB /* UIDevice+Categories.h */,
+			);
+			name = "UIDevice Categories";
 			sourceTree = "<group>";
 		};
 		891B01E6189650DA00B2D848 /* IRCClientSpecs */ = {
@@ -563,10 +597,14 @@
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
+				8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
+				8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				898132FB18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
+				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				899B2A9E189913840008FED3 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
+				8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
 				899B2AA0189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				898132F218A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
@@ -586,11 +624,13 @@
 			files = (
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
+				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
 				898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
+				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
@@ -603,8 +643,10 @@
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
 				898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
+				8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				898132CF18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm in Sources */,
 				891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */,
+				8908DBC518B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
 				898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
 				891B01ED189650DA00B2D848 /* main.m in Sources */,
 				899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */,

@@ -9,6 +9,7 @@
 #import "RBChannelViewController.h"
 
 #import "UIButton+buttonWithFrame.h"
+#import "NSString+isNilOrEmpty.h"
 
 #import "RBIRCServer.h"
 #import "RBIRCChannel.h"
@@ -122,6 +123,33 @@ static NSString *CellIdentifier = @"Cell";
     self.actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
     
     for (NSString *str in @[@"notice", @"mode", @"kick", @"topic", @"nick", @"quit", @"action", @"ctcp"]) {
+        [self.actionSheet addButtonWithTitle:str];
+    }
+    
+    UIActionSheet *as = self.actionSheet;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        [as showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
+    } else {
+        [as showInView:self.view.superview];
+    }
+}
+
+-(void)showCTCPCommands
+{
+    self.actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"CTCP Commands", nil)
+                                                   delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:nil];
+    self.actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
+    
+    for (NSString *str in @[@"finger",
+                            @"version",
+                            @"source",
+                            @"userinfo",
+                            @"clientinfo",
+                            @"ping",
+                            @"time"]) {
         [self.actionSheet addButtonWithTitle:str];
     }
     
@@ -344,6 +372,13 @@ static NSString *CellIdentifier = @"Cell";
     }
     [self.tableView reloadData];
     
+    textField.text = @"";
+    NSInteger rows = [self.tableView numberOfRowsInSection:0];
+    if (rows != 0) {
+        rows--;
+    }
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
     return YES;
 }
 
@@ -352,6 +387,12 @@ static NSString *CellIdentifier = @"Cell";
     self.navigationItem.title = @"Disconnected";
     self.input.enabled = NO;
     self.inputCommands.enabled = NO;
+}
+
+-(void)connect
+{
+    self.input.enabled = YES;
+    self.inputCommands.enabled = YES;
 }
 
 #pragma mark - RBServerVCDelegate
@@ -363,6 +404,7 @@ static NSString *CellIdentifier = @"Cell";
     self.server = server;
     self.channel = newChannel.name;
     self.navigationItem.title = newChannel.name;
+    [self connect];
     if (!self.server.connected) {
         [self disconnect];
     }
@@ -429,12 +471,22 @@ static NSString *CellIdentifier = @"Cell";
 {
     if ([actionSheet cancelButtonIndex] == buttonIndex)
         return;
+    NSString *str = @"";
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
-    if ([title isEqualToString:@"action"])
-        title = @"me";
-    NSString *str = [NSString stringWithFormat:@"/%@ ", title];
-    
-    self.input.text = [str stringByAppendingString:self.input.text];
+    if ([actionSheet.title isEqualToString:NSLocalizedString(@"Commands", nil)]) {
+        if ([title isEqualToString:@"action"])
+            title = @"me";
+        str = [NSString stringWithFormat:@"/%@ ", title];
+        if ([title isEqualToString:@"ctcp"]) {
+            [self showCTCPCommands];
+        }
+    } else if ([actionSheet.title isEqualToString:NSLocalizedString(@"CTCP Commands", nil)]) {
+        str = [NSString stringWithFormat:@"/ctcp  %@", title];
+        UITextPosition *startPosition = [self.input positionFromPosition:self.input.beginningOfDocument offset:6];
+        UITextRange *selection = [self.input textRangeFromPosition:startPosition toPosition:startPosition];
+        self.input.selectedTextRange = selection;
+    }
+    self.input.text = str;
 }
 
 @end
