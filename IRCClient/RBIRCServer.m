@@ -255,7 +255,10 @@
     RBIRCChannel *ch;
     for (int i = 0; i < msg.targets.count; i++) {
         NSString *to = msg.targets[i];
-        if (![to hasContent] || [to isEqualToString:@"*"] || [to isEqualToString:self.nick]) {
+        if ([to isEqualToString:self.nick]) {
+            to = msg.from;
+        }
+        if (![to hasContent] || [to isEqualToString:@"*"]) {
             ch = [channels objectForKey:RBIRCServerLog];
             msg.message = msg.rawMessage;
             to = RBIRCServerLog;
@@ -288,6 +291,8 @@
         case IRCMessageTypeCTCPTime: {
             NSString *ret = [NSString stringWithFormat:@"NOTICE %@ :%c%@ %@%c\r\n", msg.from, 1, [RBIRCMessage getMessageStringForType:msg.command], msg.extra, 1];
             [self sendCommand:ret];
+            RBIRCMessage *a = [[RBIRCMessage alloc] initWithRawMessage:ret];
+            [[self[a.targets[0]] log] addObject:a];
             break;
         } default:
             break;

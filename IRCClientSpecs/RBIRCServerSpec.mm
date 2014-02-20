@@ -1,5 +1,6 @@
 #import "RBIRCServer.h"
 #import "RBIRCMessage.h"
+#import "RBIRCChannel.h"
 #import "NSData+string.h"
 #include <string.h>
 #include <semaphore.h>
@@ -199,8 +200,20 @@ describe(@"RBIRCServer", ^{
         });
         
         it(@"should PING", ^{
-            [subject receivedString:createCTCPMessage(@"PING 123456789")];
-            subject should have_received("sendCommand:").with(createCTCPResponse(@"PING 123456789"));
+            double firstTimeStamp = [[NSDate date] timeIntervalSince1970];
+            NSString *str = [NSString stringWithFormat:@"PING %f", firstTimeStamp];
+            [subject receivedString:createCTCPMessage(str)];
+            subject should have_received("sendCommand:").with(createCTCPResponse(str));
+            RBIRCMessage *msg = [[subject[@"ik"] log] lastObject];
+            [msg.attributedMessage.string hasPrefix:@"CTCP Ping reply: "] should be_truthy;
+            [msg.attributedMessage.string hasSuffix:@"seconds"] should be_truthy;
+            NSInteger loc =[@"CTCP Ping reply: " length];
+            NSRange range = NSMakeRange(loc, [msg.attributedMessage.string rangeOfString:@" seconds"].location - loc);
+            str = [msg.attributedMessage.string substringWithRange:range];
+            double d = [str doubleValue];
+            d should_not equal(0);
+            double secondTimeStamp = [[NSDate date] timeIntervalSince1970];
+            d should be_lte(secondTimeStamp - firstTimeStamp);
         });
         
         it(@"should TIME", ^{

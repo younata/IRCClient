@@ -176,9 +176,12 @@
             self.message = trailing;
             break;
         case IRCMessageTypeNotice:
+            self.message = trailing;
+            [self parseCTCPResponse];
+            break;
         case IRCMessageTypePrivmsg:
             self.message = trailing;
-            [self parseCTCP];
+            [self parseCTCPRequest];
             break;
         case IRCMessageTypeMode: {
             NSMutableArray *modes = [[NSMutableArray alloc] init];
@@ -229,7 +232,7 @@
     }
 }
 
--(void)parseCTCP
+-(void)parseCTCPRequest // privmsg
 {
     NSString *msg = self.message;
     NSString *delim = [NSString stringWithFormat:@"%c", 1];
@@ -239,11 +242,11 @@
     NSString *rest = [msg substringFromIndex:1];
     NSRange range = [rest rangeOfString:delim];
     rest = [rest substringWithRange:NSMakeRange(0, range.location)];
-    self.command = [RBIRCMessage getMessageTypeForString:rest];
+    IRCMessageType newCmd = [RBIRCMessage getMessageTypeForString:rest];
     if ([rest hasPrefix:@"PING"]) {
-        self.command = IRCMessageTypeCTCPPing;
+        newCmd = IRCMessageTypeCTCPPing;
     }
-    if (self.command == IRCMessageTypeUnknown) {
+    if (newCmd == IRCMessageTypeUnknown) {
         if ([rest hasPrefix:@"ACTION"]) {
             NSString *contents = [rest substringFromIndex:7];
             NSString *message = [NSString stringWithFormat:@"%@ %@", self.from, contents];
@@ -255,7 +258,7 @@
         return;
     }
     NSString *repl = nil;
-    switch (self.command) {
+    switch (newCmd) {
         case IRCMessageTypeCTCPFinger:
             repl = [[NSUserDefaults standardUserDefaults] objectForKey:RBCTCPFinger];
             if (repl) {
@@ -302,6 +305,57 @@
         } default:
             break;
     }
+    self.command = newCmd;
+}
+
+-(void)parseCTCPResponse // notice
+{
+    NSString *msg = self.message;
+    NSString *delim = [NSString stringWithFormat:@"%c", 1];
+    if ([msg characterAtIndex:0] != 1) {
+        return; // not up to spec, but this passes my tests.
+    }
+    NSString *rest = [msg substringFromIndex:1];
+    NSRange range = [rest rangeOfString:delim];
+    rest = [rest substringWithRange:NSMakeRange(0, range.location)];
+    IRCMessageType newCmd = [RBIRCMessage getMessageTypeForString:rest];
+    if ([rest hasPrefix:@"PING"]) {
+        newCmd = IRCMessageTypeCTCPPing;
+    }
+    if (newCmd == IRCMessageTypeUnknown) {
+        if ([rest hasPrefix:@"ACTION"]) {
+            NSString *contents = [rest substringFromIndex:7];
+            NSString *message = [NSString stringWithFormat:@"%@ %@", self.from, contents];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        } else {
+            self.command = IRCMessageTypeCTCPErrMsg;
+            self.extra = @"Unrecognized CTCP command";
+        }
+        return;
+    }
+    NSString *repl = [rest substringFromIndex:[rest rangeOfString:@" "].location + 1];
+    switch (newCmd) {
+        case IRCMessageTypeCTCPFinger:
+        case IRCMessageTypeCTCPUserInfo:
+            repl = [repl substringFromIndex:1];
+            break;
+        case IRCMessageTypeCTCPVersion:
+        case IRCMessageTypeCTCPSource:
+        case IRCMessageTypeCTCPClientInfo:
+        case IRCMessageTypeCTCPTime:
+            break;
+        case IRCMessageTypeCTCPPing: {
+            double timestamp = [repl doubleValue];
+            double now = [[NSDate date] timeIntervalSince1970];
+            double difference = now - timestamp;
+            repl = [NSString stringWithFormat:@"%f seconds", difference];
+            break;
+        }
+        default:
+            break;
+    }
+    NSString *str = [NSString stringWithFormat:@"CTCP %@ reply: %@", [[RBIRCMessage getMessageStringForType:newCmd] capitalizedString], repl];
+    self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
 }
 
 -(NSString *)description

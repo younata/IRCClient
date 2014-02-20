@@ -305,15 +305,20 @@ static NSString *CellIdentifier = @"Cell";
                 target = self.channel;
                 action = c[0];
             }
-            NSString *str = [NSString stringWithFormat:@"PRIVMSG %@ :%c%@%c\r\n", target, 1, [action uppercaseString], 1];
-            [self.server sendCommand:str];
+            NSString *cmd = [NSString stringWithFormat:@"PRIVMSG %@ :%c%@%c\r\n", target, 1, [action uppercaseString], 1];
+
+            if ([[action uppercaseString] isEqualToString:@"PING"]) {
+                double timestamp = [[NSDate date] timeIntervalSince1970];
+                cmd = [NSString stringWithFormat:@"PRIVMSG %@ :%c%@ %f%c\r\n", target, 1, [action uppercaseString], timestamp, 1];
+            }
+            [self.server sendCommand:cmd];
             RBIRCMessage *msg = [[RBIRCMessage alloc] init];
             msg.from = self.server.nick;
             msg.targets = [@[target] mutableCopy];
             msg.message = action;
             msg.command = [RBIRCMessage getMessageTypeForString:action];
-            msg.rawMessage = str;
-            [self.server[target] addObject:str];
+            msg.rawMessage = cmd;
+            [[self.server[target] log] addObject:msg];
         } else if ([command isEqualToString:@"me"]) {
             NSString *action = [NSString stringWithFormat:@"PRIVMSG %@ :%cACTION %@%c\r\n", self.channel, 1, str, 1];
             [self.server sendCommand:action];
@@ -324,7 +329,7 @@ static NSString *CellIdentifier = @"Cell";
             msg.command = IRCMessageTypePrivmsg;
             msg.rawMessage = str;
             msg.attributedMessage = [[NSAttributedString alloc] initWithString:msg.message attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
-            [self.server[self.channel] addObject:str];
+            [[self.server[self.channel] log] addObject:msg];
         }
     } else {
         [self.server privmsg:self.channel contents:str];
@@ -336,8 +341,8 @@ static NSString *CellIdentifier = @"Cell";
         msg.command = IRCMessageTypePrivmsg;
         msg.rawMessage = [NSString stringWithFormat:@"PRIVMSG %@ %@", msg.targets[0], str];
         [[self.server[self.channel] log] addObject:msg];
-        [self.tableView reloadData];
     }
+    [self.tableView reloadData];
     
     return YES;
 }

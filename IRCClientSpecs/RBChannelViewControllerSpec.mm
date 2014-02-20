@@ -68,6 +68,7 @@ describe(@"RBChannelViewController", ^{
             it(@"should prepend /me to the input field for actions", ^{
                 for (int i = 0; i < [subject.actionSheet numberOfButtons]; i++) {
                     if ([[subject.actionSheet buttonTitleAtIndex:i] isEqualToString:@"action"]) {
+                        [subject actionSheet:subject.actionSheet clickedButtonAtIndex:i];
                         [subject.input.text hasPrefix:@"/me"] should be_truthy;
                     }
                 }
@@ -105,6 +106,11 @@ describe(@"RBChannelViewController", ^{
             it(@"should arbitrary CTCP", ^{
                 addTextAndSend(@"/ctcp ik arbitraryctcpcommand");
                 server should have_received("sendCommand:").with(sendCTCP(@"ik", [@"arbitraryctcpcommand" uppercaseString]));
+            });
+            
+            it(@"should PING", ^{
+                addTextAndSend(@"/ctcp ik ping");
+                server should have_received("sendCommand:").with(Arguments::any([NSString class]));
             });
         });
         
