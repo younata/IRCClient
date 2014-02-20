@@ -138,7 +138,9 @@
 -(void)sendCommand:(NSString *)command
 {
     printf("sending: '%s'\n", command.UTF8String);
-    command = [command stringByAppendingString:@"\r\n"];
+    if (![command hasSuffix:[NSString stringWithFormat:@"\r\n"]]) {
+        command = [command stringByAppendingString:@"\r\n"];
+    }
     signed long numBytesWritten = [writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
     if (numBytesWritten < 0) {
         NSError *error = [writeStream streamError];

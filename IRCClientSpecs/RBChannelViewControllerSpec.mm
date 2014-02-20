@@ -32,6 +32,7 @@ describe(@"RBChannelViewController", ^{
         server stub_method("kick:target:").with(Arguments::any([NSString class]), Arguments::any([NSString class]));
         server stub_method("kick:target:reason:").with(Arguments::any([NSString class]), Arguments::any([NSString class]), Arguments::any([NSString class]));
         server stub_method("privmsg:contents:").with(Arguments::any([NSString class]), Arguments::any([NSString class]));
+        server stub_method("sendCommand:").with(Arguments::any([NSString class]));
         subject.server = server;
     });
     
@@ -53,7 +54,7 @@ describe(@"RBChannelViewController", ^{
             
             it(@"should have a button for most of the commands listed in IRCMessageType", ^{
                 NSArray *arr = [subject.actionSheet allButtonTitles];
-                for (NSString *str in @[@"notice", @"mode", @"kick", @"topic", @"nick", @"quit"]) {
+                for (NSString *str in @[@"notice", @"mode", @"kick", @"topic", @"nick", @"quit", @"action", @"ctcp"]) {
                     arr should contain(str);
                 }
             });
@@ -61,8 +62,15 @@ describe(@"RBChannelViewController", ^{
             it(@"should prepend text to the input field when a button is pressed", ^{
                 NSString *str = [subject.actionSheet buttonTitleAtIndex:1];
                 [subject actionSheet:subject.actionSheet didDismissWithButtonIndex:1];
-                
                 [subject.input.text hasPrefix:[NSString stringWithFormat:@"/%@", str]] should be_truthy;
+            });
+            
+            it(@"should prepend /me to the input field for actions", ^{
+                for (int i = 0; i < [subject.actionSheet numberOfButtons]; i++) {
+                    if ([[subject.actionSheet buttonTitleAtIndex:i] isEqualToString:@"action"]) {
+                        [subject.input.text hasPrefix:@"/me"] should be_truthy;
+                    }
+                }
             });
             
             it(@"should not prepend text if cancel is pressed", ^{
@@ -71,6 +79,33 @@ describe(@"RBChannelViewController", ^{
                 subject.input.text.length should equal(0);
             });
             
+        });
+        
+        describe(@"CTCP", ^{
+            NSString *delim = [NSString stringWithFormat:@"%c", 1];
+
+            NSString *(^sendCTCP)(NSString *, NSString *) = ^NSString *(NSString *target, NSString *msg){
+                return [NSString stringWithFormat:@"PRIVMSG %@ :%@%@%@\r\n", target, delim, msg, delim];
+            };
+            
+            void (^addTextAndSend)(NSString *) = ^(NSString *msg){
+                subject.input.text = msg;
+                [subject textFieldShouldReturn:subject.input];
+            };
+            it(@"should ACTION", ^{
+                addTextAndSend(@"/me codes.");
+                server should have_received("sendCommand:").with(sendCTCP(subject.channel, @"ACTION codes."));
+            });
+            
+            it(@"should FINGER", ^{
+                addTextAndSend(@"/ctcp ik finger");
+                server should have_received("sendCommand:").with(sendCTCP(@"ik", @"FINGER"));
+            });
+            
+            it(@"should arbitrary CTCP", ^{
+                addTextAndSend(@"/ctcp ik arbitraryctcpcommand");
+                server should have_received("sendCommand:").with(sendCTCP(@"ik", [@"arbitraryctcpcommand" uppercaseString]));
+            });
         });
         
         it(@"should nick", ^{

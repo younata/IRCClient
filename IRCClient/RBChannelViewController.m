@@ -121,7 +121,7 @@ static NSString *CellIdentifier = @"Cell";
                                           otherButtonTitles:nil];
     self.actionSheet.actionSheetStyle = UIActionSheetStyleAutomatic;
     
-    for (NSString *str in @[@"notice", @"mode", @"kick", @"topic", @"nick", @"quit"]) {
+    for (NSString *str in @[@"notice", @"mode", @"kick", @"topic", @"nick", @"quit", @"action", @"ctcp"]) {
         [self.actionSheet addButtonWithTitle:str];
     }
     
@@ -231,6 +231,7 @@ static NSString *CellIdentifier = @"Cell";
 {
     NSString *str = textField.text;
     if ([str hasPrefix:@"/"]) {
+        
         str = [str substringFromIndex:1];
         NSArray *c = [str componentsSeparatedByString:@" "];
         NSString *command = c[0];
@@ -294,6 +295,36 @@ static NSString *CellIdentifier = @"Cell";
             }
             default:
                 break;
+        }
+        if ([command isEqualToString:@"ctcp"]) {
+            NSString *target, *action;
+            if (c.count > 1) {
+                target = c[0];
+                action = c[1];
+            } else {
+                target = self.channel;
+                action = c[0];
+            }
+            NSString *str = [NSString stringWithFormat:@"PRIVMSG %@ :%c%@%c\r\n", target, 1, [action uppercaseString], 1];
+            [self.server sendCommand:str];
+            RBIRCMessage *msg = [[RBIRCMessage alloc] init];
+            msg.from = self.server.nick;
+            msg.targets = [@[target] mutableCopy];
+            msg.message = action;
+            msg.command = [RBIRCMessage getMessageTypeForString:action];
+            msg.rawMessage = str;
+            [self.server[target] addObject:str];
+        } else if ([command isEqualToString:@"me"]) {
+            NSString *action = [NSString stringWithFormat:@"PRIVMSG %@ :%cACTION %@%c\r\n", self.channel, 1, str, 1];
+            [self.server sendCommand:action];
+            RBIRCMessage *msg = [[RBIRCMessage alloc] init];
+            msg.from = self.server.nick;
+            msg.targets = [@[self.channel] mutableCopy];
+            msg.message = [NSString stringWithFormat:@"%@ %@", self.server.nick, str];
+            msg.command = IRCMessageTypePrivmsg;
+            msg.rawMessage = str;
+            msg.attributedMessage = [[NSAttributedString alloc] initWithString:msg.message attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+            [self.server[self.channel] addObject:str];
         }
     } else {
         [self.server privmsg:self.channel contents:str];
@@ -394,6 +425,8 @@ static NSString *CellIdentifier = @"Cell";
     if ([actionSheet cancelButtonIndex] == buttonIndex)
         return;
     NSString *title = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if ([title isEqualToString:@"action"])
+        title = @"me";
     NSString *str = [NSString stringWithFormat:@"/%@ ", title];
     
     self.input.text = [str stringByAppendingString:self.input.text];
