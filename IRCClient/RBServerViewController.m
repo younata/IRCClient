@@ -166,6 +166,7 @@ static NSString *textFieldCell = @"textFieldCell";
         if (([channelName hasPrefix:@"#"] || [channelName hasPrefix:@"&"])) {
             [server part:channelName];
         }
+        server[channelName] = nil;
     }
     [self saveServerData];
     [tableView reloadData];
@@ -177,19 +178,22 @@ static NSString *textFieldCell = @"textFieldCell";
     NSInteger row = indexPath.row;
     
     RBServerEditorViewController *editor = nil;
+    __weak RBServerViewController *theSelf = self;
     
     if (section < [self.servers count]) {
         RBIRCServer *server = self.servers[section];
-        if (row != 0 && row <= server.channels.count) {
-            NSArray *channels = [server.channels allKeys];
-            NSString *ch = channels[row - 1];
+        NSArray *channels = [self sortChannelsForServer:server];
+        if (row != 0 && row < channels.count) {
+            NSString *ch = channels[row];
             RBIRCChannel *channel = server[ch];
             [self.delegate server:server didChangeChannel:channel];
-        } else if (row > server.channels.count) {
-            ;
-        } else {
+        } else if (row == 0) {
             editor = [[RBServerEditorViewController alloc] init];
             editor.server = server;
+            editor.onCancel = ^{
+                [theSelf.tableView reloadData];
+                [theSelf saveServerData];
+            };
         }
     } else {
         editor = [[RBServerEditorViewController alloc] init];
@@ -197,9 +201,8 @@ static NSString *textFieldCell = @"textFieldCell";
         [editor setServer:newServer];
         [self.servers addObject:newServer];
         __weak RBServerEditorViewController *theEditor = editor;
-        __weak RBServerViewController *theSelf = self;
         editor.onCancel = ^{
-            if (!(theEditor.server.connected || theEditor.server.readStream.streamStatus == NSStreamStatusOpening)) {
+            if (!(theEditor.server.connected || theEditor.server.readStream.streamStatus != NSStreamStatusOpening)) {
                 [theSelf.servers removeObject:theEditor.server];
             }
             [theSelf.tableView reloadData];

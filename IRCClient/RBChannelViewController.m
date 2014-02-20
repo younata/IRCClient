@@ -464,7 +464,6 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [self actionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

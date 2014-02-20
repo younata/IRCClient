@@ -104,7 +104,14 @@
     [coder encodeObject:self.password forKey:@"password"];
     
     [coder encodeBool:self.connectOnStartup forKey:@"connectOnStartup"];
-    [coder encodeObject:self.channels forKey:@"channels"];
+    NSMutableDictionary *channelsToSave = [[NSMutableDictionary alloc] init];
+    for (NSString *key in self.channels.allKeys) {
+        RBIRCChannel *channel = self.channels[key];
+        if (channel.isChannel) {
+            channelsToSave[key] = channel;
+        }
+    }
+    [coder encodeObject:channelsToSave forKey:@"channels"];
 }
 
 -(void)commonInit
