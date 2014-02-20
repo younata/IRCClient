@@ -48,5 +48,6 @@ typedef enum {
 +(NSString *)getMessageStringForType:(IRCMessageType)messagetype;
 +(IRCMessageType)getMessageTypeForString:(NSString *)messageString;
 -(instancetype)initWithRawMessage:(NSString *)raw;
+-(NSDictionary *)defaultAttributes;
 
 @end

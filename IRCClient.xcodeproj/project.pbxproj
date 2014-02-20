@@ -32,6 +32,55 @@
 		8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBD18B5B3B1004DFBAB /* UIDevice-Reachability.m */; };
 		8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
 		8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
+		8908DBFA18B60FB0004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE018B60FB0004DFBAB /* ffi.c */; };
+		8908DBFB18B60FB0004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE018B60FB0004DFBAB /* ffi.c */; };
+		8908DBFC18B60FB0004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE218B60FB0004DFBAB /* ffi.S */; };
+		8908DBFD18B60FB0004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE218B60FB0004DFBAB /* ffi.S */; };
+		8908DBFE18B60FB0004DFBAB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE318B60FB0004DFBAB /* LICENSE */; };
+		8908DBFF18B60FB0004DFBAB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE318B60FB0004DFBAB /* LICENSE */; };
+		8908DC0018B60FB0004DFBAB /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE418B60FB0004DFBAB /* README.markdown */; };
+		8908DC0118B60FB0004DFBAB /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE418B60FB0004DFBAB /* README.markdown */; };
+		8908DC0218B60FB0004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
+		8908DC0318B60FB0004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
+		8908DC0418B60FB0004DFBAB /* bridgesupport.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE718B60FB0004DFBAB /* bridgesupport.nu */; };
+		8908DC0518B60FB0004DFBAB /* bridgesupport.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE718B60FB0004DFBAB /* bridgesupport.nu */; };
+		8908DC0618B60FB0004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
+		8908DC0718B60FB0004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
+		8908DC0818B60FB0004DFBAB /* cocoa.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE918B60FB0004DFBAB /* cocoa.nu */; };
+		8908DC0918B60FB0004DFBAB /* cocoa.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE918B60FB0004DFBAB /* cocoa.nu */; };
+		8908DC0A18B60FB0004DFBAB /* console.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEA18B60FB0004DFBAB /* console.nu */; };
+		8908DC0B18B60FB0004DFBAB /* console.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEA18B60FB0004DFBAB /* console.nu */; };
+		8908DC0C18B60FB0004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
+		8908DC0D18B60FB0004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
+		8908DC0E18B60FB0004DFBAB /* doc.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEC18B60FB0004DFBAB /* doc.nu */; };
+		8908DC0F18B60FB0004DFBAB /* doc.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEC18B60FB0004DFBAB /* doc.nu */; };
+		8908DC1018B60FB0004DFBAB /* fscript.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBED18B60FB0004DFBAB /* fscript.nu */; };
+		8908DC1118B60FB0004DFBAB /* fscript.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBED18B60FB0004DFBAB /* fscript.nu */; };
+		8908DC1218B60FB0004DFBAB /* generate.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEE18B60FB0004DFBAB /* generate.nu */; };
+		8908DC1318B60FB0004DFBAB /* generate.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEE18B60FB0004DFBAB /* generate.nu */; };
+		8908DC1418B60FB0004DFBAB /* help.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEF18B60FB0004DFBAB /* help.nu */; };
+		8908DC1518B60FB0004DFBAB /* help.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEF18B60FB0004DFBAB /* help.nu */; };
+		8908DC1618B60FB0004DFBAB /* match.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF018B60FB0004DFBAB /* match.nu */; };
+		8908DC1718B60FB0004DFBAB /* match.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF018B60FB0004DFBAB /* match.nu */; };
+		8908DC1818B60FB0004DFBAB /* math.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF118B60FB0004DFBAB /* math.nu */; };
+		8908DC1918B60FB0004DFBAB /* math.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF118B60FB0004DFBAB /* math.nu */; };
+		8908DC1A18B60FB0004DFBAB /* menu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF218B60FB0004DFBAB /* menu.nu */; };
+		8908DC1B18B60FB0004DFBAB /* menu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF218B60FB0004DFBAB /* menu.nu */; };
+		8908DC1C18B60FB0004DFBAB /* nibtools.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF318B60FB0004DFBAB /* nibtools.nu */; };
+		8908DC1D18B60FB0004DFBAB /* nibtools.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF318B60FB0004DFBAB /* nibtools.nu */; };
+		8908DC1E18B60FB0004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
+		8908DC1F18B60FB0004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
+		8908DC2018B60FB0004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
+		8908DC2118B60FB0004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
+		8908DC2218B60FB0004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
+		8908DC2318B60FB0004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
+		8908DC2418B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8908DC2518B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; };
+		8908DC2918B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
+		8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
+		8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
+		8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
+		8908DC3018B61F98004DFBAB /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DC2F18B61F7F004DFBAB /* hilight.nu */; };
 		891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
 		891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
@@ -130,6 +179,35 @@
 		8908DBC818B5B3CC004DFBAB /* UIDevice+Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Categories.h"; sourceTree = "<group>"; };
 		8908DBC918B5B3E8004DFBAB /* wwanconnect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wwanconnect.c; sourceTree = "<group>"; };
 		8908DBCA18B5B3E8004DFBAB /* wwanconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wwanconnect.h; sourceTree = "<group>"; };
+		8908DBE018B60FB0004DFBAB /* ffi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi.c; sourceTree = "<group>"; };
+		8908DBE118B60FB0004DFBAB /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
+		8908DBE218B60FB0004DFBAB /* ffi.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = ffi.S; sourceTree = "<group>"; };
+		8908DBE318B60FB0004DFBAB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		8908DBE418B60FB0004DFBAB /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
+		8908DBE618B60FB0004DFBAB /* beautify.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = beautify.nu; sourceTree = "<group>"; };
+		8908DBE718B60FB0004DFBAB /* bridgesupport.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bridgesupport.nu; sourceTree = "<group>"; };
+		8908DBE818B60FB0004DFBAB /* cblocks.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cblocks.nu; sourceTree = "<group>"; };
+		8908DBE918B60FB0004DFBAB /* cocoa.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cocoa.nu; sourceTree = "<group>"; };
+		8908DBEA18B60FB0004DFBAB /* console.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = console.nu; sourceTree = "<group>"; };
+		8908DBEB18B60FB0004DFBAB /* coredata.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coredata.nu; sourceTree = "<group>"; };
+		8908DBEC18B60FB0004DFBAB /* doc.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doc.nu; sourceTree = "<group>"; };
+		8908DBED18B60FB0004DFBAB /* fscript.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fscript.nu; sourceTree = "<group>"; };
+		8908DBEE18B60FB0004DFBAB /* generate.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = generate.nu; sourceTree = "<group>"; };
+		8908DBEF18B60FB0004DFBAB /* help.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = help.nu; sourceTree = "<group>"; };
+		8908DBF018B60FB0004DFBAB /* match.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = match.nu; sourceTree = "<group>"; };
+		8908DBF118B60FB0004DFBAB /* math.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = math.nu; sourceTree = "<group>"; };
+		8908DBF218B60FB0004DFBAB /* menu.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = menu.nu; sourceTree = "<group>"; };
+		8908DBF318B60FB0004DFBAB /* nibtools.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nibtools.nu; sourceTree = "<group>"; };
+		8908DBF418B60FB0004DFBAB /* nu.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nu.nu; sourceTree = "<group>"; };
+		8908DBF518B60FB0004DFBAB /* template.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = template.nu; sourceTree = "<group>"; };
+		8908DBF618B60FB0004DFBAB /* test.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.nu; sourceTree = "<group>"; };
+		8908DBF818B60FB0004DFBAB /* Nu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nu.h; sourceTree = "<group>"; };
+		8908DBF918B60FB0004DFBAB /* Nu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nu.m; sourceTree = "<group>"; };
+		8908DC2718B6105F004DFBAB /* RBScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScript.h; sourceTree = "<group>"; };
+		8908DC2818B6105F004DFBAB /* RBScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScript.m; sourceTree = "<group>"; };
+		8908DC2B18B615EE004DFBAB /* RBScriptingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptingService.h; sourceTree = "<group>"; };
+		8908DC2C18B615EE004DFBAB /* RBScriptingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptingService.m; sourceTree = "<group>"; };
+		8908DC2F18B61F7F004DFBAB /* hilight.nu */ = {isa = PBXFileReference; lastKnownFileType = text; path = hilight.nu; sourceTree = "<group>"; };
 		891B01E2189650DA00B2D848 /* IRCClientSpecs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRCClientSpecs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		891B01E8189650DA00B2D848 /* IRCClientSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientSpecs-Info.plist"; sourceTree = "<group>"; };
 		891B01EA189650DA00B2D848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -220,6 +298,7 @@
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
+				8908DBDE18B60FA2004DFBAB /* Nu */,
 				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
 				898132FD18A9A274004AEBE9 /* UIView+AutoLayout */,
 				899B2A93189913840008FED3 /* RBCategories */,
@@ -259,6 +338,7 @@
 				8906F1D918867BEE00042A13 /* RBAppDelegate.h */,
 				8906F1DA18867BEE00042A13 /* RBAppDelegate.m */,
 				898132D018A74F19004AEBE9 /* RBConfigurationKeys.h */,
+				8908DC2618B61047004DFBAB /* Scripting */,
 				89C46E431895F89A006068DC /* IRC Backend */,
 				89C46E441895F8A2006068DC /* Views and Controllers */,
 				8906F20F188799C000042A13 /* SWRevealViewController */,
@@ -305,6 +385,81 @@
 				8908DBC818B5B3CC004DFBAB /* UIDevice+Categories.h */,
 			);
 			name = "UIDevice Categories";
+			sourceTree = "<group>";
+		};
+		8908DBDE18B60FA2004DFBAB /* Nu */ = {
+			isa = PBXGroup;
+			children = (
+				8908DBDF18B60FB0004DFBAB /* libffi */,
+				8908DBE518B60FB0004DFBAB /* nu */,
+				8908DBF718B60FB0004DFBAB /* objc */,
+			);
+			name = Nu;
+			sourceTree = "<group>";
+		};
+		8908DBDF18B60FB0004DFBAB /* libffi */ = {
+			isa = PBXGroup;
+			children = (
+				8908DBE018B60FB0004DFBAB /* ffi.c */,
+				8908DBE118B60FB0004DFBAB /* ffi.h */,
+				8908DBE218B60FB0004DFBAB /* ffi.S */,
+				8908DBE318B60FB0004DFBAB /* LICENSE */,
+				8908DBE418B60FB0004DFBAB /* README.markdown */,
+			);
+			path = libffi;
+			sourceTree = "<group>";
+		};
+		8908DBE518B60FB0004DFBAB /* nu */ = {
+			isa = PBXGroup;
+			children = (
+				8908DBE618B60FB0004DFBAB /* beautify.nu */,
+				8908DBE718B60FB0004DFBAB /* bridgesupport.nu */,
+				8908DBE818B60FB0004DFBAB /* cblocks.nu */,
+				8908DBE918B60FB0004DFBAB /* cocoa.nu */,
+				8908DBEA18B60FB0004DFBAB /* console.nu */,
+				8908DBEB18B60FB0004DFBAB /* coredata.nu */,
+				8908DBEC18B60FB0004DFBAB /* doc.nu */,
+				8908DBED18B60FB0004DFBAB /* fscript.nu */,
+				8908DBEE18B60FB0004DFBAB /* generate.nu */,
+				8908DBEF18B60FB0004DFBAB /* help.nu */,
+				8908DBF018B60FB0004DFBAB /* match.nu */,
+				8908DBF118B60FB0004DFBAB /* math.nu */,
+				8908DBF218B60FB0004DFBAB /* menu.nu */,
+				8908DBF318B60FB0004DFBAB /* nibtools.nu */,
+				8908DBF418B60FB0004DFBAB /* nu.nu */,
+				8908DBF518B60FB0004DFBAB /* template.nu */,
+				8908DBF618B60FB0004DFBAB /* test.nu */,
+			);
+			path = nu;
+			sourceTree = "<group>";
+		};
+		8908DBF718B60FB0004DFBAB /* objc */ = {
+			isa = PBXGroup;
+			children = (
+				8908DBF818B60FB0004DFBAB /* Nu.h */,
+				8908DBF918B60FB0004DFBAB /* Nu.m */,
+			);
+			path = objc;
+			sourceTree = "<group>";
+		};
+		8908DC2618B61047004DFBAB /* Scripting */ = {
+			isa = PBXGroup;
+			children = (
+				8908DC2718B6105F004DFBAB /* RBScript.h */,
+				8908DC2818B6105F004DFBAB /* RBScript.m */,
+				8908DC2B18B615EE004DFBAB /* RBScriptingService.h */,
+				8908DC2C18B615EE004DFBAB /* RBScriptingService.m */,
+				8908DC3118B61FA0004DFBAB /* Built In Scripts */,
+			);
+			name = Scripting;
+			sourceTree = "<group>";
+		};
+		8908DC3118B61FA0004DFBAB /* Built In Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				8908DC2F18B61F7F004DFBAB /* hilight.nu */,
+			);
+			name = "Built In Scripts";
 			sourceTree = "<group>";
 		};
 		891B01E6189650DA00B2D848 /* IRCClientSpecs */ = {
@@ -553,12 +708,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8908DC3018B61F98004DFBAB /* hilight.nu in Resources */,
+				8908DC0A18B60FB0004DFBAB /* console.nu in Resources */,
+				8908DC1E18B60FB0004DFBAB /* nu.nu in Resources */,
 				89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */,
+				8908DC0418B60FB0004DFBAB /* bridgesupport.nu in Resources */,
+				8908DC1A18B60FB0004DFBAB /* menu.nu in Resources */,
+				8908DC1418B60FB0004DFBAB /* help.nu in Resources */,
 				898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				8906F1D518867BEE00042A13 /* InfoPlist.strings in Resources */,
+				8908DC1818B60FB0004DFBAB /* math.nu in Resources */,
+				8908DC0E18B60FB0004DFBAB /* doc.nu in Resources */,
+				8908DC2218B60FB0004DFBAB /* test.nu in Resources */,
+				8908DC1018B60FB0004DFBAB /* fscript.nu in Resources */,
+				8908DC1C18B60FB0004DFBAB /* nibtools.nu in Resources */,
+				8908DC0218B60FB0004DFBAB /* beautify.nu in Resources */,
+				8908DC0618B60FB0004DFBAB /* cblocks.nu in Resources */,
+				8908DC0C18B60FB0004DFBAB /* coredata.nu in Resources */,
+				8908DC0818B60FB0004DFBAB /* cocoa.nu in Resources */,
+				8908DC2018B60FB0004DFBAB /* template.nu in Resources */,
+				8908DC1618B60FB0004DFBAB /* match.nu in Resources */,
+				8908DBFE18B60FB0004DFBAB /* LICENSE in Resources */,
 				899B2AA4189913840008FED3 /* README.md in Resources */,
 				8906F1DD18867BEE00042A13 /* Images.xcassets in Resources */,
+				8908DC0018B60FB0004DFBAB /* README.markdown in Resources */,
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
+				8908DC1218B60FB0004DFBAB /* generate.nu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,9 +748,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8908DC1118B60FB0004DFBAB /* fscript.nu in Resources */,
+				8908DC1F18B60FB0004DFBAB /* nu.nu in Resources */,
+				8908DC0918B60FB0004DFBAB /* cocoa.nu in Resources */,
+				8908DC0518B60FB0004DFBAB /* bridgesupport.nu in Resources */,
+				8908DC1918B60FB0004DFBAB /* math.nu in Resources */,
 				899B2AA5189913840008FED3 /* README.md in Resources */,
+				8908DC0118B60FB0004DFBAB /* README.markdown in Resources */,
+				8908DC0B18B60FB0004DFBAB /* console.nu in Resources */,
+				8908DC1718B60FB0004DFBAB /* match.nu in Resources */,
+				8908DC0F18B60FB0004DFBAB /* doc.nu in Resources */,
+				8908DC1B18B60FB0004DFBAB /* menu.nu in Resources */,
 				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
+				8908DC0718B60FB0004DFBAB /* cblocks.nu in Resources */,
+				8908DC1D18B60FB0004DFBAB /* nibtools.nu in Resources */,
+				8908DC0D18B60FB0004DFBAB /* coredata.nu in Resources */,
+				8908DC0318B60FB0004DFBAB /* beautify.nu in Resources */,
+				8908DBFF18B60FB0004DFBAB /* LICENSE in Resources */,
+				8908DC1518B60FB0004DFBAB /* help.nu in Resources */,
+				8908DC2318B60FB0004DFBAB /* test.nu in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
+				8908DC2118B60FB0004DFBAB /* template.nu in Resources */,
+				8908DC1318B60FB0004DFBAB /* generate.nu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +799,8 @@
 				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
+				8908DBFA18B60FB0004DFBAB /* ffi.c in Sources */,
+				8908DBFC18B60FB0004DFBAB /* ffi.S in Sources */,
 				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
@@ -613,15 +809,18 @@
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
+				8908DC2918B6105F004DFBAB /* RBScript.m in Sources */,
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				898132FB18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
+				8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				899B2A9E189913840008FED3 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
+				8908DC2418B60FB0004DFBAB /* Nu.m in Sources */,
 				899B2AA0189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				898132F218A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
@@ -639,12 +838,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8908DBFB18B60FB0004DFBAB /* ffi.c in Sources */,
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
+				8908DBFD18B60FB0004DFBAB /* ffi.S in Sources */,
 				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
+				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
@@ -658,6 +860,8 @@
 				891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */,
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
+				8908DC2518B60FB0004DFBAB /* Nu.m in Sources */,
+				8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */,
 				898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
 				8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */,

@@ -251,7 +251,7 @@
         if ([rest hasPrefix:@"ACTION"]) {
             NSString *contents = [rest substringFromIndex:7];
             NSString *message = [NSString stringWithFormat:@"%@ %@", self.from, contents];
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:message attributes:[self defaultAttributes]];
         } else {
             self.command = IRCMessageTypeCTCPErrMsg;
             self.extra = @"Unrecognized CTCP command";
@@ -328,7 +328,7 @@
         if ([rest hasPrefix:@"ACTION"]) {
             NSString *contents = [rest substringFromIndex:7];
             NSString *message = [NSString stringWithFormat:@"%@ %@", self.from, contents];
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:message attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:message attributes:[self defaultAttributes]];
         } else {
             self.command = IRCMessageTypeCTCPErrMsg;
             self.extra = @"Unrecognized CTCP command";
@@ -357,7 +357,7 @@
             break;
     }
     NSString *str = [NSString stringWithFormat:@"CTCP %@ reply: %@", [[RBIRCMessage getMessageStringForType:newCmd] capitalizedString], repl];
-    self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+    self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
 }
 
 -(NSString *)description
@@ -384,10 +384,15 @@
 -(NSAttributedString *)attributedMessage
 {
     if (!_attributedMessage) {
-        _attributedMessage = [[NSAttributedString alloc] initWithString:[self description] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+        _attributedMessage = [[NSAttributedString alloc] initWithString:[self description] attributes:[self defaultAttributes]];
     }
     
     return _attributedMessage;
+}
+
+-(NSDictionary *)defaultAttributes
+{
+    return @{NSFontAttributeName:[UIFont systemFontOfSize:14]};
 }
 
 @end

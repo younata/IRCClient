@@ -13,6 +13,8 @@
 #import "NSString+isNilOrEmpty.h"
 #import "NSString+contains.h"
 
+#import "RBScriptingService.h"
+
 @interface RBIRCServer ()
 
 @property (nonatomic, readwrite) BOOL connected;
@@ -279,6 +281,8 @@
         }
     }
     
+    [[RBScriptingService sharedInstance] messageRecieved:msg server:self];
+    
     RBIRCChannel *ch;
     for (int i = 0; i < msg.targets.count; i++) {
         NSString *to = msg.targets[i];
@@ -305,6 +309,8 @@
         }
         [ch logMessage:msg];
     }
+    
+    [[RBScriptingService sharedInstance] messageLogged:msg server:self];
     
     for (id<RBIRCServerDelegate>del in self.delegates) {
         if ([del respondsToSelector:@selector(IRCServer:handleMessage:)]) {
