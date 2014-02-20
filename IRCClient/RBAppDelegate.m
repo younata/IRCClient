@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "RBServerViewController.h"
 #import "RBChannelViewController.h"
+#import "RBIRCServer.h"
 
 #import "RBConfigurationKeys.h"
 
@@ -39,7 +40,13 @@
     
     NSData *serverData = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
     if (serverData) {
-        serverVC.servers = [NSKeyedUnarchiver unarchiveObjectWithData:serverData];
+        NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:serverData];
+        for (RBIRCServer *server in servers) {
+            if (!server.connectOnStartup) {
+                [servers removeObject:server];
+            }
+        }
+        serverVC.servers = servers;
     }
     
     self.window.rootViewController = viewController;

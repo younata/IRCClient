@@ -43,6 +43,8 @@ static NSString *textFieldCell = @"textFieldCell";
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
+    
+    self.view.backgroundColor = [UIColor lightGrayColor];
 }
 
 -(void)setServers:(NSMutableArray *)servers
@@ -64,16 +66,6 @@ static NSString *textFieldCell = @"textFieldCell";
     [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
 }
 
--(NSArray *)sortChannelsForServer:(RBIRCServer *)server
-{
-    NSMutableArray *channels = [server.channels.allKeys mutableCopy];
-    [channels removeObject:RBIRCServerLog];
-    NSArray *ret = [channels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
-        return [(NSString *)obj1 compare:(NSString *)obj2];
-    }];
-    return [@[server.serverName, RBIRCServerLog] arrayByAddingObjectsFromArray:ret];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -87,7 +79,7 @@ static NSString *textFieldCell = @"textFieldCell";
         return 1;
     }
     RBIRCServer *server = self.servers[section];
-    return [self sortChannelsForServer:server].count + 1;
+    return [server sortedChannelKeys].count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,22 +89,23 @@ static NSString *textFieldCell = @"textFieldCell";
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     
-    if (section < [self.servers count] && row == ([[self.servers[section] channels] count] + 1)) {
+    RBIRCServer *server = nil;
+    NSArray *channels = nil;
+    if (section < [self.servers count]) {
+        server = self.servers[section];
+        channels = [server sortedChannelKeys];
+    }
+    
+    if (server && row == channels.count) {
         cell = [tableView dequeueReusableCellWithIdentifier:textFieldCell forIndexPath:indexPath];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     }
     
-    if (section == [self.servers count]) {
+    if (!server) {
         cell.textLabel.text = NSLocalizedString(@"New Server", nil);
     } else {
-        RBIRCServer *server = self.servers[section];
-        if (!server.connected) {
-            cell.textLabel.textColor = [[UIColor darkTextColor] colorWithAlphaComponent:0.5];
-        } else {
-            cell.textLabel.textColor = [UIColor darkTextColor];
-        }
-        NSArray *channels = [self sortChannelsForServer:server];
+        cell.textLabel.textColor = server.connected ? [UIColor darkTextColor] : [[UIColor darkTextColor] colorWithAlphaComponent:0.5];
         if (row == channels.count) {
             RBTextFieldServerCell *c = (RBTextFieldServerCell *)cell;
             c.textField.placeholder = NSLocalizedString(@"Join a channel", nil);
@@ -182,7 +175,7 @@ static NSString *textFieldCell = @"textFieldCell";
     
     if (section < [self.servers count]) {
         RBIRCServer *server = self.servers[section];
-        NSArray *channels = [self sortChannelsForServer:server];
+        NSArray *channels = [server sortedChannelKeys];
         if (row != 0 && row < channels.count) {
             NSString *ch = channels[row];
             RBIRCChannel *channel = server[ch];

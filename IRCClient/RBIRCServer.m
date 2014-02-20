@@ -72,6 +72,8 @@
         
         self.incompleteMessages = [[NSMutableString alloc] init];
         
+        [self createServerLog];
+        
         if (self.connectOnStartup) {
             [self connect];
             for (NSString *key in self.channels.allKeys) {
@@ -107,20 +109,24 @@
     NSMutableDictionary *channelsToSave = [[NSMutableDictionary alloc] init];
     for (NSString *key in self.channels.allKeys) {
         RBIRCChannel *channel = self.channels[key];
-        if (channel.isChannel) {
+        if (channel.isChannel && channel.connectOnStartup) {
             channelsToSave[key] = channel;
         }
     }
     [coder encodeObject:channelsToSave forKey:@"channels"];
 }
 
+-(void)createServerLog
+{
+    RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
+    [channels setObject:serverLog forKey:RBIRCServerLog];
+}
+
 -(void)commonInit
 {
     _delegates = [[NSMutableSet alloc] init];
     channels = [[NSMutableDictionary alloc] init];
-    RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
-    serverLog.connectOnStartup = YES;
-    [channels setObject:serverLog forKey:RBIRCServerLog];
+    [self createServerLog];
     self.incompleteMessages = [[NSMutableString alloc] init];
     
     self.connectOnStartup = YES;
@@ -260,7 +266,13 @@
         return;
     }
     
-    if (([msg.from containsSubstring:self.hostname]) && (msg.commandNumber == 1)) {
+    NSArray *hostParts = [self.hostname componentsSeparatedByString:@"."];
+    NSString *superDomain = self.hostname;
+    if (hostParts.count > 2) {
+        superDomain = [[hostParts subarrayWithRange:NSMakeRange(1, hostParts.count - 1)] componentsJoinedByString:@"."];
+    }
+    
+    if (([msg.from containsSubstring:superDomain]) && (msg.commandNumber == 1)) {
         while (self.commandQueue.count > 0) {
             [self sendCommand:self.commandQueue.lastObject];
             [self.commandQueue removeLastObject];
@@ -276,8 +288,9 @@
         if (msg.command == IRCMessageTypeNotice) {
             to = nil;
         }
-        if (![to hasContent] || [to isEqualToString:@"*"] || [to isEqualToString:@"AUTH"] || [to containsSubstring:self.hostname]) {
+        if (![to hasContent] || [to isEqualToString:@"*"] || [to isEqualToString:@"AUTH"] || [to containsSubstring:superDomain]) {
             ch = [channels objectForKey:RBIRCServerLog];
+            NSLog(@"%@", ch);
             msg.message = msg.rawMessage;
             to = RBIRCServerLog;
             msg.targets[i] = to;
@@ -550,6 +563,17 @@
         default:
             break;
     }
+}
+
+-(NSArray *)sortedChannelKeys
+{
+    NSMutableArray *theChannels = [self.channels.allKeys mutableCopy];
+    [theChannels removeObject:RBIRCServerLog];
+    NSArray *ret = [theChannels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){
+        return [(NSString *)obj1 compare:(NSString *)obj2];
+    }];
+    return [@[self.serverName, RBIRCServerLog] arrayByAddingObjectsFromArray:ret];
+
 }
 
 #pragma mark - Keyed subscripting
