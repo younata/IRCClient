@@ -9,14 +9,19 @@
 #import "RBScript.h"
 #import "RBScriptingService.h"
 
+#import "Nu.h"
+
 @implementation RBScript
 
--(instancetype)init
++(NSString *)description
 {
-    if ((self = [super init])) {
-        [[RBScriptingService sharedInstance] registerScript:self];
-    }
-    return  self;
+    return NSStringFromClass(self);
+}
+
++(id)inheritedByClass:(NuClass *)newClass
+{
+    [[RBScriptingService sharedInstance] registerScript:[newClass wrappedClass]];
+    return [[self superclass] inheritedByClass:newClass];
 }
 
 -(void)messageRecieved:(RBIRCMessage *)message server:(RBIRCServer *)server{}

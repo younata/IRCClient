@@ -36,51 +36,38 @@
 		8908DBFB18B60FB0004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE018B60FB0004DFBAB /* ffi.c */; };
 		8908DBFC18B60FB0004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE218B60FB0004DFBAB /* ffi.S */; };
 		8908DBFD18B60FB0004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE218B60FB0004DFBAB /* ffi.S */; };
-		8908DBFE18B60FB0004DFBAB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE318B60FB0004DFBAB /* LICENSE */; };
-		8908DBFF18B60FB0004DFBAB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE318B60FB0004DFBAB /* LICENSE */; };
 		8908DC0018B60FB0004DFBAB /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE418B60FB0004DFBAB /* README.markdown */; };
-		8908DC0118B60FB0004DFBAB /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE418B60FB0004DFBAB /* README.markdown */; };
-		8908DC0218B60FB0004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
-		8908DC0318B60FB0004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
-		8908DC0418B60FB0004DFBAB /* bridgesupport.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE718B60FB0004DFBAB /* bridgesupport.nu */; };
-		8908DC0518B60FB0004DFBAB /* bridgesupport.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE718B60FB0004DFBAB /* bridgesupport.nu */; };
-		8908DC0618B60FB0004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
-		8908DC0718B60FB0004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
-		8908DC0818B60FB0004DFBAB /* cocoa.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE918B60FB0004DFBAB /* cocoa.nu */; };
-		8908DC0918B60FB0004DFBAB /* cocoa.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE918B60FB0004DFBAB /* cocoa.nu */; };
-		8908DC0A18B60FB0004DFBAB /* console.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEA18B60FB0004DFBAB /* console.nu */; };
-		8908DC0B18B60FB0004DFBAB /* console.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEA18B60FB0004DFBAB /* console.nu */; };
-		8908DC0C18B60FB0004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
-		8908DC0D18B60FB0004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
-		8908DC0E18B60FB0004DFBAB /* doc.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEC18B60FB0004DFBAB /* doc.nu */; };
-		8908DC0F18B60FB0004DFBAB /* doc.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEC18B60FB0004DFBAB /* doc.nu */; };
-		8908DC1018B60FB0004DFBAB /* fscript.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBED18B60FB0004DFBAB /* fscript.nu */; };
-		8908DC1118B60FB0004DFBAB /* fscript.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBED18B60FB0004DFBAB /* fscript.nu */; };
-		8908DC1218B60FB0004DFBAB /* generate.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEE18B60FB0004DFBAB /* generate.nu */; };
-		8908DC1318B60FB0004DFBAB /* generate.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEE18B60FB0004DFBAB /* generate.nu */; };
-		8908DC1418B60FB0004DFBAB /* help.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEF18B60FB0004DFBAB /* help.nu */; };
-		8908DC1518B60FB0004DFBAB /* help.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEF18B60FB0004DFBAB /* help.nu */; };
-		8908DC1618B60FB0004DFBAB /* match.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF018B60FB0004DFBAB /* match.nu */; };
-		8908DC1718B60FB0004DFBAB /* match.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF018B60FB0004DFBAB /* match.nu */; };
-		8908DC1818B60FB0004DFBAB /* math.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF118B60FB0004DFBAB /* math.nu */; };
-		8908DC1918B60FB0004DFBAB /* math.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF118B60FB0004DFBAB /* math.nu */; };
-		8908DC1A18B60FB0004DFBAB /* menu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF218B60FB0004DFBAB /* menu.nu */; };
-		8908DC1B18B60FB0004DFBAB /* menu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF218B60FB0004DFBAB /* menu.nu */; };
-		8908DC1C18B60FB0004DFBAB /* nibtools.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF318B60FB0004DFBAB /* nibtools.nu */; };
-		8908DC1D18B60FB0004DFBAB /* nibtools.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF318B60FB0004DFBAB /* nibtools.nu */; };
-		8908DC1E18B60FB0004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
-		8908DC1F18B60FB0004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
-		8908DC2018B60FB0004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
-		8908DC2118B60FB0004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
-		8908DC2218B60FB0004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
-		8908DC2318B60FB0004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
 		8908DC2418B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8908DC2518B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; };
+		8908DC2518B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8908DC2918B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
 		8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
 		8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
 		8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
-		8908DC3018B61F98004DFBAB /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DC2F18B61F7F004DFBAB /* hilight.nu */; };
+		8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */; };
+		8908DC3418B736E2004DFBAB /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DC2F18B61F7F004DFBAB /* hilight.nu */; };
+		8908DC3518B73900004DFBAB /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DC2F18B61F7F004DFBAB /* hilight.nu */; };
+		8908DC3618B74913004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
+		8908DC3718B74913004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
+		8908DC3818B74913004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
+		8908DC3918B74913004DFBAB /* doc.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEC18B60FB0004DFBAB /* doc.nu */; };
+		8908DC3B18B74913004DFBAB /* generate.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEE18B60FB0004DFBAB /* generate.nu */; };
+		8908DC3C18B74913004DFBAB /* help.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEF18B60FB0004DFBAB /* help.nu */; };
+		8908DC3D18B74913004DFBAB /* match.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF018B60FB0004DFBAB /* match.nu */; };
+		8908DC3E18B74913004DFBAB /* math.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF118B60FB0004DFBAB /* math.nu */; };
+		8908DC4018B74913004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
+		8908DC4118B74913004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
+		8908DC4218B74913004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
+		8908DC4318B7491C004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
+		8908DC4418B7491C004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
+		8908DC4518B7491C004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
+		8908DC4618B7491C004DFBAB /* doc.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEC18B60FB0004DFBAB /* doc.nu */; };
+		8908DC4818B7491C004DFBAB /* generate.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEE18B60FB0004DFBAB /* generate.nu */; };
+		8908DC4918B7491C004DFBAB /* help.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEF18B60FB0004DFBAB /* help.nu */; };
+		8908DC4A18B7491C004DFBAB /* match.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF018B60FB0004DFBAB /* match.nu */; };
+		8908DC4B18B7491C004DFBAB /* math.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF118B60FB0004DFBAB /* math.nu */; };
+		8908DC4D18B7491C004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
+		8908DC4E18B7491C004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
+		8908DC4F18B7491C004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
 		891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
 		891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
@@ -127,8 +114,6 @@
 		899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A99189913840008FED3 /* NSStream+remoteHost.m */; };
 		899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */; };
 		899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */; };
-		899B2AA4189913840008FED3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 899B2A9D189913840008FED3 /* README.md */; };
-		899B2AA5189913840008FED3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 899B2A9D189913840008FED3 /* README.md */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
@@ -185,19 +170,13 @@
 		8908DBE318B60FB0004DFBAB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		8908DBE418B60FB0004DFBAB /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		8908DBE618B60FB0004DFBAB /* beautify.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = beautify.nu; sourceTree = "<group>"; };
-		8908DBE718B60FB0004DFBAB /* bridgesupport.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bridgesupport.nu; sourceTree = "<group>"; };
 		8908DBE818B60FB0004DFBAB /* cblocks.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cblocks.nu; sourceTree = "<group>"; };
-		8908DBE918B60FB0004DFBAB /* cocoa.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cocoa.nu; sourceTree = "<group>"; };
-		8908DBEA18B60FB0004DFBAB /* console.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = console.nu; sourceTree = "<group>"; };
 		8908DBEB18B60FB0004DFBAB /* coredata.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coredata.nu; sourceTree = "<group>"; };
 		8908DBEC18B60FB0004DFBAB /* doc.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doc.nu; sourceTree = "<group>"; };
-		8908DBED18B60FB0004DFBAB /* fscript.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fscript.nu; sourceTree = "<group>"; };
 		8908DBEE18B60FB0004DFBAB /* generate.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = generate.nu; sourceTree = "<group>"; };
 		8908DBEF18B60FB0004DFBAB /* help.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = help.nu; sourceTree = "<group>"; };
 		8908DBF018B60FB0004DFBAB /* match.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = match.nu; sourceTree = "<group>"; };
 		8908DBF118B60FB0004DFBAB /* math.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = math.nu; sourceTree = "<group>"; };
-		8908DBF218B60FB0004DFBAB /* menu.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = menu.nu; sourceTree = "<group>"; };
-		8908DBF318B60FB0004DFBAB /* nibtools.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nibtools.nu; sourceTree = "<group>"; };
 		8908DBF418B60FB0004DFBAB /* nu.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nu.nu; sourceTree = "<group>"; };
 		8908DBF518B60FB0004DFBAB /* template.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = template.nu; sourceTree = "<group>"; };
 		8908DBF618B60FB0004DFBAB /* test.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.nu; sourceTree = "<group>"; };
@@ -208,6 +187,7 @@
 		8908DC2B18B615EE004DFBAB /* RBScriptingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptingService.h; sourceTree = "<group>"; };
 		8908DC2C18B615EE004DFBAB /* RBScriptingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptingService.m; sourceTree = "<group>"; };
 		8908DC2F18B61F7F004DFBAB /* hilight.nu */ = {isa = PBXFileReference; lastKnownFileType = text; path = hilight.nu; sourceTree = "<group>"; };
+		8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBScriptingServiceSpec.mm; sourceTree = "<group>"; };
 		891B01E2189650DA00B2D848 /* IRCClientSpecs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRCClientSpecs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		891B01E8189650DA00B2D848 /* IRCClientSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientSpecs-Info.plist"; sourceTree = "<group>"; };
 		891B01EA189650DA00B2D848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -413,19 +393,13 @@
 			isa = PBXGroup;
 			children = (
 				8908DBE618B60FB0004DFBAB /* beautify.nu */,
-				8908DBE718B60FB0004DFBAB /* bridgesupport.nu */,
 				8908DBE818B60FB0004DFBAB /* cblocks.nu */,
-				8908DBE918B60FB0004DFBAB /* cocoa.nu */,
-				8908DBEA18B60FB0004DFBAB /* console.nu */,
 				8908DBEB18B60FB0004DFBAB /* coredata.nu */,
 				8908DBEC18B60FB0004DFBAB /* doc.nu */,
-				8908DBED18B60FB0004DFBAB /* fscript.nu */,
 				8908DBEE18B60FB0004DFBAB /* generate.nu */,
 				8908DBEF18B60FB0004DFBAB /* help.nu */,
 				8908DBF018B60FB0004DFBAB /* match.nu */,
 				8908DBF118B60FB0004DFBAB /* math.nu */,
-				8908DBF218B60FB0004DFBAB /* menu.nu */,
-				8908DBF318B60FB0004DFBAB /* nibtools.nu */,
 				8908DBF418B60FB0004DFBAB /* nu.nu */,
 				8908DBF518B60FB0004DFBAB /* template.nu */,
 				8908DBF618B60FB0004DFBAB /* test.nu */,
@@ -471,6 +445,7 @@
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */,
 				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
+				8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */,
 				891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */,
 				891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */,
 				899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */,
@@ -708,32 +683,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8908DC3018B61F98004DFBAB /* hilight.nu in Resources */,
-				8908DC0A18B60FB0004DFBAB /* console.nu in Resources */,
-				8908DC1E18B60FB0004DFBAB /* nu.nu in Resources */,
+				8908DC3518B73900004DFBAB /* hilight.nu in Resources */,
 				89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */,
-				8908DC0418B60FB0004DFBAB /* bridgesupport.nu in Resources */,
-				8908DC1A18B60FB0004DFBAB /* menu.nu in Resources */,
-				8908DC1418B60FB0004DFBAB /* help.nu in Resources */,
 				898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				8906F1D518867BEE00042A13 /* InfoPlist.strings in Resources */,
-				8908DC1818B60FB0004DFBAB /* math.nu in Resources */,
-				8908DC0E18B60FB0004DFBAB /* doc.nu in Resources */,
-				8908DC2218B60FB0004DFBAB /* test.nu in Resources */,
-				8908DC1018B60FB0004DFBAB /* fscript.nu in Resources */,
-				8908DC1C18B60FB0004DFBAB /* nibtools.nu in Resources */,
-				8908DC0218B60FB0004DFBAB /* beautify.nu in Resources */,
-				8908DC0618B60FB0004DFBAB /* cblocks.nu in Resources */,
-				8908DC0C18B60FB0004DFBAB /* coredata.nu in Resources */,
-				8908DC0818B60FB0004DFBAB /* cocoa.nu in Resources */,
-				8908DC2018B60FB0004DFBAB /* template.nu in Resources */,
-				8908DC1618B60FB0004DFBAB /* match.nu in Resources */,
-				8908DBFE18B60FB0004DFBAB /* LICENSE in Resources */,
-				899B2AA4189913840008FED3 /* README.md in Resources */,
 				8906F1DD18867BEE00042A13 /* Images.xcassets in Resources */,
 				8908DC0018B60FB0004DFBAB /* README.markdown in Resources */,
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
-				8908DC1218B60FB0004DFBAB /* generate.nu in Resources */,
+				8908DC4318B7491C004DFBAB /* beautify.nu in Resources */,
+				8908DC4418B7491C004DFBAB /* cblocks.nu in Resources */,
+				8908DC4518B7491C004DFBAB /* coredata.nu in Resources */,
+				8908DC4618B7491C004DFBAB /* doc.nu in Resources */,
+				8908DC4818B7491C004DFBAB /* generate.nu in Resources */,
+				8908DC4918B7491C004DFBAB /* help.nu in Resources */,
+				8908DC4A18B7491C004DFBAB /* match.nu in Resources */,
+				8908DC4B18B7491C004DFBAB /* math.nu in Resources */,
+				8908DC4D18B7491C004DFBAB /* nu.nu in Resources */,
+				8908DC4E18B7491C004DFBAB /* template.nu in Resources */,
+				8908DC4F18B7491C004DFBAB /* test.nu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,28 +715,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8908DC1118B60FB0004DFBAB /* fscript.nu in Resources */,
-				8908DC1F18B60FB0004DFBAB /* nu.nu in Resources */,
-				8908DC0918B60FB0004DFBAB /* cocoa.nu in Resources */,
-				8908DC0518B60FB0004DFBAB /* bridgesupport.nu in Resources */,
-				8908DC1918B60FB0004DFBAB /* math.nu in Resources */,
-				899B2AA5189913840008FED3 /* README.md in Resources */,
-				8908DC0118B60FB0004DFBAB /* README.markdown in Resources */,
-				8908DC0B18B60FB0004DFBAB /* console.nu in Resources */,
-				8908DC1718B60FB0004DFBAB /* match.nu in Resources */,
-				8908DC0F18B60FB0004DFBAB /* doc.nu in Resources */,
-				8908DC1B18B60FB0004DFBAB /* menu.nu in Resources */,
+				8908DC3418B736E2004DFBAB /* hilight.nu in Resources */,
 				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
-				8908DC0718B60FB0004DFBAB /* cblocks.nu in Resources */,
-				8908DC1D18B60FB0004DFBAB /* nibtools.nu in Resources */,
-				8908DC0D18B60FB0004DFBAB /* coredata.nu in Resources */,
-				8908DC0318B60FB0004DFBAB /* beautify.nu in Resources */,
-				8908DBFF18B60FB0004DFBAB /* LICENSE in Resources */,
-				8908DC1518B60FB0004DFBAB /* help.nu in Resources */,
-				8908DC2318B60FB0004DFBAB /* test.nu in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
-				8908DC2118B60FB0004DFBAB /* template.nu in Resources */,
-				8908DC1318B60FB0004DFBAB /* generate.nu in Resources */,
+				8908DC3618B74913004DFBAB /* beautify.nu in Resources */,
+				8908DC3718B74913004DFBAB /* cblocks.nu in Resources */,
+				8908DC3818B74913004DFBAB /* coredata.nu in Resources */,
+				8908DC3918B74913004DFBAB /* doc.nu in Resources */,
+				8908DC3B18B74913004DFBAB /* generate.nu in Resources */,
+				8908DC3C18B74913004DFBAB /* help.nu in Resources */,
+				8908DC3D18B74913004DFBAB /* match.nu in Resources */,
+				8908DC3E18B74913004DFBAB /* math.nu in Resources */,
+				8908DC4018B74913004DFBAB /* nu.nu in Resources */,
+				8908DC4118B74913004DFBAB /* template.nu in Resources */,
+				8908DC4218B74913004DFBAB /* test.nu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,6 +807,7 @@
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
 				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
+				8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,

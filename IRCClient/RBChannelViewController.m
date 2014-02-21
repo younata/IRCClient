@@ -377,7 +377,9 @@ static NSString *CellIdentifier = @"Cell";
     if (rows != 0) {
         rows--;
     }
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (rows != 0 && [self.tableView numberOfSections] != 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
     
     return YES;
 }

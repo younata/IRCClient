@@ -14,4 +14,6 @@
 #define RBCTCPVersion @"RBCTCPVersion"
 #define RBCTCPUserInfo @"RBCTCPUserInfo"
 
+#define RBScriptLoad @"RBScriptLoad"
+
 #endif

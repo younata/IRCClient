@@ -294,7 +294,6 @@
         }
         if (![to hasContent] || [to isEqualToString:@"*"] || [to isEqualToString:@"AUTH"] || [to containsSubstring:superDomain]) {
             ch = [channels objectForKey:RBIRCServerLog];
-            NSLog(@"%@", ch);
             msg.message = msg.rawMessage;
             to = RBIRCServerLog;
             msg.targets[i] = to;
@@ -591,7 +590,11 @@
 
 -(void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key
 {
-    self.channels[key] = obj;
+    if (obj == nil) {
+        [self.channels removeObjectForKey:key];
+    } else {
+        self.channels[key] = obj;
+    }
 }
 
 -(NSString *)description

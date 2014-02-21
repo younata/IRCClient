@@ -60,8 +60,8 @@ describe(@"RBChannelViewController", ^{
             });
             
             it(@"should prepend text to the input field when a button is pressed", ^{
-                NSString *str = [subject.actionSheet buttonTitleAtIndex:1];
-                [subject actionSheet:subject.actionSheet didDismissWithButtonIndex:1];
+                NSString *str = [subject.actionSheet buttonTitleAtIndex:3];
+                [subject actionSheet:subject.actionSheet clickedButtonAtIndex:3];
                 [subject.input.text hasPrefix:[NSString stringWithFormat:@"/%@", str]] should be_truthy;
             });
             
@@ -75,7 +75,7 @@ describe(@"RBChannelViewController", ^{
             });
             
             it(@"should not prepend text if cancel is pressed", ^{
-                [subject actionSheet:subject.actionSheet didDismissWithButtonIndex:subject.actionSheet.cancelButtonIndex];
+                [subject actionSheet:subject.actionSheet clickedButtonAtIndex:subject.actionSheet.cancelButtonIndex];
                 
                 subject.input.text.length should equal(0);
             });

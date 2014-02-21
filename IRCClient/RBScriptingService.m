@@ -8,6 +8,7 @@
 
 #import "RBScriptingService.h"
 #import "RBScript.h"
+#import "RBConfigurationKeys.h"
 
 #import "Nu.h"
 
@@ -26,9 +27,8 @@
 -(instancetype)init
 {
     if ((self = [super init])) {
-        scripts = [[NSMutableArray alloc] init];
+        _scriptsLoaded = NO;
         [self loadNu];
-
     }
     return self;
 }
@@ -41,6 +41,9 @@
 
 -(void)loadScripts
 {
+    self.scriptSet = [[NSMutableSet alloc] init];
+    self.scriptDict = [[NSMutableDictionary alloc] init];
+    
     NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
     NSFileManager *manager = [NSFileManager defaultManager];
     NSDirectoryEnumerator *direnum = [manager enumeratorAtPath:bundleRoot];
@@ -48,31 +51,79 @@
     NSString *filename;
     while ((filename = [direnum nextObject])) {
         if ([filename hasSuffix:@".nu"]) {
-            [Nu loadNuFile:filename fromBundleWithIdentifier:[[NSBundle mainBundle] bundleIdentifier] withContext:nil];
+            [self loadNuScript:[bundleRoot stringByAppendingPathComponent:filename]];
+        }
+    }
+}
+
+-(void)registerScript:(Class)script
+{
+    [self.scriptDict setObject:script forKey:[script description]];
+}
+
+-(void)loadNuScript:(NSString *)location
+{
+    NSString *file = [NSString stringWithContentsOfFile:location encoding:NSUTF8StringEncoding error:nil];
+    if (file != nil) {
+        @try {
+            NuCell *cell = [[Nu sharedParser] parse:[NSString stringWithContentsOfFile:location encoding:NSUTF8StringEncoding error:nil]];
+            [[Nu sharedParser] eval:cell];
+        }
+        @catch (NSException *exception) {
+            NSString *filename = [location lastPathComponent];
+            NSLog(@"Recieved exception from Nu parser:\n'%@'\n when loading file '%@'", exception, filename);
+            @throw exception;
+        }
+    }
+}
+
+-(void)runEnabledScripts
+{
+    if (!self.scriptsLoaded) {
+        [self loadScripts];
+        _scriptsLoaded = YES;
+    }
+    
+    NSArray *keys = [[NSUserDefaults standardUserDefaults] objectForKey:RBScriptLoad];
+    if (keys == nil) {
+        [[NSUserDefaults standardUserDefaults] setObject:@[] forKey:RBScriptLoad];
+        keys = @[];
+    }
+    for (NSString *key in self.scripts) {
+        Class cls = self.scriptDict[key];
+        if ([keys containsObject:key]) {
+            id obj = [[cls alloc] init];
+            [self.scriptSet addObject:obj];
+        } else {
+            id toRM = nil;
+            for (id obj in self.scriptSet) {
+                if ([obj isMemberOfClass:cls]) {
+                    toRM = obj;
+                    break;
+                }
+            }
+            if (toRM != nil) {
+                [self.scriptSet removeObject:toRM];
+            }
         }
     }
 }
 
 -(NSArray *)scripts;
 {
-    return [NSArray arrayWithArray:scripts];
-}
-
--(void)registerScript:(RBScript *)script
-{
-    [scripts addObject:script];
+    return self.scriptDict.allKeys;
 }
 
 -(void)messageLogged:(RBIRCMessage *)message server:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scripts) {
+    for (RBScript *script in self.scriptSet) {
         [script messageLogged:message server:server];
     }
 }
 
 -(void)messageRecieved:(RBIRCMessage *)message server:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scripts) {
+    for (RBScript *script in self.scriptSet) {
         [script messageRecieved:message server:server];
     }
 }

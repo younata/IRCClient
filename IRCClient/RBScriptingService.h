@@ -14,15 +14,19 @@
 @class RBIRCMessage;
 
 @interface RBScriptingService : NSObject
-{
-    NSMutableArray *scripts;
-}
 
-@property (nonatomic, readonly, strong) NSArray *scripts;
+@property (nonatomic, readonly) BOOL scriptsLoaded;
+@property (nonatomic, strong) NSMutableSet *scriptSet;
+@property (nonatomic, strong) NSMutableDictionary *scriptDict; // string: class
 
 +(RBScriptingService *)sharedInstance;
 
--(void)registerScript:(RBScript *)script;
+-(void)loadScripts;
+-(void)runEnabledScripts;
+
+-(NSArray *)scripts;
+
+-(void)registerScript:(Class)script;
 
 -(void)messageRecieved:(RBIRCMessage *)message server:(RBIRCServer *)server;
 -(void)messageLogged:(RBIRCMessage *)message server:(RBIRCServer *)server;
