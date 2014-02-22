@@ -17,7 +17,6 @@
 
 @interface RBIRCServer ()
 
-@property (nonatomic, readwrite) BOOL connected;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableString *incompleteMessages;
 
@@ -48,7 +47,6 @@
         self.useSSL = useSSL;
         self.realname = realname;
         self.password = password;
-        _connected = NO;
         
         [self commonInit];
     }
@@ -77,21 +75,7 @@
         [self createServerLog];
         
         if (self.connectOnStartup) {
-            [self connect];
-            for (NSString *key in self.channels.allKeys) {
-                if ([key isEqualToString:RBIRCServerLog]) {
-                    continue;
-                }
-                RBIRCChannel *channel = self.channels[key];
-                if (channel.connectOnStartup && channel.isChannel) {
-                    NSString *s = [NSString stringWithFormat:@"join %@", key];
-                    if ([channel.password hasContent]) {
-                        s = [NSString stringWithFormat:@"%@ %@", s, channel.password];
-                    }
-                    s = [NSString stringWithFormat:@"%@\r\n", s];
-                    [self.commandQueue addObject:s];
-                }
-            }
+            [self reconnect];
         }
     }
     return self;
@@ -116,6 +100,32 @@
         }
     }
     [coder encodeObject:channelsToSave forKey:@"channels"];
+}
+
+-(void)reconnect
+{
+    [self connect];
+    for (NSString *key in self.channels.allKeys) {
+        if ([key isEqualToString:RBIRCServerLog]) {
+            continue;
+        }
+        RBIRCChannel *channel = self.channels[key];
+        if (channel.connectOnStartup && channel.isChannel) {
+            NSString *s = [NSString stringWithFormat:@"join %@", key];
+            if ([channel.password hasContent]) {
+                s = [NSString stringWithFormat:@"%@ %@", s, channel.password];
+            }
+            s = [NSString stringWithFormat:@"%@\r\n", s];
+            [self.commandQueue addObject:s];
+        }
+    }
+}
+
+-(BOOL)connected
+{
+    if (self.readStream == nil)
+        return NO;
+    return 1 <= self.readStream.streamStatus <= 4;
 }
 
 -(void)createServerLog
@@ -160,7 +170,6 @@
     if (numBytesWritten < 0) {
         NSError *error = [writeStream streamError];
         NSLog(@"Error Writing to stream: %@", error);
-        self.connected = NO;
         [self.writeStream close];
         [self.readStream close];
     } else if (numBytesWritten == 0) {
@@ -234,7 +243,6 @@
         }
         [theSelf nick:theSelf.nick];
         [theSelf sendCommand:[NSString stringWithFormat:@"user %@ foo bar %@", theSelf.nick, realname]];
-        theSelf.connected = YES;
         for (id<RBIRCServerDelegate> del in theSelf.delegates) {
             if ([del respondsToSelector:@selector(IRCServerDidConnect:)])
                 [del IRCServerDidConnect:theSelf];
@@ -559,7 +567,6 @@
         case NSStreamEventEndEncountered:
             [self.writeStream close];
             [self.readStream close];
-            self.connected = NO;
             for (id<RBIRCServerDelegate>del in self.delegates) {
                 if ([del respondsToSelector:@selector(IRCServerConnectionDidDisconnect:)])
                     [del IRCServerConnectionDidDisconnect:self];

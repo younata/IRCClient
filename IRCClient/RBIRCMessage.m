@@ -12,6 +12,13 @@
 #import "RBConfigurationKeys.h"
 #import "UIDevice+Categories.h"
 
+@interface RBIRCMessage ()
+{
+    NSAttributedString *_attributedMessage;
+}
+
+@end
+
 @implementation RBIRCMessage
 
 +(NSString *)getMessageStringForType:(IRCMessageType)messagetype
@@ -382,12 +389,17 @@
     return ret;
 }
 
+-(void)setAttributedMessage:(NSAttributedString *)attributedMessage
+{
+    _attributedMessage = attributedMessage;
+}
+
 -(NSAttributedString *)attributedMessage
 {
     if (!_attributedMessage) {
         _attributedMessage = [[NSAttributedString alloc] initWithString:[self description] attributes:[self defaultAttributes]];
     }
-    
+        
     return _attributedMessage;
 }
 

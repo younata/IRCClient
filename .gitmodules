@@ -1,3 +1,6 @@
 [submodule "RBCategories"]
 	path = RBCategories
 	url = https://github.com/younata/RBCategories.git
+[submodule "RBHelp"]
+	path = RBHelp
+	url = https://github.com/younata/RBHelp.git

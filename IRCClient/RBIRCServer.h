@@ -43,6 +43,8 @@
 -(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname password:(NSString *)password;
 -(void)sendCommand:(NSString *)command;
 
+-(void)reconnect;
+
 -(void)addDelegate:(id<RBIRCServerDelegate>)object;
 -(void)rmDelegate:(id<RBIRCServerDelegate>)object;
 

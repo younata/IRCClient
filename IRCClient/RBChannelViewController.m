@@ -96,10 +96,6 @@ static NSString *CellIdentifier = @"Cell";
     [self.view addSubview:self.borderView];
     
     [self revealButtonPressed:nil];
-    
-    if (!self.server.connected) {
-        [self disconnect];
-    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -107,6 +103,10 @@ static NSString *CellIdentifier = @"Cell";
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    if (!self.server.connected) {
+        [self disconnect];
+    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated

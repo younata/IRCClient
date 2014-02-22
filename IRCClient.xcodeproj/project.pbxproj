@@ -70,6 +70,14 @@
 		8908DC5618B82324004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5218B82324004DFBAB /* ffi.S */; };
 		8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
 		8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
+		8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7418B8B299004DFBAB /* RBHelpArrayViewController.m */; };
+		8908DC7C18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7418B8B299004DFBAB /* RBHelpArrayViewController.m */; };
+		8908DC7D18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7618B8B299004DFBAB /* RBHelpTextViewController.m */; };
+		8908DC7E18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7618B8B299004DFBAB /* RBHelpTextViewController.m */; };
+		8908DC7F18B8B299004DFBAB /* RBHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7918B8B299004DFBAB /* RBHelpViewController.m */; };
+		8908DC8018B8B299004DFBAB /* RBHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7918B8B299004DFBAB /* RBHelpViewController.m */; };
+		8908DC8118B8B299004DFBAB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8908DC7A18B8B299004DFBAB /* README.md */; };
+		8908DC8218B8B299004DFBAB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8908DC7A18B8B299004DFBAB /* README.md */; };
 		891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
 		891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
@@ -119,6 +127,8 @@
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
+		89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
+		89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +202,15 @@
 		8908DC5218B82324004DFBAB /* ffi.S */ = {isa = PBXFileReference; explicitFileType = sourcecode.asm; fileEncoding = 4; path = ffi.S; sourceTree = "<group>"; };
 		8908DC5D18B88897004DFBAB /* UITableView+Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+Scroll.h"; path = "UITableView/UITableView+Scroll.h"; sourceTree = "<group>"; };
 		8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+Scroll.m"; path = "UITableView/UITableView+Scroll.m"; sourceTree = "<group>"; };
+		8908DC7218B8B299004DFBAB /* RBHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBHelp.h; sourceTree = "<group>"; };
+		8908DC7318B8B299004DFBAB /* RBHelpArrayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBHelpArrayViewController.h; sourceTree = "<group>"; };
+		8908DC7418B8B299004DFBAB /* RBHelpArrayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBHelpArrayViewController.m; sourceTree = "<group>"; };
+		8908DC7518B8B299004DFBAB /* RBHelpTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBHelpTextViewController.h; sourceTree = "<group>"; };
+		8908DC7618B8B299004DFBAB /* RBHelpTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBHelpTextViewController.m; sourceTree = "<group>"; };
+		8908DC7718B8B299004DFBAB /* RBHelpTint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBHelpTint.h; sourceTree = "<group>"; };
+		8908DC7818B8B299004DFBAB /* RBHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBHelpViewController.h; sourceTree = "<group>"; };
+		8908DC7918B8B299004DFBAB /* RBHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBHelpViewController.m; sourceTree = "<group>"; };
+		8908DC7A18B8B299004DFBAB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		891B01E2189650DA00B2D848 /* IRCClientSpecs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRCClientSpecs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		891B01E8189650DA00B2D848 /* IRCClientSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientSpecs-Info.plist"; sourceTree = "<group>"; };
 		891B01EA189650DA00B2D848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -240,6 +259,8 @@
 		89C46E4818960C96006068DC /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
 		89C46E4918960C96006068DC /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
 		89C46E4C189646AE006068DC /* RBIRCServerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBIRCServerDelegate.h; sourceTree = "<group>"; };
+		89E812B218B8CB7400616600 /* RBScriptHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptHelpers.h; sourceTree = "<group>"; };
+		89E812B318B8CB7400616600 /* RBScriptHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptHelpers.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +303,7 @@
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
+				8908DC7118B8B299004DFBAB /* RBHelp */,
 				8908DBDE18B60FA2004DFBAB /* Nu */,
 				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
 				898132FD18A9A274004AEBE9 /* UIView+AutoLayout */,
@@ -425,6 +447,8 @@
 			children = (
 				8908DC2718B6105F004DFBAB /* RBScript.h */,
 				8908DC2818B6105F004DFBAB /* RBScript.m */,
+				89E812B218B8CB7400616600 /* RBScriptHelpers.h */,
+				89E812B318B8CB7400616600 /* RBScriptHelpers.m */,
 				8908DC2B18B615EE004DFBAB /* RBScriptingService.h */,
 				8908DC2C18B615EE004DFBAB /* RBScriptingService.m */,
 				8908DC3118B61FA0004DFBAB /* Built In Scripts */,
@@ -447,6 +471,22 @@
 				8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */,
 			);
 			name = UITableView;
+			sourceTree = "<group>";
+		};
+		8908DC7118B8B299004DFBAB /* RBHelp */ = {
+			isa = PBXGroup;
+			children = (
+				8908DC7218B8B299004DFBAB /* RBHelp.h */,
+				8908DC7318B8B299004DFBAB /* RBHelpArrayViewController.h */,
+				8908DC7418B8B299004DFBAB /* RBHelpArrayViewController.m */,
+				8908DC7518B8B299004DFBAB /* RBHelpTextViewController.h */,
+				8908DC7618B8B299004DFBAB /* RBHelpTextViewController.m */,
+				8908DC7718B8B299004DFBAB /* RBHelpTint.h */,
+				8908DC7818B8B299004DFBAB /* RBHelpViewController.h */,
+				8908DC7918B8B299004DFBAB /* RBHelpViewController.m */,
+				8908DC7A18B8B299004DFBAB /* README.md */,
+			);
+			path = RBHelp;
 			sourceTree = "<group>";
 		};
 		891B01E6189650DA00B2D848 /* IRCClientSpecs */ = {
@@ -710,6 +750,7 @@
 				8908DC4618B7491C004DFBAB /* doc.nu in Resources */,
 				8908DC4818B7491C004DFBAB /* generate.nu in Resources */,
 				8908DC4918B7491C004DFBAB /* help.nu in Resources */,
+				8908DC8118B8B299004DFBAB /* README.md in Resources */,
 				8908DC4A18B7491C004DFBAB /* match.nu in Resources */,
 				8908DC4B18B7491C004DFBAB /* math.nu in Resources */,
 				8908DC4D18B7491C004DFBAB /* nu.nu in Resources */,
@@ -741,6 +782,7 @@
 				8908DC3D18B74913004DFBAB /* match.nu in Resources */,
 				8908DC3E18B74913004DFBAB /* math.nu in Resources */,
 				8908DC4018B74913004DFBAB /* nu.nu in Resources */,
+				8908DC8218B8B299004DFBAB /* README.md in Resources */,
 				8908DC4118B74913004DFBAB /* template.nu in Resources */,
 				8908DC4218B74913004DFBAB /* test.nu in Resources */,
 			);
@@ -776,11 +818,13 @@
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
+				8908DC7D18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
 				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
 				8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
+				8908DC7F18B8B299004DFBAB /* RBHelpViewController.m in Sources */,
 				8908DC2918B6105F004DFBAB /* RBScript.m in Sources */,
 				8908DC5318B82324004DFBAB /* ffi.c in Sources */,
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
@@ -790,6 +834,8 @@
 				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				8908DC5518B82324004DFBAB /* ffi.S in Sources */,
+				8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
+				89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				899B2A9E189913840008FED3 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
@@ -813,6 +859,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
+				8908DC7C18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
 				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
@@ -830,12 +877,15 @@
 				8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8908DC5618B82324004DFBAB /* ffi.S in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
+				8908DC8018B8B299004DFBAB /* RBHelpViewController.m in Sources */,
 				899B2A9F189913840008FED3 /* NSData+string.m in Sources */,
 				898132E818A86E0C004AEBE9 /* RBAppDelegateSpec.mm in Sources */,
 				891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */,
 				891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */,
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
+				8908DC7E18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
+				89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */,
 				8908DC2518B60FB0004DFBAB /* Nu.m in Sources */,
 				8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */,
 				898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,

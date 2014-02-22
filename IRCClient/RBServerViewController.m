@@ -53,6 +53,17 @@ static NSString *textFieldCell = @"textFieldCell";
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    for (RBIRCServer *server in self.servers) {
+        if ([server connectOnStartup] && ![server connected]) {
+            [server reconnect];
+        }
+    }
+}
+
 -(void)setServers:(NSMutableArray *)servers
 {
     for (RBIRCServer *server in _servers) {

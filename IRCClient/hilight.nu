@@ -1,12 +1,11 @@
 ; TODO: load nick color names from some sort of user-facing attribute list.
 (class Hilight is RBScript
     (- (void) messageLogged:(id)message server:(id)server is
-        (if (or (eq (message command) 3) (eq (message command) 4))
-            (set (channelName ((message target) objectAtIndex:0)))
-            (set (channel (server objectForKeyedSubscript:channelName)))
-            (set (m ((NSMutableAttributedString alloc) initWithAttributedString:(message attributedMessage))))
-            (for ((set nameIdx i) (< i ((channel names) count)) (set i (+ i 1)))
+        (set channel (server objectForKeyedSubscript:((message targets) objectAtIndex:0)))
+        (set msg ((NSMutableAttributedString alloc) initWithAttributedString:(message attributedMessage)))
+        (if (or (== (message command) 3) (== (message command) 4))
+            (for ((set i 0) (< i ((channel names) count)) (set i (+ i 1)))
                  (set name ((channel names) objectAtIndex:i))
                  (if ((message message) containsSubstring:name)
-                     (m addAttribute:NSForegroundColorAttributeName value:(UIColor redColor) range:((message message) rangeOfString:name))))
-            (message setAttributedMessage:m))))
+                     (msg addAttribute:(NSAttributedStringAttributes NSForegroundColorAttributeName) value:(UIColor redColor) range:((message message) rangeOfString:name))))
+            (message setAttributedMessage:msg))))
