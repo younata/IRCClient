@@ -32,10 +32,6 @@
 		8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBD18B5B3B1004DFBAB /* UIDevice-Reachability.m */; };
 		8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
 		8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
-		8908DBFA18B60FB0004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE018B60FB0004DFBAB /* ffi.c */; };
-		8908DBFB18B60FB0004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE018B60FB0004DFBAB /* ffi.c */; };
-		8908DBFC18B60FB0004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE218B60FB0004DFBAB /* ffi.S */; };
-		8908DBFD18B60FB0004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBE218B60FB0004DFBAB /* ffi.S */; };
 		8908DC0018B60FB0004DFBAB /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE418B60FB0004DFBAB /* README.markdown */; };
 		8908DC2418B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8908DC2518B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -68,6 +64,10 @@
 		8908DC4D18B7491C004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
 		8908DC4E18B7491C004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
 		8908DC4F18B7491C004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
+		8908DC5318B82324004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5018B82324004DFBAB /* ffi.c */; };
+		8908DC5418B82324004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5018B82324004DFBAB /* ffi.c */; };
+		8908DC5518B82324004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5218B82324004DFBAB /* ffi.S */; };
+		8908DC5618B82324004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5218B82324004DFBAB /* ffi.S */; };
 		891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
 		891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
@@ -164,9 +164,6 @@
 		8908DBC818B5B3CC004DFBAB /* UIDevice+Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Categories.h"; sourceTree = "<group>"; };
 		8908DBC918B5B3E8004DFBAB /* wwanconnect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wwanconnect.c; sourceTree = "<group>"; };
 		8908DBCA18B5B3E8004DFBAB /* wwanconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wwanconnect.h; sourceTree = "<group>"; };
-		8908DBE018B60FB0004DFBAB /* ffi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi.c; sourceTree = "<group>"; };
-		8908DBE118B60FB0004DFBAB /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
-		8908DBE218B60FB0004DFBAB /* ffi.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = ffi.S; sourceTree = "<group>"; };
 		8908DBE318B60FB0004DFBAB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		8908DBE418B60FB0004DFBAB /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		8908DBE618B60FB0004DFBAB /* beautify.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = beautify.nu; sourceTree = "<group>"; };
@@ -188,6 +185,9 @@
 		8908DC2C18B615EE004DFBAB /* RBScriptingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptingService.m; sourceTree = "<group>"; };
 		8908DC2F18B61F7F004DFBAB /* hilight.nu */ = {isa = PBXFileReference; lastKnownFileType = text; path = hilight.nu; sourceTree = "<group>"; };
 		8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBScriptingServiceSpec.mm; sourceTree = "<group>"; };
+		8908DC5018B82324004DFBAB /* ffi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi.c; sourceTree = "<group>"; };
+		8908DC5118B82324004DFBAB /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
+		8908DC5218B82324004DFBAB /* ffi.S */ = {isa = PBXFileReference; explicitFileType = sourcecode.asm; fileEncoding = 4; path = ffi.S; sourceTree = "<group>"; };
 		891B01E2189650DA00B2D848 /* IRCClientSpecs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRCClientSpecs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		891B01E8189650DA00B2D848 /* IRCClientSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientSpecs-Info.plist"; sourceTree = "<group>"; };
 		891B01EA189650DA00B2D848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -380,9 +380,9 @@
 		8908DBDF18B60FB0004DFBAB /* libffi */ = {
 			isa = PBXGroup;
 			children = (
-				8908DBE018B60FB0004DFBAB /* ffi.c */,
-				8908DBE118B60FB0004DFBAB /* ffi.h */,
-				8908DBE218B60FB0004DFBAB /* ffi.S */,
+				8908DC5018B82324004DFBAB /* ffi.c */,
+				8908DC5118B82324004DFBAB /* ffi.h */,
+				8908DC5218B82324004DFBAB /* ffi.S */,
 				8908DBE318B60FB0004DFBAB /* LICENSE */,
 				8908DBE418B60FB0004DFBAB /* README.markdown */,
 			);
@@ -758,8 +758,6 @@
 				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
-				8908DBFA18B60FB0004DFBAB /* ffi.c in Sources */,
-				8908DBFC18B60FB0004DFBAB /* ffi.S in Sources */,
 				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
@@ -769,12 +767,14 @@
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				8908DC2918B6105F004DFBAB /* RBScript.m in Sources */,
+				8908DC5318B82324004DFBAB /* ffi.c in Sources */,
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				898132FB18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */,
+				8908DC5518B82324004DFBAB /* ffi.S in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				899B2A9E189913840008FED3 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
@@ -797,10 +797,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8908DBFB18B60FB0004DFBAB /* ffi.c in Sources */,
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
-				8908DBFD18B60FB0004DFBAB /* ffi.S in Sources */,
 				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
@@ -812,7 +810,9 @@
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
+				8908DC5418B82324004DFBAB /* ffi.c in Sources */,
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
+				8908DC5618B82324004DFBAB /* ffi.S in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				899B2A9F189913840008FED3 /* NSData+string.m in Sources */,
 				898132E818A86E0C004AEBE9 /* RBAppDelegateSpec.mm in Sources */,
@@ -1029,19 +1029,26 @@
 					"$(inherited)",
 					/Users/you/Desktop/dev/IRCClient/IRCClientSpecs/Frameworks,
 				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRCClientSpecs/IRCClientSpecs-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)/**",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.8.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = "IRCClientSpecs/IRCClientSpecs-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1055,9 +1062,15 @@
 					"$(inherited)",
 					/Users/you/Desktop/dev/IRCClient/IRCClientSpecs/Frameworks,
 				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRCClientSpecs/IRCClientSpecs-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)/**",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.8.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = "IRCClientSpecs/IRCClientSpecs-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1065,6 +1078,7 @@
 					"-lstdc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

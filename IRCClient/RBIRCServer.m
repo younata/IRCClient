@@ -281,7 +281,7 @@
         }
     }
     
-    [[RBScriptingService sharedInstance] messageRecieved:msg server:self];
+    //[[RBScriptingService sharedInstance] messageRecieved:msg server:self];
     
     RBIRCChannel *ch;
     for (int i = 0; i < msg.targets.count; i++) {
@@ -309,7 +309,7 @@
         [ch logMessage:msg];
     }
     
-    [[RBScriptingService sharedInstance] messageLogged:msg server:self];
+    //[[RBScriptingService sharedInstance] messageLogged:msg server:self];
     
     for (id<RBIRCServerDelegate>del in self.delegates) {
         if ([del respondsToSelector:@selector(IRCServer:handleMessage:)]) {

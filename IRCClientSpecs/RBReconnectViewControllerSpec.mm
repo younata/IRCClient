@@ -23,10 +23,6 @@ describe(@"RBReconnectViewController", ^{
         [[NSUserDefaults standardUserDefaults] setObject:Nil forKey:RBConfigServers];
     });
     
-    it(@"should have a tableview", ^{
-        subject.tableView should_not be_nil;
-    });
-    
     describe(@"initial startup, nothing set", ^{
         beforeEach(^{
             [[NSUserDefaults standardUserDefaults] setObject:Nil forKey:RBConfigServers];
@@ -94,7 +90,9 @@ describe(@"RBReconnectViewController", ^{
             [subject view];
             for (UITableViewCell *cell in subject.tableView.visibleCells) {
                 if ([cell.textLabel.text isEqualToString:@"#test"]) {
-                    [(UISwitch *)cell.accessoryView setOn:NO];
+                    UISwitch *s = (UISwitch *)cell.accessoryView;
+                    [s setOn:NO];
+                    [s sendActionsForControlEvents:UIControlEventValueChanged];
                 }
             }
             [subject save];

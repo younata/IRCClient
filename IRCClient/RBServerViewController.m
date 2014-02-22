@@ -41,6 +41,8 @@ static NSString *textFieldCell = @"textFieldCell";
 {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"Servers";
+    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
     
@@ -96,7 +98,7 @@ static NSString *textFieldCell = @"textFieldCell";
         channels = [server sortedChannelKeys];
     }
     
-    if (server && row == channels.count) {
+    if (server != nil && row == channels.count) {
         cell = [tableView dequeueReusableCellWithIdentifier:textFieldCell forIndexPath:indexPath];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];

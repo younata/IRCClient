@@ -83,7 +83,8 @@ describe(@"RBServerViewController", ^{
             c = [[RBIRCChannel alloc] initWithName:@"#foo"];
             s stub_method("serverName").and_return(@"Test Server");
             s stub_method("channels").and_return(@{@"#foo": c});
-            [subject.servers addObject:s];
+            s stub_method("sortedChannelKeys").and_return(@[@"Test Server", RBIRCServerLog, @"#foo"]);
+            subject.servers = [@[s] mutableCopy];
             [subject.tableView reloadData];
             
             subject.delegate = nice_fake_for(@protocol(RBServerVCDelegate));
@@ -94,8 +95,11 @@ describe(@"RBServerViewController", ^{
         
         it(@"should prepend servers to list", ^{
             [subject numberOfSectionsInTableView:subject.tableView] should be_gte(2);
-            [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].textLabel.text should equal(@"Test Server");
-            [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]].textLabel.text should equal(@"#foo");
+            UITableViewCell *serverCell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            serverCell.textLabel.text should equal(@"Test Server");
+            
+            UITableViewCell *channelCell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+            channelCell.textLabel.text should equal(RBIRCServerLog);
             
             NSInteger i = [subject numberOfSectionsInTableView:subject.tableView];
             i should_not be_lte(1);

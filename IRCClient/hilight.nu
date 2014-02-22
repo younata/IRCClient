@@ -1,7 +1,7 @@
 ; TODO: load nick color names from some sort of user-facing attribute list.
 (class Hilight is RBScript
     (- (void) messageLogged:(id)message server:(id)server is
-        (if (or (eq (message command) IRCMessageTypePrivmsg) (eq (message command) IRCMessageTypeNotice))
+        (if (or (eq (message command) 3) (eq (message command) 4))
             (set (channelName ((message target) objectAtIndex:0)))
             (set (channel (server objectForKeyedSubscript:channelName)))
             (set (m ((NSMutableAttributedString alloc) initWithAttributedString:(message attributedMessage))))

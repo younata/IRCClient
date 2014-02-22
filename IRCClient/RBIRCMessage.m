@@ -276,10 +276,11 @@
             } else {
                 NSDictionary *info = [[NSBundle mainBundle] infoDictionary]; // I actually want this in english...
                 NSString *appname = [info objectForKey:@"CFBundleDisplayName"];
-                NSString *version = [info objectForKey:@"CFBundleVersion"];
+                NSString *version = [info objectForKey:@"CFBundleShortVersionString"];
+                NSString *build = [info objectForKey:@"CFBundleVersion"];
                 UIDevice *cd = [UIDevice currentDevice];
                 NSString *device = [NSString stringWithFormat:@"%@ %@ on an %@", cd.systemName, cd.systemVersion, cd.platformString];
-                self.extra = [NSString stringWithFormat:@"%@ version %@ running on %@", appname, version, device];
+                self.extra = [NSString stringWithFormat:@"%@ version %@ build %@ running on %@", appname, version, build, device];
             }
             break;
         } case IRCMessageTypeCTCPSource:

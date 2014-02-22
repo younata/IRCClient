@@ -31,7 +31,7 @@ describe(@"RBAppDelegate", ^{
         
         it(@"should not launch servers", ^{
             SWRevealViewController *vc = (SWRevealViewController *)subject.window.rootViewController;
-            RBServerViewController *ser = (RBServerViewController *)vc.rearViewController;
+            RBServerViewController *ser = (RBServerViewController *)[(UINavigationController *)vc.rearViewController topViewController];
             ser.servers should be_empty;
         });
     });
@@ -49,7 +49,7 @@ describe(@"RBAppDelegate", ^{
         
         it(@"should launch servers", ^{
             SWRevealViewController *vc = (SWRevealViewController *)subject.window.rootViewController;
-            RBServerViewController *ser = (RBServerViewController *)vc.rearViewController;
+            RBServerViewController *ser = (RBServerViewController *)[(UINavigationController *)vc.rearViewController topViewController];
             ser.servers should_not be_empty;
         });
     });

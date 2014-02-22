@@ -31,8 +31,9 @@
     [serverVC setDelegate:channelVC];
     
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:channelVC];
+    UINavigationController *otherNC = [[UINavigationController alloc] initWithRootViewController:serverVC];
     
-    SWRevealViewController *viewController = [[SWRevealViewController alloc] initWithRearViewController:serverVC
+    SWRevealViewController *viewController = [[SWRevealViewController alloc] initWithRearViewController:otherNC
                                                                                     frontViewController:nc];
     
     [serverVC setRevealController:viewController];

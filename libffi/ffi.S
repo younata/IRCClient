@@ -1,7 +1,7 @@
-#import "TargetConditionals.h"
+#include "TargetConditionals.h"
 
 /* This file is mangled from the original to compile using Apple's AS, not GAS */
-#if !TARGET_IPHONE_SIMULATOR
+#if !(TARGET_IPHONE_SIMULATOR)
 
 #define __SOFTFP__
 
