@@ -24,7 +24,6 @@ static NSString *CellIdentifier = @"Cell";
 {
     self = [super initWithStyle:style];
     if (self) {
-        self.servers = @[];
     }
     return self;
 }
@@ -34,23 +33,12 @@ static NSString *CellIdentifier = @"Cell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    [self reloadServerData];
     [self.tableView reloadData];
     
     self.navigationItem.title = NSLocalizedString(@"Connect on Startup", nil);
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", nil) style:UIBarButtonItemStylePlain target:self action:@selector(save)];
     self.switches = [[NSMutableDictionary alloc] init];
-}
-
--(void)reloadServerData
-{
-    NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
-    if (d == nil) {
-        self.servers = @[];
-    } else {
-        self.servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
-    }
 }
 
 -(void)save

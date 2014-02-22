@@ -10,9 +10,8 @@
 
 @interface RBReconnectViewController : UITableViewController
 
-@property (nonatomic, strong) NSArray *servers;
+@property (nonatomic, strong) NSMutableArray *servers;
 
--(void)reloadServerData;
 -(void)save;
 
 @end

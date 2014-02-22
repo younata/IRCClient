@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "RBIRCServerDelegate.h"
+#import "SWRevealViewController.h"
 
 @protocol RBServerVCDelegate;
-@class SWRevealViewController;
 
-@interface RBServerViewController : UITableViewController <UITextFieldDelegate, RBIRCServerDelegate>
+@interface RBServerViewController : UITableViewController <UITextFieldDelegate, RBIRCServerDelegate, SWRevealViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *servers;
 @property (nonatomic, weak) id<RBServerVCDelegate> delegate;

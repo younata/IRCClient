@@ -12,6 +12,9 @@
 
 #import "UIButton+buttonWithFrame.h"
 
+#import "SWRevealViewController.h"
+#import "RBServerViewController.h"
+
 @interface RBConfigViewController ()
 
 @end
@@ -59,6 +62,8 @@
 -(void)pushReconnect
 {
     RBReconnectViewController *rvc = [[RBReconnectViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    SWRevealViewController *vc = (SWRevealViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    rvc.servers = [(RBServerViewController *)[(UINavigationController *)[vc rearViewController] topViewController] servers];
     [self.navigationController pushViewController:rvc animated:YES];
 }
 

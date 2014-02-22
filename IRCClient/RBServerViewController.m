@@ -46,7 +46,9 @@ static NSString *textFieldCell = @"textFieldCell";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
     
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    [self.revealController setDelegate:self];
+    
+    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
 }
 
 -(void)setServers:(NSMutableArray *)servers
@@ -249,6 +251,18 @@ static NSString *textFieldCell = @"textFieldCell";
     if ((![server[to] isChannel] || message.command == IRCMessageTypeJoin)) {
         [self.tableView reloadData];
     }
+}
+
+#pragma mark - SWRevealControllerDelegate
+
+-(void)revealController:(SWRevealViewController *)revealController didMoveToPosition:(FrontViewPosition)position
+{
+    CGRect r = self.view.frame;
+    r.size.width = revealController.rearViewRevealWidth;
+    self.view.frame = r;
+    self.navigationController.view.frame = r;
+    [self.view layoutSubviews];
+    [self.tableView reloadData];
 }
 
 @end
