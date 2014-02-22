@@ -19,6 +19,8 @@
 
 #import "RBConfigurationKeys.h"
 
+#import "RBChannelViewController.h" // shouldn't have to do this...
+
 @interface RBServerViewController ()
 
 @end
@@ -144,6 +146,16 @@ static NSString *textFieldCell = @"textFieldCell";
     return UITableViewCellEditingStyleDelete;
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 0)
+        return NSLocalizedString(@"Disconnect", nil);
+    RBIRCServer *server = self.servers[indexPath.section];
+    RBIRCChannel *channel = server[server.sortedChannelKeys[indexPath.row]];
+    return channel.isChannel ? NSLocalizedString(@"Part", nil) : NSLocalizedString(@"Delete", nil);
+    return indexPath.row == 0 ? @"Disconnect" : @"Part";
+}
+
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle != UITableViewCellEditingStyleDelete)
@@ -153,13 +165,27 @@ static NSString *textFieldCell = @"textFieldCell";
         return;
     RBIRCServer *server = self.servers[section];
     NSInteger row = indexPath.row;
+    
+    RBChannelViewController *cvc = (RBChannelViewController *)self.delegate; // should not have to do this.
+    
     if (row == 0) {
+        if ([cvc.server isEqual:server]) {
+            cvc.channel = nil;
+            cvc.server = nil;
+            [cvc performSelector:@selector(disconnect) withObject:nil];
+        }
         [server quit];
         [self.servers removeObject:server];
     } else {
         NSString *channelName = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
         if ([channelName isEqualToString:RBIRCServerLog])
             return;
+        
+        if ([cvc.server isEqual:server] && [channelName isEqualToString:cvc.channel]) {
+            cvc.channel = nil;
+            [cvc performSelector:@selector(disconnect) withObject:nil];
+        }
+        
         if (([channelName hasPrefix:@"#"] || [channelName hasPrefix:@"&"])) {
             [server part:channelName];
         }

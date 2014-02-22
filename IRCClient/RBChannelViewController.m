@@ -17,6 +17,8 @@
 #import "SWRevealViewController.h"
 #import "RBConfigViewController.h"
 
+#import "UITableView+Scroll.h"
+
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
@@ -411,6 +413,7 @@ static NSString *CellIdentifier = @"Cell";
         [self disconnect];
     }
     [self.tableView reloadData];
+    [self.tableView scrollToBottom:NO];
 }
 
 #pragma mark - RBIRCServerDelegate

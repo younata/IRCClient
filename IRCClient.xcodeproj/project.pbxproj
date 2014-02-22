@@ -68,6 +68,8 @@
 		8908DC5418B82324004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5018B82324004DFBAB /* ffi.c */; };
 		8908DC5518B82324004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5218B82324004DFBAB /* ffi.S */; };
 		8908DC5618B82324004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5218B82324004DFBAB /* ffi.S */; };
+		8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
+		8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
 		891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
 		891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
@@ -188,6 +190,8 @@
 		8908DC5018B82324004DFBAB /* ffi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi.c; sourceTree = "<group>"; };
 		8908DC5118B82324004DFBAB /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
 		8908DC5218B82324004DFBAB /* ffi.S */ = {isa = PBXFileReference; explicitFileType = sourcecode.asm; fileEncoding = 4; path = ffi.S; sourceTree = "<group>"; };
+		8908DC5D18B88897004DFBAB /* UITableView+Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+Scroll.h"; path = "UITableView/UITableView+Scroll.h"; sourceTree = "<group>"; };
+		8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+Scroll.m"; path = "UITableView/UITableView+Scroll.m"; sourceTree = "<group>"; };
 		891B01E2189650DA00B2D848 /* IRCClientSpecs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRCClientSpecs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		891B01E8189650DA00B2D848 /* IRCClientSpecs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IRCClientSpecs-Info.plist"; sourceTree = "<group>"; };
 		891B01EA189650DA00B2D848 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -436,6 +440,15 @@
 			name = "Built In Scripts";
 			sourceTree = "<group>";
 		};
+		8908DC5C18B88856004DFBAB /* UITableView */ = {
+			isa = PBXGroup;
+			children = (
+				8908DC5D18B88897004DFBAB /* UITableView+Scroll.h */,
+				8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */,
+			);
+			name = UITableView;
+			sourceTree = "<group>";
+		};
 		891B01E6189650DA00B2D848 /* IRCClientSpecs */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,6 +530,7 @@
 		899B2A93189913840008FED3 /* RBCategories */ = {
 			isa = PBXGroup;
 			children = (
+				8908DC5C18B88856004DFBAB /* UITableView */,
 				898132E918A89085004AEBE9 /* UIActionSheet */,
 				898132DE18A78ABC004AEBE9 /* UIButton */,
 				899B2A94189913840008FED3 /* NSData */,
@@ -765,6 +779,7 @@
 				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
+				8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				8908DC2918B6105F004DFBAB /* RBScript.m in Sources */,
 				8908DC5318B82324004DFBAB /* ffi.c in Sources */,
@@ -812,6 +827,7 @@
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
 				8908DC5418B82324004DFBAB /* ffi.c in Sources */,
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
+				8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8908DC5618B82324004DFBAB /* ffi.S in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				899B2A9F189913840008FED3 /* NSData+string.m in Sources */,
