@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RBTableViewCell.h"
 
 @interface RBTextFieldServerCell : UITableViewCell
 

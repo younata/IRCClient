@@ -17,6 +17,7 @@ describe(@"RBReconnectViewController", ^{
 
     beforeEach(^{
         subject = [[RBReconnectViewController alloc] init];
+        subject.servers = [[NSMutableArray alloc] init];
     });
     
     afterEach(^{
@@ -43,9 +44,8 @@ describe(@"RBReconnectViewController", ^{
         __block RBIRCServer *server;
         static NSString *serverName = @"localhost";
         
-        void (^saveServer)(RBIRCServer *) = ^(RBIRCServer *s){
-            NSData *d = [NSKeyedArchiver archivedDataWithRootObject:@[s]];
-            [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+        void (^saveServer)(RBIRCServer *) = ^(RBIRCServer *serv){
+            subject.servers = [@[serv] mutableCopy];
         };
         
         beforeEach(^{

@@ -16,11 +16,6 @@ describe(@"RBConfigViewController", ^{
         navController = [[UINavigationController alloc] initWithRootViewController:subject];
         [subject view];
     });
-    
-    it(@"should have a button for going to the reconnect gui", ^{
-        [subject.reconnectButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-        [navController topViewController] should be_instance_of([RBReconnectViewController class]);
-    });
 });
 
 SPEC_END
