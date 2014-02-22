@@ -129,11 +129,9 @@ static NSString *CellIdentifier = @"Cell";
     }
     
     UIActionSheet *as = self.actionSheet;
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        [as showFromBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
-    } else {
-        [as showInView:self.view.superview];
-    }
+    [as showInView:self.view.superview];
+    // https://www.dropbox.com/s/bxlbj0hwgtoe19u/2014-02-22%2000.06.28.png is ugly
+    // but it's less ugly than the other options for ipad.
 }
 
 -(void)showCTCPCommands
