@@ -13,6 +13,10 @@
 #import "RBIRCServer.h"
 #import "NSString+isNilOrEmpty.h"
 
+#import "RBColorScheme.h"
+
+#import "RBHelp.h"
+
 @interface RBServerEditorViewController ()
 
 @property (nonatomic) CGRect originalFrame;
@@ -63,7 +67,20 @@
         label.text = NSLocalizedString(@"Edit Server", nil);
     }
     
-    [self.scrollView addSubview:label];
+    if (self.navigationItem) {
+        self.navigationItem.title = label.text;
+        label = nil;
+        
+        self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
+        
+        UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"?"
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(showHelp)];
+        self.navigationItem.rightBarButtonItem = helpButton;
+    } else {
+        [self.scrollView addSubview:label];
+    }
     
     self.serverName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y, w, h)];
     self.serverHostname = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + (h + 10), w, h)];
@@ -145,6 +162,13 @@
                         self.cancelButton]) {
         [self.scrollView addSubview:v];
     }
+}
+
+-(void)showHelp
+{
+    UINavigationController *nc = [[UINavigationController alloc] init];
+    [nc pushViewController:[[RBHelpViewController alloc] init] animated:NO];
+    [self presentViewController:nc animated:YES completion:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated

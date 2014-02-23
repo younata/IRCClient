@@ -129,6 +129,10 @@
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
 		89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
 		89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
+		89E812B818B8E78800616600 /* RBColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B718B8E78800616600 /* RBColorScheme.m */; };
+		89E812B918B8E78800616600 /* RBColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B718B8E78800616600 /* RBColorScheme.m */; };
+		89E812BB18B98A6200616600 /* help.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BA18B8EB9400616600 /* help.json */; };
+		89E812BC18B98A8000616600 /* help.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BA18B8EB9400616600 /* help.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -261,6 +265,9 @@
 		89C46E4C189646AE006068DC /* RBIRCServerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBIRCServerDelegate.h; sourceTree = "<group>"; };
 		89E812B218B8CB7400616600 /* RBScriptHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptHelpers.h; sourceTree = "<group>"; };
 		89E812B318B8CB7400616600 /* RBScriptHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptHelpers.m; sourceTree = "<group>"; };
+		89E812B618B8E78800616600 /* RBColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBColorScheme.h; sourceTree = "<group>"; };
+		89E812B718B8E78800616600 /* RBColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBColorScheme.m; sourceTree = "<group>"; };
+		89E812BA18B8EB9400616600 /* help.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = help.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +351,8 @@
 				8906F1D918867BEE00042A13 /* RBAppDelegate.h */,
 				8906F1DA18867BEE00042A13 /* RBAppDelegate.m */,
 				898132D018A74F19004AEBE9 /* RBConfigurationKeys.h */,
+				89E812B618B8E78800616600 /* RBColorScheme.h */,
+				89E812B718B8E78800616600 /* RBColorScheme.m */,
 				8908DC2618B61047004DFBAB /* Scripting */,
 				89C46E431895F89A006068DC /* IRC Backend */,
 				89C46E441895F8A2006068DC /* Views and Controllers */,
@@ -360,6 +369,7 @@
 				898132F418A99EDF004AEBE9 /* en.lproj */,
 				8906F1D218867BEE00042A13 /* IRCClient-Info.plist */,
 				8906F1D318867BEE00042A13 /* InfoPlist.strings */,
+				89E812BA18B8EB9400616600 /* help.json */,
 				8906F1D618867BEE00042A13 /* main.m */,
 				8906F1D818867BEE00042A13 /* IRCClient-Prefix.pch */,
 			);
@@ -737,6 +747,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E812BC18B98A8000616600 /* help.json in Resources */,
 				8908DC3518B73900004DFBAB /* hilight.nu in Resources */,
 				89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */,
 				898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */,
@@ -770,6 +781,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E812BB18B98A6200616600 /* help.json in Resources */,
 				8908DC3418B736E2004DFBAB /* hilight.nu in Resources */,
 				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
@@ -821,6 +833,7 @@
 				8908DC7D18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
 				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
+				89E812B818B8E78800616600 /* RBColorScheme.m in Sources */,
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
 				8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
@@ -868,6 +881,7 @@
 				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */,
+				89E812B918B8E78800616600 /* RBColorScheme.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,

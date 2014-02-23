@@ -12,6 +12,9 @@
 #import "RBChannelViewController.h"
 #import "RBIRCServer.h"
 
+#import "RBHelp.h"
+#import "RBColorScheme.h"
+
 #import "RBConfigurationKeys.h"
 
 @interface RBAppDelegate ()<SWRevealViewControllerDelegate>
@@ -25,6 +28,9 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme primaryColor]] forKey:RBHelpTintColor];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme secondaryColor]] forKey:RBHelpLinkColor];
     
     RBServerViewController *serverVC = [[RBServerViewController alloc] initWithStyle:UITableViewStyleGrouped];
     RBChannelViewController *channelVC = [[RBChannelViewController alloc] init];

@@ -19,6 +19,10 @@
 
 #import "UITableView+Scroll.h"
 
+#import "RBColorScheme.h"
+
+#import "RBHelp.h"
+
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
@@ -60,12 +64,18 @@ static NSString *CellIdentifier = @"Cell";
                                                                             action:@selector(revealButtonPressed:)];
     
     
-    //self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
+    //self.navigationItem.leftBarButtonItem.tintColor = [RBColorScheme primaryColor];
+    self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Settings", nil)
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(showSettings)];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Settings", nil)
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(showSettings)];
+    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"?"
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(showHelp)];
+    self.navigationItem.rightBarButtonItems = @[settingsButton, helpButton];
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, height-inputHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
@@ -96,6 +106,13 @@ static NSString *CellIdentifier = @"Cell";
     [self.view addSubview:self.borderView];
     
     [self revealButtonPressed:nil];
+}
+
+-(void)showHelp
+{
+    UINavigationController *nc = [[UINavigationController alloc] init];
+    [nc pushViewController:[[RBHelpViewController alloc] init] animated:NO];
+    [self presentViewController:nc animated:YES completion:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -245,8 +262,11 @@ static NSString *CellIdentifier = @"Cell";
     }
     
     NSAttributedString *text = [self attributedStringForIndex:indexPath.row];
+    NSMutableAttributedString *mt = [[NSMutableAttributedString alloc] initWithAttributedString:text];
+    NSMutableString *st = [mt mutableString];
+    [st insertString:@"    " atIndex:0]; // I should not have to do this
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(self.view.frame.size.width, CGFLOAT_MAX)
+    CGRect boundingRect = [mt boundingRectWithSize:CGSizeMake(self.view.frame.size.width, CGFLOAT_MAX)
                                              options:options
                                              context:nil];
     

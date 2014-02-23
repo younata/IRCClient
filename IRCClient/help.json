@@ -1,0 +1,12 @@
+{
+    "IRC Basics" : {
+        "What is IRC?" : "IRC - Internet Relay Chat - is a protocol for communicating with others. It's basically multiplayer Notepad",
+        "Channels" : "A channel is a group of several users who can send messages talking to it. It's basically a \"room\" that hosts conversation (or not) between 2 or more users. Channels have a '#' character prefixed to their name.",
+    },
+    "Using this app" : {
+        "Connecting": "Press the \"Join Server\" button, fill out the information for which network you want to join, put down your desired nick, and press connect.",
+        "SSL?": "It is recommended that, whenever possible, you use SSL to connect to the network. For this reason, this app defaults to using SSl to connect to IRC networks, and defaults to connecting the port most commonly used for hosting SSL connections on IRC networks",
+        "Disconnecting": "To disconnect from a server, leave a channel, or close a PM, simply swipe to the left on the cell for the desired server/channel, then press the \"Disconnect\", \"Part\", or \"Delete\" button.",
+        "Auto-joining": "By default, this app will rejoin any networks and servers it was connected to when it last ran. To turn this off, go into Configure, then press \"Reconnect\" and select whether or not you want to rejoin. Alternatively, disconnect/part/delete the desired server/channel/conversation you don't want re-opened.",
+    }
+}

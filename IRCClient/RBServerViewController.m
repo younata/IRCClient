@@ -21,6 +21,8 @@
 
 #import "RBChannelViewController.h" // shouldn't have to do this...
 
+#import "RBColorScheme.h"
+
 @interface RBServerViewController ()
 
 @end
@@ -44,6 +46,8 @@ static NSString *textFieldCell = @"textFieldCell";
     [super viewDidLoad];
     
     self.navigationItem.title = @"Servers";
+    
+    self.navigationController.navigationBar.tintColor = [RBColorScheme secondaryColor];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
@@ -121,6 +125,7 @@ static NSString *textFieldCell = @"textFieldCell";
     
     if (!server) {
         cell.textLabel.text = NSLocalizedString(@"New Server", nil);
+        cell.textLabel.textColor = [RBColorScheme primaryColor];
     } else {
         cell.textLabel.textColor = server.connected ? [UIColor darkTextColor] : [[UIColor darkTextColor] colorWithAlphaComponent:0.5];
         if (row == channels.count) {
@@ -131,6 +136,13 @@ static NSString *textFieldCell = @"textFieldCell";
             cell = c;
         } else {
             cell.textLabel.text = channels[row];
+            if (row == 0) {
+                cell.textLabel.textColor = [RBColorScheme primaryColor];
+            } else if ([server[channels[row]] isChannel]) {
+                cell.textLabel.textColor = [RBColorScheme secondaryColor];
+            } else {
+                cell.textLabel.textColor = [RBColorScheme tertiaryColor];
+            }
         }
     }
     
@@ -185,7 +197,9 @@ static NSString *textFieldCell = @"textFieldCell";
             cvc.server = nil;
             [cvc performSelector:@selector(disconnect) withObject:nil];
         }
-        [server quit];
+        if ([server connected]) {
+            [server quit];
+        }
         [self.servers removeObject:server];
     } else {
         NSString *channelName = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
@@ -244,7 +258,8 @@ static NSString *textFieldCell = @"textFieldCell";
         };
     }
     if (editor) {
-        [self presentViewController:editor animated:YES completion:nil];
+        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:editor];
+        [self presentViewController:nc animated:YES completion:nil];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }

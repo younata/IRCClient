@@ -15,6 +15,8 @@
 #import "SWRevealViewController.h"
 #import "RBServerViewController.h"
 
+#import "RBColorScheme.h"
+
 @interface RBConfigViewController ()
 
 @end
@@ -38,6 +40,8 @@
     self.navigationItem.title = NSLocalizedString(@"Configure", nil);
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", nil) style:UIBarButtonItemStylePlain target:self action:@selector(save)];
+    
+    self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
     
     CGFloat width = self.view.frame.size.width;
     
