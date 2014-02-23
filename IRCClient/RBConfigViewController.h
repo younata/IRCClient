@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RBConfigViewController : UIViewController
+@interface RBConfigViewController : UITableViewController
 
 @property (nonatomic, strong) UIButton *reconnectButton;
 

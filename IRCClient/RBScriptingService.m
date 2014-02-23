@@ -41,6 +41,9 @@
 
 -(void)loadScripts
 {
+    if (self.scriptsLoaded) {
+        return;
+    }
     self.scriptSet = [[NSMutableSet alloc] init];
     self.scriptDict = [[NSMutableDictionary alloc] init];
     
@@ -54,11 +57,15 @@
             [self loadNuScript:[bundleRoot stringByAppendingPathComponent:filename]];
         }
     }
+    _scriptsLoaded = YES;
 }
 
 -(void)registerScript:(Class)script
 {
-    [self.scriptDict setObject:script forKey:[script description]];
+    NSString *desc = [script description];
+    if (desc && self.scriptDict[desc] == nil) {
+        [self.scriptDict setObject:script forKey:desc];
+    }
 }
 
 -(void)loadNuScript:(NSString *)location

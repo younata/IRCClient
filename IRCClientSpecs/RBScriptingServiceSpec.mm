@@ -5,6 +5,8 @@
 #import "RBIRCServer.h"
 #import "RBIRCMessage.h"
 
+#import "RBColorScheme.h"
+
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
@@ -12,6 +14,8 @@ SPEC_BEGIN(RBScriptingServiceSpec)
 
 describe(@"RBScriptingService", ^{
     __block RBScriptingService *subject;
+    
+    [[RBScriptingService sharedInstance] loadScripts];
 
     beforeEach(^{
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBScriptLoad];
@@ -44,9 +48,10 @@ describe(@"RBScriptingService", ^{
             subject.scriptSet.count should equal(1);
         });
         
-        it(@"should highlight nicks", ^{
+        it(@"should highlight your nick only", ^{
             RBIRCServer *server = nice_fake_for([RBIRCServer class]);
-            RBIRCChannel *channel = nice_fake_for([RBIRCChannel class]);
+            
+            server stub_method("nick").and_return(@"You");
             
             RBIRCMessage *message = [[RBIRCMessage alloc] init];
             message.command = IRCMessageTypePrivmsg;
@@ -55,11 +60,6 @@ describe(@"RBScriptingService", ^{
             message.from = @"ik";
             
             NSAttributedString *str = message.attributedMessage;
-            
-            channel stub_method("names").and_return(@[@"You", @"ik"]);
-            channel stub_method("name").and_return(@"#test");
-            
-            server stub_method("objectForKeyedSubscript:").and_return(channel);
             
             [subject messageLogged:message server:server];
             NSAttributedString *newStr = message.attributedMessage;

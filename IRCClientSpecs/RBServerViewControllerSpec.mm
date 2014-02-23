@@ -45,7 +45,7 @@ describe(@"RBServerViewController", ^{
     it(@"should present an editor view controller when a new server is selected", ^{
         NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
         [subject tableView:subject.tableView didSelectRowAtIndexPath:ip];
-        subject should have_received(@selector(presentViewController:animated:completion:)).with(Arguments::any([RBServerEditorViewController class]), YES, nil);
+        subject should have_received(@selector(presentViewController:animated:completion:)).with(Arguments::any([UINavigationController class]), YES, nil);
         subject.tableView should have_received("deselectRowAtIndexPath:animated:").with(ip, Arguments::anything);
     });
     
@@ -109,7 +109,7 @@ describe(@"RBServerViewController", ^{
         it(@"should present a server editor controller when the first cell in a server section is selected", ^{
             NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:0];
             [subject tableView:subject.tableView didSelectRowAtIndexPath:ip];
-            subject should have_received(@selector(presentViewController:animated:completion:)).with(Arguments::any([RBServerEditorViewController class]), YES, nil);
+            subject should have_received(@selector(presentViewController:animated:completion:)).with(Arguments::any([UINavigationController class]), YES, nil);
             subject.tableView should have_received("deselectRowAtIndexPath:animated:").with(ip, Arguments::anything);
         });
         

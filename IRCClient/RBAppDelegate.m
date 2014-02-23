@@ -15,6 +15,7 @@
 #import "RBHelp.h"
 #import "RBColorScheme.h"
 
+#import "RBScriptingService.h"
 #import "RBConfigurationKeys.h"
 
 @interface RBAppDelegate ()<SWRevealViewControllerDelegate>
@@ -28,6 +29,8 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [[RBScriptingService sharedInstance] loadScripts];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme primaryColor]] forKey:RBHelpTintColor];
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme secondaryColor]] forKey:RBHelpLinkColor];
