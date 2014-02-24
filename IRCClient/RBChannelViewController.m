@@ -261,12 +261,10 @@ static NSString *CellIdentifier = @"Cell";
         return 40.0;
     }
     
+    CGFloat indentionWidth = 10;
     NSAttributedString *text = [self attributedStringForIndex:indexPath.row];
-    NSMutableAttributedString *mt = [[NSMutableAttributedString alloc] initWithAttributedString:text];
-    NSMutableString *st = [mt mutableString];
-    [st insertString:@"    " atIndex:0]; // I should not have to do this
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-    CGRect boundingRect = [mt boundingRectWithSize:CGSizeMake(self.view.frame.size.width, CGFLOAT_MAX)
+    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - indentionWidth, CGFLOAT_MAX)
                                              options:options
                                              context:nil];
     
@@ -446,7 +444,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)IRCServer:(RBIRCServer *)server errorReadingFromStream:(NSError *)error
 {
-    // meh.
+    [self IRCServerConnectionDidDisconnect:server];
 }
 
 -(void)IRCServer:(RBIRCServer *)server invalidCommand:(NSError *)error

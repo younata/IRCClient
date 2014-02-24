@@ -133,6 +133,12 @@
 		89E812B918B8E78800616600 /* RBColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B718B8E78800616600 /* RBColorScheme.m */; };
 		89E812BB18B98A6200616600 /* help.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BA18B8EB9400616600 /* help.json */; };
 		89E812BC18B98A8000616600 /* help.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BA18B8EB9400616600 /* help.json */; };
+		89E812C018BA1B6A00616600 /* icon-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BD18BA1B6A00616600 /* icon-iPad.png */; };
+		89E812C118BA1B6A00616600 /* icon-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BD18BA1B6A00616600 /* icon-iPad.png */; };
+		89E812C218BA1B6A00616600 /* icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BE18BA1B6A00616600 /* icon-iPad@2x.png */; };
+		89E812C318BA1B6A00616600 /* icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BE18BA1B6A00616600 /* icon-iPad@2x.png */; };
+		89E812C418BA1B6A00616600 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BF18BA1B6A00616600 /* icon@2x.png */; };
+		89E812C518BA1B6A00616600 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BF18BA1B6A00616600 /* icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,7 +152,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8906F1C718867BEE00042A13 /* IRCClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IRCClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8906F1C718867BEE00042A13 /* rIRC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rIRC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8906F1CA18867BEE00042A13 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8906F1CC18867BEE00042A13 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8906F1CE18867BEE00042A13 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -268,6 +274,9 @@
 		89E812B618B8E78800616600 /* RBColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBColorScheme.h; sourceTree = "<group>"; };
 		89E812B718B8E78800616600 /* RBColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBColorScheme.m; sourceTree = "<group>"; };
 		89E812BA18B8EB9400616600 /* help.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = help.json; sourceTree = "<group>"; };
+		89E812BD18BA1B6A00616600 /* icon-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-iPad.png"; sourceTree = SOURCE_ROOT; };
+		89E812BE18BA1B6A00616600 /* icon-iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-iPad@2x.png"; sourceTree = SOURCE_ROOT; };
+		89E812BF18BA1B6A00616600 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,7 +334,7 @@
 		8906F1C818867BEE00042A13 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8906F1C718867BEE00042A13 /* IRCClient.app */,
+				8906F1C718867BEE00042A13 /* rIRC.app */,
 				8906F1E218867BEE00042A13 /* IRCClientTests.xctest */,
 				891B01E2189650DA00B2D848 /* IRCClientSpecs.app */,
 			);
@@ -358,6 +367,9 @@
 				89C46E441895F8A2006068DC /* Views and Controllers */,
 				8906F20F188799C000042A13 /* SWRevealViewController */,
 				8906F1DC18867BEE00042A13 /* Images.xcassets */,
+				89E812BD18BA1B6A00616600 /* icon-iPad.png */,
+				89E812BE18BA1B6A00616600 /* icon-iPad@2x.png */,
+				89E812BF18BA1B6A00616600 /* icon@2x.png */,
 				8906F1D118867BEE00042A13 /* Supporting Files */,
 			);
 			path = IRCClient;
@@ -670,7 +682,7 @@
 			);
 			name = IRCClient;
 			productName = IRCClient;
-			productReference = 8906F1C718867BEE00042A13 /* IRCClient.app */;
+			productReference = 8906F1C718867BEE00042A13 /* rIRC.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8906F1E118867BEE00042A13 /* IRCClientTests */ = {
@@ -748,6 +760,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89E812BC18B98A8000616600 /* help.json in Resources */,
+				89E812C218BA1B6A00616600 /* icon-iPad@2x.png in Resources */,
 				8908DC3518B73900004DFBAB /* hilight.nu in Resources */,
 				89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */,
 				898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */,
@@ -755,12 +768,14 @@
 				8906F1DD18867BEE00042A13 /* Images.xcassets in Resources */,
 				8908DC0018B60FB0004DFBAB /* README.markdown in Resources */,
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
+				89E812C418BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC4318B7491C004DFBAB /* beautify.nu in Resources */,
 				8908DC4418B7491C004DFBAB /* cblocks.nu in Resources */,
 				8908DC4518B7491C004DFBAB /* coredata.nu in Resources */,
 				8908DC4618B7491C004DFBAB /* doc.nu in Resources */,
 				8908DC4818B7491C004DFBAB /* generate.nu in Resources */,
 				8908DC4918B7491C004DFBAB /* help.nu in Resources */,
+				89E812C018BA1B6A00616600 /* icon-iPad.png in Resources */,
 				8908DC8118B8B299004DFBAB /* README.md in Resources */,
 				8908DC4A18B7491C004DFBAB /* match.nu in Resources */,
 				8908DC4B18B7491C004DFBAB /* math.nu in Resources */,
@@ -790,11 +805,14 @@
 				8908DC3818B74913004DFBAB /* coredata.nu in Resources */,
 				8908DC3918B74913004DFBAB /* doc.nu in Resources */,
 				8908DC3B18B74913004DFBAB /* generate.nu in Resources */,
+				89E812C518BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC3C18B74913004DFBAB /* help.nu in Resources */,
 				8908DC3D18B74913004DFBAB /* match.nu in Resources */,
 				8908DC3E18B74913004DFBAB /* math.nu in Resources */,
 				8908DC4018B74913004DFBAB /* nu.nu in Resources */,
 				8908DC8218B8B299004DFBAB /* README.md in Resources */,
+				89E812C118BA1B6A00616600 /* icon-iPad.png in Resources */,
+				89E812C318BA1B6A00616600 /* icon-iPad@2x.png in Resources */,
 				8908DC4118B74913004DFBAB /* template.nu in Resources */,
 				8908DC4218B74913004DFBAB /* test.nu in Resources */,
 			);
@@ -1037,7 +1055,7 @@
 				GCC_PREFIX_HEADER = "IRCClient/IRCClient-Prefix.pch";
 				INFOPLIST_FILE = "IRCClient/IRCClient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = rIRC;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1052,7 +1070,7 @@
 				GCC_PREFIX_HEADER = "IRCClient/IRCClient-Prefix.pch";
 				INFOPLIST_FILE = "IRCClient/IRCClient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = rIRC;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

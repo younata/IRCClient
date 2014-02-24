@@ -54,7 +54,6 @@
         self.topic = message.message;
     } else if (message.command == IRCMessageTypeJoin) {
         if ([message.from isEqualToString:self.server.nick]) {
-            // execute a /names command.
         } else {
             [self.names addObject:message.from];
         }
@@ -66,7 +65,9 @@
             [self.names removeObject:message.from];
         }
     }
-    [_log addObject:message];
+    if (message.command == IRCMessageTypePrivmsg || message.command == IRCMessageTypeNotice) {
+        [_log addObject:message];
+    }
 }
 
 -(BOOL)isChannel

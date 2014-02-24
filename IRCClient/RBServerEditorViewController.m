@@ -230,7 +230,9 @@
     }
     
     if (!self.server.connected) {
-
+        [self.server connect];
+    } else {
+        [self.server quit:@"Reloading settings"];
         [self.server connect];
     }
     
