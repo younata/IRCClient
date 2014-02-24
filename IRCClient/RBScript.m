@@ -18,6 +18,11 @@
     return NSStringFromClass(self);
 }
 
++(NSDictionary *)configurationItems
+{
+    return nil;
+}
+
 +(id)inheritedByClass:(NuClass *)newClass
 {
     [[RBScriptingService sharedInstance] registerScript:[newClass wrappedClass]];

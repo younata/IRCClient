@@ -28,6 +28,8 @@
  */
 +(NSString *)description;
 
++(NSDictionary *)configurationItems;
+
 /**
  Gets called right after a message has been interpretted.
  

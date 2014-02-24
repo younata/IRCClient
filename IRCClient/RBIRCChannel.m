@@ -10,6 +10,8 @@
 #import "RBIRCServer.h"
 #import "RBIRCMessage.h"
 
+#import "IRCNumericReplies.h"
+
 @implementation RBIRCChannel
 
 -(instancetype)initWithName:(NSString *)name
@@ -18,6 +20,7 @@
         _name = name;
         _log = [[NSMutableArray alloc] init];
         _names = [[NSMutableArray alloc] init];
+        self.askedForNames = YES;
         self.connectOnStartup = YES;
     }
     return self;
@@ -64,8 +67,22 @@
         } else {
             [self.names removeObject:message.from];
         }
+    } else if (message.command == IRCMessageTypeNames) {
+        if (self.askedForNames) {
+            [self.names removeAllObjects];
+            self.askedForNames = NO;
+        }
+        [self.names addObjectsFromArray:message.extra];
+    } else if (message.commandNumber == RPL_ENDOFNAMES) {
+        self.askedForNames = YES;
     }
-    if (message.command == IRCMessageTypePrivmsg || message.command == IRCMessageTypeNotice) {
+    
+    if (!(message.command == IRCMessageTypeJoin ||
+          message.command == IRCMessageTypePart ||
+          message.command == IRCMessageTypeNick ||
+          message.command == IRCMessageTypeNames ||
+          message.commandNumber == RPL_ENDOFNAMES ||
+          message == nil)) {
         [_log addObject:message];
     }
 }

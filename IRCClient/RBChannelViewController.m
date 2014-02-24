@@ -371,10 +371,10 @@ static NSString *CellIdentifier = @"Cell";
             RBIRCMessage *msg = [[RBIRCMessage alloc] init];
             msg.from = self.server.nick;
             msg.targets = [@[self.channel] mutableCopy];
-            msg.message = [NSString stringWithFormat:@"%@ %@", self.server.nick, str];
+            msg.message = [NSString stringWithFormat:@"* %@ %@", self.server.nick, str];
             msg.command = IRCMessageTypePrivmsg;
             msg.rawMessage = str;
-            msg.attributedMessage = [[NSAttributedString alloc] initWithString:msg.message attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}];
+            msg.attributedMessage = [[NSAttributedString alloc] initWithString:msg.message attributes:[msg defaultAttributes]];
             [[self.server[self.channel] log] addObject:msg];
         }
     } else {

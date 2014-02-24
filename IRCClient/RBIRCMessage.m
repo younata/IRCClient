@@ -12,6 +12,8 @@
 #import "RBConfigurationKeys.h"
 #import "UIDevice+Categories.h"
 
+#import "IRCNumericReplies.h"
+
 @interface RBIRCMessage ()
 {
     NSAttributedString *_attributedMessage;
@@ -221,7 +223,8 @@
         case IRCMessageTypeOper: // shouldn't have to handle
             break;
         case IRCMessageTypeNick:
-            self.message = params[0]; // hopcount is server...
+            self.message = [NSString stringWithFormat:@"%@ is now known as %@", self.from, trailing]; // hopcount is server...
+            self.extra = trailing;
             break;
         case IRCMessageTypeQuit:
             self.message = originalParamsString;
@@ -237,6 +240,10 @@
             break;
         default:
             break;
+    }
+    
+    if (self.commandNumber != 0) {
+        [self parseNumberedCommand:trailing withParams:params];
     }
 }
 
@@ -257,7 +264,7 @@
     if (newCmd == IRCMessageTypeUnknown) {
         if ([rest hasPrefix:@"ACTION"]) {
             NSString *contents = [rest substringFromIndex:7];
-            NSString *message = [NSString stringWithFormat:@"%@ %@", self.from, contents];
+            NSString *message = [NSString stringWithFormat:@"* %@ %@", self.from, contents];
             self.attributedMessage = [[NSAttributedString alloc] initWithString:message attributes:[self defaultAttributes]];
         } else {
             self.command = IRCMessageTypeCTCPErrMsg;
@@ -335,7 +342,7 @@
     if (newCmd == IRCMessageTypeUnknown) {
         if ([rest hasPrefix:@"ACTION"]) {
             NSString *contents = [rest substringFromIndex:7];
-            NSString *message = [NSString stringWithFormat:@"%@ %@", self.from, contents];
+            NSString *message = [NSString stringWithFormat:@"* %@ %@", self.from, contents];
             self.attributedMessage = [[NSAttributedString alloc] initWithString:message attributes:[self defaultAttributes]];
         } else {
             self.command = IRCMessageTypeCTCPErrMsg;
@@ -366,6 +373,41 @@
     }
     NSString *str = [NSString stringWithFormat:@"CTCP %@ reply: %@", [[RBIRCMessage getMessageStringForType:newCmd] capitalizedString], repl];
     self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
+}
+
+-(void)parseNumberedCommand:(NSString *)trailing withParams:(NSArray *)params
+{
+    switch (self.commandNumber) {
+        case RPL_TOPIC: {// topic
+            self.command = IRCMessageTypeTopic;
+            self.targets = [@[self.message] mutableCopy];
+            self.from = self.targets.firstObject;
+            self.message = trailing;
+            NSString *msg = [NSString stringWithFormat:@"Topic for %@, is %@", self.targets.firstObject, self.message];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:msg attributes:self.defaultAttributes];
+            break;
+        }
+        case RPL_TOPICSETTER: {
+            self.targets = [@[params[1]] mutableCopy];
+            NSInteger ut = [params[3] integerValue];
+            NSDate *then = [NSDate dateWithTimeIntervalSince1970:ut];
+            self.message = [NSString stringWithFormat:@"Topic set by %@ on %@", params[2], [then descriptionWithLocale:[NSLocale currentLocale]]];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:self.message attributes:self.defaultAttributes];
+            break;
+        }
+        case RPL_NAMREPLY: // part of names
+            self.command = IRCMessageTypeNames;
+            self.targets = [@[params.lastObject] mutableCopy];
+            self.extra = [trailing componentsSeparatedByString:@" "];
+            self.from = self.targets.firstObject;
+            break;
+        case RPL_ENDOFNAMES: // end of names
+            self.targets = [@[self.message] mutableCopy];
+            self.message = trailing;
+            break;
+        default:
+            break;
+    }
 }
 
 -(NSString *)description
@@ -405,7 +447,21 @@
 
 -(NSDictionary *)defaultAttributes
 {
-    return @{NSFontAttributeName:[UIFont systemFontOfSize:14]};
+    NSString *fontName = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigFontName];
+    if (!fontName) {
+        fontName = @"Inconsolata";
+        [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:RBConfigFontName];
+    }
+    double fontSize = [[NSUserDefaults standardUserDefaults] doubleForKey:RBConfigFontSize];
+    if (fontSize == 0) {
+        fontSize = 14.0;
+        [[NSUserDefaults standardUserDefaults] setDouble:fontSize forKey:RBConfigFontSize];
+    }
+    UIFont *font = [UIFont fontWithName:fontName size:fontSize];
+    if (!font) {
+        font = [UIFont systemFontOfSize:fontSize];
+    }
+    return @{NSFontAttributeName:font};
 }
 
 @end

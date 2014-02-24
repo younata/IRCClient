@@ -525,12 +525,11 @@
 -(void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
 {
     switch (eventCode) {
-        case NSStreamEventOpenCompleted: {
+        case NSStreamEventOpenCompleted:
             if ([aStream isKindOfClass:[NSOutputStream class]]) {
                 dispatch_async(dispatch_queue_create("", NULL), onConnect);
             }
             break;
-        }
         case NSStreamEventHasBytesAvailable: {
             uint8_t buffer[513];
             buffer[512] = 0;

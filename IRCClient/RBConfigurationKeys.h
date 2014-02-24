@@ -16,4 +16,7 @@
 
 #define RBScriptLoad @"RBScriptLoad"
 
+#define RBConfigFontName @"RBConfigKeyFontName"
+#define RBConfigFontSize @"RBConfigKeyFontSize"
+
 #endif

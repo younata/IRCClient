@@ -62,7 +62,7 @@ static NSString *textFieldCell = @"textFieldCell";
     [super viewWillAppear:animated];
     
     for (RBIRCServer *server in self.servers) {
-        if ([server connectOnStartup] && ![server connected]) {
+        if ([server connectOnStartup] && ![server connected] && [server.nick hasContent]) {
             [server reconnect];
         }
     }
@@ -124,7 +124,7 @@ static NSString *textFieldCell = @"textFieldCell";
     }
     
     if (!server) {
-        cell.textLabel.text = NSLocalizedString(@"New Server", nil);
+        cell.textLabel.text = [@"+ " stringByAppendingString:NSLocalizedString(@"New Server", nil)];
         cell.textLabel.textColor = [RBColorScheme primaryColor];
     } else {
         cell.textLabel.textColor = server.connected ? [UIColor darkTextColor] : [[UIColor darkTextColor] colorWithAlphaComponent:0.5];
@@ -133,6 +133,8 @@ static NSString *textFieldCell = @"textFieldCell";
             c.textField.placeholder = NSLocalizedString(@"Join a channel", nil);
             c.data = server;
             c.textField.delegate = self;
+            [c layoutSubviews];
+            c.textField.frame = CGRectMake(10, 0, c.textField.frame.size.width - 10, c.textField.frame.size.height);
             cell = c;
         } else {
             cell.textLabel.text = channels[row];
@@ -250,7 +252,7 @@ static NSString *textFieldCell = @"textFieldCell";
         [self.servers addObject:newServer];
         __weak RBServerEditorViewController *theEditor = editor;
         editor.onCancel = ^{
-            if (!(theEditor.server.connected || theEditor.server.readStream.streamStatus != NSStreamStatusOpening)) {
+            if (!theEditor.server.nick.hasContent) {
                 [theSelf.servers removeObject:theEditor.server];
             }
             [theSelf.tableView reloadData];

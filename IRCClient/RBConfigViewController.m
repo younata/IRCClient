@@ -128,9 +128,9 @@ static NSString *textFieldCell = @"textFieldCell";
     NSInteger row = indexPath.row;
     
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    cell.textLabel.textColor = [RBColorScheme primaryColor];
     
     if (section == 0) { // reconnect
+        cell.textLabel.textColor = [RBColorScheme secondaryColor];
         cell.textLabel.text = NSLocalizedString(@"Connect on Startup", nil);
     } else if (section == 1) { // ctcp
         NSArray *rawStrings = @[@"Finger", @"UserInfo"];
@@ -143,7 +143,6 @@ static NSString *textFieldCell = @"textFieldCell";
         cell.accessoryView = tf;
         [cell layoutSubviews];
     } else if (section == 2) { // scripts
-        cell.textLabel.textColor = [RBColorScheme secondaryColor];
         UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectZero];
         cell.accessoryView = s;
         NSString *key = self.values.allKeys[row];
@@ -151,6 +150,11 @@ static NSString *textFieldCell = @"textFieldCell";
         [s addTarget:self action:@selector(setScript:) forControlEvents:UIControlEventValueChanged];
         
         cell.textLabel.text = key;
+        
+        Class cls = [[RBScriptingService sharedInstance] scriptDict][key];
+        if ([cls performSelector:@selector(configurationItems)] != nil) {
+            cell.textLabel.textColor = [RBColorScheme secondaryColor];
+        }
     }
     
     return cell;

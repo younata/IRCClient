@@ -32,4 +32,6 @@
 -(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message;
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;
 
+-(void)disconnect;
+
 @end

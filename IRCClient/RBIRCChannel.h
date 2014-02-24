@@ -19,6 +19,7 @@
 @property (nonatomic, weak) RBIRCServer *server;
 @property (nonatomic, copy) NSString *topic;
 @property (nonatomic, copy) NSString *password;
+@property (nonatomic) BOOL askedForNames;
 
 @property (nonatomic) BOOL connectOnStartup;
 

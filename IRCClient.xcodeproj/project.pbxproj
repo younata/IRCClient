@@ -139,6 +139,10 @@
 		89E812C318BA1B6A00616600 /* icon-iPad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BE18BA1B6A00616600 /* icon-iPad@2x.png */; };
 		89E812C418BA1B6A00616600 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BF18BA1B6A00616600 /* icon@2x.png */; };
 		89E812C518BA1B6A00616600 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BF18BA1B6A00616600 /* icon@2x.png */; };
+		89E812C718BB367300616600 /* Inconsolata.otf in Resources */ = {isa = PBXBuildFile; fileRef = 89E812C618BB367300616600 /* Inconsolata.otf */; };
+		89E812C818BB367300616600 /* Inconsolata.otf in Resources */ = {isa = PBXBuildFile; fileRef = 89E812C618BB367300616600 /* Inconsolata.otf */; };
+		89E812CC18BB530900616600 /* UIView+initWithSuperview.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812CB18BB530900616600 /* UIView+initWithSuperview.m */; };
+		89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812CB18BB530900616600 /* UIView+initWithSuperview.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +281,9 @@
 		89E812BD18BA1B6A00616600 /* icon-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-iPad.png"; sourceTree = SOURCE_ROOT; };
 		89E812BE18BA1B6A00616600 /* icon-iPad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-iPad@2x.png"; sourceTree = SOURCE_ROOT; };
 		89E812BF18BA1B6A00616600 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		89E812C618BB367300616600 /* Inconsolata.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inconsolata.otf; sourceTree = "<group>"; };
+		89E812CA18BB530900616600 /* UIView+initWithSuperview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+initWithSuperview.h"; path = "RBCategories/UIView/UIView+initWithSuperview.h"; sourceTree = SOURCE_ROOT; };
+		89E812CB18BB530900616600 /* UIView+initWithSuperview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+initWithSuperview.m"; path = "RBCategories/UIView/UIView+initWithSuperview.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +387,7 @@
 			children = (
 				898132F418A99EDF004AEBE9 /* en.lproj */,
 				8906F1D218867BEE00042A13 /* IRCClient-Info.plist */,
+				89E812C618BB367300616600 /* Inconsolata.otf */,
 				8906F1D318867BEE00042A13 /* InfoPlist.strings */,
 				89E812BA18B8EB9400616600 /* help.json */,
 				8906F1D618867BEE00042A13 /* main.m */,
@@ -592,6 +600,7 @@
 		899B2A93189913840008FED3 /* RBCategories */ = {
 			isa = PBXGroup;
 			children = (
+				89E812C918BB52E700616600 /* UIView */,
 				8908DC5C18B88856004DFBAB /* UITableView */,
 				898132E918A89085004AEBE9 /* UIActionSheet */,
 				898132DE18A78ABC004AEBE9 /* UIButton */,
@@ -662,6 +671,16 @@
 				898132D718A787E9004AEBE9 /* Config */,
 			);
 			name = "Views and Controllers";
+			sourceTree = "<group>";
+		};
+		89E812C918BB52E700616600 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				89E812CA18BB530900616600 /* UIView+initWithSuperview.h */,
+				89E812CB18BB530900616600 /* UIView+initWithSuperview.m */,
+			);
+			name = UIView;
+			path = NSString;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -776,6 +795,7 @@
 				8908DC4818B7491C004DFBAB /* generate.nu in Resources */,
 				8908DC4918B7491C004DFBAB /* help.nu in Resources */,
 				89E812C018BA1B6A00616600 /* icon-iPad.png in Resources */,
+				89E812C718BB367300616600 /* Inconsolata.otf in Resources */,
 				8908DC8118B8B299004DFBAB /* README.md in Resources */,
 				8908DC4A18B7491C004DFBAB /* match.nu in Resources */,
 				8908DC4B18B7491C004DFBAB /* math.nu in Resources */,
@@ -809,6 +829,7 @@
 				8908DC3C18B74913004DFBAB /* help.nu in Resources */,
 				8908DC3D18B74913004DFBAB /* match.nu in Resources */,
 				8908DC3E18B74913004DFBAB /* math.nu in Resources */,
+				89E812C818BB367300616600 /* Inconsolata.otf in Resources */,
 				8908DC4018B74913004DFBAB /* nu.nu in Resources */,
 				8908DC8218B8B299004DFBAB /* README.md in Resources */,
 				89E812C118BA1B6A00616600 /* icon-iPad.png in Resources */,
@@ -853,6 +874,7 @@
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
 				89E812B818B8E78800616600 /* RBColorScheme.m in Sources */,
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
+				89E812CC18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				8908DC7F18B8B299004DFBAB /* RBHelpViewController.m in Sources */,
@@ -896,6 +918,7 @@
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
+				89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */,

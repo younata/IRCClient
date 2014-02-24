@@ -41,95 +41,96 @@
     
     self.originalFrame = self.view.frame;
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:self.scrollView];
+    self.scrollView = [[UIScrollView alloc] initForAutoLayoutWithSuperview:self.view];
+    [self.scrollView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+    UIScrollView *sv = self.scrollView;
+    //sv.frame = self.view.frame;
     self.scrollView.scrollEnabled = YES;
     
-    CGFloat width = self.view.frame.size.width / 2;
-    
-    CGFloat h = 40.0;
-    
-    CGFloat w = 480.0;
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        w = 280.0;
         self.scrollView.contentSize = self.view.frame.size;
     }
     
-    CGFloat w2 = w / 2;
-    
-    CGFloat y = 80;
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, 20, w, 40)];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.text = NSLocalizedString(@"New Server", nil);
+    self.navigationItem.title = NSLocalizedString(@"New Server", nil);
     if ([self.server.serverName hasContent]) {
-        label.text = NSLocalizedString(@"Edit Server", nil);
+        self.navigationItem.title = NSLocalizedString(@"Edit Server", nil);
     }
     
-    if (self.navigationItem) {
-        self.navigationItem.title = label.text;
-        label = nil;
-        
-        self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
-        
-        UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"?"
-                                                                       style:UIBarButtonItemStylePlain
-                                                                      target:self
-                                                                      action:@selector(showHelp)];
-        self.navigationItem.rightBarButtonItem = helpButton;
-    } else {
-        [self.scrollView addSubview:label];
-    }
+    self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
     
-    self.serverName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y, w, h)];
-    self.serverHostname = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + (h + 10), w, h)];
-    self.serverPort = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 2 * (h + 10), w, h)];
+    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"?"
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(showHelp)];
     
-    UILabel *sslLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 3 * (h + 10), 120, h)];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:self.server.connected ? NSLocalizedString(@"Save", nil) : NSLocalizedString(@"Connect", nil)
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(save)];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil)
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(dismiss)];
+    
+    self.navigationItem.rightBarButtonItems = @[saveButton, helpButton];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    
+    self.serverName = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
+    [self.serverName autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20];
+    [self.serverName autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20];
+    [self.serverName autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:sv withOffset:-40];
+    //[self.serverName autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20];
+    
+    self.serverHostname = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
+    
+    self.serverPort = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
+    
+    UILabel *sslLabel = [[UILabel alloc] initForAutoLayoutWithSuperview:sv];
     sslLabel.text = NSLocalizedString(@"Use SSL?", nil);
     sslLabel.textAlignment = NSTextAlignmentLeft;
-    [self.scrollView addSubview:sslLabel];
     
-    self.serverSSL = [[UISwitch alloc] initWithFrame:CGRectZero];
-    CGFloat uiswidth = self.serverSSL.frame.size.width;
-    self.serverSSL.frame = CGRectMake(width + (w2 - uiswidth), y + 3 * (h + 10), uiswidth, h);
+    self.serverSSL = [[UISwitch alloc] initForAutoLayoutWithSuperview:sv];
     
-    self.serverNick = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 4 * (h + 10), w, h)];
-    self.serverRealName = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 5 * (h + 10), w, h)];
-    self.serverPassword = [[UITextField alloc] initWithFrame:CGRectMake(width - w2, y + 6 * (h + 10), w, h)];
+    [sslLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.serverSSL withOffset:20];
+    [self.serverSSL autoAlignAxis:ALAxisHorizontal toSameAxisOfView:sslLabel];
+    [[self.serverSSL autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20] setPriority:UILayoutPriorityRequired];
+    
+    self.serverNick = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
+    
+    self.serverRealName = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
+
+    self.serverPassword = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
     self.serverPassword.secureTextEntry = YES;
     
-    self.serverConnectOnStartup = [[UISwitch alloc] initWithFrame:CGRectZero];
-    self.serverConnectOnStartup.frame = CGRectMake(width + (w2 - uiswidth), y + 7 * (h + 10), uiswidth, h);
+    self.serverConnectOnStartup = [[UISwitch alloc] initForAutoLayoutWithSuperview:sv];
     self.serverConnectOnStartup.on = self.server.connectOnStartup;
-    UILabel *connectOnStartupLabel = [[UILabel alloc] initWithFrame:CGRectMake(width - w2, y + 7 * (h + 10), 160, h)];
+    
+    UILabel *connectOnStartupLabel = [[UILabel alloc] initForAutoLayoutWithSuperview:sv];
     connectOnStartupLabel.text = NSLocalizedString(@"Connect on startup?", nil);
     connectOnStartupLabel.textAlignment = NSTextAlignmentLeft;
-    [self.scrollView addSubview:connectOnStartupLabel];
     
-    self.saveButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.saveButton.frame = CGRectMake(width + 10, y + 8 * (h + 10) - 20, 90, 80);
-    [self.saveButton addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
+    [connectOnStartupLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.serverConnectOnStartup withOffset:20];
+    [connectOnStartupLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20];
+    [self.serverConnectOnStartup autoAlignAxis:ALAxisHorizontal toSameAxisOfView:connectOnStartupLabel];
+    [[self.serverConnectOnStartup autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20] setPriority:UILayoutPriorityRequired];
     
-    self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.cancelButton.frame = CGRectMake(width - 100, y + 8 * (h + 10) - 20, 90, 80);
-    [self.cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
-    [self.cancelButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-    
-    if (self.server.connected) {
-        [self.saveButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
-        self.serverSSL.on = self.server.useSSL;
-    } else {
-        [self.saveButton setTitle:NSLocalizedString(@"Connect", nil) forState:UIControlStateNormal];
-        self.serverSSL.on = YES;
+    NSArray *views = @[self.serverName, self.serverHostname, self.serverPort, sslLabel, self.serverNick, self.serverRealName, self.serverPassword, connectOnStartupLabel];
+    [views autoDistributeViewsAlongAxis:ALAxisVertical withFixedSpacing:20 alignment:NSLayoutFormatAlignAllLeft];
+    [@[self.serverName, self.serverHostname, self.serverPort, self.serverNick, self.serverRealName, self.serverPassword] autoMatchViewsDimension:ALDimensionWidth];
+    NSArray *switches = @[self.serverSSL, self.serverConnectOnStartup];
+    [switches autoAlignViewsToEdge:ALEdgeRight];
+    for (UIView *v in switches) {
+        [v autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.serverName];
     }
+    
     self.serverName.placeholder = NSLocalizedString(@"ServerName", nil);
     self.serverHostname.placeholder = @"irc.freenode.net";
     self.serverPort.placeholder = @"6697";
     self.serverNick.placeholder = NSLocalizedString(@"username", nil);
-    self.serverRealName.placeholder = @"iOS";
-    self.serverPassword.placeholder = @"****";
+    self.serverRealName.placeholder = NSLocalizedString(@"realname", nil);
+    self.serverPassword.placeholder = NSLocalizedString(@"server password", nil);
     
     self.serverName.text = self.server.serverName;
     self.serverHostname.text = self.server.hostname;
@@ -150,18 +151,13 @@
         [tf setDelegate:self];
     }
     
-    for (UIView *v in @[self.serverName,
-                        self.serverHostname,
-                        self.serverPort,
-                        self.serverSSL,
-                        self.serverNick,
-                        self.serverRealName,
-                        self.serverPassword,
-                        self.serverConnectOnStartup,
-                        self.saveButton,
-                        self.cancelButton]) {
-        [self.scrollView addSubview:v];
-    }
+    [self.view layoutSubviews];
+}
+
+-(void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    
 }
 
 -(void)showHelp
@@ -184,12 +180,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)dismiss
+-(void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:self.onCancel];
 }
 
-- (void)save
+-(void)save
 {
     NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers]];
     NSMutableArray *marr = [[NSMutableArray alloc] init];
