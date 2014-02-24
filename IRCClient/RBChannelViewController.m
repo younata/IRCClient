@@ -78,32 +78,50 @@ static NSString *CellIdentifier = @"Cell";
     self.navigationItem.rightBarButtonItems = @[settingsButton, helpButton];
 
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, height-inputHeight) style:UITableViewStylePlain];
+    [self.view addSubview:self.tableView];
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     
     // bunch of view shit to make the interface look not-shit.
-    self.borderView = [[UIView alloc] initWithFrame:CGRectMake(0, height - inputHeight, width, inputHeight)];
+    self.borderView = [[UIView alloc] initForAutoLayoutWithSuperview:self.view];
     self.borderView.backgroundColor = [UIColor blackColor];
-    UIView *inputView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, width, inputHeight - 1)];
-    inputView.backgroundColor = [UIColor whiteColor];
-    [self.borderView addSubview:inputView];
     
-    self.input = [[UITextField alloc] initWithFrame:CGRectMake(4, 0, width - 28, inputHeight - 1)];
+    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [self.tableView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.borderView];
+    
+    [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+    [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight relation:NSLayoutRelationGreaterThanOrEqual];
+    
+    UIView *inputView = [[UIView alloc] initForAutoLayoutWithSuperview:self.borderView];
+    inputView.backgroundColor = [UIColor whiteColor];
+    [inputView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(1, 0, 0, 0)];
+    
+    self.input = [[UITextField alloc] initForAutoLayoutWithSuperview:inputView];
     self.input.placeholder = NSLocalizedString(@"Message", nil);
     self.input.returnKeyType = UIReturnKeySend;
     self.input.backgroundColor = [UIColor whiteColor];
     self.input.delegate = self;
+    [self.input autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+    [self.input autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+    [self.input autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:4];
     
-    self.inputCommands = [UIButton systemButtonWithFrame:CGRectMake(width - 24, 0, 20, inputHeight - 1)];
+    self.inputCommands = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.inputCommands.translatesAutoresizingMaskIntoConstraints = NO;
+    [inputView addSubview:self.inputCommands];
     [self.inputCommands setTitle:@"+" forState:UIControlStateNormal];
     self.inputCommands.titleLabel.font = [UIFont systemFontOfSize:20];
     [self.inputCommands addTarget:self action:@selector(showInputCommands) forControlEvents:UIControlEventTouchUpInside];
-    [inputView addSubview:self.inputCommands];
-    [inputView addSubview:self.input];
     
-    [self.view addSubview:self.tableView];
-    [self.view addSubview:self.borderView];
+    [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+    [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+    [self.inputCommands autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.input];
     
     [self revealButtonPressed:nil];
 }
