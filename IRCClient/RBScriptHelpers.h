@@ -32,6 +32,10 @@
 +(NSString *)NSWritingDirectionAttributeName;
 +(NSString *)NSVerticalGlyphFormAttributeName;
 
+@end
+
+@interface UIControlEventsClass : NSObject
+
 +(NSInteger)UIControlEventTouchDown;
 +(NSInteger)UIControlEventTouchDownRepeat;
 +(NSInteger)UIControlEventTouchDragInside;
@@ -51,5 +55,23 @@
 +(NSInteger)UIControlEventApplicationReserved;
 +(NSInteger)UIControlEventSystemReserved;
 +(NSInteger)UIControlEventAllEvents;
+
+@end
+
+@interface ALLayoutAttributes : NSObject
+
++(ALEdge)edgeLeft;
++(ALEdge)edgeRight;
++(ALEdge)edgeTop;
++(ALEdge)edgeBottom;
++(ALEdge)edgeLeading;
++(ALEdge)edgeTrailing;
+
++(ALDimension)dimensionWidth;
++(ALDimension)dimensionHeight;
+
++(ALAxis)axisVertical;
++(ALAxis)axisHorizontal;
++(ALAxis)axisBaseline;
 
 @end

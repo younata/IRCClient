@@ -115,7 +115,9 @@
     return NSVerticalGlyphFormAttributeName;
 }
 
-// UIControlEvents
+@end
+
+@implementation UIControlEventsClass
 
 +(NSInteger)UIControlEventTouchDown
 {
@@ -212,5 +214,63 @@
     return UIControlEventAllEvents;
 }
 
+@end
+
+@implementation ALLayoutAttributes
+
++(ALEdge)edgeLeft
+{
+    return ALEdgeLeft;
+}
+
++(ALEdge)edgeRight
+{
+    return ALEdgeRight;
+}
+
++(ALEdge)edgeTop
+{
+    return ALEdgeTop;
+}
+
++(ALEdge)edgeBottom
+{
+    return ALEdgeBottom;
+}
+
++(ALEdge)edgeLeading
+{
+    return ALEdgeLeading;
+}
+
++(ALEdge)edgeTrailing
+{
+    return ALEdgeTrailing;
+}
+
++(ALDimension)dimensionWidth
+{
+    return ALDimensionWidth;
+}
+
++(ALDimension)dimensionHeight
+{
+    return ALDimensionHeight;
+}
+
++(ALAxis)axisVertical
+{
+    return ALAxisVertical;
+}
+
++(ALAxis)axisHorizontal
+{
+    return ALAxisHorizontal;
+}
+
++(ALAxis)axisBaseline
+{
+    return ALAxisBaseline;
+}
 
 @end

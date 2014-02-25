@@ -91,14 +91,15 @@
         _scriptsLoaded = YES;
     }
     
-    NSArray *keys = [[NSUserDefaults standardUserDefaults] objectForKey:RBScriptLoad];
-    if (keys == nil) {
-        [[NSUserDefaults standardUserDefaults] setObject:@[] forKey:RBScriptLoad];
-        keys = @[];
+    NSArray *keys = [self scripts];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    for (NSString *key in keys) {
+        NSNumber *val = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+        dict[key] = val;
     }
-    for (NSString *key in self.scripts) {
+    for (NSString *key in keys) {
         Class cls = self.scriptDict[key];
-        if ([keys containsObject:key]) {
+        if (dict[key] && [dict[key] boolValue]) {
             id obj = [[cls alloc] init];
             [self.scriptSet addObject:obj];
         } else {

@@ -33,7 +33,7 @@
     
     self.taskIdentifier = UIBackgroundTaskInvalid;
     
-    [[RBScriptingService sharedInstance] loadScripts];
+    [[RBScriptingService sharedInstance] runEnabledScripts];
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme primaryColor]] forKey:RBHelpTintColor];
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme secondaryColor]] forKey:RBHelpLinkColor];

@@ -14,8 +14,6 @@
 #define RBCTCPVersion @"RBCTCPVersion"
 #define RBCTCPUserInfo @"RBCTCPUserInfo"
 
-#define RBScriptLoad @"RBScriptLoad"
-
 #define RBConfigFontName @"RBConfigKeyFontName"
 #define RBConfigFontSize @"RBConfigKeyFontSize"
 

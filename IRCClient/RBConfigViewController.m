@@ -13,11 +13,14 @@
 #import "UIButton+buttonWithFrame.h"
 
 #import "SWRevealViewController.h"
+#import "RBChannelViewController.h"
 #import "RBServerViewController.h"
 
 #import "RBColorScheme.h"
 
 #import "RBScriptingService.h"
+
+#import "NSObject+customProperty.h"
 
 static NSString *CellIdentifier = @"Cell";
 static NSString *textFieldCell = @"textFieldCell";
@@ -76,6 +79,14 @@ static NSString *textFieldCell = @"textFieldCell";
     }
     
     [[RBScriptingService sharedInstance] runEnabledScripts];
+    
+    SWRevealViewController *rvc = (SWRevealViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    RBServerViewController *svc = (RBServerViewController *)[(UINavigationController *)[rvc rearViewController] topViewController];
+    RBChannelViewController *cvc = (RBChannelViewController *)[(UINavigationController *)[rvc frontViewController] topViewController];
+    [svc.tableView reloadData];
+    [cvc.tableView reloadData];
+    
+    
     [self dismiss];
 }
 
@@ -148,6 +159,7 @@ static NSString *textFieldCell = @"textFieldCell";
         NSString *key = self.values.allKeys[row];
         s.on = [self.values[key] boolValue];
         [s addTarget:self action:@selector(setScript:) forControlEvents:UIControlEventValueChanged];
+        [s setCustomProperty:key forKey:@"scriptKey"];
         
         cell.textLabel.text = key;
         
@@ -162,10 +174,9 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(void)setScript:(UISwitch *)theSwitch
 {
-    for (UITableViewCell *cell in [self.tableView visibleCells]) {
-        if ([cell.subviews containsObject:theSwitch]) {
-            [self.values setObject:@(theSwitch.on) forKey:cell.textLabel.text];
-        }
+    NSString *key = [theSwitch getCustomPropertyForKey:@"scriptKey"];
+    if (key) {
+        [self.values setObject:@(theSwitch.on) forKey:key];
     }
 }
 
