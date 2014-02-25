@@ -26,6 +26,7 @@
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
+@property (nonatomic) NSLayoutConstraint *keyboardConstraint;
 
 @end
 
@@ -93,10 +94,10 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     [self.tableView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.borderView];
     
-    [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+    self.keyboardConstraint = [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
     [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
     [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
-    [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight relation:NSLayoutRelationEqual];
     
     UIView *inputView = [[UIView alloc] initForAutoLayoutWithSuperview:self.borderView];
     inputView.backgroundColor = [UIColor whiteColor];
@@ -136,8 +137,8 @@ static NSString *CellIdentifier = @"Cell";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     if (!self.server.connected) {
         [self disconnect];
@@ -212,40 +213,46 @@ static NSString *CellIdentifier = @"Cell";
     [self presentViewController:newNC animated:YES completion:nil];
 }
 
--(NSInteger)getKeyboardHeight:(NSNotification *)notification
+-(CGFloat)getKeyboardHeight:(NSNotification *)notification
 {
     NSDictionary* keyboardInfo = [notification userInfo];
     NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
-    NSInteger keyboardHeight = keyboardFrameBeginRect.size.height;
+    CGFloat keyboardHeight;
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        keyboardHeight = keyboardFrameBeginRect.size.width;
+    } else {
+        keyboardHeight = keyboardFrameBeginRect.size.height;
+    }
     return keyboardHeight;
 }
 
--(void)keyboardDidHide:(NSNotification *)notification
+-(void)keyboardWillHide:(NSNotification *)notification
 {
-    [UIView animateWithDuration:0.25 animations:^{
-        CGFloat height = self.originalFrame.size.height;
-        CGFloat width = self.originalFrame.size.width;
-        CGFloat inputHeight = 40;
-        
-        self.view.frame = self.originalFrame;
-        self.tableView.frame = CGRectMake(0, 0, width, height - inputHeight);
-        self.borderView.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
+    self.keyboardConstraint.constant = 0;
+    [self.view setNeedsUpdateConstraints];
+    NSDictionary *info = [notification userInfo];
+    NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    [UIView animateWithDuration:animationDuration animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished){
+        [self.tableView scrollToBottom:NO];
     }];
 }
 
--(void)keyboardDidShow:(NSNotification *)notification
+-(void)keyboardWillShow:(NSNotification *)notification
 {
-    NSInteger kh = [self getKeyboardHeight:notification];
-    [UIView animateWithDuration:0.25 animations:^{
-        CGFloat height = self.originalFrame.size.height - kh;
-        CGFloat width = self.originalFrame.size.width;
-        CGFloat inputHeight = 40;
-        
-        self.view.frame = CGRectMake(0, 0, self.originalFrame.size.width, height);
-        
-        self.tableView.frame = CGRectMake(0, 0, width, height - inputHeight);
-        self.borderView.frame = CGRectMake(0, height - inputHeight, width, inputHeight);
+    CGFloat kh = [self getKeyboardHeight:notification];
+    NSDictionary *info = [notification userInfo];
+    NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    self.keyboardConstraint.constant = -kh;
+    [self.view setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:animationDuration animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished){
+        [self.tableView scrollToBottom:NO];
     }];
 }
 
@@ -279,7 +286,7 @@ static NSString *CellIdentifier = @"Cell";
         return 40.0;
     }
     
-    CGFloat indentionWidth = 10;
+    CGFloat indentionWidth = 20;
     NSAttributedString *text = [self attributedStringForIndex:indexPath.row];
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
     CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - indentionWidth, CGFLOAT_MAX)
@@ -425,6 +432,8 @@ static NSString *CellIdentifier = @"Cell";
     self.navigationItem.title = @"Disconnected";
     self.input.enabled = NO;
     self.inputCommands.enabled = NO;
+    self.channel = nil;
+    self.server = nil;
 }
 
 -(void)connect

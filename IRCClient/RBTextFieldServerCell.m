@@ -16,7 +16,8 @@
     if (self) {
         // Initialization code
         
-        self.textField = [[UITextField alloc] initWithFrame:CGRectInset(self.contentView.frame, 4, 4)];
+        self.textField = [[UITextField alloc] initForAutoLayoutWithSuperview:self.contentView];
+        [self.textField autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, self.indentationLevel * self.indentationWidth, 0, 0)];
         [self.contentView addSubview:self.textField];
     }
     return self;

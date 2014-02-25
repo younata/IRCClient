@@ -134,7 +134,6 @@ static NSString *textFieldCell = @"textFieldCell";
             c.data = server;
             c.textField.delegate = self;
             [c layoutSubviews];
-            c.textField.frame = CGRectMake(10, 0, c.textField.frame.size.width - 10, c.textField.frame.size.height);
             cell = c;
         } else {
             cell.textLabel.text = channels[row];

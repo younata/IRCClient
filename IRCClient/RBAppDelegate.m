@@ -19,6 +19,7 @@
 #import "RBConfigurationKeys.h"
 
 @interface RBAppDelegate ()<SWRevealViewControllerDelegate>
+@property (nonatomic) UIBackgroundTaskIdentifier taskIdentifier;
 @end
 
 @implementation RBAppDelegate
@@ -29,6 +30,8 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    self.taskIdentifier = UIBackgroundTaskInvalid;
     
     [[RBScriptingService sharedInstance] loadScripts];
     
@@ -82,18 +85,32 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-    for (RBIRCServer *server in self.servers) {
-        [server quit];
-    }
-    
     SWRevealViewController *rvc = (SWRevealViewController *)self.window.rootViewController;
     RBChannelViewController *cvc = (RBChannelViewController *)[(UINavigationController *)rvc.frontViewController topViewController];
+    RBServerViewController *svc = (RBServerViewController *)[(UINavigationController *)rvc.rearViewController topViewController];
     [cvc disconnect];
+    
+    self.taskIdentifier = [application beginBackgroundTaskWithName:@"server background task" expirationHandler:^{
+        if ([application applicationState] == UIApplicationStateBackground) {
+            for (RBIRCServer *server in self.servers) {
+                [server quit];
+            }
+            
+            svc.servers = nil;
+        }
+        [[UIApplication sharedApplication] endBackgroundTask:self.taskIdentifier];
+    }];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    for (RBIRCServer *server in self.servers) {
+        if (server.connected) {
+            return;
+        }
+    }
     
     SWRevealViewController *rvc = (SWRevealViewController *)self.window.rootViewController;
     RBServerViewController *svc = (RBServerViewController *)[(UINavigationController *)rvc.rearViewController topViewController];
