@@ -22,6 +22,7 @@
 #import "RBChannelViewController.h" // shouldn't have to do this...
 
 #import "RBColorScheme.h"
+#import "RBScriptingService.h"
 
 @interface RBServerViewController ()
 
@@ -126,6 +127,7 @@ static NSString *textFieldCell = @"textFieldCell";
     if (!server) {
         cell.textLabel.text = [@"+ " stringByAppendingString:NSLocalizedString(@"New Server", nil)];
         cell.textLabel.textColor = [RBColorScheme primaryColor];
+        [[RBScriptingService sharedInstance] serverList:self didCreateNewServerCell:cell];
     } else {
         cell.textLabel.textColor = server.connected ? [UIColor darkTextColor] : [[UIColor darkTextColor] colorWithAlphaComponent:0.5];
         if (row == channels.count) {
@@ -135,14 +137,19 @@ static NSString *textFieldCell = @"textFieldCell";
             c.textField.delegate = self;
             [c layoutSubviews];
             cell = c;
+            [[RBScriptingService sharedInstance] serverList:self didCreateNewChannelCell:c];
         } else {
             cell.textLabel.text = channels[row];
+            
             if (row == 0) {
                 cell.textLabel.textColor = [RBColorScheme primaryColor];
+                [[RBScriptingService sharedInstance] serverList:self didCreateServerCell:cell forServer:server];
             } else if ([server[channels[row]] isChannel]) {
                 cell.textLabel.textColor = [RBColorScheme secondaryColor];
+                [[RBScriptingService sharedInstance] serverList:self didCreateChannelCell:cell forChannel:server[channels[row]]];
             } else {
                 cell.textLabel.textColor = [RBColorScheme tertiaryColor];
+                [[RBScriptingService sharedInstance] serverList:self didCreatePrivateCell:cell forPrivateConversation:server[channels[row]]];
             }
         }
     }

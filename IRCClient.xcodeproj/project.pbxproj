@@ -40,8 +40,6 @@
 		8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
 		8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
 		8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */; };
-		8908DC3418B736E2004DFBAB /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DC2F18B61F7F004DFBAB /* hilight.nu */; };
-		8908DC3518B73900004DFBAB /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DC2F18B61F7F004DFBAB /* hilight.nu */; };
 		8908DC3618B74913004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
 		8908DC3718B74913004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
 		8908DC3818B74913004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
@@ -143,6 +141,14 @@
 		89E812C818BB367300616600 /* Inconsolata.otf in Resources */ = {isa = PBXBuildFile; fileRef = 89E812C618BB367300616600 /* Inconsolata.otf */; };
 		89E812CC18BB530900616600 /* UIView+initWithSuperview.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812CB18BB530900616600 /* UIView+initWithSuperview.m */; };
 		89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812CB18BB530900616600 /* UIView+initWithSuperview.m */; };
+		89E812CF18BCE39B00616600 /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812CE18BCE39B00616600 /* hilight.nu */; };
+		89E812D018BCE39B00616600 /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812CE18BCE39B00616600 /* hilight.nu */; };
+		89E812D318BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */; };
+		89E812D418BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */; };
+		89E812DB18BCF0E000616600 /* reconnectButton.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812DA18BCF0E000616600 /* reconnectButton.nu */; };
+		89E812DC18BCF0E000616600 /* reconnectButton.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812DA18BCF0E000616600 /* reconnectButton.nu */; };
+		89E812DF18BCF5FE00616600 /* NSObject+customProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */; };
+		89E812E018BCF5FE00616600 /* NSObject+customProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,7 +215,6 @@
 		8908DC2818B6105F004DFBAB /* RBScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScript.m; sourceTree = "<group>"; };
 		8908DC2B18B615EE004DFBAB /* RBScriptingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptingService.h; sourceTree = "<group>"; };
 		8908DC2C18B615EE004DFBAB /* RBScriptingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptingService.m; sourceTree = "<group>"; };
-		8908DC2F18B61F7F004DFBAB /* hilight.nu */ = {isa = PBXFileReference; lastKnownFileType = text; path = hilight.nu; sourceTree = "<group>"; };
 		8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBScriptingServiceSpec.mm; sourceTree = "<group>"; };
 		8908DC5018B82324004DFBAB /* ffi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi.c; sourceTree = "<group>"; };
 		8908DC5118B82324004DFBAB /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
@@ -284,6 +289,12 @@
 		89E812C618BB367300616600 /* Inconsolata.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inconsolata.otf; sourceTree = "<group>"; };
 		89E812CA18BB530900616600 /* UIView+initWithSuperview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+initWithSuperview.h"; path = "RBCategories/UIView/UIView+initWithSuperview.h"; sourceTree = SOURCE_ROOT; };
 		89E812CB18BB530900616600 /* UIView+initWithSuperview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+initWithSuperview.m"; path = "RBCategories/UIView/UIView+initWithSuperview.m"; sourceTree = SOURCE_ROOT; };
+		89E812CE18BCE39B00616600 /* hilight.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hilight.nu; path = scripts/hilight.nu; sourceTree = "<group>"; };
+		89E812D118BCE7CC00616600 /* UIButton+buttonWithTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+buttonWithTitle.h"; sourceTree = "<group>"; };
+		89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+buttonWithTitle.m"; sourceTree = "<group>"; };
+		89E812DA18BCF0E000616600 /* reconnectButton.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = reconnectButton.nu; path = scripts/reconnectButton.nu; sourceTree = "<group>"; };
+		89E812DD18BCF5FE00616600 /* NSObject+customProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+customProperty.h"; path = "NSObject/NSObject+customProperty.h"; sourceTree = "<group>"; };
+		89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+customProperty.m"; path = "NSObject/NSObject+customProperty.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -489,7 +500,8 @@
 		8908DC3118B61FA0004DFBAB /* Built In Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				8908DC2F18B61F7F004DFBAB /* hilight.nu */,
+				89E812CE18BCE39B00616600 /* hilight.nu */,
+				89E812DA18BCF0E000616600 /* reconnectButton.nu */,
 			);
 			name = "Built In Scripts";
 			sourceTree = "<group>";
@@ -566,6 +578,8 @@
 			children = (
 				898132DF18A78ABC004AEBE9 /* UIButton+buttonWithFrame.h */,
 				898132E018A78ABC004AEBE9 /* UIButton+buttonWithFrame.m */,
+				89E812D118BCE7CC00616600 /* UIButton+buttonWithTitle.h */,
+				89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */,
 			);
 			path = UIButton;
 			sourceTree = "<group>";
@@ -600,6 +614,7 @@
 		899B2A93189913840008FED3 /* RBCategories */ = {
 			isa = PBXGroup;
 			children = (
+				89E812D518BCEBF400616600 /* NSObject */,
 				89E812C918BB52E700616600 /* UIView */,
 				8908DC5C18B88856004DFBAB /* UITableView */,
 				898132E918A89085004AEBE9 /* UIActionSheet */,
@@ -681,6 +696,15 @@
 			);
 			name = UIView;
 			path = NSString;
+			sourceTree = "<group>";
+		};
+		89E812D518BCEBF400616600 /* NSObject */ = {
+			isa = PBXGroup;
+			children = (
+				89E812DD18BCF5FE00616600 /* NSObject+customProperty.h */,
+				89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */,
+			);
+			name = NSObject;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -780,7 +804,6 @@
 			files = (
 				89E812BC18B98A8000616600 /* help.json in Resources */,
 				89E812C218BA1B6A00616600 /* icon-iPad@2x.png in Resources */,
-				8908DC3518B73900004DFBAB /* hilight.nu in Resources */,
 				89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */,
 				898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				8906F1D518867BEE00042A13 /* InfoPlist.strings in Resources */,
@@ -789,6 +812,8 @@
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
 				89E812C418BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC4318B7491C004DFBAB /* beautify.nu in Resources */,
+				89E812CF18BCE39B00616600 /* hilight.nu in Resources */,
+				89E812DB18BCF0E000616600 /* reconnectButton.nu in Resources */,
 				8908DC4418B7491C004DFBAB /* cblocks.nu in Resources */,
 				8908DC4518B7491C004DFBAB /* coredata.nu in Resources */,
 				8908DC4618B7491C004DFBAB /* doc.nu in Resources */,
@@ -817,9 +842,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				89E812BB18B98A6200616600 /* help.json in Resources */,
-				8908DC3418B736E2004DFBAB /* hilight.nu in Resources */,
 				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
+				89E812D018BCE39B00616600 /* hilight.nu in Resources */,
 				8908DC3618B74913004DFBAB /* beautify.nu in Resources */,
 				8908DC3718B74913004DFBAB /* cblocks.nu in Resources */,
 				8908DC3818B74913004DFBAB /* coredata.nu in Resources */,
@@ -827,6 +852,7 @@
 				8908DC3B18B74913004DFBAB /* generate.nu in Resources */,
 				89E812C518BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC3C18B74913004DFBAB /* help.nu in Resources */,
+				89E812DC18BCF0E000616600 /* reconnectButton.nu in Resources */,
 				8908DC3D18B74913004DFBAB /* match.nu in Resources */,
 				8908DC3E18B74913004DFBAB /* math.nu in Resources */,
 				89E812C818BB367300616600 /* Inconsolata.otf in Resources */,
@@ -862,6 +888,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E812D318BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */,
 				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
@@ -890,6 +917,7 @@
 				8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
+				89E812DF18BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
 				899B2A9E189913840008FED3 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
@@ -911,6 +939,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E812D418BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */,
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
 				8908DC7C18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
@@ -926,6 +955,7 @@
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
+				89E812E018BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
 				8908DC5418B82324004DFBAB /* ffi.c in Sources */,
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,

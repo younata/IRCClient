@@ -1,5 +1,5 @@
-; TODO: load nick color names from some sort of user-facing attribute list.
-(class Hilight is RBScript
+(class Highlight is RBScript
+    (+ (id) description is "Highlight when your username is mentioned")
     (- (void) messageLogged:(id)message server:(id)server is
         (set msg ((NSMutableAttributedString alloc) initWithAttributedString:(message attributedMessage)))
         (if (and (or (== (message command) 3) (== (message command) 4))

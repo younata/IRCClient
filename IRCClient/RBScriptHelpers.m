@@ -115,4 +115,102 @@
     return NSVerticalGlyphFormAttributeName;
 }
 
+// UIControlEvents
+
++(NSInteger)UIControlEventTouchDown
+{
+    return UIControlEventTouchDown;
+}
+
++(NSInteger)UIControlEventTouchDownRepeat
+{
+    return UIControlEventTouchDownRepeat;
+}
+
++(NSInteger)UIControlEventTouchDragInside
+{
+    return UIControlEventTouchDragInside;
+}
+
++(NSInteger)UIControlEventTouchDragOutside
+{
+    return UIControlEventTouchDragOutside;
+}
+
++(NSInteger)UIControlEventTouchDragEnter
+{
+    return UIControlEventTouchDragEnter;
+}
+
++(NSInteger)UIControlEventTouchDragExit
+{
+    return UIControlEventTouchDragExit;
+}
+
++(NSInteger)UIControlEventTouchUpInside
+{
+    return UIControlEventTouchUpInside;
+}
+
++(NSInteger)UIControlEventTouchUpOutside
+{
+    return UIControlEventTouchUpOutside;
+}
+
++(NSInteger)UIControlEventTouchCancel
+{
+    return UIControlEventTouchCancel;
+}
+
++(NSInteger)UIControlEventValueChanged
+{
+    return UIControlEventValueChanged;
+}
+
++(NSInteger)UIControlEventEditingDidBegin
+{
+    return UIControlEventEditingDidBegin;
+}
+
++(NSInteger)UIControlEventEditingChanged
+{
+    return UIControlEventEditingChanged;
+}
+
++(NSInteger)UIControlEventEditingDidEnd
+{
+    return UIControlEventEditingDidEnd;
+}
+
++(NSInteger)UIControlEventEditingDidEndOnExit
+{
+    return UIControlEventEditingDidEndOnExit;
+}
+
++(NSInteger)UIControlEventAllTouchEvents
+{
+    return UIControlEventAllTouchEvents;
+}
+
++(NSInteger)UIControlEventAllEditingEvents
+{
+    return UIControlEventAllEditingEvents;
+}
+
++(NSInteger)UIControlEventApplicationReserved
+{
+    return UIControlEventApplicationReserved;
+}
+
++(NSInteger)UIControlEventSystemReserved
+{
+    return UIControlEventSystemReserved;
+}
+
++(NSInteger)UIControlEventAllEvents
+{
+    return UIControlEventAllEvents;
+}
+
+
 @end

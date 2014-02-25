@@ -11,6 +11,8 @@
 @class RBIRCServer;
 @class RBIRCChannel;
 @class RBIRCMessage;
+@class RBServerViewController;
+@class RBTextFieldServerCell;
 
 /**
  `RBScript` is the base class for scripts. All scripts should subclass RBScript.
@@ -57,5 +59,51 @@
  @see -messageReceived:server:
  */
 -(void)messageLogged:(RBIRCMessage *)message server:(RBIRCServer *)server;
+
+///@name Server List View
+
+/**
+ Do additional things to a cell which will hold a message/prompt for the user to set up a connection to a new server.
+ 
+ @param serverList - the ServerViewController which originally sent this message
+ @param cell - the created cell
+ */
+-(void)serverList:(RBServerViewController *)serverList didCreateNewServerCell:(UITableViewCell *)cell;
+
+/**
+ Do additional things to a cell which will hold a message/prompt for the user to modify the connection for an existing server
+ 
+ @param serverList - the ServerViewController which originally sent this message
+ @param cell - the created cell
+ @param server - the server which backs the cell
+ */
+-(void)serverList:(RBServerViewController *)serverList didCreateServerCell:(UITableViewCell *)cell forServer:(RBIRCServer *)server;
+
+/**
+ Do additional things to a cell which represents a channel (has prefix '#' or '&').
+ 
+ @param serverList - the ServerViewController which originally sent this message
+ @param cell - the created cell
+ @param channel - the backing channel
+ */
+-(void)serverList:(RBServerViewController *)serverList didCreateChannelCell:(UITableViewCell *)cell forChannel:(RBIRCChannel *)channel;
+
+/**
+ Do additional things to a cell which represents a conversation.
+ 
+ @param serverList - the ServerViewController which originally sent this message
+ @param cell - the created cell
+ @param conversation - the backing conversation
+ */
+-(void)serverList:(RBServerViewController *)serverList didCreatePrivateCell:(UITableViewCell *)cell forPrivateConversation:(RBIRCChannel *)conversation;
+
+/**
+ Do additional things to a cell which will hold a message/prompt for the user to connect to a new channel/send a pm to another user.
+ 
+ @param serverList - the ServerViewController which originally sent this message
+ @param cell - the created cell
+ */
+-(void)serverList:(RBServerViewController *)serverList didCreateNewChannelCell:(RBTextFieldServerCell *)cell;
+
 
 @end

@@ -135,4 +135,39 @@
     }
 }
 
+-(void)serverList:(RBServerViewController *)serverList didCreateNewServerCell:(UITableViewCell *)cell
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverList:serverList didCreateNewServerCell:cell];
+    }
+}
+
+-(void)serverList:(RBServerViewController *)serverList didCreateServerCell:(UITableViewCell *)cell forServer:(RBIRCServer *)server
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverList:serverList didCreateServerCell:cell forServer:server];
+    }
+}
+
+-(void)serverList:(RBServerViewController *)serverList didCreateChannelCell:(UITableViewCell *)cell forChannel:(RBIRCChannel *)channel
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverList:serverList didCreateChannelCell:cell forChannel:channel];
+    }
+}
+
+-(void)serverList:(RBServerViewController *)serverList didCreatePrivateCell:(UITableViewCell *)cell forPrivateConversation:(RBIRCChannel *)conversation
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverList:serverList didCreatePrivateCell:cell forPrivateConversation:conversation];
+    }
+}
+
+-(void)serverList:(RBServerViewController *)serverList didCreateNewChannelCell:(RBTextFieldServerCell *)cell
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverList:serverList didCreateNewChannelCell:cell];
+    }
+}
+
 @end

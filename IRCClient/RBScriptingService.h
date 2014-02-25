@@ -13,6 +13,9 @@
 @class RBIRCChannel;
 @class RBIRCMessage;
 
+@class RBServerViewController;
+@class RBTextFieldServerCell;
+
 @interface RBScriptingService : NSObject
 
 @property (nonatomic, readonly) BOOL scriptsLoaded;
@@ -28,8 +31,16 @@
 
 -(void)registerScript:(Class)script;
 
+#pragma mark - messages
 -(void)messageRecieved:(RBIRCMessage *)message server:(RBIRCServer *)server;
 -(void)messageLogged:(RBIRCMessage *)message server:(RBIRCServer *)server;
 
+#pragma mark - Server list view
+// creating...
+-(void)serverList:(RBServerViewController *)serverList didCreateNewServerCell:(UITableViewCell *)cell;
+-(void)serverList:(RBServerViewController *)serverList didCreateServerCell:(UITableViewCell *)cell forServer:(RBIRCServer *)server;
+-(void)serverList:(RBServerViewController *)serverList didCreateChannelCell:(UITableViewCell *)cell forChannel:(RBIRCChannel *)channel;
+-(void)serverList:(RBServerViewController *)serverList didCreatePrivateCell:(UITableViewCell *)cell forPrivateConversation:(RBIRCChannel *)conversation;
+-(void)serverList:(RBServerViewController *)serverList didCreateNewChannelCell:(RBTextFieldServerCell *)cell;
 
 @end
