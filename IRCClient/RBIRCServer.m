@@ -162,6 +162,9 @@
 
 -(void)sendCommand:(NSString *)command
 {
+    if (!self.connected) {
+        return;
+    }
     printf("sending: '%s'\n", command.UTF8String);
     if (![command hasSuffix:[NSString stringWithFormat:@"\r\n"]]) {
         command = [command stringByAppendingString:@"\r\n"];
@@ -209,6 +212,8 @@
 
 -(void)connect:(NSString *)realname withPassword:(NSString *)pass
 {
+    if (self.connected)
+        return;
     NSInputStream *is;
     NSOutputStream *os;
     [NSStream getStreamsToHost:self.hostname port:self.port inputStream:&is outputStream:&os];

@@ -95,6 +95,7 @@
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     for (NSString *key in keys) {
         NSNumber *val = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+        if (!val) { val = @(NO); }
         dict[key] = val;
     }
     for (NSString *key in keys) {
