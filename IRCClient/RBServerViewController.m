@@ -26,6 +26,8 @@
 
 @interface RBServerViewController ()
 
+@property (nonatomic, strong) UIAlertView *av;
+
 @end
 
 static NSString *CellIdentifier = @"Cell";
@@ -311,6 +313,12 @@ static NSString *textFieldCell = @"textFieldCell";
     if ((![server[to] isChannel] || message.command == IRCMessageTypeJoin)) {
         [self.tableView reloadData];
     }
+}
+
+-(void)IRCServer:(RBIRCServer *)server errorReadingFromStream:(NSError *)error
+{
+    self.av = [[UIAlertView alloc] initWithTitle:@"Error connecting to server" message:[NSString stringWithFormat:@"Error connecting to %@", server.hostname] delegate:Nil cancelButtonTitle:@"Accept" otherButtonTitles:nil];
+    [self.av show];
 }
 
 #pragma mark - SWRevealControllerDelegate
