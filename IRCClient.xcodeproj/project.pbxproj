@@ -141,8 +141,6 @@
 		89E812C818BB367300616600 /* Inconsolata.otf in Resources */ = {isa = PBXBuildFile; fileRef = 89E812C618BB367300616600 /* Inconsolata.otf */; };
 		89E812CC18BB530900616600 /* UIView+initWithSuperview.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812CB18BB530900616600 /* UIView+initWithSuperview.m */; };
 		89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812CB18BB530900616600 /* UIView+initWithSuperview.m */; };
-		89E812CF18BCE39B00616600 /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812CE18BCE39B00616600 /* hilight.nu */; };
-		89E812D018BCE39B00616600 /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812CE18BCE39B00616600 /* hilight.nu */; };
 		89E812D318BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */; };
 		89E812D418BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */; };
 		89E812DB18BCF0E000616600 /* reconnectButton.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812DA18BCF0E000616600 /* reconnectButton.nu */; };
@@ -289,7 +287,6 @@
 		89E812C618BB367300616600 /* Inconsolata.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Inconsolata.otf; sourceTree = "<group>"; };
 		89E812CA18BB530900616600 /* UIView+initWithSuperview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+initWithSuperview.h"; path = "RBCategories/UIView/UIView+initWithSuperview.h"; sourceTree = SOURCE_ROOT; };
 		89E812CB18BB530900616600 /* UIView+initWithSuperview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+initWithSuperview.m"; path = "RBCategories/UIView/UIView+initWithSuperview.m"; sourceTree = SOURCE_ROOT; };
-		89E812CE18BCE39B00616600 /* hilight.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hilight.nu; path = scripts/hilight.nu; sourceTree = "<group>"; };
 		89E812D118BCE7CC00616600 /* UIButton+buttonWithTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+buttonWithTitle.h"; sourceTree = "<group>"; };
 		89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+buttonWithTitle.m"; sourceTree = "<group>"; };
 		89E812DA18BCF0E000616600 /* reconnectButton.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = reconnectButton.nu; path = scripts/reconnectButton.nu; sourceTree = "<group>"; };
@@ -500,7 +497,6 @@
 		8908DC3118B61FA0004DFBAB /* Built In Scripts */ = {
 			isa = PBXGroup;
 			children = (
-				89E812CE18BCE39B00616600 /* hilight.nu */,
 				89E812DA18BCF0E000616600 /* reconnectButton.nu */,
 			);
 			name = "Built In Scripts";
@@ -812,7 +808,6 @@
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
 				89E812C418BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC4318B7491C004DFBAB /* beautify.nu in Resources */,
-				89E812CF18BCE39B00616600 /* hilight.nu in Resources */,
 				89E812DB18BCF0E000616600 /* reconnectButton.nu in Resources */,
 				8908DC4418B7491C004DFBAB /* cblocks.nu in Resources */,
 				8908DC4518B7491C004DFBAB /* coredata.nu in Resources */,
@@ -844,7 +839,6 @@
 				89E812BB18B98A6200616600 /* help.json in Resources */,
 				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
-				89E812D018BCE39B00616600 /* hilight.nu in Resources */,
 				8908DC3618B74913004DFBAB /* beautify.nu in Resources */,
 				8908DC3718B74913004DFBAB /* cblocks.nu in Resources */,
 				8908DC3818B74913004DFBAB /* coredata.nu in Resources */,

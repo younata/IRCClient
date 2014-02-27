@@ -319,6 +319,10 @@ static NSString *textFieldCell = @"textFieldCell";
 {
     self.av = [[UIAlertView alloc] initWithTitle:@"Error connecting to server" message:[NSString stringWithFormat:@"Error connecting to %@", server.hostname] delegate:Nil cancelButtonTitle:@"Accept" otherButtonTitles:nil];
     [self.av show];
+    // The only reason the above code isn't in RBChannelViewController is because the channel view controller is not guaranteed to be a server's delegate.
+    // RBServerViewController is.
+    
+    // Additionally, it's ugly from a design perspective to have UI code in the backend, so that's why it's not directly handled by the server.
 }
 
 #pragma mark - SWRevealControllerDelegate
