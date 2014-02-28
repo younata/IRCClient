@@ -147,6 +147,8 @@
 		89E812DC18BCF0E000616600 /* reconnectButton.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812DA18BCF0E000616600 /* reconnectButton.nu */; };
 		89E812DF18BCF5FE00616600 /* NSObject+customProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */; };
 		89E812E018BCF5FE00616600 /* NSObject+customProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */; };
+		89E812E218BFD33300616600 /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812E118BFD33300616600 /* hilight.nu */; };
+		89E812E318BFD33300616600 /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812E118BFD33300616600 /* hilight.nu */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -292,6 +294,7 @@
 		89E812DA18BCF0E000616600 /* reconnectButton.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = reconnectButton.nu; path = scripts/reconnectButton.nu; sourceTree = "<group>"; };
 		89E812DD18BCF5FE00616600 /* NSObject+customProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+customProperty.h"; path = "NSObject/NSObject+customProperty.h"; sourceTree = "<group>"; };
 		89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+customProperty.m"; path = "NSObject/NSObject+customProperty.m"; sourceTree = "<group>"; };
+		89E812E118BFD33300616600 /* hilight.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hilight.nu; path = scripts/hilight.nu; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -497,6 +500,7 @@
 		8908DC3118B61FA0004DFBAB /* Built In Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				89E812E118BFD33300616600 /* hilight.nu */,
 				89E812DA18BCF0E000616600 /* reconnectButton.nu */,
 			);
 			name = "Built In Scripts";
@@ -809,6 +813,7 @@
 				89E812C418BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC4318B7491C004DFBAB /* beautify.nu in Resources */,
 				89E812DB18BCF0E000616600 /* reconnectButton.nu in Resources */,
+				89E812E218BFD33300616600 /* hilight.nu in Resources */,
 				8908DC4418B7491C004DFBAB /* cblocks.nu in Resources */,
 				8908DC4518B7491C004DFBAB /* coredata.nu in Resources */,
 				8908DC4618B7491C004DFBAB /* doc.nu in Resources */,
@@ -840,6 +845,7 @@
 				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
 				8908DC3618B74913004DFBAB /* beautify.nu in Resources */,
+				89E812E318BFD33300616600 /* hilight.nu in Resources */,
 				8908DC3718B74913004DFBAB /* cblocks.nu in Resources */,
 				8908DC3818B74913004DFBAB /* coredata.nu in Resources */,
 				8908DC3918B74913004DFBAB /* doc.nu in Resources */,

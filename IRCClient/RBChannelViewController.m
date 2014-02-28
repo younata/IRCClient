@@ -125,6 +125,18 @@ static NSString *CellIdentifier = @"Cell";
     [self.inputCommands autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.input];
     
     [self revealButtonPressed:nil];
+    
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+    [self.view addGestureRecognizer:tgr];
+}
+
+-(void)tapped:(UITapGestureRecognizer *)tgr
+{
+    CGRect rect = CGRectInset(self.borderView.frame, 0, -4);
+    CGPoint point = [tgr locationInView:self.view];
+    if (CGRectContainsPoint(rect, point)) {
+        [self.tableView scrollToBottom];
+    }
 }
 
 -(void)showHelp
@@ -273,9 +285,14 @@ static NSString *CellIdentifier = @"Cell";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    ret.textLabel.attributedText = [self attributedStringForIndex:indexPath.row];
-    ret.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    ret.textLabel.numberOfLines = 0;
+    UITextView *tv = [[UITextView alloc] initForAutoLayoutWithSuperview:ret.contentView];
+    [tv autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+    tv.attributedText = [self attributedStringForIndex:indexPath.row];
+    tv.dataDetectorTypes = UIDataDetectorTypeLink;
+    tv.editable = NO;
+    tv.userInteractionEnabled = YES;
+    tv.scrollEnabled = NO;
+    tv.textContainerInset = UIEdgeInsetsZero;
     [ret layoutSubviews];
     return ret;
 }
@@ -293,7 +310,12 @@ static NSString *CellIdentifier = @"Cell";
                                              options:options
                                              context:nil];
     
-    return boundingRect.size.height * 1.2;
+    return boundingRect.size.height + 10;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -370,8 +392,8 @@ static NSString *CellIdentifier = @"Cell";
         if ([command isEqualToString:@"ctcp"]) {
             NSString *target, *action;
             if (c.count > 1) {
-                target = c[0];
-                action = c[1];
+                action = c[0];
+                target = c[1];
             } else {
                 target = self.channel;
                 action = c[0];
@@ -528,10 +550,7 @@ static NSString *CellIdentifier = @"Cell";
             [self showCTCPCommands];
         }
     } else if ([actionSheet.title isEqualToString:NSLocalizedString(@"CTCP Commands", nil)]) {
-        str = [NSString stringWithFormat:@"/ctcp  %@", title];
-        UITextPosition *startPosition = [self.input positionFromPosition:self.input.beginningOfDocument offset:6];
-        UITextRange *selection = [self.input textRangeFromPosition:startPosition toPosition:startPosition];
-        self.input.selectedTextRange = selection;
+        str = [NSString stringWithFormat:@"/ctcp %@", title];
     }
     self.input.text = str;
 }

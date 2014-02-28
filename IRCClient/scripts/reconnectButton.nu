@@ -1,5 +1,4 @@
 (class ServerReconnectButton is RBScript
-    (+ (id) description is "Button to (re)connect to a server")
     (- (void) reconnectServer:(id)button is
         (set server (button getCustomPropertyForKey:"server"))
         (server quit)
