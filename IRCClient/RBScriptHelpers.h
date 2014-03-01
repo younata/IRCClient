@@ -75,3 +75,9 @@
 +(ALAxis)axisBaseline;
 
 @end
+
+@interface NSTextCheckingTypesClass : NSObject
+
++(NSTextCheckingType)link;
+
+@end

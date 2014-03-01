@@ -274,3 +274,12 @@
 }
 
 @end
+
+@implementation NSTextCheckingTypesClass
+
++(NSTextCheckingType)link
+{
+    return NSTextCheckingTypeLink;
+}
+
+@end
