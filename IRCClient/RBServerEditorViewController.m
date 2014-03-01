@@ -21,6 +21,8 @@
 
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic) NSLayoutConstraint *keyboardConstraint;
+
 
 @end
 
@@ -151,6 +153,8 @@
         [tf setDelegate:self];
     }
     
+    self.keyboardConstraint = [self.scrollView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+    
     [self.view layoutSubviews];
 }
 
@@ -170,8 +174,8 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -241,32 +245,43 @@
 
 
 
--(NSInteger)getKeyboardHeight:(NSNotification *)notification
+-(CGFloat)getKeyboardHeight:(NSNotification *)notification
 {
     NSDictionary* keyboardInfo = [notification userInfo];
     NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
-    NSInteger keyboardHeight = keyboardFrameBeginRect.size.height;
+    CGFloat keyboardHeight;
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        keyboardHeight = keyboardFrameBeginRect.size.width;
+    } else {
+        keyboardHeight = keyboardFrameBeginRect.size.height;
+    }
     return keyboardHeight;
 }
 
--(void)keyboardDidHide:(NSNotification *)notification
+-(void)keyboardWillHide:(NSNotification *)notification
 {
-    [UIView animateWithDuration:0.25 animations:^{
-        self.view.frame = self.originalFrame;
-        self.scrollView.frame = self.view.frame;
-    }];
+    self.keyboardConstraint.constant = 0;
+    [self.view setNeedsUpdateConstraints];
+    NSDictionary *info = [notification userInfo];
+    NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    [UIView animateWithDuration:animationDuration animations:^{
+        [self.view layoutIfNeeded];
+    } completion:nil];
 }
 
--(void)keyboardDidShow:(NSNotification *)notification
+-(void)keyboardWillShow:(NSNotification *)notification
 {
-    NSInteger kh = [self getKeyboardHeight:notification];
-    [UIView animateWithDuration:0.25 animations:^{
-        CGFloat height = self.originalFrame.size.height - kh;
-        
-        self.view.frame = CGRectMake(0, 0, self.originalFrame.size.width, height);
-        
-        self.scrollView.frame = self.view.frame;
-    }];
+    CGFloat kh = [self getKeyboardHeight:notification];
+    NSDictionary *info = [notification userInfo];
+    NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    self.keyboardConstraint.constant = -kh;
+    [self.view setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:animationDuration animations:^{
+        [self.view layoutIfNeeded];
+    } completion:nil];
 }
+
 @end

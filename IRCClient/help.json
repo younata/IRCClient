@@ -8,5 +8,6 @@
         "SSL?": "It is recommended that, whenever possible, you use SSL to connect to the network. For this reason, this app defaults to using SSl to connect to IRC networks, and defaults to connecting the port most commonly used for hosting SSL connections on IRC networks",
         "Disconnecting": "To disconnect from a server, leave a channel, or close a PM, simply swipe to the left on the cell for the desired server/channel, then press the \"Disconnect\", \"Part\", or \"Delete\" button.",
         "Auto-joining": "By default, this app will rejoin any networks and servers it was connected to when it last ran. To turn this off, go into Configure, then press \"Reconnect\" and select whether or not you want to rejoin. Alternatively, disconnect/part/delete the desired server/channel/conversation you don't want re-opened.",
+        "Gestures": "From the channel screen, swiping from the left edge of the screen will open up the server/channel view. Additionally, tapping near the bottom of the message list will scroll to the newest message.",
     }
 }

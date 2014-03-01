@@ -277,9 +277,15 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 #pragma mark - UITableViewDataSource
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[self.server[self.channel] log] count];
+    int ret = [[self.server[self.channel] log] count];
+    return ret;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
