@@ -1,9 +1,9 @@
 (class Highlight is RBScript
     (+ (id) description is "Highlight when your username is mentioned")
-    (- (void) messageLogged:(id)message server:(id)server is
+    (- (void) channel:(id)channel didLogMessage:(id)message is
         (set msg ((NSMutableAttributedString alloc) initWithAttributedString:(message attributedMessage)))
         (if (and (or (== (message command) 3) (== (message command) 4))
-           ((message message) containsSubstring:(server nick)))
+           ((message message) containsSubstring:((channel server) nick)))
        (msg addAttribute:(NSAttributedStringAttributes NSForegroundColorAttributeName)
                    value:(RBColorScheme primaryColor)
                    range:(((message attributedMessage) string) rangeOfString:(server nick))))

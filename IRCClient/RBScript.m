@@ -29,8 +29,12 @@
     return [[self superclass] inheritedByClass:newClass];
 }
 
--(void)messageRecieved:(RBIRCMessage *)message server:(RBIRCServer *)server{}
--(void)messageLogged:(RBIRCMessage *)message server:(RBIRCServer *)server{}
+-(void)serverDidConnect:(RBIRCServer *)server{}
+-(void)serverDidDisconnect:(RBIRCServer *)server{}
+-(void)serverDidError:(RBIRCServer *)server{}
+-(void)server:(RBIRCServer *)server didReceiveMessage:(RBIRCMessage *)message{}
+
+-(void)channel:(RBIRCChannel *)channel didLogMessage:(RBIRCMessage *)message{}
 
 -(void)serverList:(RBServerViewController *)serverList didCreateNewServerCell:(UITableViewCell *)cell{}
 -(void)serverList:(RBServerViewController *)serverList didCreateServerCell:(UITableViewCell *)cell forServer:(RBIRCServer *)server{}
@@ -38,5 +42,8 @@
 -(void)serverList:(RBServerViewController *)serverList didCreatePrivateCell:(UITableViewCell *)cell forPrivateConversation:(RBIRCChannel *)conversation{}
 -(void)serverList:(RBServerViewController *)serverList didCreateNewChannelCell:(RBTextFieldServerCell *)cell{}
 
+-(void)serverEditorWasLoaded:(RBServerEditorViewController *)serverEditor{}
+-(void)serverEditor:(RBServerEditorViewController *)serverEditor didMakeChangesToServer:(RBIRCServer *)server{}
+-(void)serverEditorWillBeDismissed:(RBServerEditorViewController *)serverEditor{}
 
 @end

@@ -58,6 +58,8 @@ static NSString *textFieldCell = @"textFieldCell";
     [self.revealController setDelegate:self];
     
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    
+    [[RBScriptingService sharedInstance] serverListWasLoaded:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated

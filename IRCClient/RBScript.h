@@ -13,6 +13,7 @@
 @class RBIRCMessage;
 @class RBServerViewController;
 @class RBTextFieldServerCell;
+@class RBServerEditorViewController;
 
 /**
  `RBScript` is the base class for scripts. All scripts should subclass RBScript.
@@ -30,35 +31,66 @@
  */
 +(NSString *)description;
 
+/**
+ Gets called for configuration.
+ 
+ @return a dictionary, expected to be of form {settingName (string): settingType (string)}.
+ This defaults to nil.
+ */
 +(NSDictionary *)configurationItems;
+
+///@name IRC Server
+
+/**
+ Do additional things after a server has connected
+ 
+ @param server - the server which just connected
+ */
+-(void)serverDidConnect:(RBIRCServer *)server;
+
+/**
+ Do additional thinsg after a server has disconnected
+ 
+ @param server - the server which sent this message
+ */
+-(void)serverDidDisconnect:(RBIRCServer *)server;
+
+/**
+ Do additional thinsg after a server has received an error with its connection.
+ 
+ @param server - the server which sent this message
+ */
+-(void)serverDidError:(RBIRCServer *)server;
 
 /**
  Gets called right after a message has been interpretted.
  
- @param message - the parsed message
  @param server - server which recieved the message
+ @param message - the parsed message
  
  @warning The RFC forbids auto-responding to NOTICEs. Not that this stops you, but it is considered bad practice.
  @warning The RFC also recommends that, if a PRIVMSG is auto-responded, a NOTICE is sent out.
  
- @see -messageLogged:server:
+ @see -channel:didLogMessage:
  */
--(void)messageRecieved:(RBIRCMessage *)message server:(RBIRCServer *)server;
+-(void)server:(RBIRCServer *)server didReceiveMessage:(RBIRCMessage *)message;
+
+/// @name IRC Channel
 
 /**
  Gets called right after the server has logged an IRCMessage to its respective channels.
  
  Note that this is called after the raw message is logged to the channel, but before it is sent off to the server delegates.
  
+ @param channel - the channel which logged this message
  @param message - the parsed message
- @param server - server which recieved the message
  
  @warning The RFC forbids auto-responding to NOTICEs. Not that this stops you, but it is considered bad practice.
  @warning The RFC also recommends that, if a PRIVMSG is auto-responded, a NOTICE is sent out.
  
- @see -messageReceived:server:
+ @see -server:didReceiveMessage:
  */
--(void)messageLogged:(RBIRCMessage *)message server:(RBIRCServer *)server;
+-(void)channel:(RBIRCChannel *)channel didLogMessage:(RBIRCMessage *)message;
 
 ///@name Server List View
 
@@ -104,6 +136,57 @@
  @param cell - the created cell
  */
 -(void)serverList:(RBServerViewController *)serverList didCreateNewChannelCell:(RBTextFieldServerCell *)cell;
+
+/// @name Server Editor
+
+/**
+ Do additional things to a server editor after it has loaded
+ 
+ @param serverEditor - the ServerEditorViewController which originally sent this message
+ */
+-(void)serverEditorWasLoaded:(RBServerEditorViewController *)serverEditor;
+
+/**
+ Do additional things to a server right before it is saved to NSUserDefaults
+ 
+ @param serverEditor - the ServerEditorViewController which originally sent this message
+ @param server - the IRCServer which is being edited
+ */
+-(void)serverEditor:(RBServerEditorViewController *)serverEditor didMakeChangesToServer:(RBIRCServer *)server;
+
+/**
+ Do additional things to a server editor right before it gets dismissed.
+ 
+ @param serverEditor - the ServerEditorViewController which originally sent this message
+ */
+-(void)serverEditorWillBeDismissed:(RBServerEditorViewController *)serverEditor;
+
+/// @name Channel View
+
+/**
+ Do additional things to a channel view after it has loaded
+ 
+ @param channelView - the ChannelViewController which sent this message
+ */
+-(void)channelViewWasLoaded:(RBChannelViewController *)channelView;
+
+/**
+ Do additional things after the channel view has called -disconnect
+ 
+ @param channelView - the ChannelViewController which sent this message
+ @param channel - the channel who's log it was displaying
+ @param server - the server the channel belonged to
+ */
+-(void)channelView:(RBChannelViewController *)channelView didDisconnectFromChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server;
+
+/**
+ Do additional things after a channel view has started to display the log of a channel
+ 
+ @param channelView - the ChannelViewController which sent this message
+ @param channel - the channel who's log it is now displaying
+ @param server - the server the channel belonged to
+ */
+-(void)channelView:(RBChannelViewController *)channelView didSelectChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server;
 
 
 @end

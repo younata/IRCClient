@@ -254,6 +254,8 @@
         }
         if (theSelf.debugLock)
             [theSelf.debugLock unlock];
+        
+        [[RBScriptingService sharedInstance] serverDidConnect:theSelf];
     };
 }
 
@@ -294,7 +296,7 @@
         }
     }
     
-    [[RBScriptingService sharedInstance] messageRecieved:msg server:self];
+    [[RBScriptingService sharedInstance] server:self didReceiveMessage:msg];
     
     RBIRCChannel *ch;
     for (int i = 0; i < msg.targets.count; i++) {
@@ -322,8 +324,6 @@
         [ch logMessage:msg];
     }
     
-    [[RBScriptingService sharedInstance] messageLogged:msg server:self];
-    
     for (id<RBIRCServerDelegate>del in self.delegates) {
         if ([del respondsToSelector:@selector(IRCServer:handleMessage:)]) {
             [del IRCServer:self handleMessage:msg];
@@ -350,11 +350,10 @@
 
 -(void)dealloc
 {
-    if (readStream != NULL) {
-        if ([readStream streamStatus] == kCFStreamStatusOpen) {
-            [readStream close];
-            [writeStream close];
-        }
+    if ([self connected]) {
+        [readStream close];
+        [writeStream close];
+        [[RBScriptingService sharedInstance] serverDidDisconnect:self];
     }
     readStream = NULL;
     writeStream = NULL;
@@ -567,6 +566,7 @@
                 if ([del respondsToSelector:@selector(IRCServer:errorReadingFromStream:)])
                     [del IRCServer:self errorReadingFromStream:aStream.streamError];
             }
+            [[RBScriptingService sharedInstance] serverDidError:self];
             break;
         case NSStreamEventEndEncountered:
             [self.writeStream close];
@@ -575,6 +575,7 @@
                 if ([del respondsToSelector:@selector(IRCServerConnectionDidDisconnect:)])
                     [del IRCServerConnectionDidDisconnect:self];
             }
+            [[RBScriptingService sharedInstance] serverDidDisconnect:self];
             break;
         default:
             break;

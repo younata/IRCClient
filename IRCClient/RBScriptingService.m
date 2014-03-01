@@ -123,19 +123,46 @@
     return self.scriptDict.allKeys;
 }
 
--(void)messageLogged:(RBIRCMessage *)message server:(RBIRCServer *)server
+#pragma mark - IRC Server
+
+-(void)serverDidConnect:(RBIRCServer *)server
 {
     for (RBScript *script in self.scriptSet) {
-        [script messageLogged:message server:server];
+        [script serverDidConnect:server];
     }
 }
 
--(void)messageRecieved:(RBIRCMessage *)message server:(RBIRCServer *)server
+-(void)serverDidDisconnect:(RBIRCServer *)server
 {
     for (RBScript *script in self.scriptSet) {
-        [script messageRecieved:message server:server];
+        [script serverDidDisconnect:server];
     }
 }
+
+-(void)serverDidError:(RBIRCServer *)server
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverDidError:server];
+    }
+}
+
+-(void)server:(RBIRCServer *)server didReceiveMessage:(RBIRCMessage *)message
+{
+    for (RBScript *script in self.scriptSet) {
+        [script server:server didReceiveMessage:message];
+    }
+}
+
+#pragma mark - IRC Channel
+
+-(void)channel:(RBIRCChannel *)channel didLogMessage:(RBIRCMessage *)message
+{
+    for (RBScript *script in self.scriptSet) {
+        [script channel:channel didLogMessage:message];
+    }
+}
+
+#pragma mark - Server List View
 
 -(void)serverList:(RBServerViewController *)serverList didCreateNewServerCell:(UITableViewCell *)cell
 {
@@ -171,5 +198,28 @@
         [script serverList:serverList didCreateNewChannelCell:cell];
     }
 }
+
+#pragma mark - Server Editor
+-(void)serverEditorWasLoaded:(RBServerEditorViewController *)serverEditor
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverEditorWasLoaded:serverEditor];
+    }
+}
+
+-(void)serverEditor:(RBServerEditorViewController *)serverEditor didMakeChangesToServer:(RBIRCServer *)server
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverEditor:serverEditor didMakeChangesToServer:server];
+    }
+}
+
+-(void)serverEditorWillBeDismissed:(RBServerEditorViewController *)serverEditor
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverEditorWillBeDismissed:serverEditor];
+    }
+}
+
 
 @end

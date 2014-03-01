@@ -23,13 +23,6 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"TextFieldServerCell with data '%@' and textfield '%@'", self.data, self.textField];

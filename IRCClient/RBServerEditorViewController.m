@@ -17,6 +17,8 @@
 
 #import "RBHelp.h"
 
+#import "RBScriptingService.h"
+
 @interface RBServerEditorViewController ()
 
 @property (nonatomic) CGRect originalFrame;
@@ -156,6 +158,8 @@
     self.keyboardConstraint = [self.scrollView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
     
     [self.view layoutSubviews];
+    
+    [[RBScriptingService sharedInstance] serverEditorWasLoaded:self];
 }
 
 -(void)updateViewConstraints
@@ -187,6 +191,7 @@
 -(void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:self.onCancel];
+    [[RBScriptingService sharedInstance] serverEditorWasDismissed:self];
 }
 
 -(void)save
@@ -235,6 +240,8 @@
         [self.server quit:@"Reloading settings"];
         [self.server connect];
     }
+    
+    [[RBScriptingService sharedInstance] serverEditor:self didMakeChangesToServer:self.server];
     
     [marr addObject:self.server];
     NSData *d = [NSKeyedArchiver archivedDataWithRootObject:marr];

@@ -32,7 +32,6 @@
 		8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBD18B5B3B1004DFBAB /* UIDevice-Reachability.m */; };
 		8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
 		8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
-		8908DC0018B60FB0004DFBAB /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE418B60FB0004DFBAB /* README.markdown */; };
 		8908DC2418B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8908DC2518B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8908DC2918B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
@@ -62,10 +61,6 @@
 		8908DC4D18B7491C004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
 		8908DC4E18B7491C004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
 		8908DC4F18B7491C004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
-		8908DC5318B82324004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5018B82324004DFBAB /* ffi.c */; };
-		8908DC5418B82324004DFBAB /* ffi.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5018B82324004DFBAB /* ffi.c */; };
-		8908DC5518B82324004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5218B82324004DFBAB /* ffi.S */; };
-		8908DC5618B82324004DFBAB /* ffi.S in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5218B82324004DFBAB /* ffi.S */; };
 		8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
 		8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
 		8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7418B8B299004DFBAB /* RBHelpArrayViewController.m */; };
@@ -95,6 +90,12 @@
 		891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */; };
 		891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */; };
 		891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */; };
+		893C331918C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
+		893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
+		893C331C18C19855000279AA /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331B18C19855000279AA /* libffi.a */; };
+		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
+		893C332418C19BA2000279AA /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332318C19BA2000279AA /* libffi.a */; };
+		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
 		898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
@@ -162,6 +163,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		760C7BDD99964E4E8C71C3C7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8906F1C718867BEE00042A13 /* rIRC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rIRC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8906F1CA18867BEE00042A13 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8906F1CC18867BEE00042A13 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -196,8 +199,6 @@
 		8908DBC818B5B3CC004DFBAB /* UIDevice+Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Categories.h"; sourceTree = "<group>"; };
 		8908DBC918B5B3E8004DFBAB /* wwanconnect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wwanconnect.c; sourceTree = "<group>"; };
 		8908DBCA18B5B3E8004DFBAB /* wwanconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wwanconnect.h; sourceTree = "<group>"; };
-		8908DBE318B60FB0004DFBAB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		8908DBE418B60FB0004DFBAB /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		8908DBE618B60FB0004DFBAB /* beautify.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = beautify.nu; sourceTree = "<group>"; };
 		8908DBE818B60FB0004DFBAB /* cblocks.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cblocks.nu; sourceTree = "<group>"; };
 		8908DBEB18B60FB0004DFBAB /* coredata.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coredata.nu; sourceTree = "<group>"; };
@@ -216,9 +217,6 @@
 		8908DC2B18B615EE004DFBAB /* RBScriptingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptingService.h; sourceTree = "<group>"; };
 		8908DC2C18B615EE004DFBAB /* RBScriptingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptingService.m; sourceTree = "<group>"; };
 		8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBScriptingServiceSpec.mm; sourceTree = "<group>"; };
-		8908DC5018B82324004DFBAB /* ffi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ffi.c; sourceTree = "<group>"; };
-		8908DC5118B82324004DFBAB /* ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ffi.h; sourceTree = "<group>"; };
-		8908DC5218B82324004DFBAB /* ffi.S */ = {isa = PBXFileReference; explicitFileType = sourcecode.asm; fileEncoding = 4; path = ffi.S; sourceTree = "<group>"; };
 		8908DC5D18B88897004DFBAB /* UITableView+Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+Scroll.h"; path = "UITableView/UITableView+Scroll.h"; sourceTree = "<group>"; };
 		8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+Scroll.m"; path = "UITableView/UITableView+Scroll.m"; sourceTree = "<group>"; };
 		8908DC7218B8B299004DFBAB /* RBHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBHelp.h; sourceTree = "<group>"; };
@@ -241,6 +239,13 @@
 		891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCServerSpec.mm; sourceTree = "<group>"; };
 		891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBChannelViewControllerSpec.mm; sourceTree = "<group>"; };
 		891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerViewControllerSpec.mm; sourceTree = "<group>"; };
+		893C331818C197F0000279AA /* libffi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = file; name = libffi.xcodeproj; path = Pods/../libffi/libffi.xcodeproj; sourceTree = "<group>"; };
+		893C331B18C19855000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
+		893C331D18C19876000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		893C331F18C19879000279AA /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
+		893C332118C198A1000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
+		893C332318C19BA2000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = "../../../Library/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug/libffi.a"; sourceTree = "<group>"; };
+		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
@@ -302,11 +307,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				893C332418C19BA2000279AA /* libffi.a in Frameworks */,
 				8906F1FF18867F1F00042A13 /* CoreFoundation.framework in Frameworks */,
 				8906F1FD18867DC200042A13 /* CFNetwork.framework in Frameworks */,
 				8906F1CD18867BEE00042A13 /* CoreGraphics.framework in Frameworks */,
 				8906F1CF18867BEE00042A13 /* UIKit.framework in Frameworks */,
 				8906F1CB18867BEE00042A13 /* Foundation.framework in Frameworks */,
+				893C332618C19BAD000279AA /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +331,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				893C331E18C19876000279AA /* libPods.a in Frameworks */,
+				893C331C18C19855000279AA /* libffi.a in Frameworks */,
 				891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */,
 				891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */,
 				891B01F1189650DB00B2D848 /* Cedar-iOS.framework in Frameworks */,
@@ -337,6 +346,7 @@
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
+				893C331818C197F0000279AA /* libffi.xcodeproj */,
 				8908DC7118B8B299004DFBAB /* RBHelp */,
 				8908DBDE18B60FA2004DFBAB /* Nu */,
 				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
@@ -346,6 +356,7 @@
 				891B01E6189650DA00B2D848 /* IRCClientSpecs */,
 				8906F1C918867BEE00042A13 /* Frameworks */,
 				8906F1C818867BEE00042A13 /* Products */,
+				6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -362,12 +373,19 @@
 		8906F1C918867BEE00042A13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				893C332518C19BAD000279AA /* libPods.a */,
+				893C332318C19BA2000279AA /* libffi.a */,
+				893C332118C198A1000279AA /* libffi.a */,
+				893C331F18C19879000279AA /* libPods-AFNetworking.a */,
+				893C331D18C19876000279AA /* libPods.a */,
+				893C331B18C19855000279AA /* libffi.a */,
 				8906F1FE18867F1F00042A13 /* CoreFoundation.framework */,
 				8906F1FC18867DC200042A13 /* CFNetwork.framework */,
 				8906F1CA18867BEE00042A13 /* Foundation.framework */,
 				8906F1CC18867BEE00042A13 /* CoreGraphics.framework */,
 				8906F1CE18867BEE00042A13 /* UIKit.framework */,
 				8906F1E318867BEE00042A13 /* XCTest.framework */,
+				760C7BDD99964E4E8C71C3C7 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -385,8 +403,8 @@
 				89C46E441895F8A2006068DC /* Views and Controllers */,
 				8906F20F188799C000042A13 /* SWRevealViewController */,
 				8906F1DC18867BEE00042A13 /* Images.xcassets */,
-				89E812BD18BA1B6A00616600 /* icon-iPad.png */,
 				89E812BE18BA1B6A00616600 /* icon-iPad@2x.png */,
+				89E812BD18BA1B6A00616600 /* icon-iPad.png */,
 				89E812BF18BA1B6A00616600 /* icon@2x.png */,
 				8906F1D118867BEE00042A13 /* Supporting Files */,
 			);
@@ -437,23 +455,10 @@
 		8908DBDE18B60FA2004DFBAB /* Nu */ = {
 			isa = PBXGroup;
 			children = (
-				8908DBDF18B60FB0004DFBAB /* libffi */,
 				8908DBE518B60FB0004DFBAB /* nu */,
 				8908DBF718B60FB0004DFBAB /* objc */,
 			);
 			name = Nu;
-			sourceTree = "<group>";
-		};
-		8908DBDF18B60FB0004DFBAB /* libffi */ = {
-			isa = PBXGroup;
-			children = (
-				8908DC5018B82324004DFBAB /* ffi.c */,
-				8908DC5118B82324004DFBAB /* ffi.h */,
-				8908DC5218B82324004DFBAB /* ffi.S */,
-				8908DBE318B60FB0004DFBAB /* LICENSE */,
-				8908DBE418B60FB0004DFBAB /* README.markdown */,
-			);
-			path = libffi;
 			sourceTree = "<group>";
 		};
 		8908DBE518B60FB0004DFBAB /* nu */ = {
@@ -714,10 +719,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8906F1F318867BEE00042A13 /* Build configuration list for PBXNativeTarget "IRCClient" */;
 			buildPhases = (
+				D7FA4626809F4F1285E153D9 /* Check Pods Manifest.lock */,
 				8906F1C318867BEE00042A13 /* Sources */,
 				8906F1C418867BEE00042A13 /* Frameworks */,
 				8906F1C518867BEE00042A13 /* Resources */,
 				8908DBCD18B5F29C004DFBAB /* ShellScript */,
+				193353F16BA24EE587670029 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -773,6 +780,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Rachel Brindle";
 				TargetAttributes = {
+					8906F1C618867BEE00042A13 = {
+						DevelopmentTeam = 9D456YCUH2;
+					};
 					8906F1E118867BEE00042A13 = {
 						TestTargetID = 891B01E1189650DA00B2D848;
 					};
@@ -808,7 +818,6 @@
 				898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				8906F1D518867BEE00042A13 /* InfoPlist.strings in Resources */,
 				8906F1DD18867BEE00042A13 /* Images.xcassets in Resources */,
-				8908DC0018B60FB0004DFBAB /* README.markdown in Resources */,
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
 				89E812C418BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC4318B7491C004DFBAB /* beautify.nu in Resources */,
@@ -823,6 +832,7 @@
 				89E812C718BB367300616600 /* Inconsolata.otf in Resources */,
 				8908DC8118B8B299004DFBAB /* README.md in Resources */,
 				8908DC4A18B7491C004DFBAB /* match.nu in Resources */,
+				893C331918C197F0000279AA /* libffi.xcodeproj in Resources */,
 				8908DC4B18B7491C004DFBAB /* math.nu in Resources */,
 				8908DC4D18B7491C004DFBAB /* nu.nu in Resources */,
 				8908DC4E18B7491C004DFBAB /* template.nu in Resources */,
@@ -853,6 +863,7 @@
 				89E812C518BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC3C18B74913004DFBAB /* help.nu in Resources */,
 				89E812DC18BCF0E000616600 /* reconnectButton.nu in Resources */,
+				893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */,
 				8908DC3D18B74913004DFBAB /* match.nu in Resources */,
 				8908DC3E18B74913004DFBAB /* math.nu in Resources */,
 				89E812C818BB367300616600 /* Inconsolata.otf in Resources */,
@@ -868,6 +879,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		193353F16BA24EE587670029 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		8908DBCD18B5F29C004DFBAB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -880,6 +906,21 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# increment version number whenever it's archived.\nVERSIONNUM=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nNEWSUBVERSION=`echo $VERSIONNUM | awk -F \".\" '{print $3}'`\nNEWSUBVERSION=$(($NEWSUBVERSION + 1))\nNEWVERSIONSTRING=`echo $VERSIONNUM | awk -F \".\" '{print $1 \".\" $2 \".'$NEWSUBVERSION'\" }'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $NEWVERSIONSTRING\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		D7FA4626809F4F1285E153D9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -906,14 +947,12 @@
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				8908DC7F18B8B299004DFBAB /* RBHelpViewController.m in Sources */,
 				8908DC2918B6105F004DFBAB /* RBScript.m in Sources */,
-				8908DC5318B82324004DFBAB /* ffi.c in Sources */,
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				898132FB18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */,
-				8908DC5518B82324004DFBAB /* ffi.S in Sources */,
 				8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
@@ -957,10 +996,8 @@
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
 				89E812E018BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
-				8908DC5418B82324004DFBAB /* ffi.c in Sources */,
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
 				8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */,
-				8908DC5618B82324004DFBAB /* ffi.S in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				8908DC8018B8B299004DFBAB /* RBHelpViewController.m in Sources */,
 				899B2A9F189913840008FED3 /* NSData+string.m in Sources */,
@@ -1101,30 +1138,50 @@
 		};
 		8906F1F418867BEE00042A13 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRCClient/IRCClient-Prefix.pch";
 				INFOPLIST_FILE = "IRCClient/IRCClient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug",
+				);
 				PRODUCT_NAME = rIRC;
+				PROVISIONING_PROFILE = "39FC714B-1EE0-4CBE-8A09-F639CBF88690";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		8906F1F518867BEE00042A13 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRCClient/IRCClient-Prefix.pch";
 				INFOPLIST_FILE = "IRCClient/IRCClient-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug",
+				);
 				PRODUCT_NAME = rIRC;
+				PROVISIONING_PROFILE = "39FC714B-1EE0-4CBE-8A09-F639CBF88690";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1198,8 +1255,10 @@
 					"-all_load",
 					"-lstdc++",
 				);
+				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1228,8 +1287,10 @@
 					"-all_load",
 					"-lstdc++",
 				);
+				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -12,6 +12,8 @@
 
 #import "IRCNumericReplies.h"
 
+#import "RBScriptingService.h"
+
 @implementation RBIRCChannel
 
 -(instancetype)initWithName:(NSString *)name
@@ -85,6 +87,8 @@
           message == nil)) {
         [_log addObject:message];
     }
+    
+    [[RBScriptingService sharedInstance] channel:self didLogMessage:message];
 }
 
 -(BOOL)isChannel

@@ -23,6 +23,8 @@
 
 #import "RBHelp.h"
 
+#import "RBScriptingService.h"
+
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
@@ -128,6 +130,8 @@ static NSString *CellIdentifier = @"Cell";
     
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     [self.view addGestureRecognizer:tgr];
+    
+    [[RBScriptingService sharedInstance] channelViewWasLoaded:self];
 }
 
 -(void)tapped:(UITapGestureRecognizer *)tgr
@@ -460,8 +464,16 @@ static NSString *CellIdentifier = @"Cell";
     self.navigationItem.title = @"Disconnected";
     self.input.enabled = NO;
     self.inputCommands.enabled = NO;
+    
+    RBIRCChannel *oldChannel = self.server[self.channel];
+    RBIRCServer *oldServer = self.server;
+    
     self.channel = nil;
     self.server = nil;
+    
+    [self.tableView reloadData];
+    
+    [[RBScriptingService sharedInstance] channelView:self didDisconnectFromChannel:oldChannel andServer:oldServer];
 }
 
 -(void)connect
@@ -485,6 +497,7 @@ static NSString *CellIdentifier = @"Cell";
     }
     [self.tableView reloadData];
     [self.tableView scrollToBottom:NO];
+    [[RBScriptingService sharedInstance] channelView:self didSelectChannel:self.server[self.channel] andServer:self.server];
 }
 
 #pragma mark - RBIRCServerDelegate
