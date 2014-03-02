@@ -131,6 +131,9 @@ static NSString *CellIdentifier = @"Cell";
     UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     [self.view addGestureRecognizer:tgr];
     
+    UISwipeGestureRecognizer *sgr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipe:)];
+    sgr.numberOfTouchesRequired = 2;
+    
     [[RBScriptingService sharedInstance] channelViewWasLoaded:self];
 }
 
@@ -140,6 +143,15 @@ static NSString *CellIdentifier = @"Cell";
     CGPoint point = [tgr locationInView:self.view];
     if (CGRectContainsPoint(rect, point)) {
         [self.tableView scrollToBottom];
+    }
+}
+
+-(void)twoFingerSwipe:(UISwipeGestureRecognizer *)sgr
+{
+    if (sgr.direction == UISwipeGestureRecognizerDirectionDown) {
+        [self.tableView scrollToBottom];
+    } else if (sgr.direction == UISwipeGestureRecognizerDirectionUp) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }
 }
 
