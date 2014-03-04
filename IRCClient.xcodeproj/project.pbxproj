@@ -92,7 +92,6 @@
 		891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */; };
 		893C331918C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
-		893C331C18C19855000279AA /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331B18C19855000279AA /* libffi.a */; };
 		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
 		893C332418C19BA2000279AA /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332318C19BA2000279AA /* libffi.a */; };
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
@@ -125,6 +124,7 @@
 		899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A99189913840008FED3 /* NSStream+remoteHost.m */; };
 		899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */; };
 		899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */; };
+		89B5AA1E18C675DC004D4BE8 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B5AA1B18C66189004D4BE8 /* libffi.a */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
@@ -161,6 +161,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8906F1C618867BEE00042A13;
 			remoteInfo = IRCClient;
+		};
+		89B5AA1A18C66189004D4BE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 893C331818C197F0000279AA /* libffi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DB13B1661849DF1E0010F42D;
+			remoteInfo = "libffi-iOS";
+		};
+		89B5AA1C18C66189004D4BE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 893C331818C197F0000279AA /* libffi.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DB13B1911849DF510010F42D;
+			remoteInfo = "libffi-Mac";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -241,13 +255,13 @@
 		891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCServerSpec.mm; sourceTree = "<group>"; };
 		891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBChannelViewControllerSpec.mm; sourceTree = "<group>"; };
 		891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerViewControllerSpec.mm; sourceTree = "<group>"; };
-		893C331818C197F0000279AA /* libffi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = file; name = libffi.xcodeproj; path = Pods/../libffi/libffi.xcodeproj; sourceTree = "<group>"; };
-		893C331B18C19855000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
-		893C331D18C19876000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		893C331F18C19879000279AA /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
-		893C332118C198A1000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
+		893C331818C197F0000279AA /* libffi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libffi.xcodeproj; path = Pods/../libffi/libffi.xcodeproj; sourceTree = "<group>"; };
+		893C331B18C19855000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
+		893C331D18C19876000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		893C331F18C19879000279AA /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
+		893C332118C198A1000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
 		893C332318C19BA2000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = "../../../Library/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug/libffi.a"; sourceTree = "<group>"; };
-		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		893C332718C1DE41000279AA /* inlineImages.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = inlineImages.nu; path = scripts/inlineImages.nu; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
@@ -335,7 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				893C331E18C19876000279AA /* libPods.a in Frameworks */,
-				893C331C18C19855000279AA /* libffi.a in Frameworks */,
+				89B5AA1E18C675DC004D4BE8 /* libffi.a in Frameworks */,
 				891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */,
 				891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */,
 				891B01F1189650DB00B2D848 /* Cedar-iOS.framework in Frameworks */,
@@ -665,6 +679,15 @@
 			path = NSString;
 			sourceTree = "<group>";
 		};
+		89B5AA1618C6617A004D4BE8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				89B5AA1B18C66189004D4BE8 /* libffi.a */,
+				89B5AA1D18C66189004D4BE8 /* ffi.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		89C46E431895F89A006068DC /* IRC Backend */ = {
 			isa = PBXGroup;
 			children = (
@@ -802,6 +825,12 @@
 			mainGroup = 8906F1BE18867BEE00042A13;
 			productRefGroup = 8906F1C818867BEE00042A13 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 89B5AA1618C6617A004D4BE8 /* Products */;
+					ProjectRef = 893C331818C197F0000279AA /* libffi.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8906F1C618867BEE00042A13 /* IRCClient */,
@@ -810,6 +839,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		89B5AA1B18C66189004D4BE8 /* libffi.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libffi.a;
+			remoteRef = 89B5AA1A18C66189004D4BE8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		89B5AA1D18C66189004D4BE8 /* ffi.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = ffi.dylib;
+			remoteRef = 89B5AA1C18C66189004D4BE8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8906F1C518867BEE00042A13 /* Resources */ = {
@@ -1162,7 +1208,7 @@
 				PRODUCT_NAME = rIRC;
 				PROVISIONING_PROFILE = "39FC714B-1EE0-4CBE-8A09-F639CBF88690";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/libffi/darwin_common/include/ $(SRCROOT)/libffi/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1187,7 +1233,7 @@
 				PRODUCT_NAME = rIRC;
 				PROVISIONING_PROFILE = "39FC714B-1EE0-4CBE-8A09-F639CBF88690";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/libffi/darwin_common/include/ $(SRCROOT)/libffi/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1237,6 +1283,7 @@
 		891B01F4189650DB00B2D848 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1272,6 +1319,7 @@
 		891B01F5189650DB00B2D848 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (

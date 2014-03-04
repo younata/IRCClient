@@ -164,6 +164,13 @@
 
 #pragma mark - Server List View
 
+-(void)serverListWasLoaded:(RBServerViewController *)serverList
+{
+    for (RBScript *script in self.scriptSet) {
+        [script serverListWasLoaded:serverList];
+    }
+}
+
 -(void)serverList:(RBServerViewController *)serverList didCreateNewServerCell:(UITableViewCell *)cell
 {
     for (RBScript *script in self.scriptSet) {
@@ -218,6 +225,28 @@
 {
     for (RBScript *script in self.scriptSet) {
         [script serverEditorWillBeDismissed:serverEditor];
+    }
+}
+
+#pragma mark - Channel View
+-(void)channelViewWasLoaded:(RBChannelViewController *)channelView
+{
+    for (RBScript *script in self.scriptSet) {
+        [script channelViewWasLoaded:channelView];
+    }
+}
+
+-(void)channelView:(RBChannelViewController *)channelView didDisconnectFromChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server
+{
+    for (RBScript *script in self.scriptSet) {
+        [script channelView:channelView didDisconnectFromChannel:channel andServer:server];
+    }
+}
+
+-(void)channelView:(RBChannelViewController *)channelView didSelectChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server
+{
+    for (RBScript *script in self.scriptSet) {
+        [script channelView:channelView didSelectChannel:channel andServer:server];
     }
 }
 

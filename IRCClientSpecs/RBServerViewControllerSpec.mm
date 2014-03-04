@@ -39,7 +39,7 @@ describe(@"RBServerViewController", ^{
         [subject numberOfSectionsInTableView:subject.tableView] should equal(1);
         [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(1);
         UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        cell.textLabel.text should equal(@"New Server");
+        cell.textLabel.text should equal(@"+ New Server");
     });
     
     it(@"should present an editor view controller when a new server is selected", ^{
@@ -103,7 +103,7 @@ describe(@"RBServerViewController", ^{
             
             NSInteger i = [subject numberOfSectionsInTableView:subject.tableView];
             i should_not be_lte(1);
-            [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i-1]].textLabel.text should equal(@"New Server");
+            [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i-1]].textLabel.text should equal(@"+ New Server");
         });
         
         it(@"should present a server editor controller when the first cell in a server section is selected", ^{

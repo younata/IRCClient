@@ -96,6 +96,13 @@
 ///@name Server List View
 
 /**
+ Do additional things to the server list after it loads.
+ 
+ @param serverList - the ServerViewController which originally sent this message
+ */
+-(void)serverListWasLoaded:(RBServerViewController *)serverList;
+
+/**
  Do additional things to a cell which will hold a message/prompt for the user to set up a connection to a new server.
  
  @param serverList - the ServerViewController which originally sent this message

@@ -81,12 +81,13 @@ describe(@"RBScriptingService", ^{
             [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
             
             server = fake_for([RBIRCServer class]);
-            server.serverName = @"blah";
+            server stub_method("serverName").and_return(@"blah");
             server stub_method("connected").and_return(YES);
             server stub_method("addDelegate:");
             server stub_method("connect");
             server stub_method("quit");
             server stub_method("sortedChannelKeys").and_return(@[@"blah", RBIRCServerLog]);
+            server stub_method(@selector(objectForKeyedSubscript:)).and_return([[RBIRCChannel alloc] initWithName:RBIRCServerLog]);
             
             svc = [[RBServerViewController alloc] init];
             svc.servers = [@[server] mutableCopy];
@@ -99,6 +100,7 @@ describe(@"RBScriptingService", ^{
         
         it(@"should add a 'reconnect' button as the accessory view of the server cell", ^{
             UITableViewCell *tvc = [svc.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            
             tvc.accessoryView should be_instance_of([UIButton class]);
         });
         
@@ -127,6 +129,7 @@ describe(@"RBScriptingService", ^{
             it(@"should append a text attachment for messages with links to images", ^{
                 RBIRCMessage *message = [[RBIRCMessage alloc] init];
                 message.timestamp = [NSDate date];
+                message.from = @"ik";
                 message.message = @"http://i.imgur.com/hjw7z6A.jpg"; // Is an actual image.
                 NSLog(@"%@", message.attributedMessage);
                 NSAttributedString *blah = message.attributedMessage;

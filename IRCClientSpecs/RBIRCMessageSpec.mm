@@ -88,7 +88,7 @@ describe(@"RBIRCMessage", ^{
             it(@"should ACTION", ^{
                 NSString *str = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :%@ACTION dies.%@", delim, delim];
                 msg = createMsg(str);
-                msg.attributedMessage.string should equal(@"ik dies.");
+                msg.attributedMessage.string should equal(@"* ik dies.");
             });
             it(@"should DCC", PENDING); // No one I know actually uses this.
             it(@"should SED", PENDING); // I can't actually find a spec for this.
