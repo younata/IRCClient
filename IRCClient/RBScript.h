@@ -14,6 +14,7 @@
 @class RBServerViewController;
 @class RBTextFieldServerCell;
 @class RBServerEditorViewController;
+@class RBChannelViewController;
 
 /**
  `RBScript` is the base class for scripts. All scripts should subclass RBScript.

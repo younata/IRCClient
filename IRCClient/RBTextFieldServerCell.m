@@ -7,6 +7,7 @@
 //
 
 #import "RBTextFieldServerCell.h"
+#import "UIView+initWithSuperview.h"
 
 @implementation RBTextFieldServerCell
 

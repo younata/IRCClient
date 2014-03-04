@@ -25,6 +25,10 @@
 @property (nonatomic, strong) UITextField *serverPassword;
 @property (nonatomic, strong) UISwitch *serverConnectOnStartup;
 
+@property (nonatomic, strong) UIBarButtonItem *helpButton;
+@property (nonatomic, strong) UIBarButtonItem *saveButton;
+@property (nonatomic, strong) UIBarButtonItem *cancelButton;
+
 @property (nonatomic, strong) void (^onCancel)();
 
 -(void)save;

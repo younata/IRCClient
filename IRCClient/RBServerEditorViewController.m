@@ -63,23 +63,23 @@
     
     self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
     
-    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"?"
+    self.helpButton = [[UIBarButtonItem alloc] initWithTitle:@"?"
                                                                    style:UIBarButtonItemStylePlain
                                                                   target:self
                                                                   action:@selector(showHelp)];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:self.server.connected ? NSLocalizedString(@"Save", nil) : NSLocalizedString(@"Connect", nil)
+    self.saveButton = [[UIBarButtonItem alloc] initWithTitle:self.server.connected ? NSLocalizedString(@"Save", nil) : NSLocalizedString(@"Connect", nil)
                                                                    style:UIBarButtonItemStylePlain
                                                                   target:self
                                                                   action:@selector(save)];
     
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil)
+    self.cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil)
                                                                      style:UIBarButtonItemStylePlain
                                                                     target:self
                                                                     action:@selector(dismiss)];
     
-    self.navigationItem.rightBarButtonItems = @[saveButton, helpButton];
-    self.navigationItem.leftBarButtonItem = cancelButton;
+    self.navigationItem.rightBarButtonItems = @[self.saveButton, self.helpButton];
+    self.navigationItem.leftBarButtonItem = self.cancelButton;
     
     self.serverName = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
     [self.serverName autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20];
@@ -191,7 +191,7 @@
 -(void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:self.onCancel];
-    [[RBScriptingService sharedInstance] serverEditorWasDismissed:self];
+    [[RBScriptingService sharedInstance] serverEditorWillBeDismissed:self];
 }
 
 -(void)save

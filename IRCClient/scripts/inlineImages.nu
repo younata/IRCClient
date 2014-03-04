@@ -1,5 +1,5 @@
-(class inlineImages is RBScript
-    (+ (id)configurationItems is (NSDictionary dictionaryWithObjects:'("switch") forKeys:'("Load Images Inline")))
+(class InlineImages is RBScript
+    (+ (id)configurationItems is (NSDictionary dictionaryWithObjects:'("switch") forKeys:'("Load NSFW Images")))
     (- (id) matchesForMessage:(id)message
         ((NSDataDetector dataDectorWithTypes:(NSTextCheckingTypesClass link) error:nil) matchesInString:msg options:0 range:'(0 (msg length))))
 
@@ -12,7 +12,7 @@
     (- (void) loadImage:(id)imageLoc forMessage:(id)message is
         (set img ((imageLoc absoluteString) lowercasestring))
         (set msg ((NSMutableAttributedString alloc) initWithAttributedString:(message attributedString)))
-        (if (or (img hasSuffix:".png")
+        (if (or (img hasSuffix:".png") ; A better solution would be to check if the filetype is an image...
                 (img hasSuffix:".jpg")
                 (img hasSuffix:".jpeg")
                 (img hasSuffix:".tif")
@@ -28,5 +28,5 @@
 
     (- (void) server:(id)server didReceiveMessage:(id)message is
         (set msg (message message))
-        (if (or (not (msg containsSubstring:"nsfw")) (((NSUserDefaults standardUserDefaults) objectForKey:"Load Images Inline") boolValue))
+        (if (or (not (msg containsSubstring:"nsfw")) (((NSUserDefaults standardUserDefaults) objectForKey:"Load NSFW Images") boolValue))
             (self enumerateMatches:(self matchesForMessage:msg) message:message)))

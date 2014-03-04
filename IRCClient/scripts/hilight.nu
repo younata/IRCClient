@@ -6,5 +6,5 @@
            ((message message) containsSubstring:((channel server) nick)))
        (msg addAttribute:(NSAttributedStringAttributes NSForegroundColorAttributeName)
                    value:(RBColorScheme primaryColor)
-                   range:(((message attributedMessage) string) rangeOfString:(server nick))))
+                   range:(((message attributedMessage) string) rangeOfString:((channel server) nick))))
     (message setAttributedMessage:msg)))
