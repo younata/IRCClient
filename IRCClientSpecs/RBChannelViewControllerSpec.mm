@@ -99,17 +99,17 @@ describe(@"RBChannelViewController", ^{
             });
             
             it(@"should FINGER", ^{
-                addTextAndSend(@"/ctcp ik finger");
+                addTextAndSend(@"/ctcp finger ik");
                 server should have_received("sendCommand:").with(sendCTCP(@"ik", @"FINGER"));
             });
             
             it(@"should arbitrary CTCP", ^{
-                addTextAndSend(@"/ctcp ik arbitraryctcpcommand");
+                addTextAndSend(@"/ctcp arbitraryctcpcommand ik");
                 server should have_received("sendCommand:").with(sendCTCP(@"ik", [@"arbitraryctcpcommand" uppercaseString]));
             });
             
             it(@"should PING", ^{
-                addTextAndSend(@"/ctcp ik ping");
+                addTextAndSend(@"/ctcp ping ik");
                 server should have_received("sendCommand:").with(Arguments::any([NSString class]));
             });
         });
@@ -196,6 +196,7 @@ describe(@"RBChannelViewController", ^{
     describe(@"RBServerVCDelegate responses", ^{
         it(@"should change channels", ^{
             RBIRCServer *server = nice_fake_for([RBIRCServer class]);
+            server stub_method("connected").and_return(YES);
             RBIRCChannel *ircChannel = nice_fake_for([RBIRCChannel class]);
             server stub_method("serverName").and_return(@"Test Server");
             ircChannel stub_method("name").and_return(@"#testuser");
@@ -206,8 +207,8 @@ describe(@"RBChannelViewController", ^{
     
     describe(@"disconnects", ^{
         beforeEach(^{
-            [subject IRCServerConnectionDidDisconnect:subject.server];
             subject.server stub_method("connected").and_return(NO);
+            [subject IRCServerConnectionDidDisconnect:subject.server];
         });
         
         it(@"should display disconnected", ^{
@@ -218,7 +219,7 @@ describe(@"RBChannelViewController", ^{
             RBIRCChannel *ircChannel = nice_fake_for([RBIRCChannel class]);
             ircChannel stub_method("name").and_return(@"#testchannel");
             [subject server:subject.server didChangeChannel:ircChannel];
-            subject.channel should equal(ircChannel.name);
+            subject.channel should be_nil;
             subject.navigationItem.title should equal(@"Disconnected");
         });
         
@@ -254,7 +255,15 @@ describe(@"RBChannelViewController", ^{
         it(@"should display existing messages", ^{
             [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(log.count);
             UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            cell.textLabel.attributedText.string should equal(@"testuser: Hello world");
+            UITextView *tv = nil;
+            for (UIView *v in cell.contentView.subviews) {
+                if ([v isKindOfClass:[UITextView class]]) {
+                    tv = (UITextView *)v;
+                    break;
+                }
+            }
+            tv should_not be_nil;
+            tv.attributedText.string should equal(@"testuser: Hello world");
         });
         
         it(@"should respond to incoming messages when viewing the bottom", ^{

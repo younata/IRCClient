@@ -74,8 +74,8 @@ describe(@"RBScriptingService", ^{
         __block RBServerViewController *svc;
         __block RBIRCServer *server;
         
-        key = @"ServerReconnectButton";
         beforeEach(^{
+            key = @"ServerReconnectButton";
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:key];
             [subject runEnabledScripts];
             [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
