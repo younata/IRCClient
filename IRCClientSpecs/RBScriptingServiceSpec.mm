@@ -158,6 +158,32 @@ describe(@"RBScriptingService", ^{
                 message.attributedMessage should_not equal(blah);
             });
         });
+        
+        describe(@"NSFW images", ^{
+            it(@"should not append a text attachment for messages with links to nsfw images", ^{
+                RBIRCMessage *message = [[RBIRCMessage alloc] init];
+                message.timestamp = [NSDate date];
+                message.from = @"ik";
+                message.message = @"http://i.imgur.com/hjw7z6A.jpg nsfw"; // not going to find another snarky image to link...
+                NSAttributedString *blah = message.attributedMessage;
+                [[RBScriptingService sharedInstance] server:nil didReceiveMessage:message];
+                message.attributedMessage should equal(blah);
+            });
+        });
+        
+        describe(@"Invalid images", ^{ // that is, links which look like they should be images, but really aren't
+            it(@"should not append a text attachment", ^{
+                RBIRCMessage *message = [[RBIRCMessage alloc] init];
+                message.timestamp = [NSDate date];
+                message.from = @"ik";
+                message.message = @"http://localhost/image.png"; // also an invalid link.
+                NSLog(@"%@", message.attributedMessage);
+                NSAttributedString *blah = message.attributedMessage;
+                [[RBScriptingService sharedInstance] server:nil didReceiveMessage:message];
+                NSLog(@"%@", message.attributedMessage);
+                message.attributedMessage should_not equal(blah);
+            });
+        });
     });
 });
 
