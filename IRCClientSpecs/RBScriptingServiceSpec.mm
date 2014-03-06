@@ -164,7 +164,7 @@ describe(@"RBScriptingService", ^{
                 RBIRCMessage *message = [[RBIRCMessage alloc] init];
                 message.timestamp = [NSDate date];
                 message.from = @"ik";
-                message.message = @"http://i.imgur.com/hjw7z6A.jpg nsfw"; // not going to find another snarky image to link...
+                message.message = @"http://i.imgur.com/NI4MgcK.gif nsfw"; // actually is nsfw.
                 NSAttributedString *blah = message.attributedMessage;
                 [[RBScriptingService sharedInstance] server:nil didReceiveMessage:message];
                 message.attributedMessage should equal(blah);
