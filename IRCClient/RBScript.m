@@ -36,6 +36,7 @@
 
 -(void)channel:(RBIRCChannel *)channel didLogMessage:(RBIRCMessage *)message{}
 
+-(void)serverListWasLoaded:(RBServerViewController *)serverList{}
 -(void)serverList:(RBServerViewController *)serverList didCreateNewServerCell:(UITableViewCell *)cell{}
 -(void)serverList:(RBServerViewController *)serverList didCreateServerCell:(UITableViewCell *)cell forServer:(RBIRCServer *)server{}
 -(void)serverList:(RBServerViewController *)serverList didCreateChannelCell:(UITableViewCell *)cell forChannel:(RBIRCChannel *)channel{}
@@ -45,5 +46,9 @@
 -(void)serverEditorWasLoaded:(RBServerEditorViewController *)serverEditor{}
 -(void)serverEditor:(RBServerEditorViewController *)serverEditor didMakeChangesToServer:(RBIRCServer *)server{}
 -(void)serverEditorWillBeDismissed:(RBServerEditorViewController *)serverEditor{}
+
+-(void)channelViewWasLoaded:(RBChannelViewController *)channelView{}
+-(void)channelView:(RBChannelViewController *)channelView didDisconnectFromChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server{}
+-(void)channelView:(RBChannelViewController *)channelView didSelectChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server{}
 
 @end

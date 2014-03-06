@@ -7,13 +7,13 @@
     (- (void) serverList:(id)serverList didCreateServerCell:(id)cell forServer:(id)server is
         (set button (UIButton systemButtonWithTitle:"Reconnect"))
         (cell setAccessoryView:button)
-        (cell layoutSubviews)
+    (cell layoutSubviews)
         (button setCustomProperty:server forKey:"server")
         ((button titleLabel) setTextAlignment:2) ; NSTextAlignmentRight
         (button addTarget:self action:"reconnectServer:" forControlEvents:(UIControlEventsClass UIControlEventTouchUpInside))
         (button setTranslatesAutoresizingMaskIntoConstraints:0)
-        (button autoPinEdge:(ALLayoutAttributes edgeRight) toEdge:(ALLayoutAttributes edgeRight) ofView:cell)
-        (button autoPinEdge:(ALLayoutAttributes edgeBottom) toEdge:(ALLayoutAttributes edgeBottom) ofView:cell)
-        (button autoPinEdge:(ALLayoutAttributes edgeTop) toEdge:(ALLayoutAttributes edgeTop) ofView:cell)
+        (button autoPinEdgeToSuperviewEdge:(ALLayoutAttributes edgeRight) withInset:0)
+        (button autoPinEdgeToSuperviewEdge:(ALLayoutAttributes edgeBottom) withInset:0)
+        (button autoPinEdgeToSuperviewEdge:(ALLayoutAttributes edgeTop) withInset:0)
         (button autoSetDimension:(ALLayoutAttributes dimensionWidth) toSize:80)
-        (cell layoutSubviews)))
+        ((cell contentView) layoutSubviews)))

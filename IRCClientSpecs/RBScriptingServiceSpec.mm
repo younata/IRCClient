@@ -9,6 +9,8 @@
 
 #import "RBServerViewController.h"
 
+#import "RBScript.h"
+
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
@@ -16,13 +18,23 @@ SPEC_BEGIN(RBScriptingServiceSpec)
 
 describe(@"RBScriptingService", ^{
     __block RBScriptingService *subject;
-    __block NSString *key;
     
     beforeEach(^{
         subject = [RBScriptingService sharedInstance];
     });
     
     [[RBScriptingService sharedInstance] loadScripts];
+    
+    void (^checkIfLoaded)(NSString *) = ^(NSString *k) {
+        BOOL isLoaded = NO;
+        for (RBScript *script in subject.scriptSet) {
+            if ([NSStringFromClass([script class]) isEqualToString:k]) {
+                isLoaded = YES;
+                break;
+            }
+        }
+        isLoaded should be_truthy;
+    };
     
     it(@"should not auto-load objects", ^{
         subject.scriptSet.count should equal(0);
@@ -33,7 +45,7 @@ describe(@"RBScriptingService", ^{
     });
     
     describe(@"Hilight script", ^{
-        key = @"Highlight";
+        NSString *key = @"Highlight";
         beforeEach(^{
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:key];
             [subject runEnabledScripts];
@@ -43,8 +55,8 @@ describe(@"RBScriptingService", ^{
             [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:key];
         });
         
-        it(@"should be the only loaded script", ^{
-            subject.scriptSet.count should equal(1);
+        it(@"should be loaded", ^{
+            checkIfLoaded(key);
         });
         
         it(@"should highlight your nick only", ^{
@@ -73,9 +85,9 @@ describe(@"RBScriptingService", ^{
     describe(@"Reconnect script", ^{
         __block RBServerViewController *svc;
         __block RBIRCServer *server;
+        NSString *key = @"ServerReconnectButton";
         
         beforeEach(^{
-            key = @"ServerReconnectButton";
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:key];
             [subject runEnabledScripts];
             [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
@@ -98,15 +110,19 @@ describe(@"RBScriptingService", ^{
             [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:key];
         });
         
+        it(@"should be loaded", ^{
+            checkIfLoaded(key);
+        });
+        
         it(@"should add a 'reconnect' button as the accessory view of the server cell", ^{
             UITableViewCell *tvc = [svc.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-            
             tvc.accessoryView should be_instance_of([UIButton class]);
         });
         
         it(@"should quit then reconnect when the button is pressed", ^{
             UITableViewCell *tvc = [svc.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             UIButton *b = (UIButton *)tvc.accessoryView;
+            b should_not be_nil;
             [b sendActionsForControlEvents:UIControlEventTouchUpInside];
             
             server should have_received("quit");
@@ -115,7 +131,7 @@ describe(@"RBScriptingService", ^{
     });
     
     describe(@"inline images", ^{
-        key = @"InlineImages";
+        NSString *key = @"InlineImages";
         beforeEach(^{
             [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:key];
             [subject runEnabledScripts];
@@ -123,6 +139,10 @@ describe(@"RBScriptingService", ^{
         
         afterEach(^{
             [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:key];
+        });
+        
+        it(@"should be loaded", ^{
+            checkIfLoaded(key);
         });
         
         describe(@"SFW images", ^{

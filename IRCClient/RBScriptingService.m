@@ -70,14 +70,20 @@
 
 -(void)loadNuScript:(NSString *)location
 {
-    NSString *file = [NSString stringWithContentsOfFile:location encoding:NSUTF8StringEncoding error:nil];
-    if (file != nil) {
+    NSError *err = nil;
+    NSString *filename = [location lastPathComponent];
+    NSString *file = [NSString stringWithContentsOfFile:location encoding:NSUTF8StringEncoding error:&err];
+    if (file == nil) {
+        NSLog(@"Error reading nu script at %@\n: %@", filename, err);
+    } else {
         @try {
-            NuCell *cell = [[Nu sharedParser] parse:[NSString stringWithContentsOfFile:location encoding:NSUTF8StringEncoding error:nil]];
+            NuCell *cell = [[Nu sharedParser] parse:file];
+            if ([cell isKindOfClass:[NSNull class]]) {
+                NSLog(@"%@ - Ill formed Nu Script", filename);
+            }
             [[Nu sharedParser] eval:cell];
         }
         @catch (NSException *exception) {
-            NSString *filename = [location lastPathComponent];
             NSLog(@"Recieved exception from Nu parser:\n'%@'\n when loading file '%@'", exception, filename);
             @throw exception;
         }
