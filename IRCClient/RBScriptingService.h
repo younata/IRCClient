@@ -25,6 +25,7 @@
 @property (nonatomic, readonly) BOOL scriptsLoaded;
 @property (nonatomic, strong) NSMutableSet *scriptSet;
 @property (nonatomic, strong) NSMutableDictionary *scriptDict; // string: class
+@property (nonatomic) BOOL runScriptsConcurrently;
 
 +(RBScriptingService *)sharedInstance;
 
@@ -62,6 +63,7 @@
 -(void)channelViewWasLoaded:(RBChannelViewController *)channelView;
 -(void)channelView:(RBChannelViewController *)channelView didDisconnectFromChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server;
 -(void)channelView:(RBChannelViewController *)channelView didSelectChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server;
+-(void)channelView:(RBChannelViewController *)channelView willDisplayMessage:(RBIRCMessage *)message inView:(UITextView *)view;
 
 
 @end

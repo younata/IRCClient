@@ -4,3 +4,6 @@
 [submodule "RBHelp"]
 	path = RBHelp
 	url = https://github.com/younata/RBHelp.git
+[submodule "UIImage-ResizeMagick"]
+	path = UIImage-ResizeMagick
+	url = https://github.com/mustangostang/UIImage-ResizeMagick

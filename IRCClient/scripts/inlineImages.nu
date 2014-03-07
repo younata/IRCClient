@@ -9,6 +9,17 @@
                  (self loadImage:(i URL) forMessage:message)
                  (set i (enum nextObject)))))
 
+    (- (int) appropriateWidthForDevice is
+        (if ((UIDevice currentDevice) userInterfaceIdiom)
+            (740)
+            (else 300)))
+
+    (- (id) resizeImageIfAppropriate:(id)image is
+        (let (maxWidth (self appropriateWidthForDevice))
+             (if (> (car (image size)) maxWidth)
+                 (image resizedImageByWidth:(maxWidth intValue))
+                 (else image))))
+
     (- (void) loadImage:(id)imageLoc forMessage:(id)message is
         (set img ((imageLoc absoluteString) lowercaseString))
         (set msg ((NSMutableAttributedString alloc) initWithAttributedString:(message attributedMessage)))
@@ -24,8 +35,9 @@
                 (img hasSuffix:".cur")
                 (img hasSuffix:".xbm"))
             (let ((attach ((NSTextAttachment alloc) init))
-                  (image (UIImage imageWithData:(NSData dataWithContentsOfURL:imageLoc))))
+                  (image (UIImage imageWithData:(NSData dataWithContentsOfURL:imageLoc)))) 
                  (if (!= image nil)
+                     ;(set image (self resizeImageIfAppropriate:image))
                      (attach setImage:(UIImage imageWithData:(NSData dataWithContentsOfURL:imageLoc)))
                      (msg appendAttributedString:(NSAttributedString attributedStringWithAttachment:attach)))))
         (message setAttributedMessage:msg))

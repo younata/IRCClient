@@ -196,5 +196,14 @@
  */
 -(void)channelView:(RBChannelViewController *)channelView didSelectChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server;
 
+/**
+ Do additional things right before a channel view displays a message
+ 
+ @param channelView - the ChannelViewController which sent this message
+ @param message - the message which is to be displayed
+ @param view - the view in which it will be displayed
+ */
+-(void)channelView:(RBChannelViewController *)channelView willDisplayMessage:(RBIRCMessage *)message inView:(UITextView *)view;
+
 
 @end

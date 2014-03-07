@@ -256,5 +256,12 @@
     }
 }
 
+-(void)channelView:(RBChannelViewController *)channelView willDisplayMessage:(RBIRCMessage *)message inView:(UITextView *)view
+{
+    for (RBScript *script in self.scriptSet) {
+        [script channelView:channelView willDisplayMessage:message inView:view];
+    }
+}
+
 
 @end

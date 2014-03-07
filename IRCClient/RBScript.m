@@ -50,5 +50,6 @@
 -(void)channelViewWasLoaded:(RBChannelViewController *)channelView{}
 -(void)channelView:(RBChannelViewController *)channelView didDisconnectFromChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server{}
 -(void)channelView:(RBChannelViewController *)channelView didSelectChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server{}
+-(void)channelView:(RBChannelViewController *)channelView willDisplayMessage:(RBIRCMessage *)message inView:(UIView *)view{}
 
 @end
