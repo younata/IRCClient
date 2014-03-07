@@ -10,6 +10,7 @@
 #import "RBServerViewController.h"
 
 #import "RBScript.h"
+#import "NSObject+customProperty.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -78,7 +79,6 @@ describe(@"RBScriptingService", ^{
             [subject channel:channel didLogMessage:message];
             NSAttributedString *newStr = message.attributedMessage;
             str should_not equal(newStr);
-            NSLog(@"Highlighted message: %@", newStr);
         });
     });
     
@@ -99,6 +99,7 @@ describe(@"RBScriptingService", ^{
             server stub_method("connect");
             server stub_method("quit");
             server stub_method("sortedChannelKeys").and_return(@[@"blah", RBIRCServerLog]);
+            server stub_method("description").and_return(@"Fake RBIRCServer");
             server stub_method(@selector(objectForKeyedSubscript:)).and_return([[RBIRCChannel alloc] initWithName:RBIRCServerLog]);
             
             svc = [[RBServerViewController alloc] init];
@@ -117,12 +118,12 @@ describe(@"RBScriptingService", ^{
         it(@"should add a 'reconnect' button as the accessory view of the server cell", ^{
             UITableViewCell *tvc = [svc.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             tvc.accessoryView should be_instance_of([UIButton class]);
+            [tvc.accessoryView getCustomPropertyForKey:@"server"] should_not be_nil;
         });
         
         it(@"should quit then reconnect when the button is pressed", ^{
             UITableViewCell *tvc = [svc.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             UIButton *b = (UIButton *)tvc.accessoryView;
-            b should_not be_nil;
             [b sendActionsForControlEvents:UIControlEventTouchUpInside];
             
             server should have_received("quit");
@@ -151,10 +152,8 @@ describe(@"RBScriptingService", ^{
                 message.timestamp = [NSDate date];
                 message.from = @"ik";
                 message.message = @"http://i.imgur.com/hjw7z6A.jpg"; // Is an actual image.
-                NSLog(@"%@", message.attributedMessage);
                 NSAttributedString *blah = message.attributedMessage;
                 [[RBScriptingService sharedInstance] server:nil didReceiveMessage:message];
-                NSLog(@"%@", message.attributedMessage);
                 message.attributedMessage should_not equal(blah);
             });
         });
@@ -176,12 +175,10 @@ describe(@"RBScriptingService", ^{
                 RBIRCMessage *message = [[RBIRCMessage alloc] init];
                 message.timestamp = [NSDate date];
                 message.from = @"ik";
-                message.message = @"http://localhost/image.png"; // also an invalid link.
-                NSLog(@"%@", message.attributedMessage);
+                message.message = @"http://younata.com/image.jpg"; // html page saying "this is not an image".
                 NSAttributedString *blah = message.attributedMessage;
                 [[RBScriptingService sharedInstance] server:nil didReceiveMessage:message];
-                NSLog(@"%@", message.attributedMessage);
-                message.attributedMessage should_not equal(blah);
+                message.attributedMessage should equal(blah);
             });
         });
     });

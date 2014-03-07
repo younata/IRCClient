@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8905344418C93842006DDA8B /* NSString+ranges.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344318C93842006DDA8B /* NSString+ranges.m */; };
+		8905344518C93842006DDA8B /* NSString+ranges.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344318C93842006DDA8B /* NSString+ranges.m */; };
+		8905344A18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */; };
+		8905344B18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */; };
 		8906F1CB18867BEE00042A13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		8906F1CD18867BEE00042A13 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
 		8906F1CF18867BEE00042A13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
@@ -181,6 +185,10 @@
 /* Begin PBXFileReference section */
 		6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		760C7BDD99964E4E8C71C3C7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8905344218C93842006DDA8B /* NSString+ranges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ranges.h"; sourceTree = "<group>"; };
+		8905344318C93842006DDA8B /* NSString+ranges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ranges.m"; sourceTree = "<group>"; };
+		8905344818C9AEB4006DDA8B /* UIButton+serverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+serverButton.h"; sourceTree = "<group>"; };
+		8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+serverButton.m"; sourceTree = "<group>"; };
 		8906F1C718867BEE00042A13 /* rIRC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rIRC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8906F1CA18867BEE00042A13 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8906F1CC18867BEE00042A13 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -512,6 +520,8 @@
 				8908DC2818B6105F004DFBAB /* RBScript.m */,
 				89E812B218B8CB7400616600 /* RBScriptHelpers.h */,
 				89E812B318B8CB7400616600 /* RBScriptHelpers.m */,
+				8905344818C9AEB4006DDA8B /* UIButton+serverButton.h */,
+				8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */,
 				8908DC2B18B615EE004DFBAB /* RBScriptingService.h */,
 				8908DC2C18B615EE004DFBAB /* RBScriptingService.m */,
 				8908DC3118B61FA0004DFBAB /* Built In Scripts */,
@@ -664,6 +674,8 @@
 			children = (
 				899B2A98189913840008FED3 /* NSStream+remoteHost.h */,
 				899B2A99189913840008FED3 /* NSStream+remoteHost.m */,
+				8905344218C93842006DDA8B /* NSString+ranges.h */,
+				8905344318C93842006DDA8B /* NSString+ranges.m */,
 			);
 			path = NSStream;
 			sourceTree = "<group>";
@@ -988,7 +1000,9 @@
 				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
+				8905344418C93842006DDA8B /* NSString+ranges.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
+				8905344A18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
 				8908DC7D18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
 				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
@@ -1049,6 +1063,7 @@
 				89E812E018BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
+				8905344518C93842006DDA8B /* NSString+ranges.m in Sources */,
 				8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				8908DC8018B8B299004DFBAB /* RBHelpViewController.m in Sources */,
@@ -1074,6 +1089,7 @@
 				898132D618A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				898132D918A78980004AEBE9 /* RBConfigViewControllerSpec.mm in Sources */,
 				898132E218A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
+				8905344B18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
 				899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
