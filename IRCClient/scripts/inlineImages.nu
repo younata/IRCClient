@@ -23,7 +23,11 @@
                 (img hasSuffix:".ico")
                 (img hasSuffix:".cur")
                 (img hasSuffix:".xbm"))
-            (msg addAttribute:(NSAttributedStringAttributes NSAttachmentAttributeName) value:((NSTextAttachment alloc) initWithData:(NSData dataWithContentsOfURL:imageLoc) ofType:nil) range:((msg string) endOfString)))
+            (let ((attach ((NSTextAttachment alloc) init))
+                  (image (UIImage imageWithData:(NSData dataWithContentsOfURL:imageLoc))))
+                 (if (!= image nil)
+                     (attach setImage:(UIImage imageWithData:(NSData dataWithContentsOfURL:imageLoc)))
+                     (msg appendAttributedString:(NSAttributedString attributedStringWithAttachment:attach)))))
         (message setAttributedMessage:msg))
 
     (- (void) server:(id)server didReceiveMessage:(id)message is

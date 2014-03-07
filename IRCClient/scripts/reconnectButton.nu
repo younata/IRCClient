@@ -2,7 +2,6 @@
     (- (id) propertyKey is "server")
     (- (void) reconnect:(id)button is
         (let (server (button server))
-             (puts "retrieved server: " server)
              (server quit)
              (server connect)))
 
