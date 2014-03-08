@@ -295,7 +295,12 @@ describe(@"RBChannelViewController", ^{
             [log addObject:msg];
             [subject IRCServer:subject.server handleMessage:msg];
             [subject.tableView numberOfRowsInSection:0] should equal(rows+1);
-            
+        });
+        
+        it(@"should memoize message views", ^{
+            UITableViewCell *cell1 = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            UITableViewCell *cell2 = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+            cell1 == cell2 should be_truthy; // does a comparison of the memory address, not checks if the objects have the same contents.
         });
     });
 });

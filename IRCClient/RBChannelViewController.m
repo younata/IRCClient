@@ -30,6 +30,8 @@
 @property (nonatomic, strong) UIView *borderView;
 @property (nonatomic) NSLayoutConstraint *keyboardConstraint;
 
+@property (nonatomic, strong) NSMutableDictionary *cells;
+
 @end
 
 static NSString *CellIdentifier = @"Cell";
@@ -306,16 +308,25 @@ static NSString *CellIdentifier = @"Cell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    UITextView *tv = [[UITextView alloc] initForAutoLayoutWithSuperview:ret.contentView];
-    [tv autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-    tv.attributedText = [self attributedStringForIndex:indexPath.row];
-    tv.dataDetectorTypes = UIDataDetectorTypeLink;
-    tv.editable = NO;
-    tv.userInteractionEnabled = YES;
-    tv.scrollEnabled = NO;
-    tv.textContainerInset = UIEdgeInsetsZero;
-    [ret layoutSubviews];
+    UITableViewCell *ret = nil;
+    if (!self.cells) {
+        self.cells = [[NSMutableDictionary alloc] init];
+    }
+    if (self.cells[indexPath] == nil) {
+        ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        UITextView *tv = [[UITextView alloc] initForAutoLayoutWithSuperview:ret.contentView];
+        [tv autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+        tv.attributedText = [self attributedStringForIndex:indexPath.row];
+        tv.dataDetectorTypes = UIDataDetectorTypeLink;
+        tv.editable = NO;
+        tv.userInteractionEnabled = YES;
+        tv.scrollEnabled = NO;
+        tv.textContainerInset = UIEdgeInsetsZero;
+        [ret layoutSubviews];
+        self.cells[indexPath] = ret;
+    } else {
+        ret = self.cells[indexPath];
+    }
     return ret;
 }
 
