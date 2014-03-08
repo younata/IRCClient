@@ -22,6 +22,7 @@ describe(@"RBScriptingService", ^{
     
     beforeEach(^{
         subject = [RBScriptingService sharedInstance];
+        subject.runScriptsConcurrently = NO;
     });
     
     [[RBScriptingService sharedInstance] loadScripts];

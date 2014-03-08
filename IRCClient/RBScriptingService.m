@@ -12,6 +12,13 @@
 
 #import "Nu.h"
 
+@interface RBScriptingService ()
+{
+    dispatch_queue_t queue;
+}
+
+@end
+
 @implementation RBScriptingService
 
 +(RBScriptingService *)sharedInstance
@@ -28,6 +35,8 @@
 {
     if ((self = [super init])) {
         _scriptsLoaded = NO;
+        queue = dispatch_queue_create("scripts", NULL);
+        self.runScriptsConcurrently = YES;
         [self loadNu];
     }
     return self;
@@ -129,138 +138,183 @@
     return self.scriptDict.allKeys;
 }
 
+-(void)runScript:(void (^)(void))command
+{
+    if (self.runScriptsConcurrently) {
+        dispatch_async(queue, command);
+    } else {
+        command();
+    }
+}
+
 #pragma mark - IRC Server
 
 -(void)serverDidConnect:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverDidConnect:server];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverDidConnect:server];
+        }
+    }];
 }
 
 -(void)serverDidDisconnect:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverDidDisconnect:server];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverDidDisconnect:server];
+        }
+    }];
 }
 
 -(void)serverDidError:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverDidError:server];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverDidError:server];
+        }
+    }];
 }
 
 -(void)server:(RBIRCServer *)server didReceiveMessage:(RBIRCMessage *)message
 {
-    for (RBScript *script in self.scriptSet) {
-        [script server:server didReceiveMessage:message];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script server:server didReceiveMessage:message];
+        }
+    }];
 }
 
 #pragma mark - IRC Channel
 
 -(void)channel:(RBIRCChannel *)channel didLogMessage:(RBIRCMessage *)message
 {
-    for (RBScript *script in self.scriptSet) {
-        [script channel:channel didLogMessage:message];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script channel:channel didLogMessage:message];
+        }
+    }];
 }
 
 #pragma mark - Server List View
 
 -(void)serverListWasLoaded:(RBServerViewController *)serverList
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverListWasLoaded:serverList];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverListWasLoaded:serverList];
+        }
+    }];
 }
 
 -(void)serverList:(RBServerViewController *)serverList didCreateNewServerCell:(UITableViewCell *)cell
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverList:serverList didCreateNewServerCell:cell];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverList:serverList didCreateNewServerCell:cell];
+        }
+    }];
 }
 
 -(void)serverList:(RBServerViewController *)serverList didCreateServerCell:(UITableViewCell *)cell forServer:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverList:serverList didCreateServerCell:cell forServer:server];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverList:serverList didCreateServerCell:cell forServer:server];
+        }
+    }];
 }
 
 -(void)serverList:(RBServerViewController *)serverList didCreateChannelCell:(UITableViewCell *)cell forChannel:(RBIRCChannel *)channel
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverList:serverList didCreateChannelCell:cell forChannel:channel];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverList:serverList didCreateChannelCell:cell forChannel:channel];
+        }
+    }];
 }
 
 -(void)serverList:(RBServerViewController *)serverList didCreatePrivateCell:(UITableViewCell *)cell forPrivateConversation:(RBIRCChannel *)conversation
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverList:serverList didCreatePrivateCell:cell forPrivateConversation:conversation];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverList:serverList didCreatePrivateCell:cell forPrivateConversation:conversation];
+        }
+    }];
 }
 
 -(void)serverList:(RBServerViewController *)serverList didCreateNewChannelCell:(RBTextFieldServerCell *)cell
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverList:serverList didCreateNewChannelCell:cell];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverList:serverList didCreateNewChannelCell:cell];
+        }
+    }];
 }
 
 #pragma mark - Server Editor
 -(void)serverEditorWasLoaded:(RBServerEditorViewController *)serverEditor
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverEditorWasLoaded:serverEditor];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverEditorWasLoaded:serverEditor];
+        }
+    }];
 }
 
 -(void)serverEditor:(RBServerEditorViewController *)serverEditor didMakeChangesToServer:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverEditor:serverEditor didMakeChangesToServer:server];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverEditor:serverEditor didMakeChangesToServer:server];
+        }
+    }];
 }
 
 -(void)serverEditorWillBeDismissed:(RBServerEditorViewController *)serverEditor
 {
-    for (RBScript *script in self.scriptSet) {
-        [script serverEditorWillBeDismissed:serverEditor];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script serverEditorWillBeDismissed:serverEditor];
+        }
+    }];
 }
 
 #pragma mark - Channel View
 -(void)channelViewWasLoaded:(RBChannelViewController *)channelView
 {
-    for (RBScript *script in self.scriptSet) {
-        [script channelViewWasLoaded:channelView];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script channelViewWasLoaded:channelView];
+        }
+    }];
 }
 
 -(void)channelView:(RBChannelViewController *)channelView didDisconnectFromChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scriptSet) {
-        [script channelView:channelView didDisconnectFromChannel:channel andServer:server];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script channelView:channelView didDisconnectFromChannel:channel andServer:server];
+        }
+    }];
 }
 
 -(void)channelView:(RBChannelViewController *)channelView didSelectChannel:(RBIRCChannel *)channel andServer:(RBIRCServer *)server
 {
-    for (RBScript *script in self.scriptSet) {
-        [script channelView:channelView didSelectChannel:channel andServer:server];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script channelView:channelView didSelectChannel:channel andServer:server];
+        }
+    }];
 }
 
 -(void)channelView:(RBChannelViewController *)channelView willDisplayMessage:(RBIRCMessage *)message inView:(UITextView *)view
 {
-    for (RBScript *script in self.scriptSet) {
-        [script channelView:channelView willDisplayMessage:message inView:view];
-    }
+    [self runScript:^{
+        for (RBScript *script in self.scriptSet) {
+            [script channelView:channelView willDisplayMessage:message inView:view];
+        }
+    }];
 }
 
 
