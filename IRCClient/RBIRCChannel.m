@@ -61,6 +61,7 @@
         if ([message.from isEqualToString:self.server.nick]) {
         } else {
             [self.names addObject:message.from];
+            [UITextChecker learnWord:message.from];
         }
     } else if (message.command == IRCMessageTypePart) {
         if ([message.from isEqualToString:self.server.nick]) {
@@ -68,13 +69,20 @@
             NSLog(@"Error: Recieved a self part");
         } else {
             [self.names removeObject:message.from];
+            [UITextChecker unlearnWord:message.from];
         }
     } else if (message.command == IRCMessageTypeNames) {
         if (self.askedForNames) {
+            for (NSString *word in self.names) {
+                [UITextChecker unlearnWord:word];
+            }
             [self.names removeAllObjects];
             self.askedForNames = NO;
         }
         [self.names addObjectsFromArray:message.extra];
+        for (NSString *word in message.extra) {
+            [UITextChecker learnWord:word];
+        }
     } else if (message.commandNumber == RPL_ENDOFNAMES) {
         self.askedForNames = YES;
     }
