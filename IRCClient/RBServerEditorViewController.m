@@ -88,6 +88,7 @@
     //[self.serverName autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20];
     
     self.serverHostname = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
+    self.serverHostname.autocorrectionType = UITextAutocorrectionTypeNo;
     
     self.serverPort = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
     

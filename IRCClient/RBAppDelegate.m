@@ -88,7 +88,6 @@
     SWRevealViewController *rvc = (SWRevealViewController *)self.window.rootViewController;
     RBChannelViewController *cvc = (RBChannelViewController *)[(UINavigationController *)rvc.frontViewController topViewController];
     RBServerViewController *svc = (RBServerViewController *)[(UINavigationController *)rvc.rearViewController topViewController];
-    [cvc disconnect];
     
     self.taskIdentifier = [application beginBackgroundTaskWithName:@"server background task" expirationHandler:^{
         if ([application applicationState] == UIApplicationStateBackground) {
@@ -97,6 +96,7 @@
             }
             
             svc.servers = nil;
+            [cvc disconnect];
         }
         [[UIApplication sharedApplication] endBackgroundTask:self.taskIdentifier];
     }];
