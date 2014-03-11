@@ -141,7 +141,11 @@
 -(void)runScript:(void (^)(void))command
 {
     if (self.runScriptsConcurrently) {
-        dispatch_async(queue, command);
+        dispatch_async(queue, ^{
+            @autoreleasepool {
+                command();
+            }
+        });
     } else {
         command();
     }
