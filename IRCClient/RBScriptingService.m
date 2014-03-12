@@ -36,7 +36,7 @@
     if ((self = [super init])) {
         _scriptsLoaded = NO;
         queue = dispatch_queue_create("scripts", NULL);
-        self.runScriptsConcurrently = YES;
+        self.runScriptsConcurrently = NO;
         [self loadNu];
     }
     return self;

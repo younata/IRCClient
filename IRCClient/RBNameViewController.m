@@ -38,6 +38,7 @@ static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     cell.textLabel.text = self.names[indexPath.row];
+    cell.textLabel.textAlignment = NSTextAlignmentRight;
     
     return cell;
 }

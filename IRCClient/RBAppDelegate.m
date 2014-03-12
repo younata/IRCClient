@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "RBServerViewController.h"
 #import "RBChannelViewController.h"
+#import "RBNameViewController.h"
 #import "RBIRCServer.h"
 
 #import "RBHelp.h"
@@ -44,9 +45,11 @@
     
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:channelVC];
     UINavigationController *otherNC = [[UINavigationController alloc] initWithRootViewController:serverVC];
+    RBNameViewController *names = [[RBNameViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
     SWRevealViewController *viewController = [[SWRevealViewController alloc] initWithRearViewController:otherNC
                                                                                     frontViewController:nc];
+    viewController.rightViewController = names;
     
     [serverVC setRevealController:viewController];
     [channelVC setRevealController:viewController];

@@ -25,6 +25,8 @@
 
 #import "RBScriptingService.h"
 
+#import "RBNameViewController.h"
+
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
@@ -513,6 +515,8 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView reloadData];
     [self.tableView scrollToBottom:NO];
     [[RBScriptingService sharedInstance] channelView:self didSelectChannel:self.server[self.channel] andServer:self.server];
+    [(RBNameViewController *)self.revealController.rightViewController setTopic:newChannel.topic];
+    [(RBNameViewController *)self.revealController.rightViewController setNames:newChannel.names];
 }
 
 #pragma mark - RBIRCServerDelegate
@@ -540,6 +544,9 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView reloadData];
     for (NSString *to in message.targets) {
         if ([to isEqualToString:self.channel]) {
+            if (message.command == IRCMessageTypeTopic) {
+                [(RBNameViewController *)self.revealController.rightViewController setTopic:message.message];
+            }
             BOOL shouldScroll = NO;
             NSInteger section = 0;
             NSInteger row = [self tableView:self.tableView numberOfRowsInSection:0] - 2; // -1 for index, another -1 because we just added to it.

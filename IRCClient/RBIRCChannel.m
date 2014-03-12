@@ -55,6 +55,7 @@
 
 -(void)logMessage:(RBIRCMessage *)message
 {
+    BOOL shouldResortNames = NO;
     if (message.command == IRCMessageTypeTopic) {
         self.topic = message.message;
     } else if (message.command == IRCMessageTypeJoin) {
@@ -62,6 +63,7 @@
         } else {
             [self.names addObject:message.from];
             [UITextChecker learnWord:message.from];
+            shouldResortNames = YES;
         }
     } else if (message.command == IRCMessageTypePart) {
         if ([message.from isEqualToString:self.server.nick]) {
@@ -70,6 +72,7 @@
         } else {
             [self.names removeObject:message.from];
             [UITextChecker unlearnWord:message.from];
+            shouldResortNames = YES;
         }
     } else if (message.command == IRCMessageTypeNames) {
         if (self.askedForNames) {
@@ -85,6 +88,32 @@
         }
     } else if (message.commandNumber == RPL_ENDOFNAMES) {
         self.askedForNames = YES;
+        shouldResortNames = YES;
+    }
+    
+    if (shouldResortNames) {
+        [self.names sortUsingComparator:^NSComparisonResult(NSString *a, NSString *b){
+            // handle ops case...
+            // owner = ~
+            // sop = &
+            // op = @
+            // hop = %
+            // voice = +
+            for (NSString *prefix in @[@"~", @"&", @"@", @"%", @"+"]) {
+                BOOL ap = [a hasPrefix:prefix];
+                BOOL bp = [b hasPrefix:prefix];
+                if (ap || bp) {
+                    if (ap && bp) {
+                        return [a caseInsensitiveCompare:b];
+                    }
+                    if (ap) {
+                        return NSOrderedAscending;
+                    }
+                    return NSOrderedDescending;
+                }
+            }
+            return [a caseInsensitiveCompare:b];
+        }];
     }
     
     if (!(message.command == IRCMessageTypeJoin ||
