@@ -134,6 +134,10 @@
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
+		89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
+		89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
+		89D4B66A18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */; };
+		89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */; };
 		89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
 		89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
 		89E812B818B8E78800616600 /* RBColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B718B8E78800616600 /* RBColorScheme.m */; };
@@ -312,6 +316,9 @@
 		89C46E4818960C96006068DC /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
 		89C46E4918960C96006068DC /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
 		89C46E4C189646AE006068DC /* RBIRCServerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBIRCServerDelegate.h; sourceTree = "<group>"; };
+		89D4B66318CFFC3600891116 /* RBNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBNameViewController.h; sourceTree = "<group>"; };
+		89D4B66418CFFC3600891116 /* RBNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNameViewController.m; sourceTree = "<group>"; };
+		89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBNameViewControllerSpec.mm; sourceTree = "<group>"; };
 		89E812B218B8CB7400616600 /* RBScriptHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptHelpers.h; sourceTree = "<group>"; };
 		89E812B318B8CB7400616600 /* RBScriptHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptHelpers.m; sourceTree = "<group>"; };
 		89E812B618B8E78800616600 /* RBColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBColorScheme.h; sourceTree = "<group>"; };
@@ -591,6 +598,7 @@
 				891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */,
 				891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */,
 				899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */,
+				89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */,
 				898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */,
 				898132D818A78980004AEBE9 /* RBConfigViewControllerSpec.mm */,
 				891B01E7189650DA00B2D848 /* Supporting Files */,
@@ -741,6 +749,8 @@
 				896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */,
 				8906F2031887562600042A13 /* RBChannelViewController.h */,
 				8906F2041887562600042A13 /* RBChannelViewController.m */,
+				89D4B66318CFFC3600891116 /* RBNameViewController.h */,
+				89D4B66418CFFC3600891116 /* RBNameViewController.m */,
 				898132D718A787E9004AEBE9 /* Config */,
 			);
 			name = "Views and Controllers";
@@ -1009,6 +1019,7 @@
 			files = (
 				89E812D318BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */,
 				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
+				89D4B66A18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */,
 				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
 				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
@@ -1034,6 +1045,7 @@
 				898132FB18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */,
+				89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */,
 				8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
@@ -1068,6 +1080,7 @@
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
 				89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
+				89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */,
 				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8905345A18C9C4FE006DDA8B /* UIImage+ResizeMagick.m in Sources */,
@@ -1080,6 +1093,7 @@
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
 				8905344518C93842006DDA8B /* NSString+ranges.m in Sources */,
+				89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */,
 				8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				8908DC8018B8B299004DFBAB /* RBHelpViewController.m in Sources */,
