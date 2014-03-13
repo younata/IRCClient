@@ -304,7 +304,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int ret = [[self.server[self.channel] log] count];
+    NSInteger ret = [[self.server[self.channel] log] count];
     return ret;
 }
 
@@ -319,7 +319,7 @@ static NSString *CellIdentifier = @"Cell";
     tv.editable = NO;
     tv.userInteractionEnabled = YES;
     tv.scrollEnabled = NO;
-    tv.textContainerInset = UIEdgeInsetsZero;
+    tv.textContainerInset = UIEdgeInsetsMake(5, 0, 0, 0);
     [ret layoutSubviews];
     return ret;
 }

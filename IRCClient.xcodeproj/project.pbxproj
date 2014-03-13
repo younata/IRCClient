@@ -130,6 +130,8 @@
 		899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A99189913840008FED3 /* NSStream+remoteHost.m */; };
 		899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */; };
 		899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */; };
+		899CE7A918D068D6002ABBFE /* RBKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */; };
+		899CE7AA18D068D6002ABBFE /* RBKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */; };
 		89B5AA1E18C675DC004D4BE8 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B5AA1B18C66189004D4BE8 /* libffi.a */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
@@ -309,6 +311,8 @@
 		899B2A9B189913840008FED3 /* NSString+isNilOrEmpty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+isNilOrEmpty.h"; sourceTree = "<group>"; };
 		899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+isNilOrEmpty.m"; sourceTree = "<group>"; };
 		899B2A9D189913840008FED3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		899CE7A718D068D6002ABBFE /* RBKeyboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBKeyboardViewController.h; sourceTree = "<group>"; };
+		899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBKeyboardViewController.m; sourceTree = "<group>"; };
 		89A4579A18AE1DAF003454AC /* IRCNumericReplies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRCNumericReplies.h; sourceTree = "<group>"; };
 		89C46E45189600A9006068DC /* RBTextFieldServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextFieldServerCell.h; sourceTree = "<group>"; };
 		89C46E46189600A9006068DC /* RBTextFieldServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextFieldServerCell.m; sourceTree = "<group>"; };
@@ -623,6 +627,8 @@
 				898132D418A787D1004AEBE9 /* RBConfigViewController.m */,
 				898132C918A72264004AEBE9 /* RBReconnectViewController.h */,
 				898132CA18A72264004AEBE9 /* RBReconnectViewController.m */,
+				899CE7A718D068D6002ABBFE /* RBKeyboardViewController.h */,
+				899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -1025,6 +1031,7 @@
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
 				8905344418C93842006DDA8B /* NSString+ranges.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
+				899CE7A918D068D6002ABBFE /* RBKeyboardViewController.m in Sources */,
 				8905344A18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
 				8908DC7D18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
 				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
@@ -1094,6 +1101,7 @@
 				89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */,
 				8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
+				899CE7AA18D068D6002ABBFE /* RBKeyboardViewController.m in Sources */,
 				8908DC8018B8B299004DFBAB /* RBHelpViewController.m in Sources */,
 				899B2A9F189913840008FED3 /* NSData+string.m in Sources */,
 				898132E818A86E0C004AEBE9 /* RBAppDelegateSpec.mm in Sources */,

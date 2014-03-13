@@ -22,7 +22,7 @@ describe(@"RBConfigViewController", ^{
         [subject view];
     });
     
-    it(@"should have 3 sections", ^{
+    it(@"should have at least 3 sections", ^{
         [subject.tableView numberOfSections] should be_gte(3);
     });
     
@@ -80,6 +80,39 @@ describe(@"RBConfigViewController", ^{
             UITableViewCell *scriptCell = [subject.tableView.dataSource tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
             scriptCell.textLabel.text should equal([[RBScriptingService sharedInstance] scripts][0]);
             scriptCell.accessoryView should be_instance_of([UISwitch class]);
+        });
+    });
+    
+    describe(@"Experimental section", ^{
+        it(@"should a section title", ^{
+            [subject tableView:subject.tableView titleForHeaderInSection:3] should equal(@"Experimental");
+        });
+        
+        it(@"should have at least 1 row", ^{
+            [subject tableView:subject.tableView numberOfRowsInSection:3] should be_gte(1);
+        });
+        
+        describe(@"first cell", ^{
+            __block UITableViewCell *cell;
+            beforeEach(^{
+                cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
+            });
+            
+            it(@"should be for keyboards", ^{
+                cell.textLabel.text should_not equal(@"Keyboards");
+            });
+
+            
+            it(@"should be disabled on iPhones", ^{
+                if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                    cell.textLabel.textColor should equal([UIColor lightGrayColor]);
+                    [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
+                    // still no idea how to describe a LACK of behavior...
+                } else {
+                    [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
+                    // should present a new view controller...
+                }
+            });
         });
     });
 });

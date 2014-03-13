@@ -9,6 +9,7 @@
 #import "RBConfigViewController.h"
 
 #import "RBReconnectViewController.h"
+#import "RBKeyboardViewController.h"
 
 #import "UIButton+buttonWithFrame.h"
 
@@ -102,7 +103,7 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3; // reconnect, ctcp, scripts
+    return 4; // reconnect, ctcp, scripts, experimental
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -114,6 +115,8 @@ static NSString *textFieldCell = @"textFieldCell";
             return 2;
         case 2:
             return [[[RBScriptingService sharedInstance] scripts] count];
+        case 3:
+            return 1;
         default:
             return 0;
     }
@@ -126,6 +129,8 @@ static NSString *textFieldCell = @"textFieldCell";
             return NSLocalizedString(@"CTCP Responses", nil);
         case 2:
             return NSLocalizedString(@"Extensions", nil);
+        case 3:
+            return NSLocalizedString(@"Experimental", nil);
         default:
             return @"";
     }
@@ -167,9 +172,39 @@ static NSString *textFieldCell = @"textFieldCell";
         if ([cls performSelector:@selector(configurationItems)] != nil) {
             cell.textLabel.textColor = [RBColorScheme secondaryColor];
         }
+    } else if (section == 3) {
+        NSArray *strings = @[NSLocalizedString(@"Keyboards", nil)];
+        cell.textLabel.text = strings[row];
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+        } else {
+            cell.textLabel.textColor = [RBColorScheme secondaryColor];
+        }
     }
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger section = indexPath.section;
+    if (section == 0) {
+        RBReconnectViewController *rvc = [[RBReconnectViewController alloc] init];
+        [self.navigationController pushViewController:rvc animated:YES];
+    } else if (section == 3) {
+        NSInteger row = indexPath.row;
+        switch (row) {
+            case 0:
+                if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+                    RBKeyboardViewController *kvc = [[RBKeyboardViewController alloc] init];
+                    [self.navigationController pushViewController:kvc animated:YES];
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 -(void)setScript:(UISwitch *)theSwitch
