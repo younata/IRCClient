@@ -7,10 +7,13 @@
 //
 
 #import "RBKeyboardViewController.h"
+#import "NSObject+customProperty.h"
 
 @interface RBKeyboardViewController ()
 
 @end
+
+static NSString *cellIdentifier = @"Cell";
 
 @implementation RBKeyboardViewController
 
@@ -27,93 +30,69 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(save)];
 }
 
-- (void)didReceiveMemoryWarning
+-(void)save
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    switch (indexPath.row) {
+        case 0:
+            cell.textLabel.text = NSLocalizedString(@"Chorded Keyboard - QWERTY-based", nil);
+            break;
+        case 1:
+            cell.textLabel.text = NSLocalizedString(@"Chorded Keyboard - Dvorak-based", nil);
+            break;
+        default:
+            break;
+    }
+    
+    UISwitch *sw = [[UISwitch alloc] init];
+    [sw addTarget:self action:@selector(changeKeyboard:) forControlEvents:UIControlEventValueChanged];
+    [sw setCustomProperty:cell forKey:@"key"];
+    [cell setAccessoryView:sw];
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)changeKeyboard:(UISwitch *)sw
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    UITableViewCell *cell = [sw getCustomPropertyForKey:@"key"];
+    
+    NSIndexPath *ip = [self.tableView indexPathForCell:cell];
+    
+    if (sw.on) {
+        for (NSInteger section = 0; section < [self numberOfSectionsInTableView:self.tableView]; section++) {
+            for (NSInteger row = 0; row < [self tableView:self.tableView numberOfRowsInSection:section]; row++) {
+                if (section == ip.section && row == ip.row) {
+                    continue;
+                }
+                UITableViewCell *theCell = [self tableView:self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+                UISwitch *s = (UISwitch *)[theCell accessoryView];
+                [s setOn:NO];
+            }
+        }
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
