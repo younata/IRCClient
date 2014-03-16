@@ -16,6 +16,7 @@
 #import "RBIRCMessage.h"
 #import "SWRevealViewController.h"
 #import "RBConfigViewController.h"
+#import "RBConfigurationKeys.h"
 
 #import "UITableView+Scroll.h"
 
@@ -26,6 +27,8 @@
 #import "RBScriptingService.h"
 
 #import "RBNameViewController.h"
+
+#import "RBChordedKeyboard.h"
 
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
@@ -141,6 +144,28 @@ static NSString *CellIdentifier = @"Cell";
     [[RBScriptingService sharedInstance] channelViewWasLoaded:self];
 }
 
+-(void)loadExtraKeyboards
+{
+    Class cls = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigKeyboard];
+    if (cls == nil) {
+        self.input.inputView = nil;
+    } else if ([[[cls alloc] init] conformsToProtocol:@protocol(RBChordedKeyboardDelegate)]) {
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad &&
+            UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            RBChordedKeyboard *keyboard = [[RBChordedKeyboard alloc] init];
+            keyboard.delegate = [[cls alloc] init];
+            self.input.inputView = keyboard;
+        } else {
+            self.input.inputView = nil;
+        }
+    }
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self loadExtraKeyboards];
+}
+
 -(void)tapped:(UITapGestureRecognizer *)tgr
 {
     CGRect rect = CGRectInset(self.borderView.frame, 0, -4);
@@ -171,6 +196,7 @@ static NSString *CellIdentifier = @"Cell";
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self loadExtraKeyboards];
     
     if (!self.server.connected) {
         [self disconnect];

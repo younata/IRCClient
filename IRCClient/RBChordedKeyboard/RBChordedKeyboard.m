@@ -232,10 +232,11 @@
 {
     NSString *ret = [self currentKeyForKeystrokes:keys];
     
-    if (![ret isEqualToString:@"\b"])
-        [_textView insertText:ret];
-    else
+    if ([ret isEqualToString:@"\b"]) {
         [_textView deleteBackward];
+    } else {
+        [_textView insertText:ret];
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

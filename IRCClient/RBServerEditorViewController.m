@@ -19,6 +19,8 @@
 
 #import "RBScriptingService.h"
 
+#import "RBChordedKeyboard.h"
+
 @interface RBServerEditorViewController ()
 
 @property (nonatomic) CGRect originalFrame;
@@ -166,7 +168,34 @@
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-    
+}
+
+-(void)loadExtraKeyboards
+{
+    Class cls = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigKeyboard];
+    NSArray *inputs = @[self.serverName,
+                        self.serverHostname,
+                        self.serverPort,
+                        self.serverNick,
+                        self.serverRealName,
+                        self.serverPassword];
+    UIView *input = nil;
+    if ([[[cls alloc] init] conformsToProtocol:@protocol(RBChordedKeyboardDelegate)]) {
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad &&
+            UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            RBChordedKeyboard *keyboard = [[RBChordedKeyboard alloc] init];
+            keyboard.delegate = [[cls alloc] init];
+            input = keyboard;
+        }
+    }
+    for (UITextField *tf in inputs) {
+        tf.inputView = input;
+    }
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self loadExtraKeyboards];
 }
 
 -(void)showHelp
@@ -181,6 +210,8 @@
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [self loadExtraKeyboards];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
