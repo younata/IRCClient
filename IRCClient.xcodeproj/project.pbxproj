@@ -139,6 +139,12 @@
 		89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
 		89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
 		89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */; };
+		89DF7E5218D538FA00FED10C /* RBChordedKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E4C18D538FA00FED10C /* RBChordedKeyboard.m */; };
+		89DF7E5318D538FA00FED10C /* RBChordedKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E4C18D538FA00FED10C /* RBChordedKeyboard.m */; };
+		89DF7E5418D538FA00FED10C /* RBChordedKeyboardDvorak.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E4F18D538FA00FED10C /* RBChordedKeyboardDvorak.m */; };
+		89DF7E5518D538FA00FED10C /* RBChordedKeyboardDvorak.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E4F18D538FA00FED10C /* RBChordedKeyboardDvorak.m */; };
+		89DF7E5618D538FA00FED10C /* RBChordedKeyboardQwerty.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E5118D538FA00FED10C /* RBChordedKeyboardQwerty.m */; };
+		89DF7E5718D538FA00FED10C /* RBChordedKeyboardQwerty.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E5118D538FA00FED10C /* RBChordedKeyboardQwerty.m */; };
 		89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
 		89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
 		89E812B818B8E78800616600 /* RBColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B718B8E78800616600 /* RBColorScheme.m */; };
@@ -322,6 +328,13 @@
 		89D4B66318CFFC3600891116 /* RBNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBNameViewController.h; sourceTree = "<group>"; };
 		89D4B66418CFFC3600891116 /* RBNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNameViewController.m; sourceTree = "<group>"; };
 		89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBNameViewControllerSpec.mm; sourceTree = "<group>"; };
+		89DF7E4B18D538FA00FED10C /* RBChordedKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBChordedKeyboard.h; sourceTree = "<group>"; };
+		89DF7E4C18D538FA00FED10C /* RBChordedKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBChordedKeyboard.m; sourceTree = "<group>"; };
+		89DF7E4D18D538FA00FED10C /* RBChordedKeyboardDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBChordedKeyboardDelegate.h; sourceTree = "<group>"; };
+		89DF7E4E18D538FA00FED10C /* RBChordedKeyboardDvorak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBChordedKeyboardDvorak.h; sourceTree = "<group>"; };
+		89DF7E4F18D538FA00FED10C /* RBChordedKeyboardDvorak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBChordedKeyboardDvorak.m; sourceTree = "<group>"; };
+		89DF7E5018D538FA00FED10C /* RBChordedKeyboardQwerty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBChordedKeyboardQwerty.h; sourceTree = "<group>"; };
+		89DF7E5118D538FA00FED10C /* RBChordedKeyboardQwerty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBChordedKeyboardQwerty.m; sourceTree = "<group>"; };
 		89E812B218B8CB7400616600 /* RBScriptHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptHelpers.h; sourceTree = "<group>"; };
 		89E812B318B8CB7400616600 /* RBScriptHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptHelpers.m; sourceTree = "<group>"; };
 		89E812B618B8E78800616600 /* RBColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBColorScheme.h; sourceTree = "<group>"; };
@@ -629,6 +642,7 @@
 				898132CA18A72264004AEBE9 /* RBReconnectViewController.m */,
 				899CE7A718D068D6002ABBFE /* RBKeyboardViewController.h */,
 				899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */,
+				89DF7E3F18D5383400FED10C /* RBChordedKeyboard */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -759,6 +773,20 @@
 				898132D718A787E9004AEBE9 /* Config */,
 			);
 			name = "Views and Controllers";
+			sourceTree = "<group>";
+		};
+		89DF7E3F18D5383400FED10C /* RBChordedKeyboard */ = {
+			isa = PBXGroup;
+			children = (
+				89DF7E4B18D538FA00FED10C /* RBChordedKeyboard.h */,
+				89DF7E4C18D538FA00FED10C /* RBChordedKeyboard.m */,
+				89DF7E4D18D538FA00FED10C /* RBChordedKeyboardDelegate.h */,
+				89DF7E4E18D538FA00FED10C /* RBChordedKeyboardDvorak.h */,
+				89DF7E4F18D538FA00FED10C /* RBChordedKeyboardDvorak.m */,
+				89DF7E5018D538FA00FED10C /* RBChordedKeyboardQwerty.h */,
+				89DF7E5118D538FA00FED10C /* RBChordedKeyboardQwerty.m */,
+			);
+			path = RBChordedKeyboard;
 			sourceTree = "<group>";
 		};
 		89E812C918BB52E700616600 /* UIView */ = {
@@ -1023,10 +1051,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				89E812D318BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */,
+				89DF7E5218D538FA00FED10C /* RBChordedKeyboard.m in Sources */,
 				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
 				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
+				89DF7E5618D538FA00FED10C /* RBChordedKeyboardQwerty.m in Sources */,
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
 				8905344418C93842006DDA8B /* NSString+ranges.m in Sources */,
@@ -1062,6 +1092,7 @@
 				899B2AA0189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				898132F218A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
+				89DF7E5418D538FA00FED10C /* RBChordedKeyboardDvorak.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1082,6 +1113,7 @@
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
 				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
+				89DF7E5718D538FA00FED10C /* RBChordedKeyboardQwerty.m in Sources */,
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
 				89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
@@ -1107,6 +1139,7 @@
 				898132E818A86E0C004AEBE9 /* RBAppDelegateSpec.mm in Sources */,
 				891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */,
 				891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */,
+				89DF7E5518D538FA00FED10C /* RBChordedKeyboardDvorak.m in Sources */,
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
 				8908DC7E18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
@@ -1120,6 +1153,7 @@
 				891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */,
 				8908DBC518B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
 				898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
+				89DF7E5318D538FA00FED10C /* RBChordedKeyboard.m in Sources */,
 				891B01ED189650DA00B2D848 /* main.m in Sources */,
 				899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				898132D618A787D1004AEBE9 /* RBConfigViewController.m in Sources */,

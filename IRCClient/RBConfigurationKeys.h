@@ -17,4 +17,6 @@
 #define RBConfigFontName @"RBConfigKeyFontName"
 #define RBConfigFontSize @"RBConfigKeyFontSize"
 
+#define RBConfigKeyboard @"RBConfigKeyboard"
+
 #endif
