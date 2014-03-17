@@ -103,7 +103,7 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4; // reconnect, ctcp, scripts, experimental
+    return 3;//4; // reconnect, ctcp, scripts, experimental (disabled)
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

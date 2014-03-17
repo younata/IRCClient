@@ -14,6 +14,12 @@
 
 #import "RBScriptingService.h"
 
+@interface RBIRCChannel ()
+
+@property (nonatomic, strong) NSMutableArray *unreadMessages;
+
+@end
+
 @implementation RBIRCChannel
 
 -(instancetype)initWithName:(NSString *)name
@@ -24,6 +30,7 @@
         _names = [[NSMutableArray alloc] init];
         self.askedForNames = YES;
         self.connectOnStartup = YES;
+        self.unreadMessages = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -38,6 +45,7 @@
         self.server = nil;
         self.topic = nil;
         self.connectOnStartup = [decoder decodeBoolForKey:@"connectOnStartup"];
+        self.unreadMessages = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -89,6 +97,10 @@
     } else if (message.commandNumber == RPL_ENDOFNAMES) {
         self.askedForNames = YES;
         shouldResortNames = YES;
+    } else if (message.command == IRCMessageTypePrivmsg ||
+               message.command == IRCMessageTypeNotice || // or CTCP...
+               (message.command >= IRCMessageTypeCTCPFinger && message.command != 255)) {
+        [(NSMutableArray *)self.unreadMessages addObject:message];
     }
     
     if (shouldResortNames) {
@@ -131,6 +143,13 @@
 -(BOOL)isChannel
 {
     return [self.name hasPrefix:@"#"] || [self.name hasPrefix:@"&"];
+}
+
+-(NSArray *)read
+{
+    NSArray *ret = [NSArray arrayWithArray:self.unreadMessages];
+    [(NSMutableArray *)self.unreadMessages removeAllObjects];
+    return ret;
 }
 
 -(NSString *)description

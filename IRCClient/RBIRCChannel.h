@@ -23,8 +23,11 @@
 
 @property (nonatomic) BOOL connectOnStartup;
 
+@property (nonatomic, readonly, strong) NSArray *unreadMessages;
+
 -(instancetype)initWithName:(NSString *)name;
 -(void)logMessage:(RBIRCMessage *)message;
 -(BOOL)isChannel; // or PM...
+-(NSArray *)read;
 
 @end
