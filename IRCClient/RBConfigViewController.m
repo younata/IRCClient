@@ -168,10 +168,12 @@ static NSString *textFieldCell = @"textFieldCell";
         
         cell.textLabel.text = key;
         
-        Class cls = [[RBScriptingService sharedInstance] scriptDict][key];
+        //Class cls = [[RBScriptingService sharedInstance] scriptDict][key];
+        /*
         if ([cls performSelector:@selector(configurationItems)] != nil) {
             cell.textLabel.textColor = [RBColorScheme secondaryColor];
         }
+         */
     } else if (section == 3) {
         NSArray *strings = @[NSLocalizedString(@"Keyboards", nil)];
         cell.textLabel.text = strings[row];

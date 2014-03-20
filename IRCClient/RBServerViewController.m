@@ -76,9 +76,7 @@ static NSString *textFieldCell = @"textFieldCell";
 -(void)setServers:(NSMutableArray *)servers
 {
     for (RBIRCServer *server in _servers) {
-        for (id<RBIRCServerDelegate> del in server.delegates) {
-            [server rmDelegate:self];
-        }
+        [server rmDelegate:self];
     }
     _servers = servers;
     for (RBIRCServer *server in servers) {

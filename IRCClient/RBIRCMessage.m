@@ -66,6 +66,7 @@
             return @"PING";
         case IRCMessageTypeCTCPTime:
             return @"TIME";
+        case IRCMessageTypeCTCPErrMsg:
         case IRCMessageTypeUnknown:
             return @"";
     }
