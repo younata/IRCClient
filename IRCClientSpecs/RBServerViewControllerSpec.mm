@@ -228,6 +228,10 @@ describe(@"RBServerViewController", ^{
             actuallyDidSave should be_falsy;
         });
     });
+    
+    describe(@"Unread message count", ^{
+        // TODO
+    });
 });
 
 SPEC_END

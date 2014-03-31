@@ -99,7 +99,7 @@ describe(@"RBConfigViewController", ^{
             });
             
             it(@"should be for keyboards", ^{
-                cell.textLabel.text should_not equal(@"Keyboards");
+                cell.textLabel.text should equal(@"Keyboards");
             });
 
             
