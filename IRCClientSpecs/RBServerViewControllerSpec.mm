@@ -202,10 +202,6 @@ describe(@"RBServerViewController", ^{
             }
         });
         
-        afterEach(^{
-            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
-        });
-        
         it(@"should remove the channel cell from the view", ^{
             NSArray *cells = [subject.tableView visibleCells];
             BOOL containsChannel = NO;
@@ -245,16 +241,10 @@ describe(@"RBServerViewController", ^{
             [server.channels setObject:channel forKey:chName];
             
             NSMutableArray *arr = [@[server] mutableCopy];
-            NSData *d = [NSKeyedArchiver archivedDataWithRootObject:arr];
-            [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
             subject.servers = arr;
             [subject.tableView reloadData];
             
             [subject tableView:subject.tableView didSelectRowAtIndexPath:ip];
-        });
-        
-        afterEach(^{
-            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
         });
         
         it(@"should not display a number when unread messages is 0", ^{
@@ -263,6 +253,7 @@ describe(@"RBServerViewController", ^{
         });
         
         it(@"should display a number when unread messages is not 0", ^{
+            [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
             NSMutableArray *servers = subject.servers;
             RBIRCServer *server = servers[0];
             NSString *msg = @":ik!iank@hide-1664EBC6.iank.org PRIVMSG #foo :how are you?";

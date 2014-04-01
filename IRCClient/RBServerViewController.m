@@ -25,6 +25,9 @@
 #import "RBScriptingService.h"
 
 @interface RBServerViewController ()
+{
+    RBIRCChannel *selectedChannel;
+}
 
 @property (nonatomic, strong) UIAlertView *av;
 
@@ -142,6 +145,13 @@ static NSString *textFieldCell = @"textFieldCell";
             [[RBScriptingService sharedInstance] serverList:self didCreateNewChannelCell:c];
         } else {
             cell.textLabel.text = channels[row];
+            RBIRCChannel *channel = server[channels[row]];
+            
+            if (![channel isEqual:selectedChannel]) {
+                if (channel.unreadMessages.count != 0) {
+                    cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", channel.unreadMessages.count, channel.name];
+                }
+            }
             
             if (row == 0) {
                 cell.textLabel.textColor = [RBColorScheme primaryColor];
@@ -244,6 +254,7 @@ static NSString *textFieldCell = @"textFieldCell";
         if (row != 0 && row < channels.count) {
             NSString *ch = channels[row];
             RBIRCChannel *channel = server[ch];
+            selectedChannel = channel;
             [self.delegate server:server didChangeChannel:channel];
         } else if (row == 0) {
             editor = [[RBServerEditorViewController alloc] init];
