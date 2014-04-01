@@ -202,6 +202,10 @@ describe(@"RBServerViewController", ^{
             }
         });
         
+        afterEach(^{
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
+        });
+        
         it(@"should remove the channel cell from the view", ^{
             NSArray *cells = [subject.tableView visibleCells];
             BOOL containsChannel = NO;
@@ -230,7 +234,43 @@ describe(@"RBServerViewController", ^{
     });
     
     describe(@"Unread message count", ^{
-        // TODO
+        NSIndexPath *ip = [NSIndexPath indexPathForRow:2 inSection:0];
+        
+        static NSString *chName = @"#foo";
+        
+        beforeEach(^{
+            server = newServer();
+            
+            RBIRCChannel *channel = [[RBIRCChannel alloc] initWithName:chName];
+            [server.channels setObject:channel forKey:chName];
+            
+            NSMutableArray *arr = [@[server] mutableCopy];
+            NSData *d = [NSKeyedArchiver archivedDataWithRootObject:arr];
+            [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+            subject.servers = arr;
+            [subject.tableView reloadData];
+            
+            [subject tableView:subject.tableView didSelectRowAtIndexPath:ip];
+        });
+        
+        afterEach(^{
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
+        });
+        
+        it(@"should not display a number when unread messages is 0", ^{
+            UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:ip];
+            [cell.textLabel.text hasPrefix:@"[0]"] should be_falsy;
+        });
+        
+        it(@"should display a number when unread messages is not 0", ^{
+            NSMutableArray *servers = subject.servers;
+            RBIRCServer *server = servers[0];
+            NSString *msg = @":ik!iank@hide-1664EBC6.iank.org PRIVMSG #foo :how are you?";
+            [server receivedString:msg];
+            
+            UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:ip];
+            [cell.textLabel.text hasPrefix:@"[1]"] should be_truthy;
+        });
     });
 });
 
