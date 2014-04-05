@@ -70,6 +70,48 @@
     return YES;
 }
 
+-(BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    return YES;
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([[url scheme] hasPrefix:@"irc"] || [[url scheme] hasPrefix:@"rirc"]) {
+        NSString *username = [url user];
+        NSString *password = [url password];
+        NSString *hostname = [url host];
+        NSString *port = [[url port] stringValue];
+        NSNumber *useSSL = @(NO);
+        if ([[url scheme] hasSuffix:@"s"]) {
+            useSSL = @(YES);
+            if (!port) {
+                port = @"6697";
+            }
+        } else {
+            if (!port) {
+                port = @"6667";
+            }
+        }
+        
+        if (self.window.rootViewController == nil) {
+            [self application:application didFinishLaunchingWithOptions:nil];
+        }
+        
+        RBServerViewController *serverVC = (RBServerViewController *)[(UINavigationController *)[(SWRevealViewController *)self.window.rootViewController rearViewController] topViewController];
+        NSDictionary *options = @{@"username": username,
+                                  @"password": password,
+                                  @"port": port,
+                                  @"hostname": hostname,
+                                  @"ssl": useSSL};
+        RBServerEditorViewController *editorVC = [serverVC editorViewControllerWithOptions:options];
+        [serverVC presentViewController:editorVC animated:YES completion:nil];
+        
+        return YES;
+    }
+    return NO;
+}
+
 -(NSArray *)servers
 {
     SWRevealViewController *rvc = (SWRevealViewController *)self.window.rootViewController;

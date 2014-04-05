@@ -20,8 +20,17 @@
 	<string>1.0.6</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLName</key>
+	<string>com.rachelbrindle.IRCClient</string>
+	<key>CFBundleURLSchemes</key>
+	<array>
+		<string>irc</string>
+		<string>rirc</string>
+		<string>ircs</string>
+		<string>rircs</string>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>54</string>
+	<string>55</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>

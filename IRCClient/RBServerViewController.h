@@ -11,11 +11,14 @@
 #import "SWRevealViewController.h"
 
 @protocol RBServerVCDelegate;
+@class RBServerEditorViewController;
 
 @interface RBServerViewController : UITableViewController <UITextFieldDelegate, RBIRCServerDelegate, SWRevealViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *servers;
 @property (nonatomic, weak) id<RBServerVCDelegate> delegate;
 @property (nonatomic, weak) SWRevealViewController *revealController;
+
+-(RBServerEditorViewController *)editorViewControllerWithOptions:(NSDictionary *)options;
 
 @end

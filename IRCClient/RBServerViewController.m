@@ -246,7 +246,6 @@ static NSString *textFieldCell = @"textFieldCell";
     NSInteger row = indexPath.row;
     
     RBServerEditorViewController *editor = nil;
-    __weak RBServerViewController *theSelf = self;
     
     if (section < [self.servers count]) {
         RBIRCServer *server = self.servers[section];
@@ -257,32 +256,64 @@ static NSString *textFieldCell = @"textFieldCell";
             selectedChannel = channel;
             [self.delegate server:server didChangeChannel:channel];
         } else if (row == 0) {
-            editor = [[RBServerEditorViewController alloc] init];
-            editor.server = server;
-            editor.onCancel = ^{
-                [theSelf.tableView reloadData];
-                [theSelf saveServerData];
-            };
+            editor = [self editorViewControllerWithOptions:@{@"server": server}];
         }
     } else {
-        editor = [[RBServerEditorViewController alloc] init];
         RBIRCServer *newServer = [[RBIRCServer alloc] init];
-        [editor setServer:newServer];
         [self.servers addObject:newServer];
-        __weak RBServerEditorViewController *theEditor = editor;
-        editor.onCancel = ^{
-            if (!theEditor.server.nick.hasContent) {
-                [theSelf.servers removeObject:theEditor.server];
-            }
-            [theSelf.tableView reloadData];
-            [theSelf saveServerData];
-        };
+        editor = [self editorViewControllerWithOptions:@{@"server": newServer}];
     }
     if (editor) {
         UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:editor];
         [self presentViewController:nc animated:YES completion:nil];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
+-(RBServerEditorViewController *)editorViewControllerWithOptions:(NSDictionary *)options
+{
+    RBServerEditorViewController *editor = [[RBServerEditorViewController alloc] init];
+    
+    [editor view];
+    
+    RBIRCServer *server = options[@"server"];
+    if (!server) {
+        server = [[RBIRCServer alloc] init];
+    }
+    if (server) {
+        [editor setServer:server];
+        
+        if (![self.servers containsObject:server]) {
+            [self.servers addObject:server];
+        }
+    }
+    if (options[@"username"]) {
+        editor.serverNick.text = options[@"username"];
+    }
+    if (options[@"password"]) {
+        editor.serverPassword.text = options[@"password"];
+    }
+    if (options[@"port"]) {
+        editor.serverPort.text = options[@"port"];
+    }
+    if (options[@"hostname"]) {
+        editor.serverHostname.text = options[@"hostname"];
+        editor.serverName.placeholder = options[@"hostname"];
+    }
+    if (options[@"ssl"]) {
+        editor.serverSSL.on = [options[@"ssl"] boolValue];
+    }
+    
+    __weak RBServerViewController *theSelf = self;
+    __weak RBServerEditorViewController *theEditor = editor;
+    editor.onCancel = ^{
+        if (!theEditor.server.nick.hasContent) {
+            [theSelf.servers removeObject:theEditor.server];
+        }
+        [theSelf.tableView reloadData];
+        [theSelf saveServerData];
+    };
+    return editor;
 }
 
 #pragma mark - UITextFieldDelegate
