@@ -133,6 +133,8 @@
           message.command == IRCMessageTypeNick ||
           message.command == IRCMessageTypeNames ||
           message.commandNumber == RPL_ENDOFNAMES ||
+          message.command == IRCMessageTypeMode ||
+          message.command == IRCMessageTypeKick ||
           message == nil)) {
         [_log addObject:message];
     }

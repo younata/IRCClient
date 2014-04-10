@@ -11,6 +11,7 @@
 #import "RBServerViewController.h"
 #import "RBChannelViewController.h"
 #import "RBNameViewController.h"
+#import "RBServerEditorViewController.h"
 #import "RBIRCServer.h"
 
 #import "RBHelp.h"
