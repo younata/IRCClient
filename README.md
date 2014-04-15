@@ -6,5 +6,3 @@ A less shitty IRC Client for iOS devices.
 ***
 
 ######iPhone
-Channel  
-![iPhone interface](http://i.imgur.com/SCOBU69.png =320x)
