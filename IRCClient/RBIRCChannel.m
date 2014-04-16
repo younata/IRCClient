@@ -128,13 +128,8 @@
         }];
     }
     
-    if (!(message.command == IRCMessageTypeJoin ||
-          message.command == IRCMessageTypePart ||
-          message.command == IRCMessageTypeNick ||
-          message.command == IRCMessageTypeNames ||
+    if (!(message.command == IRCMessageTypeNames ||
           message.commandNumber == RPL_ENDOFNAMES ||
-          message.command == IRCMessageTypeMode ||
-          message.command == IRCMessageTypeKick ||
           message == nil)) {
         [_log addObject:message];
     }

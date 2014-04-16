@@ -180,11 +180,16 @@
         self.message = [[params subarrayWithRange:NSMakeRange(1, params.count - 1)] componentsJoinedByString:@" "];
     }
     
+    NSString *str = nil;
     switch (self.command) {
         case IRCMessageTypeJoin:
+            str = [NSString stringWithFormat:@"%@ joined", self.from];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
             break;
         case IRCMessageTypePart:
             self.message = trailing;
+            str = [NSString stringWithFormat:@"%@ left [%@]", self.from, trailing];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
             break;
         case IRCMessageTypeNotice:
             self.message = trailing;
@@ -195,10 +200,10 @@
             [self parseCTCPRequest];
             break;
         case IRCMessageTypeMode: {
+            self.message = trailing;
             NSMutableArray *modes = [[NSMutableArray alloc] init];
             if (params.count == 1) {
                 [params addObject:trailing]; // fucking unrealircd...
-                self.message = trailing;
             }
             int i = 1; // params[0] is targets...
             while ([params[i] hasPrefix:@"+"] || [params[i] hasPrefix:@"-"]) {
@@ -217,9 +222,12 @@
         case IRCMessageTypeKick:
             self.extra = @{params[1]: trailing};
             self.message = [NSString stringWithFormat:@"%@ :%@", params[1], trailing];
+            str = [NSString stringWithFormat:@"%@ was kicked from %@ by %@ [%@]", params[1], self.targets[0], self.from, trailing];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
             break;
         case IRCMessageTypeTopic:
             self.message = [params componentsJoinedByString:@" "];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:self.message attributes:[self defaultAttributes]];
             break;
         case IRCMessageTypeOper: // shouldn't have to handle
             break;
@@ -229,6 +237,8 @@
             break;
         case IRCMessageTypeQuit:
             self.message = originalParamsString;
+            str = [NSString stringWithFormat:@"%@ has quit [%@]", self.from, self.message];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
             break;
         case IRCMessageTypePing:
             self.message = trailing;
@@ -414,7 +424,10 @@
 -(NSString *)description
 {
     NSString *ret = @"";
-    if (!self.from || [self.from isEqualToString:RBIRCServerLog])
+    if (!self.from ||
+        [self.from isEqualToString:RBIRCServerLog] ||
+        self.command != IRCMessageTypePrivmsg ||
+        self.command != IRCMessageTypeNotice)
         return self.rawMessage;
     ret = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
     return ret;
