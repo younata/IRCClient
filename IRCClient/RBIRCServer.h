@@ -82,6 +82,8 @@
 
 -(NSArray *)sortedChannelKeys;
 
+-(void)sendUpdateMessageCommand:(RBIRCMessage *)caller;
+
 // yay making things easier...
 -(id)objectForKeyedSubscript:(id <NSCopying>)key;
 -(void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;

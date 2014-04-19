@@ -8,6 +8,7 @@
 
 #import "RBConfigViewController.h"
 
+#import "RBConfigurationKeys.h"
 #import "RBReconnectViewController.h"
 #import "RBKeyboardViewController.h"
 
@@ -103,7 +104,7 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;//4; // reconnect, ctcp, scripts, experimental (disabled)
+    return 4;//5; // reconnect, ctcp, scripts, images, experimental (disabled)
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -116,6 +117,8 @@ static NSString *textFieldCell = @"textFieldCell";
         case 2:
             return [[[RBScriptingService sharedInstance] scripts] count];
         case 3:
+            return 2; // display inline, display nsfw
+        case 4:
             return 1;
         default:
             return 0;
@@ -130,6 +133,8 @@ static NSString *textFieldCell = @"textFieldCell";
         case 2:
             return NSLocalizedString(@"Extensions", nil);
         case 3:
+            return NSLocalizedString(@"Inline Images", nil);
+        case 4:
             return NSLocalizedString(@"Experimental", nil);
         default:
             return @"";
@@ -175,6 +180,25 @@ static NSString *textFieldCell = @"textFieldCell";
         }
          */
     } else if (section == 3) {
+        NSArray *strings = @[NSLocalizedString(@"Display images inline", nil),
+                             NSLocalizedString(@"Display NSFW images", nil)];
+        cell.textLabel.text = strings[row];
+        
+        UISwitch *sw = [[UISwitch alloc] initWithFrame:CGRectZero];
+        switch (row) {
+            case 0:
+                sw.on = [[NSUserDefaults standardUserDefaults] boolForKey:RBConfigLoadImages];
+                self.values[RBConfigLoadImages] = @(sw.on);
+                break;
+            case 1:
+                sw.on = [[NSUserDefaults standardUserDefaults] boolForKey:RBConfigDontLoadNSFW];
+                self.values[RBConfigDontLoadNSFW] = @(sw.on);
+                break;
+            default:
+                break;
+        }
+        cell.accessoryView = sw;
+    } else if (section == 4) {
         NSArray *strings = @[NSLocalizedString(@"Keyboards", nil)];
         cell.textLabel.text = strings[row];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -193,7 +217,7 @@ static NSString *textFieldCell = @"textFieldCell";
     if (section == 0) {
         RBReconnectViewController *rvc = [[RBReconnectViewController alloc] init];
         [self.navigationController pushViewController:rvc animated:YES];
-    } else if (section == 3) {
+    } else if (section == 4) {
         NSInteger row = indexPath.row;
         switch (row) {
             case 0:

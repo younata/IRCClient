@@ -19,4 +19,7 @@
 
 #define RBConfigKeyboard @"RBConfigKeyboard"
 
+#define RBConfigLoadImages @"RBConfigLoadImages"
+#define RBConfigDontLoadNSFW @"RBConfigNoLoadNSFWImages"
+
 #endif

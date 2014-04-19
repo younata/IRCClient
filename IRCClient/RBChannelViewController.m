@@ -10,6 +10,7 @@
 
 #import "UIButton+buttonWithFrame.h"
 #import "NSString+isNilOrEmpty.h"
+#import "UIView+initWithSuperview.h"
 
 #import "RBIRCServer.h"
 #import "RBIRCChannel.h"
@@ -593,6 +594,16 @@ static NSString *CellIdentifier = @"Cell";
             }
         } else {
             NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
+        }
+    }
+}
+
+-(void)IRCServer:(RBIRCServer *)server updateMessage:(RBIRCMessage *)message
+{
+    for (NSString *to in message.targets) {
+        if ([to isEqualToString:self.channel]) {
+            [self.tableView reloadData];
+            break;
         }
     }
 }

@@ -266,7 +266,7 @@
         return;
     RBIRCMessage *msg;
     @try {
-        msg = [[RBIRCMessage alloc] initWithRawMessage:str];
+        msg = [[RBIRCMessage alloc] initWithRawMessage:str onServer:self];
     }
     @catch (NSException *exception) {
         NSLog(@"error parsing message '%@'\nException: %@", str, exception); // I'm bad and I should feel bad.
@@ -277,6 +277,7 @@
         msg.targets = [@[RBIRCServerLog] mutableCopy];
         msg.message = str;
         msg.rawMessage = str;
+        msg.server = self;
     }
     if (msg.command == IRCMessageTypePing) {
         [self sendCommand:[NSString stringWithFormat:@"PONG %@", msg.message]];
@@ -590,7 +591,15 @@
         return [(NSString *)obj1 compare:(NSString *)obj2];
     }];
     return [@[self.serverName, RBIRCServerLog] arrayByAddingObjectsFromArray:ret];
+}
 
+-(void)sendUpdateMessageCommand:(RBIRCMessage *)caller
+{
+    for (id<RBIRCServerDelegate> delegate in self.delegates) {
+        if ([delegate respondsToSelector:@selector(IRCServer:updateMessage:)]) {
+            [delegate IRCServer:self updateMessage:caller];
+        }
+    }
 }
 
 #pragma mark - Keyed subscripting

@@ -83,19 +83,23 @@ describe(@"RBConfigViewController", ^{
         });
     });
     
+    describe(@"Inline Images section", ^{
+        // later...
+    });
+    
     describe(@"Experimental section", ^{
         it(@"should a section title", ^{
-            [subject tableView:subject.tableView titleForHeaderInSection:3] should equal(@"Experimental");
+            [subject tableView:subject.tableView titleForHeaderInSection:4] should equal(@"Experimental");
         });
         
         it(@"should have at least 1 row", ^{
-            [subject tableView:subject.tableView numberOfRowsInSection:3] should be_gte(1);
+            [subject tableView:subject.tableView numberOfRowsInSection:4] should be_gte(1);
         });
         
         describe(@"first cell", ^{
             __block UITableViewCell *cell;
             beforeEach(^{
-                cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
+                cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]];
             });
             
             it(@"should be for keyboards", ^{
@@ -106,10 +110,10 @@ describe(@"RBConfigViewController", ^{
             it(@"should be disabled on iPhones", ^{
                 if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
                     cell.textLabel.textColor should equal([UIColor lightGrayColor]);
-                    [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
+                    [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]];
                     // still no idea how to describe a LACK of behavior...
                 } else {
-                    [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:3]];
+                    [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]];
                     // should present a new view controller...
                 }
             });

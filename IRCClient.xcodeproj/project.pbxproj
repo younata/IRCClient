@@ -101,8 +101,6 @@
 		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
 		893C332418C19BA2000279AA /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332318C19BA2000279AA /* libffi.a */; };
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
-		893C332818C1DE41000279AA /* inlineImages.nu in Resources */ = {isa = PBXBuildFile; fileRef = 893C332718C1DE41000279AA /* inlineImages.nu */; };
-		893C332918C1DE41000279AA /* inlineImages.nu in Resources */ = {isa = PBXBuildFile; fileRef = 893C332718C1DE41000279AA /* inlineImages.nu */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
 		898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
@@ -285,7 +283,6 @@
 		893C332118C198A1000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
 		893C332318C19BA2000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = "../../../Library/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug/libffi.a"; sourceTree = "<group>"; };
 		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		893C332718C1DE41000279AA /* inlineImages.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = inlineImages.nu; path = scripts/inlineImages.nu; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
@@ -570,7 +567,6 @@
 			isa = PBXGroup;
 			children = (
 				89E812E118BFD33300616600 /* hilight.nu */,
-				893C332718C1DE41000279AA /* inlineImages.nu */,
 				89E812DA18BCF0E000616600 /* reconnectButton.nu */,
 			);
 			name = "Built In Scripts";
@@ -956,7 +952,6 @@
 				8908DC4D18B7491C004DFBAB /* nu.nu in Resources */,
 				8908DC4E18B7491C004DFBAB /* template.nu in Resources */,
 				8908DC4F18B7491C004DFBAB /* test.nu in Resources */,
-				893C332818C1DE41000279AA /* inlineImages.nu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -980,7 +975,6 @@
 				8908DC3818B74913004DFBAB /* coredata.nu in Resources */,
 				8908DC3918B74913004DFBAB /* doc.nu in Resources */,
 				8908DC3B18B74913004DFBAB /* generate.nu in Resources */,
-				893C332918C1DE41000279AA /* inlineImages.nu in Resources */,
 				89E812C518BA1B6A00616600 /* icon@2x.png in Resources */,
 				8908DC3C18B74913004DFBAB /* help.nu in Resources */,
 				89E812DC18BCF0E000616600 /* reconnectButton.nu in Resources */,

@@ -12,6 +12,8 @@
 #import "RBConfigurationKeys.h"
 #import "UIDevice+Categories.h"
 
+#import <AFNetworking/AFNetworking.h>
+
 #import "IRCNumericReplies.h"
 
 @interface RBIRCMessage ()
@@ -116,6 +118,20 @@
     return self;
 }
 
+-(instancetype)initWithRawMessage:(NSString *)raw onServer:(id)server
+{
+    if ((self = [super init]) != nil) {
+        self.server = server;
+        raw = [raw stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        self.rawMessage = raw;
+        self.timestamp = [NSDate date];
+        self.commandNumber = -1;
+        [self parseRawMessage];
+        [self attributedMessage];
+    }
+    return self;
+}
+
 -(void)parseRawMessage
 {
     NSArray *array = [self.rawMessage componentsSeparatedByString:@" "];
@@ -194,10 +210,12 @@
         case IRCMessageTypeNotice:
             self.message = trailing;
             [self parseCTCPResponse];
+            [self loadImages];
             break;
         case IRCMessageTypePrivmsg:
             self.message = trailing;
             [self parseCTCPRequest];
+            [self loadImages];
             break;
         case IRCMessageTypeMode: {
             self.message = trailing;
@@ -418,6 +436,49 @@
             break;
         default:
             break;
+    }
+}
+
+-(void)loadImages
+{
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:RBConfigLoadImages]) {
+        return;
+    }
+    NSString *message = [self.message lowercaseString];
+    if (![message containsSubstring:@"nsfw"] ||
+        [[NSUserDefaults standardUserDefaults] boolForKey:RBConfigDontLoadNSFW]) {
+        NSMutableAttributedString *mas = [[NSMutableAttributedString alloc] initWithAttributedString:[self attributedMessage]];
+        NSArray *matches = [[NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil] matchesInString:message options:0 range:NSMakeRange(0, [message length])];
+        for (id match in matches) {
+            // load image
+            NSURL *imageLocation = [match URL];
+            NSString *img = [imageLocation absoluteString];
+            if ([img hasSuffix:@".png"] ||
+                [img hasSuffix:@".jpg"] ||
+                [img hasSuffix:@".jpeg"] ||
+                [img hasSuffix:@".tif"] ||
+                [img hasSuffix:@".tiff"] ||
+                [img hasSuffix:@".gif"] ||
+                [img hasSuffix:@".bmp"] ||
+                [img hasSuffix:@".bmpf"] ||
+                [img hasSuffix:@".ico"] ||
+                [img hasSuffix:@".cur"] ||
+                [img hasSuffix:@".xbm"]) {
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                __weak RBIRCMessage *theSelf = self;
+                [manager GET:img parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    if ([responseObject isKindOfClass:[UIImage class]]) {
+                        UIImage *image = (UIImage *)responseObject;
+                        NSTextAttachment *attach = [[NSTextAttachment alloc] init];
+                        [attach setImage:image];
+                        [mas appendAttributedString:[NSAttributedString attributedStringWithAttachment:attach]];
+                        [(RBIRCServer *)theSelf.server sendUpdateMessageCommand:theSelf];
+                    }
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                }];
+            }
+        }
+        self.attributedMessage = mas;
     }
 }
 
