@@ -82,7 +82,6 @@
 		891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
 		891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 891B01E9189650DA00B2D848 /* InfoPlist.strings */; };
 		891B01ED189650DA00B2D848 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 891B01EC189650DA00B2D848 /* main.m */; };
-		891B01F1189650DB00B2D848 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 891B01F0189650DB00B2D848 /* Cedar-iOS.framework */; };
 		891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */; };
 		891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1DA18867BEE00042A13 /* RBAppDelegate.m */; };
 		891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F1FA18867DA000042A13 /* RBIRCServer.m */; };
@@ -103,6 +102,7 @@
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
+		897D8F621903775300410BE4 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897D8F611903775300410BE4 /* Cedar-iOS.framework */; };
 		898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CF18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */; };
@@ -271,7 +271,6 @@
 		891B01EC189650DA00B2D848 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		891B01EE189650DA00B2D848 /* IRCClientSpecs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IRCClientSpecs-Prefix.pch"; sourceTree = "<group>"; };
 		891B01EF189650DA00B2D848 /* Rakefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
-		891B01F0189650DB00B2D848 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCMessageSpec.mm; sourceTree = "<group>"; };
 		891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCServerSpec.mm; sourceTree = "<group>"; };
 		891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBChannelViewControllerSpec.mm; sourceTree = "<group>"; };
@@ -288,6 +287,7 @@
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
 		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
 		896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
+		897D8F611903775300410BE4 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		898132C918A72264004AEBE9 /* RBReconnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBReconnectViewController.h; sourceTree = "<group>"; };
 		898132CA18A72264004AEBE9 /* RBReconnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBReconnectViewController.m; sourceTree = "<group>"; };
 		898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBReconnectViewControllerSpec.mm; sourceTree = "<group>"; };
@@ -384,7 +384,7 @@
 				89B5AA1E18C675DC004D4BE8 /* libffi.a in Frameworks */,
 				891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */,
 				891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */,
-				891B01F1189650DB00B2D848 /* Cedar-iOS.framework in Frameworks */,
+				897D8F621903775300410BE4 /* Cedar-iOS.framework in Frameworks */,
 				891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -601,7 +601,7 @@
 			isa = PBXGroup;
 			children = (
 				891B01EF189650DA00B2D848 /* Rakefile */,
-				891B01F0189650DB00B2D848 /* Cedar-iOS.framework */,
+				897D8F611903775300410BE4 /* Cedar-iOS.framework */,
 				898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */,
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */,
@@ -1364,6 +1364,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/you/Desktop/dev/IRCClient/IRCClientSpecs/Frameworks,
+					"$(PROJECT_DIR)/IRCClientSpecs",
+					"$(PROJECT_DIR)/IRCClientSpecs/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1399,6 +1401,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/you/Desktop/dev/IRCClient/IRCClientSpecs/Frameworks,
+					"$(PROJECT_DIR)/IRCClientSpecs",
+					"$(PROJECT_DIR)/IRCClientSpecs/Frameworks",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
