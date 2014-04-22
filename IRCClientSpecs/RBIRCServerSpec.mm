@@ -21,6 +21,7 @@ describe(@"RBIRCServer", ^{
         subject = [[RBIRCServer alloc] init];
         subject.serverName = @"Test server";
         delegate = nice_fake_for(@protocol(RBIRCServerDelegate));
+        delegate stub_method("IRCServer:handleMessage:");
         [subject addDelegate:delegate];
         spy_on(subject);
         

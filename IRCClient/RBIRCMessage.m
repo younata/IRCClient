@@ -218,7 +218,8 @@
             [self loadImages];
             break;
         case IRCMessageTypeMode: {
-            self.message = trailing;
+            self.message = [NSString stringWithFormat:@"%@ %@", params[1], params[2]];
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:[@"MODE " stringByAppendingString:self.message] attributes:[self defaultAttributes]];
             NSMutableArray *modes = [[NSMutableArray alloc] init];
             if (params.count == 1) {
                 [params addObject:trailing]; // fucking unrealircd...

@@ -131,58 +131,6 @@ describe(@"RBScriptingService", ^{
             server should have_received("connect");
         });
     });
-    
-    describe(@"inline images", ^{
-        NSString *key = @"InlineImages";
-        beforeEach(^{
-            [[NSUserDefaults standardUserDefaults] setObject:@(YES) forKey:key];
-            [subject runEnabledScripts];
-        });
-        
-        afterEach(^{
-            [[NSUserDefaults standardUserDefaults] setObject:@(NO) forKey:key];
-        });
-        
-        it(@"should be loaded", ^{
-            checkIfLoaded(key);
-        });
-        
-        describe(@"SFW images", ^{
-            it(@"should append a text attachment for messages with links to images", ^{
-                RBIRCMessage *message = [[RBIRCMessage alloc] init];
-                message.timestamp = [NSDate date];
-                message.from = @"ik";
-                message.message = @"http://i.imgur.com/hjw7z6A.jpg"; // Is an actual image.
-                NSAttributedString *blah = message.attributedMessage;
-                [[RBScriptingService sharedInstance] server:nil didReceiveMessage:message];
-                message.attributedMessage should_not equal(blah);
-            });
-        });
-        
-        describe(@"NSFW images", ^{
-            it(@"should not append a text attachment for messages with links to nsfw images", ^{
-                RBIRCMessage *message = [[RBIRCMessage alloc] init];
-                message.timestamp = [NSDate date];
-                message.from = @"ik";
-                message.message = @"http://i.imgur.com/NI4MgcK.gif nsfw"; // actually is nsfw.
-                NSAttributedString *blah = message.attributedMessage;
-                [[RBScriptingService sharedInstance] server:nil didReceiveMessage:message];
-                message.attributedMessage should equal(blah);
-            });
-        });
-        
-        describe(@"Invalid images", ^{ // that is, links which look like they should be images, but really aren't
-            it(@"should not append a text attachment", ^{
-                RBIRCMessage *message = [[RBIRCMessage alloc] init];
-                message.timestamp = [NSDate date];
-                message.from = @"ik";
-                message.message = @"http://younata.com/image.jpg"; // html page saying "this is not an image".
-                NSAttributedString *blah = message.attributedMessage;
-                [[RBScriptingService sharedInstance] server:nil didReceiveMessage:message];
-                message.attributedMessage should equal(blah);
-            });
-        });
-    });
 });
 
 SPEC_END
