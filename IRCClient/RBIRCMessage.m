@@ -211,19 +211,22 @@
             self.message = trailing;
             [self parseCTCPResponse];
             [self loadImages];
+            self.message = [NSString stringWithFormat:@"%@: %@", self.from, trailing];
             break;
         case IRCMessageTypePrivmsg:
             self.message = trailing;
             [self parseCTCPRequest];
             [self loadImages];
+            self.message = [NSString stringWithFormat:@"%@: %@", self.from, trailing];
             break;
         case IRCMessageTypeMode: {
-            self.message = [NSString stringWithFormat:@"%@ %@", params[1], params[2]];
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:[@"MODE " stringByAppendingString:self.message] attributes:[self defaultAttributes]];
             NSMutableArray *modes = [[NSMutableArray alloc] init];
             if (params.count == 1) {
                 [params addObject:trailing]; // fucking unrealircd...
             }
+            self.message = [NSString stringWithFormat:@"MODE %@ %@", params[params.count - 2], params.lastObject]; // yeah, yeah...
+            self.attributedMessage = [[NSAttributedString alloc] initWithString:self.message attributes:[self defaultAttributes]];
+            
             int i = 1; // params[0] is targets...
             while ([params[i] hasPrefix:@"+"] || [params[i] hasPrefix:@"-"]) {
                 [modes addObject:params[i]];
@@ -485,14 +488,7 @@
 
 -(NSString *)description
 {
-    NSString *ret = @"";
-    if (!self.from ||
-        [self.from isEqualToString:RBIRCServerLog] ||
-        self.command != IRCMessageTypePrivmsg ||
-        self.command != IRCMessageTypeNotice)
-        return self.rawMessage;
-    ret = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
-    return ret;
+    return self.message;
 }
 
 -(NSString *)debugDescription

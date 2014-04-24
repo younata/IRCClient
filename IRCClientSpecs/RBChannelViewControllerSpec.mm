@@ -184,7 +184,7 @@ describe(@"RBChannelViewController", ^{
     
     RBIRCMessage *(^createMessage)() = ^RBIRCMessage*(){
         RBIRCMessage *msg = [[RBIRCMessage alloc] init];
-        msg.message = @"Hello world";
+        msg.message = @"testuser: Hello world";
         msg.from = @"testuser";
         msg.targets = [@[channel] mutableCopy];
         msg.command = IRCMessageTypePrivmsg;

@@ -26,7 +26,7 @@ describe(@"RBIRCMessage", ^{
     
     it(@"should interpret private messages properly", ^{
         msg = createMsg(@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :how are you");
-        msg.message should equal(@"how are you");
+        msg.message should equal(@"ik: how are you");
         msg.from should equal(@"ik");
         msg.targets[0] should equal(@"#boats");
         msg.command should equal(IRCMessageTypePrivmsg);
@@ -34,7 +34,7 @@ describe(@"RBIRCMessage", ^{
     
     it(@"should interpret notices properly", ^{
         msg = createMsg(@":You!Rachel@hide-DEA18147.com NOTICE foobar :test");
-        msg.message should equal(@"test");
+        msg.message should equal(@"You: test");
         msg.from should equal(@"You");
         msg.targets[0] should equal(@"foobar");
         msg.command should equal(IRCMessageTypeNotice);
@@ -50,7 +50,7 @@ describe(@"RBIRCMessage", ^{
     
     it(@"should interpret modes properly", ^{
         msg = createMsg(@":You!Rachel@hide-DEA18147.com MODE #foo +b foobar!*@*");
-        msg.message should equal(@"+b foobar!*@*");
+        msg.message should equal(@"MODE +b foobar!*@*");
         msg.extra should be_instance_of([NSArray class]).or_any_subclass();
         msg.extra[0] should equal(@[@"+b"]);
         msg.extra[1] should equal(@"foobar!*@*");
@@ -59,7 +59,7 @@ describe(@"RBIRCMessage", ^{
         msg.command should equal(IRCMessageTypeMode);
         
         msg = createMsg(@":YouiOS MODE YouiOS :+iwxz");
-        msg.message should equal(@"+iwxz");
+        msg.message should equal(@"MODE YouiOS +iwxz");
         msg.extra should be_instance_of([NSArray class]).or_any_subclass();
         msg.extra[0] should equal(@[@"+iwxz"]);
         msg.targets[0] should equal(@"YouiOS");

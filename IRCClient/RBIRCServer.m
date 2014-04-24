@@ -261,7 +261,6 @@
 
 -(void)receivedString:(NSString *)str
 {
-    printf("recv'd: %s", [str UTF8String]); // Debug! Without the annoying timestamp NSLog adds.
     if ([str hasPrefix:@"ERROR"])
         return;
     RBIRCMessage *msg;

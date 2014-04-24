@@ -21,7 +21,22 @@ describe(@"RBIRCServer", ^{
         subject = [[RBIRCServer alloc] init];
         subject.serverName = @"Test server";
         delegate = nice_fake_for(@protocol(RBIRCServerDelegate));
-        delegate stub_method("IRCServer:handleMessage:");
+        /* testing the tests
+        delegate stub_method(@selector(IRCServer:handleMessage:)).and_do(^(NSInvocation *inv){
+            id arg1;
+            id arg2;
+            [inv getArgument:&arg1 atIndex:2];
+            [inv getArgument:&arg2 atIndex:3];
+            NSLog(@"received IRCServer:handleMessage: with args '%@', '%@'", arg1, arg2);
+        });
+        delegate stub_method(@selector(IRCServer:invalidCommand:)).and_do(^(NSInvocation *inv){
+            id arg1;
+            id arg2;
+            [inv getArgument:&arg1 atIndex:2];
+            [inv getArgument:&arg2 atIndex:3];
+            NSLog(@"received IRCServer:invalidCommand: with args '%@', '%@'", arg1, arg2);
+        });
+        // */
         [subject addDelegate:delegate];
         spy_on(subject);
         
@@ -30,6 +45,17 @@ describe(@"RBIRCServer", ^{
     
     it(@"should have at least 1 delegate", ^{
         subject.delegates.count should be_gte(1);
+    });
+    
+    it(@"should have the delegate as a delegate", ^{
+        [subject.delegates containsObject:delegate] should be_truthy;
+        [delegate IRCServerDidConnect:nil];
+        [delegate IRCServerConnectionDidDisconnect:nil];
+        [delegate IRCServer:nil errorReadingFromStream:nil];
+        [delegate IRCServer:nil handleMessage:nil];
+        [delegate IRCServer:nil invalidCommand:nil];
+        [delegate IRCServer:nil updateMessage:nil];
+        delegate should_not be_nil;
     });
     
     it(@"should default to reconnect on startup", ^{
@@ -53,7 +79,7 @@ describe(@"RBIRCServer", ^{
     
     it(@"should handle messages", ^{
         [subject receivedString:msg];
-        delegate should have_received("IRCServer:handleMessage:").with(subject).and_with(Arguments::any([RBIRCMessage class]));
+        delegate should have_received(@selector(IRCServer:handleMessage:)).with(subject).and_with(Arguments::any([RBIRCMessage class]));
         subject.channels.count should be_gte(0);
     });
     
@@ -96,8 +122,8 @@ describe(@"RBIRCServer", ^{
         });
         
         void (^checkNotSent)(void) = ^{
-            delegate should have_received("IRCServer:invalidCommand:").with(subject, Arguments::any([NSError class]));
-            subject should_not have_received("sendCommand:").with(Arguments::anything);
+            delegate should have_received(@selector(IRCServer:invalidCommand:)).with(subject, Arguments::any([NSError class]));
+            subject should_not have_received(@selector(sendCommand:)).with(Arguments::anything);
         };
         
         it(@"should not allow you to part from an unjoined channel", ^{
