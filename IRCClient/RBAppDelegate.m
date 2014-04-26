@@ -33,12 +33,6 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    // delete old files...
-    NSURL *inlineImages = [[NSBundle mainBundle] URLForResource:@"inlineImages" withExtension:@"nu"];
-    if (inlineImages) {
-        [[NSFileManager defaultManager] removeItemAtURL:inlineImages error:nil];
-    }
-    
     self.taskIdentifier = UIBackgroundTaskInvalid;
     
     [[RBScriptingService sharedInstance] runEnabledScripts];

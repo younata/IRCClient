@@ -184,20 +184,23 @@ static NSString *textFieldCell = @"textFieldCell";
                              NSLocalizedString(@"Display NSFW images", nil)];
         cell.textLabel.text = strings[row];
         
-        UISwitch *sw = [[UISwitch alloc] initWithFrame:CGRectZero];
+        UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectZero];
+        NSString *key;
         switch (row) {
             case 0:
-                sw.on = [[NSUserDefaults standardUserDefaults] boolForKey:RBConfigLoadImages];
-                self.values[RBConfigLoadImages] = @(sw.on);
+                key = RBConfigLoadImages;
                 break;
             case 1:
-                sw.on = [[NSUserDefaults standardUserDefaults] boolForKey:RBConfigDontLoadNSFW];
-                self.values[RBConfigDontLoadNSFW] = @(sw.on);
+                key = RBConfigDontLoadNSFW;
                 break;
             default:
                 break;
         }
-        cell.accessoryView = sw;
+        s.on = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+        self.values[key] = @(s.on);
+        [s addTarget:self action:@selector(setScript:) forControlEvents:UIControlEventValueChanged];
+        [s setCustomProperty:key forKey:@"scriptKey"];
+        cell.accessoryView = s;
     } else if (section == 4) {
         NSArray *strings = @[NSLocalizedString(@"Keyboards", nil)];
         cell.textLabel.text = strings[row];

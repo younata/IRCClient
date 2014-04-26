@@ -469,8 +469,10 @@
                 [img hasSuffix:@".cur"] ||
                 [img hasSuffix:@".xbm"]) {
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"image/gif", @"image/jpeg", @"image/png", @"image/tiff", @"image/bmp", @"image/ico", nil];
                 __weak RBIRCMessage *theSelf = self;
                 [manager GET:img parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSLog(@"Recieved image: %@", responseObject);
                     if ([responseObject isKindOfClass:[UIImage class]]) {
                         UIImage *image = (UIImage *)responseObject;
                         NSTextAttachment *attach = [[NSTextAttachment alloc] init];
@@ -479,6 +481,7 @@
                         [(RBIRCServer *)theSelf.server sendUpdateMessageCommand:theSelf];
                     }
                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    NSLog(@"Error attempting to retrieve image: %@", error);
                 }];
             }
         }

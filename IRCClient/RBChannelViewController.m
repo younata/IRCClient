@@ -332,13 +332,22 @@ static NSString *CellIdentifier = @"Cell";
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger ret = [[self.server[self.channel] log] count];
+    if (ret > 50) {
+        return 50;
+    }
     return ret;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSAttributedString *as = [self attributedStringForIndex:indexPath.row];
-    UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSInteger i = indexPath.row;
+    NSInteger length = [[self.server[self.channel] log] count];
+    if (length > 50) {
+        length -= 50;
+        i = length + i;
+    }
+    NSAttributedString *as = [self attributedStringForIndex:i];
+    UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     UITextView *tv = [[UITextView alloc] initForAutoLayoutWithSuperview:ret.contentView];
     [tv autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
     tv.attributedText = as;
