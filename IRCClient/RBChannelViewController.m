@@ -599,7 +599,7 @@ static NSString *CellIdentifier = @"Cell";
             }
             
             if (shouldScroll) {
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.server[self.channel] log].count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
             }
         } else {
             NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
