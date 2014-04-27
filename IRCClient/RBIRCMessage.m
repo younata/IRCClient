@@ -491,6 +491,9 @@
 
 -(NSString *)description
 {
+    if (self.command == IRCMessageTypePrivmsg || self.command == IRCMessageTypeNotice) {
+        return [NSString stringWithFormat:@"%@: %@", self.from, self.message];
+    }
     return self.message;
 }
 

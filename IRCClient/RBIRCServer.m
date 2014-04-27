@@ -165,7 +165,6 @@
     if (!self.connected) {
         return;
     }
-    printf("sending: '%s'\n", command.UTF8String);
     if (![command hasSuffix:[NSString stringWithFormat:@"\r\n"]]) {
         command = [command stringByAppendingString:@"\r\n"];
     }
