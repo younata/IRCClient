@@ -541,6 +541,8 @@ static NSString *CellIdentifier = @"Cell";
 {
     [self.server rmDelegate:self];
     [server addDelegate:self];
+    [self.server[self.channel] read];
+    [newChannel read];
     self.server = server;
     self.channel = newChannel.name;
     self.navigationItem.title = newChannel.name;
