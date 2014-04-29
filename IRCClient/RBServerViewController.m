@@ -63,6 +63,20 @@ static NSString *textFieldCell = @"textFieldCell";
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     
     [[RBScriptingService sharedInstance] serverListWasLoaded:self];
+    
+    void (^blockName)(NSNotification *) = ^(NSNotification *note) {
+        NSString *name = note.name;
+        if ([name isEqualToString:RBIRCServerDidConnect]) {
+            [self IRCServerDidConnect:note.object];
+        } else if ([name isEqualToString:RBIRCServerErrorReadingFromStream]) {
+            [self IRCServer:note.object errorReadingFromStream:note.userInfo[@"error"]];
+        } else if ([name isEqualToString:RBIRCServerHandleMessage]) {
+            [self IRCServer:note.object handleMessage:note.userInfo[@"message"]];
+        }
+    };
+    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerDidConnect object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerErrorReadingFromStream object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerHandleMessage object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -76,21 +90,15 @@ static NSString *textFieldCell = @"textFieldCell";
     }
 }
 
--(void)setServers:(NSMutableArray *)servers
-{
-    for (RBIRCServer *server in _servers) {
-        [server rmDelegate:self];
-    }
-    _servers = servers;
-    for (RBIRCServer *server in servers) {
-        [server addDelegate:self];
-    }
-}
-
 -(void)saveServerData
 {
     NSData *d = [NSKeyedArchiver archivedDataWithRootObject:self.servers];
     [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Table view data source
@@ -149,7 +157,7 @@ static NSString *textFieldCell = @"textFieldCell";
             
             if (![channel isEqual:selectedChannel]) {
                 if (channel.unreadMessages.count != 0) {
-                    cell.textLabel.text = [NSString stringWithFormat:@"[%d] %@", channel.unreadMessages.count, channel.name];
+                    cell.textLabel.text = [NSString stringWithFormat:@"[%lu] %@", (unsigned long)channel.unreadMessages.count, channel.name];
                 }
             }
             

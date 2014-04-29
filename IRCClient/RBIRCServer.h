@@ -10,9 +10,15 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <CFNetwork/CFNetwork.h>
 
-#import "RBIRCServerDelegate.h"
-
 #define RBIRCServerLog @"ServerLog"
+
+#define RBIRCServerDidConnect @"RBIRCServerDidConnect"
+#define RBIRCServerConnectionDidDisconnect @"RBIRCServerConnectionDidDisconnect"
+#define RBIRCServerErrorReadingFromStream @"RBIRCServerErrorReadingFromStream"
+#define RBIRCServerHandleMessage @"RBIRCServerHandleMessage"
+#define RBIRCServerInvalidCommand @"RBIRCServerInvalidCommand"
+#define RBIRCServerUpdateMessage @"RBIRCServerUpdateMessage"
+
 
 @interface RBIRCServer : NSObject <NSStreamDelegate, NSCoding>
 {
@@ -25,7 +31,6 @@
 @property (nonatomic, strong) NSInputStream *readStream;
 @property (nonatomic, strong) NSOutputStream *writeStream;
 
-@property (nonatomic, readonly, strong) NSMutableSet *delegates;
 @property (nonatomic, readonly, strong) NSMutableDictionary *channels;
 @property (nonatomic, copy) NSString *serverName;
 
@@ -44,9 +49,6 @@
 -(void)sendCommand:(NSString *)command;
 
 -(void)reconnect;
-
--(void)addDelegate:(id<RBIRCServerDelegate>)object;
--(void)rmDelegate:(id<RBIRCServerDelegate>)object;
 
 -(void)connect;
 -(void)connect:(NSString *)realname;

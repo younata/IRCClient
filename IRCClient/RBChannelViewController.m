@@ -143,6 +143,31 @@ static NSString *CellIdentifier = @"Cell";
     sgr.numberOfTouchesRequired = 2;
     
     [[RBScriptingService sharedInstance] channelViewWasLoaded:self];
+    
+    void (^blockName)(NSNotification *) = ^(NSNotification *note) {
+        NSString *name = note.name;
+        if ([name isEqualToString:RBIRCServerConnectionDidDisconnect]) {
+            [self IRCServerConnectionDidDisconnect:note.object];
+        } else if ([name isEqualToString:RBIRCServerErrorReadingFromStream]) {
+            [self IRCServer:note.object errorReadingFromStream:note.userInfo[@"error"]];
+        } else if ([name isEqualToString:RBIRCServerInvalidCommand]) {
+            [self IRCServer:note.object invalidCommand:note.userInfo[@"error"]];
+        } else if ([name isEqualToString:RBIRCServerHandleMessage]) {
+            [self IRCServer:note.object handleMessage:note.userInfo[@"message"]];
+        } else if ([name isEqualToString:RBIRCServerUpdateMessage]) {
+            [self IRCServer:note.object updateMessage:note.userInfo[@"message"]];
+        }
+    };
+    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerConnectionDidDisconnect object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerErrorReadingFromStream object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerInvalidCommand object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerHandleMessage object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerUpdateMessage object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)loadExtraKeyboards
@@ -332,20 +357,12 @@ static NSString *CellIdentifier = @"Cell";
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger ret = [[self.server[self.channel] log] count];
-    if (ret > 50) {
-        return 50;
-    }
     return ret;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger i = indexPath.row;
-    NSInteger length = [[self.server[self.channel] log] count];
-    if (length > 50) {
-        length -= 50;
-        i = length + i;
-    }
     NSAttributedString *as = [self attributedStringForIndex:i];
     UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     UITextView *tv = [[UITextView alloc] initForAutoLayoutWithSuperview:ret.contentView];
@@ -539,8 +556,6 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)server:(RBIRCServer *)server didChangeChannel:(RBIRCChannel *)newChannel
 {
-    [self.server rmDelegate:self];
-    [server addDelegate:self];
     [self.server[self.channel] read];
     [newChannel read];
     self.server = server;
@@ -585,24 +600,7 @@ static NSString *CellIdentifier = @"Cell";
             if (message.command == IRCMessageTypeTopic) {
                 [(RBNameViewController *)self.revealController.rightViewController setTopic:message.message];
             }
-            BOOL shouldScroll = NO;
-            NSInteger section = 0;
-            NSInteger row = [self tableView:self.tableView numberOfRowsInSection:0] - 2; // -1 for index, another -1 because we just added to it.
-            
-            for (NSIndexPath *ip in [self.tableView indexPathsForVisibleRows]) {
-                if (ip.section < section)
-                    continue;
-                else if (ip.section > section)
-                    break;
-                if (ip.row == row) {
-                    shouldScroll = YES;
-                    break;
-                }
-            }
-            
-            if (shouldScroll) {
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-            }
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.tableView numberOfRowsInSection:0] - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
         } else {
             NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
         }
@@ -613,8 +611,9 @@ static NSString *CellIdentifier = @"Cell";
 {
     for (NSString *to in message.targets) {
         if ([to isEqualToString:self.channel]) {
-            [self.tableView reloadData];
-            break;
+            NSUInteger i = [[self.server[self.channel] log] indexOfObject:message];
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]
+                                  withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }
 }

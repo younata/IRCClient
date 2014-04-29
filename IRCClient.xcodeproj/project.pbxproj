@@ -11,8 +11,6 @@
 		8905344518C93842006DDA8B /* NSString+ranges.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344318C93842006DDA8B /* NSString+ranges.m */; };
 		8905344A18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */; };
 		8905344B18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */; };
-		8905345918C9C4FE006DDA8B /* UIImage+ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905345118C9C4FE006DDA8B /* UIImage+ResizeMagick.m */; };
-		8905345A18C9C4FE006DDA8B /* UIImage+ResizeMagick.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905345118C9C4FE006DDA8B /* UIImage+ResizeMagick.m */; };
 		8906F1CB18867BEE00042A13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		8906F1CD18867BEE00042A13 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
 		8906F1CF18867BEE00042A13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
@@ -200,8 +198,6 @@
 		8905344318C93842006DDA8B /* NSString+ranges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ranges.m"; sourceTree = "<group>"; };
 		8905344818C9AEB4006DDA8B /* UIButton+serverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+serverButton.h"; sourceTree = "<group>"; };
 		8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+serverButton.m"; sourceTree = "<group>"; };
-		8905345018C9C4FE006DDA8B /* UIImage+ResizeMagick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeMagick.h"; sourceTree = "<group>"; };
-		8905345118C9C4FE006DDA8B /* UIImage+ResizeMagick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeMagick.m"; sourceTree = "<group>"; };
 		8906F1C718867BEE00042A13 /* rIRC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rIRC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8906F1CA18867BEE00042A13 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8906F1CC18867BEE00042A13 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -321,7 +317,6 @@
 		89C46E46189600A9006068DC /* RBTextFieldServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextFieldServerCell.m; sourceTree = "<group>"; };
 		89C46E4818960C96006068DC /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
 		89C46E4918960C96006068DC /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
-		89C46E4C189646AE006068DC /* RBIRCServerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBIRCServerDelegate.h; sourceTree = "<group>"; };
 		89D4B66318CFFC3600891116 /* RBNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBNameViewController.h; sourceTree = "<group>"; };
 		89D4B66418CFFC3600891116 /* RBNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNameViewController.m; sourceTree = "<group>"; };
 		89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBNameViewControllerSpec.mm; sourceTree = "<group>"; };
@@ -392,20 +387,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8905344C18C9C4FE006DDA8B /* UIImage-ResizeMagick */ = {
-			isa = PBXGroup;
-			children = (
-				8905345018C9C4FE006DDA8B /* UIImage+ResizeMagick.h */,
-				8905345118C9C4FE006DDA8B /* UIImage+ResizeMagick.m */,
-			);
-			path = "UIImage-ResizeMagick";
-			sourceTree = "<group>";
-		};
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
 				893C331818C197F0000279AA /* libffi.xcodeproj */,
-				8905344C18C9C4FE006DDA8B /* UIImage-ResizeMagick */,
 				8908DC7118B8B299004DFBAB /* RBHelp */,
 				8908DBDE18B60FA2004DFBAB /* Nu */,
 				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
@@ -740,7 +725,6 @@
 		89C46E431895F89A006068DC /* IRC Backend */ = {
 			isa = PBXGroup;
 			children = (
-				89C46E4C189646AE006068DC /* RBIRCServerDelegate.h */,
 				8906F1F918867DA000042A13 /* RBIRCServer.h */,
 				8906F1FA18867DA000042A13 /* RBIRCServer.m */,
 				8906F20618878F1100042A13 /* RBIRCChannel.h */,
@@ -1066,7 +1050,6 @@
 				8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
 				8908DC7F18B8B299004DFBAB /* RBHelpViewController.m in Sources */,
-				8905345918C9C4FE006DDA8B /* UIImage+ResizeMagick.m in Sources */,
 				8908DC2918B6105F004DFBAB /* RBScript.m in Sources */,
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
@@ -1114,7 +1097,6 @@
 				89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */,
 				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
-				8905345A18C9C4FE006DDA8B /* UIImage+ResizeMagick.m in Sources */,
 				8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */,
 				89E812B918B8E78800616600 /* RBColorScheme.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
