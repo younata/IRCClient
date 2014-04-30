@@ -15,8 +15,6 @@
 #import "RBServerEditorViewController.h"
 #import "RBTextFieldServerCell.h"
 
-#import "RBIRCServerDelegate.h"
-
 #import "RBConfigurationKeys.h"
 
 #import "RBChannelViewController.h" // shouldn't have to do this...

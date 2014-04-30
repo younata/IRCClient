@@ -10,6 +10,8 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <CFNetwork/CFNetwork.h>
 
+@class RBIRCMessage;
+
 #define RBIRCServerLog @"ServerLog"
 
 #define RBIRCServerDidConnect @"RBIRCServerDidConnect"
