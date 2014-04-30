@@ -485,12 +485,22 @@
 
 #pragma mark - NSStreamDelegate
 
++(dispatch_queue_t)queue
+{
+    static dispatch_queue_t ret = 0;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
+        ret = dispatch_queue_create("RBIRCServer", NULL);
+    });
+    return ret;
+}
+
 -(void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
 {
     switch (eventCode) {
         case NSStreamEventOpenCompleted:
             if ([aStream isKindOfClass:[NSOutputStream class]]) {
-                dispatch_async(dispatch_queue_create("", NULL), onConnect);
+                dispatch_async([RBIRCServer queue], onConnect);
             }
             break;
         case NSStreamEventHasBytesAvailable: {

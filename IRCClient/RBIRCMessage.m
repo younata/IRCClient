@@ -443,6 +443,7 @@
     }
 }
 
+
 -(void)loadImages
 {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:RBConfigLoadImages]) {
@@ -465,12 +466,16 @@
                 [img hasSuffix:@".gif"] ||
                 [img hasSuffix:@".bmp"] ||
                 [img hasSuffix:@".bmpf"] ||
-                [img hasSuffix:@".ico"] ||
-                [img hasSuffix:@".cur"] ||
-                [img hasSuffix:@".xbm"]) {
-                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"image/gif", @"image/jpeg", @"image/png", @"image/tiff", @"image/bmp", @"image/ico", nil];
+                [img hasSuffix:@".ico"]) {
+                
                 __weak RBIRCMessage *theSelf = self;
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"image/gif",
+                                                                                          @"image/jpeg",
+                                                                                          @"image/png",
+                                                                                          @"image/tiff",
+                                                                                          @"image/bmp",
+                                                                                          @"image/ico"]];
                 [manager GET:img parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     NSLog(@"Recieved image: %@", responseObject);
                     if ([responseObject isKindOfClass:[UIImage class]]) {

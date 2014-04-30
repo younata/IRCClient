@@ -62,19 +62,23 @@ static NSString *textFieldCell = @"textFieldCell";
     
     [[RBScriptingService sharedInstance] serverListWasLoaded:self];
     
-    void (^blockName)(NSNotification *) = ^(NSNotification *note) {
-        NSString *name = note.name;
-        if ([name isEqualToString:RBIRCServerDidConnect]) {
-            [self IRCServerDidConnect:note.object];
-        } else if ([name isEqualToString:RBIRCServerErrorReadingFromStream]) {
-            [self IRCServer:note.object errorReadingFromStream:note.userInfo[@"error"]];
-        } else if ([name isEqualToString:RBIRCServerHandleMessage]) {
-            [self IRCServer:note.object handleMessage:note.userInfo[@"message"]];
-        }
-    };
-    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerDidConnect object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
-    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerErrorReadingFromStream object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
-    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerHandleMessage object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+    for (NSString *str in @[RBIRCServerDidConnect,
+                            RBIRCServerErrorReadingFromStream,
+                            RBIRCServerHandleMessage]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:str object:nil];
+    }
+}
+
+-(void)handleNotification:(NSNotification *)note
+{
+    NSString *name = note.name;
+    if ([name isEqualToString:RBIRCServerDidConnect]) {
+        [self IRCServerDidConnect:note.object];
+    } else if ([name isEqualToString:RBIRCServerErrorReadingFromStream]) {
+        [self IRCServer:note.object errorReadingFromStream:note.userInfo[@"error"]];
+    } else if ([name isEqualToString:RBIRCServerHandleMessage]) {
+        [self IRCServer:note.object handleMessage:note.userInfo[@"message"]];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated

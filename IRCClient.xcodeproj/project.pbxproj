@@ -135,6 +135,8 @@
 		89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
 		89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
 		89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */; };
+		89D4C45C19108EB900E8E4C7 /* RBTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */; };
+		89D4C45D19108EB900E8E4C7 /* RBTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */; };
 		89DF7E5218D538FA00FED10C /* RBChordedKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E4C18D538FA00FED10C /* RBChordedKeyboard.m */; };
 		89DF7E5318D538FA00FED10C /* RBChordedKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E4C18D538FA00FED10C /* RBChordedKeyboard.m */; };
 		89DF7E5418D538FA00FED10C /* RBChordedKeyboardDvorak.m in Sources */ = {isa = PBXBuildFile; fileRef = 89DF7E4F18D538FA00FED10C /* RBChordedKeyboardDvorak.m */; };
@@ -320,6 +322,8 @@
 		89D4B66318CFFC3600891116 /* RBNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBNameViewController.h; sourceTree = "<group>"; };
 		89D4B66418CFFC3600891116 /* RBNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNameViewController.m; sourceTree = "<group>"; };
 		89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBNameViewControllerSpec.mm; sourceTree = "<group>"; };
+		89D4C45A19108EB900E8E4C7 /* RBTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextViewCell.h; sourceTree = "<group>"; };
+		89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextViewCell.m; sourceTree = "<group>"; };
 		89DF7E4B18D538FA00FED10C /* RBChordedKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBChordedKeyboard.h; sourceTree = "<group>"; };
 		89DF7E4C18D538FA00FED10C /* RBChordedKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBChordedKeyboard.m; sourceTree = "<group>"; };
 		89DF7E4D18D538FA00FED10C /* RBChordedKeyboardDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBChordedKeyboardDelegate.h; sourceTree = "<group>"; };
@@ -748,6 +752,8 @@
 				896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */,
 				8906F2031887562600042A13 /* RBChannelViewController.h */,
 				8906F2041887562600042A13 /* RBChannelViewController.m */,
+				89D4C45A19108EB900E8E4C7 /* RBTextViewCell.h */,
+				89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */,
 				89D4B66318CFFC3600891116 /* RBNameViewController.h */,
 				89D4B66418CFFC3600891116 /* RBNameViewController.m */,
 				898132D718A787E9004AEBE9 /* Config */,
@@ -1037,6 +1043,7 @@
 				89DF7E5618D538FA00FED10C /* RBChordedKeyboardQwerty.m in Sources */,
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
+				89D4C45C19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
 				8905344418C93842006DDA8B /* NSString+ranges.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
 				899CE7A918D068D6002ABBFE /* RBKeyboardViewController.m in Sources */,
@@ -1135,6 +1142,7 @@
 				898132D618A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				898132D918A78980004AEBE9 /* RBConfigViewControllerSpec.mm in Sources */,
 				898132E218A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
+				89D4C45D19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
 				8905344B18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
 				899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */,
 			);

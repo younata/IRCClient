@@ -31,6 +31,8 @@
 
 #import "RBChordedKeyboard.h"
 
+#import "RBTextViewCell.h"
+
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
@@ -93,7 +95,7 @@ static NSString *CellIdentifier = @"Cell";
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView registerClass:[RBTextViewCell class] forCellReuseIdentifier:CellIdentifier];
     
     // bunch of view shit to make the interface look not-shit.
     self.borderView = [[UIView alloc] initForAutoLayoutWithSuperview:self.view];
@@ -144,25 +146,29 @@ static NSString *CellIdentifier = @"Cell";
     
     [[RBScriptingService sharedInstance] channelViewWasLoaded:self];
     
-    void (^blockName)(NSNotification *) = ^(NSNotification *note) {
-        NSString *name = note.name;
-        if ([name isEqualToString:RBIRCServerConnectionDidDisconnect]) {
-            [self IRCServerConnectionDidDisconnect:note.object];
-        } else if ([name isEqualToString:RBIRCServerErrorReadingFromStream]) {
-            [self IRCServer:note.object errorReadingFromStream:note.userInfo[@"error"]];
-        } else if ([name isEqualToString:RBIRCServerInvalidCommand]) {
-            [self IRCServer:note.object invalidCommand:note.userInfo[@"error"]];
-        } else if ([name isEqualToString:RBIRCServerHandleMessage]) {
-            [self IRCServer:note.object handleMessage:note.userInfo[@"message"]];
-        } else if ([name isEqualToString:RBIRCServerUpdateMessage]) {
-            [self IRCServer:note.object updateMessage:note.userInfo[@"message"]];
-        }
-    };
-    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerConnectionDidDisconnect object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
-    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerErrorReadingFromStream object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
-    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerInvalidCommand object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
-    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerHandleMessage object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
-    [[NSNotificationCenter defaultCenter] addObserverForName:RBIRCServerUpdateMessage object:self queue:[NSOperationQueue currentQueue] usingBlock:blockName];
+    for (NSString *str in @[RBIRCServerConnectionDidDisconnect,
+                            RBIRCServerErrorReadingFromStream,
+                            RBIRCServerInvalidCommand,
+                            RBIRCServerHandleMessage,
+                            RBIRCServerUpdateMessage]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:str object:nil];
+    }
+}
+
+-(void)handleNotification:(NSNotification *)note
+{
+    NSString *name = note.name;
+    if ([name isEqualToString:RBIRCServerConnectionDidDisconnect]) {
+        [self IRCServerConnectionDidDisconnect:note.object];
+    } else if ([name isEqualToString:RBIRCServerErrorReadingFromStream]) {
+        [self IRCServer:note.object errorReadingFromStream:note.userInfo[@"error"]];
+    } else if ([name isEqualToString:RBIRCServerInvalidCommand]) {
+        [self IRCServer:note.object invalidCommand:note.userInfo[@"error"]];
+    } else if ([name isEqualToString:RBIRCServerHandleMessage]) {
+        [self IRCServer:note.object handleMessage:note.userInfo[@"message"]];
+    } else if ([name isEqualToString:RBIRCServerUpdateMessage]) {
+        [self IRCServer:note.object updateMessage:note.userInfo[@"message"]];
+    }
 }
 
 -(void)dealloc
@@ -364,15 +370,11 @@ static NSString *CellIdentifier = @"Cell";
 {
     NSInteger i = indexPath.row;
     NSAttributedString *as = [self attributedStringForIndex:i];
-    UITableViewCell *ret = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    UITextView *tv = [[UITextView alloc] initForAutoLayoutWithSuperview:ret.contentView];
-    [tv autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-    tv.attributedText = as;
-    tv.dataDetectorTypes = UIDataDetectorTypeLink;
-    tv.editable = NO;
-    tv.userInteractionEnabled = YES;
-    tv.scrollEnabled = NO;
-    tv.textContainerInset = UIEdgeInsetsMake(5, 0, 0, 0);
+    RBTextViewCell *ret = (RBTextViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if ([ret.textView.attributedText isEqualToAttributedString:as]) {
+        return ret;
+    }
+    ret.textView.attributedText = as;
     [ret layoutSubviews];
     return ret;
 }
@@ -515,7 +517,9 @@ static NSString *CellIdentifier = @"Cell";
         msg.rawMessage = [NSString stringWithFormat:@"PRIVMSG %@ %@", msg.targets[0], str];
         [[self.server[self.channel] log] addObject:msg];
     }
-    [self.tableView reloadData];
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView endUpdates];
     
     textField.text = @"";
     NSInteger rows = [self.tableView numberOfRowsInSection:0];
@@ -594,13 +598,13 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message
 {
-    [self.tableView reloadData];
     for (NSString *to in message.targets) {
         if ([to isEqualToString:self.channel]) {
             if (message.command == IRCMessageTypeTopic) {
                 [(RBNameViewController *)self.revealController.rightViewController setTopic:message.message];
             }
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.tableView numberOfRowsInSection:0] - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView scrollToBottomIfNear];
         } else {
             NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
         }
@@ -612,8 +616,10 @@ static NSString *CellIdentifier = @"Cell";
     for (NSString *to in message.targets) {
         if ([to isEqualToString:self.channel]) {
             NSUInteger i = [[self.server[self.channel] log] indexOfObject:message];
+            [self.tableView beginUpdates];
             [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]
-                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+                                  withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView endUpdates];
         }
     }
 }
