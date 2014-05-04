@@ -518,7 +518,8 @@ static NSString *CellIdentifier = @"Cell";
         [[self.server[self.channel] log] addObject:msg];
     }
     [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
+                          withRowAnimation:UITableViewRowAnimationNone];
     [self.tableView endUpdates];
     
     textField.text = @"";
@@ -603,7 +604,8 @@ static NSString *CellIdentifier = @"Cell";
             if (message.command == IRCMessageTypeTopic) {
                 [(RBNameViewController *)self.revealController.rightViewController setTopic:message.message];
             }
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:nil numberOfRowsInSection:0] - 1 inSection:0]]
+                                  withRowAnimation:UITableViewRowAnimationNone];
             [self.tableView scrollToBottomIfNear];
         } else {
             NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
@@ -617,7 +619,7 @@ static NSString *CellIdentifier = @"Cell";
         if ([to isEqualToString:self.channel]) {
             NSUInteger i = [[self.server[self.channel] log] indexOfObject:message];
             [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]
                                   withRowAnimation:UITableViewRowAnimationNone];
             [self.tableView endUpdates];
         }
