@@ -99,6 +99,7 @@
     sslLabel.textAlignment = NSTextAlignmentLeft;
     
     self.serverSSL = [[UISwitch alloc] initForAutoLayoutWithSuperview:sv];
+    self.serverSSL.on = NO;
     
     [sslLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.serverSSL withOffset:20];
     [self.serverSSL autoAlignAxis:ALAxisHorizontal toSameAxisOfView:sslLabel];
@@ -134,7 +135,7 @@
     
     self.serverName.placeholder = NSLocalizedString(@"ServerName", nil);
     self.serverHostname.placeholder = @"irc.freenode.net";
-    self.serverPort.placeholder = @"6697";
+    self.serverPort.placeholder = @"6667";
     self.serverNick.placeholder = NSLocalizedString(@"username", nil);
     self.serverRealName.placeholder = NSLocalizedString(@"realname", nil);
     self.serverPassword.placeholder = NSLocalizedString(@"server password", nil);
