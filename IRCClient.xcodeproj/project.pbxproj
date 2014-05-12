@@ -96,7 +96,6 @@
 		893C331918C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
-		893C332418C19BA2000279AA /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332318C19BA2000279AA /* libffi.a */; };
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
@@ -132,6 +131,7 @@
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
+		89C99BE3192052E900922FC6 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B5AA1B18C66189004D4BE8 /* libffi.a */; };
 		89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
 		89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
 		89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */; };
@@ -190,6 +190,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = DB13B1911849DF510010F42D;
 			remoteInfo = "libffi-Mac";
+		};
+		89C99BE11920524500922FC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 893C331818C197F0000279AA /* libffi.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = DB13B1651849DF1E0010F42D;
+			remoteInfo = "libffi-iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -355,7 +362,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				893C332418C19BA2000279AA /* libffi.a in Frameworks */,
+				89C99BE3192052E900922FC6 /* libffi.a in Frameworks */,
 				8906F1FF18867F1F00042A13 /* CoreFoundation.framework in Frameworks */,
 				8906F1FD18867DC200042A13 /* CFNetwork.framework in Frameworks */,
 				8906F1CD18867BEE00042A13 /* CoreGraphics.framework in Frameworks */,
@@ -811,6 +818,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				89C99BE21920524500922FC6 /* PBXTargetDependency */,
 			);
 			name = IRCClient;
 			productName = IRCClient;
@@ -1155,6 +1163,11 @@
 			isa = PBXTargetDependency;
 			target = 8906F1C618867BEE00042A13 /* IRCClient */;
 			targetProxy = 8906F1E718867BEE00042A13 /* PBXContainerItemProxy */;
+		};
+		89C99BE21920524500922FC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libffi-iOS";
+			targetProxy = 89C99BE11920524500922FC6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

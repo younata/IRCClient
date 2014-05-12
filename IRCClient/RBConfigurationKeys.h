@@ -22,4 +22,6 @@
 #define RBConfigLoadImages @"RBConfigLoadImages"
 #define RBConfigDontLoadNSFW @"RBConfigNoLoadNSFWImages"
 
+#define RBConfigChannelViewNotifyNewMessages @"RBConfigChannelViewNotifyNewMessages"
+
 #endif

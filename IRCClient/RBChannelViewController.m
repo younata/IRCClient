@@ -10,6 +10,7 @@
 
 #import "UIButton+buttonWithFrame.h"
 #import "NSString+isNilOrEmpty.h"
+#import "NSString+contains.h"
 #import "UIView+initWithSuperview.h"
 
 #import "RBIRCServer.h"
@@ -120,6 +121,23 @@ static NSString *CellIdentifier = @"Cell";
     self.input.returnKeyType = UIReturnKeySend;
     self.input.backgroundColor = [UIColor whiteColor];
     self.input.delegate = self;
+    
+    NSString *fontName = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigFontName];
+    if (!fontName) {
+        fontName = @"Inconsolata";
+        [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:RBConfigFontName];
+    }
+    double fontSize = [[NSUserDefaults standardUserDefaults] doubleForKey:RBConfigFontSize];
+    if (fontSize == 0) {
+        fontSize = 14.0;
+        [[NSUserDefaults standardUserDefaults] setDouble:fontSize forKey:RBConfigFontSize];
+    }
+    UIFont *font = [UIFont fontWithName:fontName size:fontSize];
+    if (!font) {
+        font = [UIFont systemFontOfSize:fontSize];
+    }
+    self.input.font = font;
+    
     [self.input autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
     [self.input autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
     [self.input autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:4];
@@ -606,10 +624,103 @@ static NSString *CellIdentifier = @"Cell";
             }
             [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:nil numberOfRowsInSection:0] - 1 inSection:0]]
                                   withRowAnimation:UITableViewRowAnimationNone];
-            [self.tableView scrollToBottomIfNear];
+            if (![self.tableView scrollToBottomIfNear]) {
+                // make a check to make sure that we're not scrolling because the log is short enough to display everything without scrolling...
+                NSInteger sectionNum = [self.tableView numberOfSections] - 1;
+                NSIndexPath *ip = [NSIndexPath indexPathForRow:[self.tableView numberOfRowsInSection:sectionNum] - 1 inSection:sectionNum];
+                NSArray *ips = [self.tableView indexPathsForVisibleRows];
+                
+                BOOL show = YES;
+                
+                
+                for (NSIndexPath *indexPath in ips) {
+                    if ([indexPath isEqual:ip]) {
+                        show = NO;
+                    }
+                }
+                if (show) {
+                    [self notifyUserOfMoreMessages];
+                }
+            }
         } else {
         }
     }
+}
+
+-(void)notifyUserOfMoreMessages
+{
+    NSArray *subviews = self.tableView.subviews;
+    UIButton *button = nil;
+    NSString *txt = @"1 new message\n(Touch to scroll down)";
+    for (UIView *view in subviews) {
+        if ([view isKindOfClass:[UIButton class]]) {
+            UIButton *b = (UIButton *)view;
+            NSAttributedString *as = [b attributedTitleForState:UIControlStateNormal];
+            if ([as.string containsSubstring:@"new message"]) {
+                NSArray *substrs = [as.string componentsSeparatedByString:@" "];
+                NSString *str = [substrs firstObject];
+                NSInteger nm = [str integerValue] + 1;
+                
+                txt = [NSString stringWithFormat:@"%ld new messages\n(Touch to scroll down)", (long)nm];
+                button = b;
+            }
+        }
+    }
+    NSAttributedString *text = [[NSAttributedString alloc] initWithString:txt attributes:@{NSForegroundColorAttributeName: [UIColor lightTextColor],
+                                                                                           NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline]}];
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(self.tableView.frame.size.width * 0.75, CGFLOAT_MAX)
+                                             options:options
+                                             context:nil];
+    boundingRect.origin.y = self.tableView.frame.size.height * 0.25;
+    boundingRect.origin.x = (self.tableView.frame.size.width * 0.5) - (boundingRect.size.width / 2.0);
+    CGRect frame = CGRectInset(boundingRect, -10, -10);
+    
+    if (button == nil) {
+        button = [UIButton systemButtonWithFrame:frame];
+        button.titleLabel.numberOfLines = 0;
+        button.titleLabel.textAlignment = NSTextAlignmentCenter;
+        button.backgroundColor = [UIColor blackColor];
+        button.layer.shadowColor = button.backgroundColor.CGColor;
+        button.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+        button.layer.shadowRadius = 5.0;
+        button.layer.shadowOpacity = 1.0 ;
+        button.layer.masksToBounds = NO;
+        button.layer.cornerRadius = 5;
+        
+        [button addTarget:self action:@selector(removeNewMessagesButtonAndScrollToBottom) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self performSelector:@selector(removeNewMessagesButtonIfThere) withObject:nil afterDelay:5];
+        
+        button.alpha = 0.0;
+        [self.tableView addSubview:button];
+        [UIView animateWithDuration:0.1 animations:^{button.alpha = 1.0;}];
+        
+    } else {
+        button.frame = frame;
+    }
+    
+    [button setAttributedTitle:text forState:UIControlStateNormal];
+}
+
+-(void)removeNewMessagesButtonIfThere
+{
+    NSArray *subviews = self.tableView.subviews;
+    for (UIView *view in subviews) {
+        if ([view isKindOfClass:[UIButton class]]) {
+            UIButton *b = (UIButton *)view;
+            NSAttributedString *as = [b attributedTitleForState:UIControlStateNormal];
+            if ([as.string containsSubstring:@"new message"]) {
+                [UIView animateWithDuration:0.1 animations:^{view.alpha = 0.0;} completion:^(BOOL finished){[view removeFromSuperview];}];
+            }
+        }
+    }
+}
+
+-(void)removeNewMessagesButtonAndScrollToBottom
+{
+    [self removeNewMessagesButtonIfThere];
+    [self.tableView scrollToBottom];
 }
 
 -(void)IRCServer:(RBIRCServer *)server updateMessage:(RBIRCMessage *)message
