@@ -268,8 +268,9 @@ describe(@"RBChannelViewController", ^{
         
         it(@"should respond to incoming messages when viewing the bottom", ^{
             NSInteger i = log.count;
-            [log addObject:createMessage()];
-            [subject IRCServer:subject.server handleMessage:createMessage()];
+            RBIRCMessage *msg = createMessage();
+            [log addObject:msg];
+            [subject IRCServer:subject.server handleMessage:msg];
             [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(i + 1);
             log.count should equal(i+1);
             subject.tableView should have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with([NSIndexPath indexPathForRow:i inSection:0], UITableViewScrollPositionBottom, YES);
@@ -279,12 +280,15 @@ describe(@"RBChannelViewController", ^{
             for (int i = 0; i < 50; i++) {
                 [log addObject:createMessage()];
             }
-            [subject tableView:subject.tableView numberOfRowsInSection:0] should be_gte(50);
+            [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(51);
             [subject.tableView reloadData];
             [subject.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
             [(id<CedarDouble>)subject.tableView reset_sent_messages];
             
-            [subject IRCServer:subject.server handleMessage:createMessage()];
+            RBIRCMessage *msg = createMessage();
+            [log addObject:msg];
+            
+            [subject IRCServer:subject.server handleMessage:msg];
             subject.tableView should_not have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with([NSIndexPath indexPathForRow:log.count - 1 inSection:0], UITableViewScrollPositionBottom, YES);
         });
         

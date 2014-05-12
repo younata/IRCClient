@@ -12,7 +12,6 @@ SPEC_BEGIN(RBIRCServerSpec)
 
 describe(@"RBIRCServer", ^{
     __block RBIRCServer *subject;
-    __block id<RBIRCServerDelegate> delegate;
     __block NSString *msg;
     
     NSString *channel = @"#foo";
@@ -20,7 +19,6 @@ describe(@"RBIRCServer", ^{
     beforeEach(^{
         subject = [[RBIRCServer alloc] init];
         subject.serverName = @"Test server";
-        delegate = nice_fake_for(@protocol(RBIRCServerDelegate));
         /* testing the tests
         delegate stub_method(@selector(IRCServer:handleMessage:)).and_do(^(NSInvocation *inv){
             id arg1;
@@ -37,25 +35,9 @@ describe(@"RBIRCServer", ^{
             NSLog(@"received IRCServer:invalidCommand: with args '%@', '%@'", arg1, arg2);
         });
         // */
-        [subject addDelegate:delegate];
         spy_on(subject);
         
         msg = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :how are you\r\n"];
-    });
-    
-    it(@"should have at least 1 delegate", ^{
-        subject.delegates.count should be_gte(1);
-    });
-    
-    it(@"should have the delegate as a delegate", ^{
-        [subject.delegates containsObject:delegate] should be_truthy;
-        [delegate IRCServerDidConnect:nil];
-        [delegate IRCServerConnectionDidDisconnect:nil];
-        [delegate IRCServer:nil errorReadingFromStream:nil];
-        [delegate IRCServer:nil handleMessage:nil];
-        [delegate IRCServer:nil invalidCommand:nil];
-        [delegate IRCServer:nil updateMessage:nil];
-        delegate should_not be_nil;
     });
     
     it(@"should default to reconnect on startup", ^{
@@ -79,20 +61,17 @@ describe(@"RBIRCServer", ^{
     
     it(@"should handle messages", ^{
         [subject receivedString:msg];
-        delegate should have_received(@selector(IRCServer:handleMessage:)).with(subject).and_with(Arguments::any([RBIRCMessage class]));
         subject.channels.count should be_gte(0);
     });
     
-    it(@"should notify delegates of disconnect", ^{
-        delegate stub_method(@selector(IRCServerConnectionDidDisconnect:));
+    it(@"should notify listeners of disconnect", ^{
         [subject stream:nil handleEvent:NSStreamEventEndEncountered];
-        delegate should have_received(@selector(IRCServerConnectionDidDisconnect:));
+        // nsnotification stuff...
     });
     
     describe(@"sending server commands", ^{
         it(@"should send raw commands", ^{
             [subject sendCommand:[msg substringToIndex:msg.length - 2]];
-            delegate should_not have_received("IRCServerConnectionDidDisconnect");
         });
         
         it(@"should change nick", ^{
@@ -122,22 +101,34 @@ describe(@"RBIRCServer", ^{
         });
         
         void (^checkNotSent)(void) = ^{
-            delegate should have_received(@selector(IRCServer:invalidCommand:)).with(subject, Arguments::any([NSError class]));
             subject should_not have_received(@selector(sendCommand:)).with(Arguments::anything);
         };
         
         it(@"should not allow you to part from an unjoined channel", ^{
-            [subject part:channel];
+            @try {
+                [subject part:channel];
+            }
+            @catch (NSException *error) {
+                
+            }
             checkNotSent();
         });
         
         it(@"should not allow you to topic an unjoined channel", ^{
-            [subject topic:channel topic:@"hello"];
+            @try {
+                [subject topic:channel topic:@"hello"];
+            }
+            @catch (NSException *error) {
+            }
             checkNotSent();
         });
         
         it(@"should not allow you to kick in an unjoined channel", ^{
-            [subject kick:channel target:@"hello"];
+            @try {
+                [subject kick:channel target:@"hello"];
+            }
+            @catch (NSException *error) {
+            }
             checkNotSent();
         });
     });
@@ -148,7 +139,6 @@ describe(@"RBIRCServer", ^{
         });
         
         void (^checkSend)(NSString *) = ^(NSString *str){
-            delegate should_not have_received("IRCServer:invalidCommand:").with(subject, Arguments::any([NSError class]));
             subject should have_received("sendCommand:").with(str);
         };
         

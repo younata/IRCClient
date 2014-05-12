@@ -405,6 +405,7 @@ static NSString *CellIdentifier = @"Cell";
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     NSString *str = textField.text;
+    BOOL addedToLog = NO;
     if ([str hasPrefix:@"/"]) {
         
         str = [str substringFromIndex:1];
@@ -494,6 +495,7 @@ static NSString *CellIdentifier = @"Cell";
             msg.command = [RBIRCMessage getMessageTypeForString:action];
             msg.rawMessage = cmd;
             [[self.server[target] log] addObject:msg];
+            addedToLog = YES;
         } else if ([command isEqualToString:@"me"]) {
             NSString *action = [NSString stringWithFormat:@"PRIVMSG %@ :%cACTION %@%c\r\n", self.channel, 1, str, 1];
             [self.server sendCommand:action];
@@ -505,6 +507,7 @@ static NSString *CellIdentifier = @"Cell";
             msg.rawMessage = str;
             msg.attributedMessage = [[NSAttributedString alloc] initWithString:msg.message attributes:[msg defaultAttributes]];
             [[self.server[self.channel] log] addObject:msg];
+            addedToLog = YES;
         }
     } else {
         [self.server privmsg:self.channel contents:str];
@@ -516,19 +519,16 @@ static NSString *CellIdentifier = @"Cell";
         msg.command = IRCMessageTypePrivmsg;
         msg.rawMessage = [NSString stringWithFormat:@"PRIVMSG %@ %@", msg.targets[0], str];
         [[self.server[self.channel] log] addObject:msg];
+        addedToLog = YES;
     }
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
-                          withRowAnimation:UITableViewRowAnimationNone];
-    [self.tableView endUpdates];
     
     textField.text = @"";
-    NSInteger rows = [self.tableView numberOfRowsInSection:0];
-    if (rows != 0) {
-        rows--;
-    }
-    if (rows != 0 && [self.tableView numberOfSections] != 0) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rows inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
+    if (addedToLog) {
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView endUpdates];
     }
     
     return YES;
@@ -608,7 +608,6 @@ static NSString *CellIdentifier = @"Cell";
                                   withRowAnimation:UITableViewRowAnimationNone];
             [self.tableView scrollToBottomIfNear];
         } else {
-            NSLog(@"'%@', '%@'", self.channel, message.debugDescription);
         }
     }
 }

@@ -34,4 +34,7 @@
 
 -(void)disconnect;
 
+// for specs.
+-(void)IRCServerConnectionDidDisconnect:(RBIRCServer *)server;
+
 @end

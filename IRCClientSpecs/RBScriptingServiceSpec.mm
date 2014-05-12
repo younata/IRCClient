@@ -96,7 +96,6 @@ describe(@"RBScriptingService", ^{
             server = fake_for([RBIRCServer class]);
             server stub_method("serverName").and_return(@"blah");
             server stub_method("connected").and_return(YES);
-            server stub_method("addDelegate:");
             server stub_method("connect");
             server stub_method("quit");
             server stub_method("sortedChannelKeys").and_return(@[@"blah", RBIRCServerLog]);
