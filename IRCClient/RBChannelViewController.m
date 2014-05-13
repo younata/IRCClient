@@ -711,7 +711,7 @@ static NSString *CellIdentifier = @"Cell";
             UIButton *b = (UIButton *)view;
             NSAttributedString *as = [b attributedTitleForState:UIControlStateNormal];
             if ([as.string containsSubstring:@"new message"]) {
-                [UIView animateWithDuration:0.1 animations:^{view.alpha = 0.0;} completion:^(BOOL finished){[view removeFromSuperview];}];
+                [UIView animateWithDuration:0.2 animations:^{view.alpha = 0.0;} completion:^(BOOL finished){[view removeFromSuperview];}];
             }
         }
     }
