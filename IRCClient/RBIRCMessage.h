@@ -33,6 +33,17 @@ typedef enum {
     IRCMessageTypeUnknown = 255
 } IRCMessageType;
 
+typedef enum {
+    styleColor = 0,
+    styleBold = 1,
+    styleItalic = 2,
+    styleStrike = 4,
+    styleUnderline = 8,
+    styleDoubleUnderline = 16,
+} stylizeFlag;
+
+UIColor *colorFromHexString(char *input);
+
 @interface RBIRCMessage : NSObject
 
 @property (nonatomic, strong) NSDate *timestamp; // arrival time

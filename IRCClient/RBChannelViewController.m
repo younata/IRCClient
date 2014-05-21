@@ -547,6 +547,7 @@ static NSString *CellIdentifier = @"Cell";
         [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
                               withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView endUpdates];
+        [self.tableView scrollToBottom:YES];
     }
     
     return YES;

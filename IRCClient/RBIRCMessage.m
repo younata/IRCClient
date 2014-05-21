@@ -16,6 +16,20 @@
 
 #import "IRCNumericReplies.h"
 
+UIColor *colorFromHexString(char *input)
+{
+    if (strlen(input) != 6) {
+        return nil;
+    }
+    char *redStr = strndup(input, 2);
+    char *greenStr = strndup(input+2, 2);
+    char *blueStr = strndup(input+4, 2);
+    float r = (float)strtol(redStr, NULL, 16);
+    float g = (float)strtol(greenStr, NULL, 16);
+    float b = (float)strtol(blueStr, NULL, 16);
+    return [UIColor colorWithRed:r / 255.0 green:g / 255.0 blue:b / 255.0 alpha:1];
+}
+
 @interface RBIRCMessage ()
 {
     NSAttributedString *_attributedMessage;
@@ -211,12 +225,14 @@
             self.message = trailing;
             [self parseCTCPResponse];
             [self loadImages];
+            [self parseStylizedMessages];
             self.message = [NSString stringWithFormat:@"%@: %@", self.from, trailing];
             break;
         case IRCMessageTypePrivmsg:
             self.message = trailing;
             [self parseCTCPRequest];
             [self loadImages];
+            [self parseStylizedMessages];
             self.message = [NSString stringWithFormat:@"%@: %@", self.from, trailing];
             break;
         case IRCMessageTypeMode: {
@@ -443,6 +459,148 @@
     }
 }
 
+-(void)parseStylizedMessages
+{
+    NSString *msg = self.message;
+    NSString *(^charToString)(char) = ^NSString *(char c) {
+        return [NSString stringWithFormat:@"%c", c];
+    };
+    NSString *colorDelim = charToString(3);
+    NSString *boldDelim = charToString(2);
+    NSString *italicDelim = charToString(9);
+    NSString *strikeDelim = charToString(0x13);
+    NSString *underDelim = charToString(0x15);
+    NSString *under2Delim = charToString(0x1f);
+    
+    int flag = 0;
+    
+    NSArray *options = @[colorDelim, boldDelim, italicDelim, strikeDelim, underDelim, under2Delim];
+    
+    for (int i = 0; i < options.count; i++) {
+        NSString *delim = options[i];
+        if ([msg containsSubstring:delim]) {
+            flag |= 1 << i;
+        }
+    }
+    if (flag == 0) {
+        return;
+    }
+    
+    NSMutableAttributedString *newMsg = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedMessage];
+    
+    if (((flag > styleColor) & 1)) {
+        NSDictionary *colors = @{@"0": colorFromHexString("FFFFFF"), // white
+                                 @"1": colorFromHexString("000000"), // black
+                                 
+                                 @"2": colorFromHexString("FF0000"), // red
+                                 @"3": colorFromHexString("FF8000"), // orange
+                                 @"4": colorFromHexString("FFFF00"), // yellow
+                                 @"5": colorFromHexString("80FF00"), // light green
+                                 @"6": colorFromHexString("00FF00"), // green
+                                 @"7": colorFromHexString("00FF80"), // blue green
+                                 @"8": colorFromHexString("00FFFF"), // cyan
+                                 @"9": colorFromHexString("0080FF"), // light blue
+                                 
+                                 @"10": colorFromHexString("0000FF"), // blue
+                                 @"11": colorFromHexString("8000FF"), // purple
+                                 @"12": colorFromHexString("FF00FF"), // magenta
+                                 @"13": colorFromHexString("FF0080"), // purple
+                                 
+                                 @"14": colorFromHexString("C0C0C0"), // light gray
+                                 @"15": colorFromHexString("404040")  // dark gray
+                                 };
+        NSString *foo = msg;
+        int location = 0;
+        
+        UIColor *(^getColor)(NSString *, NSString **) = ^UIColor *(NSString *m, NSString **theKey) {
+            for (NSString *key in colors.allKeys) {
+                if ([m hasPrefix:key]) {
+                    *theKey = key;
+                    return colors[key];
+                }
+            }
+            return nil;
+        };
+        UIColor *background = nil;
+        while ([foo containsSubstring:colorDelim]) {
+            NSMutableDictionary *attribution = [@{} mutableCopy];
+            NSRange range = [foo rangeOfString:colorDelim];
+            location += range.location + 1;
+            
+            foo = [foo substringFromIndex:range.location + 1]; // now to determine which color...
+            NSString *key = nil;
+            UIColor *foreground = getColor(foo, &key);
+            foo = [foo substringFromIndex:key.length];
+            location += key.length;
+            
+            [attribution setObject:foreground forKey:NSForegroundColorAttributeName];
+            
+            if ([foo hasPrefix:@","]) {
+                key = nil;
+                foo = [foo substringFromIndex:1];
+                background = getColor(foo, &key);
+                foo = [foo substringFromIndex:key.length];
+                
+                location += key.length;
+            }
+            if (background != nil) {
+                [attribution setObject:background forKey:NSBackgroundColorAttributeName];
+            }
+            
+            NSRange theRange;
+            
+            theRange.location = location;
+            
+            if ([foo containsSubstring:colorDelim]) {
+                theRange.length = [foo rangeOfString:colorDelim].location - theRange.location - 1;
+            } else {
+                theRange.length = foo.length;
+            }
+            
+            [newMsg addAttributes:attribution range:theRange];
+        }
+    }
+    void (^applyStyle)(NSString *, NSString *, NSArray *) = ^(NSString *foo, NSString *delim, NSArray *atr) {
+        int location = 0;
+        while ([foo containsSubstring:delim]) {
+            NSRange range = [foo rangeOfString:delim];
+            location += range.location + 1;
+            
+            foo = [foo substringFromIndex:1];
+            
+            NSRange theRange;
+            theRange.location = location;
+            if ([foo containsSubstring:delim]) {
+                theRange.length = (int)[foo rangeOfString:delim].location - 1 - location;
+            } else {
+                theRange.length = foo.length;
+            }
+            [newMsg addAttribute:atr[0] value:atr[1] range:theRange];
+        }
+    };
+    
+    if (((flag > styleBold) & 1)) {
+        applyStyle(msg, boldDelim, @[NSStrokeWidthAttributeName, @(-3)]);
+    }
+    
+    if (((flag > styleItalic) & 1)) {
+        applyStyle(msg, italicDelim, @[NSObliquenessAttributeName, @2]);
+    }
+    
+    if (((flag > styleStrike) & 1)) {
+        applyStyle(msg, strikeDelim, @[NSStrikethroughStyleAttributeName, @1]);
+    }
+    
+    if (((flag > styleUnderline) & 1)) {
+        applyStyle(msg, underDelim, @[NSUnderlineStyleAttributeName, @(NSUnderlineStyleSingle)]);
+    }
+    
+    if (((flag > styleDoubleUnderline) & 1)) {
+        applyStyle(msg, underDelim, @[NSUnderlineStyleAttributeName, @(NSUnderlineStyleDouble)]);
+    }
+    
+    self.attributedMessage = newMsg;
+}
 
 -(void)loadImages
 {
