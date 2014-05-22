@@ -99,6 +99,12 @@
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
+		896E474B192CCAB700024FF5 /* NSAttributedString+containsAttributions.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E474A192CCAB700024FF5 /* NSAttributedString+containsAttributions.m */; };
+		896E474C192CCAB700024FF5 /* NSAttributedString+containsAttributions.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E474A192CCAB700024FF5 /* NSAttributedString+containsAttributions.m */; };
+		896E4751192D7F6700024FF5 /* UIColor+colorWithHexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4750192D7F6700024FF5 /* UIColor+colorWithHexString.m */; };
+		896E4752192D7F6700024FF5 /* UIColor+colorWithHexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4750192D7F6700024FF5 /* UIColor+colorWithHexString.m */; };
+		896E4755192D831D00024FF5 /* NSString+hexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4754192D831D00024FF5 /* NSString+hexValue.m */; };
+		896E4756192D831D00024FF5 /* NSString+hexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4754192D831D00024FF5 /* NSString+hexValue.m */; };
 		897D8F621903775300410BE4 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897D8F611903775300410BE4 /* Cedar-iOS.framework */; };
 		898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
@@ -292,6 +298,12 @@
 		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
 		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
 		896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
+		896E4749192CCAB700024FF5 /* NSAttributedString+containsAttributions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+containsAttributions.h"; path = "NSAttributedString/NSAttributedString+containsAttributions.h"; sourceTree = "<group>"; };
+		896E474A192CCAB700024FF5 /* NSAttributedString+containsAttributions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+containsAttributions.m"; path = "NSAttributedString/NSAttributedString+containsAttributions.m"; sourceTree = "<group>"; };
+		896E474F192D7F6700024FF5 /* UIColor+colorWithHexString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+colorWithHexString.h"; path = "UIColor/UIColor+colorWithHexString.h"; sourceTree = "<group>"; };
+		896E4750192D7F6700024FF5 /* UIColor+colorWithHexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+colorWithHexString.m"; path = "UIColor/UIColor+colorWithHexString.m"; sourceTree = "<group>"; };
+		896E4753192D831D00024FF5 /* NSString+hexValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+hexValue.h"; sourceTree = "<group>"; };
+		896E4754192D831D00024FF5 /* NSString+hexValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+hexValue.m"; sourceTree = "<group>"; };
 		897D8F611903775300410BE4 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		898132C918A72264004AEBE9 /* RBReconnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBReconnectViewController.h; sourceTree = "<group>"; };
 		898132CA18A72264004AEBE9 /* RBReconnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBReconnectViewController.m; sourceTree = "<group>"; };
@@ -625,6 +637,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		896E474E192CCABC00024FF5 /* NSAttributedString */ = {
+			isa = PBXGroup;
+			children = (
+				896E4749192CCAB700024FF5 /* NSAttributedString+containsAttributions.h */,
+				896E474A192CCAB700024FF5 /* NSAttributedString+containsAttributions.m */,
+			);
+			name = NSAttributedString;
+			sourceTree = "<group>";
+		};
+		896E4757192D845700024FF5 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				896E474F192D7F6700024FF5 /* UIColor+colorWithHexString.h */,
+				896E4750192D7F6700024FF5 /* UIColor+colorWithHexString.m */,
+			);
+			name = UIColor;
+			sourceTree = "<group>";
+		};
 		898132D718A787E9004AEBE9 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -685,9 +715,11 @@
 				8908DC5C18B88856004DFBAB /* UITableView */,
 				898132E918A89085004AEBE9 /* UIActionSheet */,
 				898132DE18A78ABC004AEBE9 /* UIButton */,
+				896E4757192D845700024FF5 /* UIColor */,
 				899B2A94189913840008FED3 /* NSData */,
 				899B2A97189913840008FED3 /* NSStream */,
 				899B2A9A189913840008FED3 /* NSString */,
+				896E474E192CCABC00024FF5 /* NSAttributedString */,
 				899B2A9D189913840008FED3 /* README.md */,
 			);
 			path = RBCategories;
@@ -720,6 +752,8 @@
 				898132E418A78B10004AEBE9 /* NSString+contains.m */,
 				899B2A9B189913840008FED3 /* NSString+isNilOrEmpty.h */,
 				899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */,
+				896E4753192D831D00024FF5 /* NSString+hexValue.h */,
+				896E4754192D831D00024FF5 /* NSString+hexValue.m */,
 			);
 			path = NSString;
 			sourceTree = "<group>";
@@ -1052,7 +1086,9 @@
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
 				89D4C45C19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
+				896E474B192CCAB700024FF5 /* NSAttributedString+containsAttributions.m in Sources */,
 				8905344418C93842006DDA8B /* NSString+ranges.m in Sources */,
+				896E4751192D7F6700024FF5 /* UIColor+colorWithHexString.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
 				899CE7A918D068D6002ABBFE /* RBKeyboardViewController.m in Sources */,
 				8905344A18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
@@ -1081,6 +1117,7 @@
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
 				8908DC2418B60FB0004DFBAB /* Nu.m in Sources */,
+				896E4755192D831D00024FF5 /* NSString+hexValue.m in Sources */,
 				899B2AA0189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				898132F218A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
@@ -1101,6 +1138,7 @@
 			files = (
 				89E812D418BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */,
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
+				896E4756192D831D00024FF5 /* NSString+hexValue.m in Sources */,
 				8908DC7C18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
 				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
@@ -1129,6 +1167,7 @@
 				899B2A9F189913840008FED3 /* NSData+string.m in Sources */,
 				898132E818A86E0C004AEBE9 /* RBAppDelegateSpec.mm in Sources */,
 				891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */,
+				896E4752192D7F6700024FF5 /* UIColor+colorWithHexString.m in Sources */,
 				891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */,
 				89DF7E5518D538FA00FED10C /* RBChordedKeyboardDvorak.m in Sources */,
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,
@@ -1153,6 +1192,7 @@
 				89D4C45D19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
 				8905344B18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
 				899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */,
+				896E474C192CCAB700024FF5 /* NSAttributedString+containsAttributions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

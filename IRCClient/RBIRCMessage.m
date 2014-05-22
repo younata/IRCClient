@@ -16,19 +16,7 @@
 
 #import "IRCNumericReplies.h"
 
-UIColor *colorFromHexString(char *input)
-{
-    if (strlen(input) != 6) {
-        return nil;
-    }
-    char *redStr = strndup(input, 2);
-    char *greenStr = strndup(input+2, 2);
-    char *blueStr = strndup(input+4, 2);
-    float r = (float)strtol(redStr, NULL, 16);
-    float g = (float)strtol(greenStr, NULL, 16);
-    float b = (float)strtol(blueStr, NULL, 16);
-    return [UIColor colorWithRed:r / 255.0 green:g / 255.0 blue:b / 255.0 alpha:1];
-}
+#import "UIColor+colorWithHexString.h"
 
 @interface RBIRCMessage ()
 {
@@ -489,26 +477,13 @@ UIColor *colorFromHexString(char *input)
     NSMutableAttributedString *newMsg = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedMessage];
     
     if (((flag > styleColor) & 1)) {
-        NSDictionary *colors = @{@"0": colorFromHexString("FFFFFF"), // white
-                                 @"1": colorFromHexString("000000"), // black
-                                 
-                                 @"2": colorFromHexString("FF0000"), // red
-                                 @"3": colorFromHexString("FF8000"), // orange
-                                 @"4": colorFromHexString("FFFF00"), // yellow
-                                 @"5": colorFromHexString("80FF00"), // light green
-                                 @"6": colorFromHexString("00FF00"), // green
-                                 @"7": colorFromHexString("00FF80"), // blue green
-                                 @"8": colorFromHexString("00FFFF"), // cyan
-                                 @"9": colorFromHexString("0080FF"), // light blue
-                                 
-                                 @"10": colorFromHexString("0000FF"), // blue
-                                 @"11": colorFromHexString("8000FF"), // purple
-                                 @"12": colorFromHexString("FF00FF"), // magenta
-                                 @"13": colorFromHexString("FF0080"), // purple
-                                 
-                                 @"14": colorFromHexString("C0C0C0"), // light gray
-                                 @"15": colorFromHexString("404040")  // dark gray
-                                 };
+        NSMutableDictionary *colors = [@{} mutableCopy];
+        NSArray *colorValues = @[@"FFFFFF", @"000000", @"FF0000", @"FF8000", @"FFFF00", @"80FF00", @"00FF00", @"00FF80",
+                                 @"00FFFF", @"0080FF", @"0000FF", @"8000FF", @"FF00FF", @"FF0080", @"C0C0C0", @"404040"];
+        for (int i = 0; i < 16; i++) {
+            [colors setObject:[@(i) stringValue] forKey:[UIColor colorWithHexString:colorValues[i]]];
+        }
+
         NSString *foo = msg;
         int location = 0;
         
@@ -552,7 +527,7 @@ UIColor *colorFromHexString(char *input)
             theRange.location = location;
             
             if ([foo containsSubstring:colorDelim]) {
-                theRange.length = [foo rangeOfString:colorDelim].location - theRange.location - 1;
+                theRange.length = [foo rangeOfString:colorDelim].location - 1;
             } else {
                 theRange.length = foo.length;
             }
@@ -570,12 +545,16 @@ UIColor *colorFromHexString(char *input)
             
             NSRange theRange;
             theRange.location = location;
+            int length = 0;
             if ([foo containsSubstring:delim]) {
-                theRange.length = (int)[foo rangeOfString:delim].location - 1 - location;
+                length = (int)[foo rangeOfString:delim].location - 1;
             } else {
-                theRange.length = foo.length;
+                length = foo.length;
             }
-            [newMsg addAttribute:atr[0] value:atr[1] range:theRange];
+            theRange.length = length;
+            if ((theRange.location + theRange.length) <= newMsg.length) {
+                [newMsg addAttribute:atr[0] value:atr[1] range:theRange];
+            }
         }
     };
     

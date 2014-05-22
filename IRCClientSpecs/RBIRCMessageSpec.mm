@@ -1,5 +1,7 @@
 #import "RBIRCMessage.h"
 #import "NSString+isNilOrEmpty.h"
+#import "NSAttributedString+containsAttributions.h"
+#import "UIColor+colorWithHexString.h"
 
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
@@ -135,6 +137,113 @@ describe(@"RBIRCMessage", ^{
                 msg = createMsg(str);
                 msg.command should equal(IRCMessageTypeCTCPTime);
             });
+        });
+    });
+    
+    describe(@"Text Stylizations", ^{
+        RBIRCMessage *(^stylizedMsg)(NSString *) = ^RBIRCMessage *(NSString *msg) {
+            msg = [@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :" stringByAppendingString:msg];
+            return createMsg(msg);
+        };
+        
+        NSString *(^charToString)(char) = ^NSString *(char c) {
+            return [NSString stringWithFormat:@"%c", c];
+        };
+        
+        describe(@"colors", ^{
+            NSString *redStr = @"FF0000";
+            NSString *orangeStr = @"FF8000";
+            it(@"should have a working colorFromHexString", ^{
+                UIColor *color = [UIColor colorWithHexString:redStr];
+                CGFloat r,g,b,a;
+                [color getRed:&r green:&g blue:&b alpha:&a];
+                r should equal(1.0);
+                g should equal(0.0);
+                b should equal(0.0);
+                a should equal(1.0);
+            });
+            
+            UIColor *red = [UIColor colorWithHexString:redStr];
+            UIColor *orange = [UIColor colorWithHexString:orangeStr];
+            
+            NSString *colorDelim = charToString(3);
+            it(@"should work for single color in entire message", ^{
+                RBIRCMessage *msg = stylizedMsg([NSString stringWithFormat:@"%@2Hello World%@", colorDelim, colorDelim]);
+                
+                [msg.attributedMessage containsAttribution:NSForegroundColorAttributeName value:red] should be_truthy;
+            });
+            
+            it(@"should work for a single color in entire message with background", ^{
+                RBIRCMessage *msg = stylizedMsg([NSString stringWithFormat:@"%@2,3Hello World%@", colorDelim, colorDelim]);
+                
+                [msg.attributedMessage containsAttribution:NSForegroundColorAttributeName value:red] should be_truthy;
+                [msg.attributedMessage containsAttribution:NSBackgroundColorAttributeName value:orange] should be_truthy;
+            });
+            
+            it(@"should work for a single color in part of the message", ^{
+                RBIRCMessage *msg = stylizedMsg([NSString stringWithFormat:@"%@2Hello%@ World", colorDelim, colorDelim]);
+                
+                [msg.attributedMessage containsAttribution:NSForegroundColorAttributeName value:red range:NSMakeRange(2, 5)] should be_truthy;
+                
+                msg = stylizedMsg([NSString stringWithFormat:@"%@2,3Hello%@ World", colorDelim, colorDelim]);
+                [msg.attributedMessage containsAttribution:NSBackgroundColorAttributeName value:orange range:NSMakeRange(2, 5)] should be_truthy;
+            });
+            
+            it(@"should work for switching colors", ^{
+                RBIRCMessage *msg = stylizedMsg([NSString stringWithFormat:@"%@2Hello %@3 World%@", colorDelim, colorDelim, colorDelim]);
+                
+                [msg.attributedMessage containsAttribution:NSForegroundColorAttributeName value:red range:NSMakeRange(2, 6)] should be_truthy;
+                [msg.attributedMessage containsAttribution:NSForegroundColorAttributeName value:orange range:NSMakeRange(10, 6)] should be_truthy;
+                
+                msg = stylizedMsg([NSString stringWithFormat:@"%@2,3Hello %@3,2 World%@", colorDelim, colorDelim, colorDelim]);
+                [msg.attributedMessage containsAttribution:NSBackgroundColorAttributeName value:orange range:NSMakeRange(2, 6)] should be_truthy;
+                [msg.attributedMessage containsAttribution:NSBackgroundColorAttributeName value:red range:NSMakeRange(10, 6)] should be_truthy;
+            });
+            
+            it(@"should switch foreground, but not background colors.", ^{
+                RBIRCMessage *msg = stylizedMsg([NSString stringWithFormat:@"%@2,3Hello %@3 World%@", colorDelim, colorDelim, colorDelim]);
+                
+                [msg.attributedMessage containsAttribution:NSForegroundColorAttributeName value:red range:NSMakeRange(2, 6)] should be_truthy;
+                [msg.attributedMessage containsAttribution:NSBackgroundColorAttributeName value:orange range:NSMakeRange(2, 6)] should be_truthy;
+                [msg.attributedMessage containsAttribution:NSForegroundColorAttributeName value:orange range:NSMakeRange(10, 6)] should be_truthy;
+                [msg.attributedMessage containsAttribution:NSBackgroundColorAttributeName value:orange range:NSMakeRange(10, 6)] should be_truthy;
+            });
+        });
+        
+        describe(@"bold", ^{
+            NSString *boldDelim = charToString(2);
+            it(@"should bold entire line", ^{
+                RBIRCMessage *msg = stylizedMsg([NSString stringWithFormat:@"%@Hello world%@", boldDelim, boldDelim]);
+                [msg.attributedMessage containsAttribution:NSStrokeWidthAttributeName value:@(-3)] should be_truthy;
+            });
+            
+            it(@"should bold part of a line", ^{
+                RBIRCMessage *msg = stylizedMsg([NSString stringWithFormat:@"%@Hello%@ world", boldDelim, boldDelim]);
+                [msg.attributedMessage containsAttribution:NSStrokeWidthAttributeName value:@(-3) range:NSMakeRange(1, 5)] should be_truthy;
+            });
+            
+            it(@"should bold two separate parts of the line", ^{
+                RBIRCMessage *msg = stylizedMsg([NSString stringWithFormat:@"%@Rachel%@ says %@hi%@", boldDelim, boldDelim, boldDelim, boldDelim]);
+                [msg.attributedMessage containsAttribution:NSStrokeWidthAttributeName value:@(-3) range:NSMakeRange(1, 6)] should be_truthy;
+                [msg.attributedMessage containsAttribution:NSStrokeWidthAttributeName value:@(-3) range:NSMakeRange(16, 2)] should be_truthy;
+                
+            });
+        });
+        
+        describe(@"italic", ^{
+            
+        });
+        
+        describe(@"strikethrough", ^{
+            
+        });
+        
+        describe(@"underline", ^{
+            
+        });
+        
+        describe(@"double underline", ^{
+            
         });
     });
 });

@@ -42,8 +42,6 @@ typedef enum {
     styleDoubleUnderline = 16,
 } stylizeFlag;
 
-UIColor *colorFromHexString(char *input);
-
 @interface RBIRCMessage : NSObject
 
 @property (nonatomic, strong) NSDate *timestamp; // arrival time
