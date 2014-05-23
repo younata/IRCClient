@@ -481,7 +481,7 @@
         NSArray *colorValues = @[@"FFFFFF", @"000000", @"FF0000", @"FF8000", @"FFFF00", @"80FF00", @"00FF00", @"00FF80",
                                  @"00FFFF", @"0080FF", @"0000FF", @"8000FF", @"FF00FF", @"FF0080", @"C0C0C0", @"404040"];
         for (int i = 0; i < 16; i++) {
-            [colors setObject:[@(i) stringValue] forKey:[UIColor colorWithHexString:colorValues[i]]];
+            [colors setObject:[UIColor colorWithHexString:colorValues[i]] forKey:[@(i) stringValue]];
         }
 
         NSString *foo = msg;
