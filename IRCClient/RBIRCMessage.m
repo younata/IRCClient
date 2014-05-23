@@ -515,12 +515,11 @@
             
             [attribution setObject:foreground forKey:NSForegroundColorAttributeName];
             
-            if ([foo hasPrefix:@","]) {
+            if ([[foo substringFromIndex:location]  hasPrefix:@","]) {
                 key = nil;
                 range.length = 1;
-                [foo deleteCharactersInRange:range];
-                background = getColor(foo, &key);
-                range.length = key.length;
+                background = getColor([foo substringFromIndex:range.location + 1], &key);
+                range.length += key.length;
                 [foo deleteCharactersInRange:range];
             }
             if (background != nil) {
@@ -529,35 +528,82 @@
             
             if ([foo containsSubstring:colorDelim]) {
                 NSRange to = [foo rangeOfString:colorDelim];
-                range.length = to.location - (location + 1);
+                range.length = to.location - (location);
             } else {
                 range.length = foo.length - location;
             }
             
-            [attributes addObject:@[attribution, [NSValue valueWithRange:range]]];
+            [attributes addObject:[@[attribution, [NSValue valueWithRange:range]] mutableCopy]];
         }
     }
-    void (^applyStyle)(NSString *, NSString *, NSArray *) = ^(NSString *foo, NSString *delim, NSArray *atr) {
+    BOOL (^NSRangeOverlapsRange)(NSRange, NSRange) = ^(NSRange a, NSRange b){
+        if (a.location + a.length < b.location) {
+            return NO;
+        }
+        if (b.location + b.length < a.location) {
+            return NO;
+        }
+        return YES;
+    };
+    NSRange (^NSRangeRemoveOverlap)(NSRange, NSRange) = ^NSRange(NSRange original, NSRange overlap){
+        if (!NSRangeOverlapsRange(original, overlap)) {
+            return original;
+        }
+        
+        NSInteger originalEnd = original.location + original.length;
+        NSInteger overlapEnd = overlap.location + overlap.length;
+        
+        if (overlap.location < original.location) {
+            NSInteger j = overlapEnd - original.location;
+            original.location += j;
+            original.length -= j;
+            if (original.length <= 0) {
+                return NSMakeRange(0, 0);
+            }
+        } else if (overlap.location < originalEnd) {
+            if (overlapEnd < originalEnd) {
+                original.length -= overlap.length;
+            } else {
+                NSInteger i = originalEnd - overlap.location;
+                original.length -= i;
+            }
+        }
+        
+        return original;
+    };
+    void (^adjustRangesForDeletion)(NSRange) = ^(NSRange toDelete){
+        for (NSMutableArray *array in attributes) {
+            NSValue *theRange = array[1];
+            NSRange range = theRange.rangeValue;
+            range = NSRangeRemoveOverlap(range, toDelete);
+            array[1] = [NSValue valueWithRange:NSRangeRemoveOverlap(range, toDelete)];
+        }
+    };
+    
+    void (^applyStyle)(NSMutableString *, NSString *, NSArray *) = ^(NSMutableString *foo, NSString *delim, NSArray *atr) {
         int location = 0;
         while ([foo containsSubstring:delim]) {
             NSRange range = [foo rangeOfString:delim];
             
-            range.location += 1;
+            adjustRangesForDeletion(range);
+            [foo deleteCharactersInRange:range];
             
-            location += range.location;
+            location = range.location;
             
-            foo = [foo substringFromIndex:1];
-                        
             int length = 0;
             if ([foo containsSubstring:delim]) {
-                length = (int)[foo rangeOfString:delim].location - 1;
-                foo = [foo substringFromIndex:length + 1];
+                range = [foo rangeOfString:delim];
+                length = (int)[foo rangeOfString:delim].location - location;
+                
+                adjustRangesForDeletion(range);
+                [foo deleteCharactersInRange:range];
             } else {
                 length = foo.length;
             }
+            range.location = location;
             range.length = length;
             if ((range.location + range.length) <= foo.length) {
-                [attributes addObject:@[@{atr[0]: atr[1]}, [NSValue valueWithRange:range]]];
+                [attributes addObject:[@[@{atr[0]: atr[1]}, [NSValue valueWithRange:range]] mutableCopy]];
             }
         }
     };

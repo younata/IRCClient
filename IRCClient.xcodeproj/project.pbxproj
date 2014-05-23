@@ -105,6 +105,8 @@
 		896E4752192D7F6700024FF5 /* UIColor+colorWithHexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4750192D7F6700024FF5 /* UIColor+colorWithHexString.m */; };
 		896E4755192D831D00024FF5 /* NSString+hexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4754192D831D00024FF5 /* NSString+hexValue.m */; };
 		896E4756192D831D00024FF5 /* NSString+hexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4754192D831D00024FF5 /* NSString+hexValue.m */; };
+		896E475A192F9BD500024FF5 /* NSAttributedString+attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4759192F9BD500024FF5 /* NSAttributedString+attributes.m */; };
+		896E475B192F9BD500024FF5 /* NSAttributedString+attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4759192F9BD500024FF5 /* NSAttributedString+attributes.m */; };
 		897D8F621903775300410BE4 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897D8F611903775300410BE4 /* Cedar-iOS.framework */; };
 		898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
@@ -304,6 +306,8 @@
 		896E4750192D7F6700024FF5 /* UIColor+colorWithHexString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+colorWithHexString.m"; path = "UIColor/UIColor+colorWithHexString.m"; sourceTree = "<group>"; };
 		896E4753192D831D00024FF5 /* NSString+hexValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+hexValue.h"; sourceTree = "<group>"; };
 		896E4754192D831D00024FF5 /* NSString+hexValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+hexValue.m"; sourceTree = "<group>"; };
+		896E4758192F9BD500024FF5 /* NSAttributedString+attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+attributes.h"; sourceTree = "<group>"; };
+		896E4759192F9BD500024FF5 /* NSAttributedString+attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+attributes.m"; sourceTree = "<group>"; };
 		897D8F611903775300410BE4 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		898132C918A72264004AEBE9 /* RBReconnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBReconnectViewController.h; sourceTree = "<group>"; };
 		898132CA18A72264004AEBE9 /* RBReconnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBReconnectViewController.m; sourceTree = "<group>"; };
@@ -642,6 +646,8 @@
 			children = (
 				896E4749192CCAB700024FF5 /* NSAttributedString+containsAttributions.h */,
 				896E474A192CCAB700024FF5 /* NSAttributedString+containsAttributions.m */,
+				896E4758192F9BD500024FF5 /* NSAttributedString+attributes.h */,
+				896E4759192F9BD500024FF5 /* NSAttributedString+attributes.m */,
 			);
 			name = NSAttributedString;
 			sourceTree = "<group>";
@@ -1077,6 +1083,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89E812D318BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */,
+				896E475A192F9BD500024FF5 /* NSAttributedString+attributes.m in Sources */,
 				89DF7E5218D538FA00FED10C /* RBChordedKeyboard.m in Sources */,
 				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
@@ -1188,6 +1195,7 @@
 				899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				898132D618A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				898132D918A78980004AEBE9 /* RBConfigViewControllerSpec.mm in Sources */,
+				896E475B192F9BD500024FF5 /* NSAttributedString+attributes.m in Sources */,
 				898132E218A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				89D4C45D19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
 				8905344B18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
