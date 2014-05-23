@@ -5,6 +5,8 @@
 #import "RBServerVCDelegate.h"
 #import "RBTextFieldServerCell.h"
 
+#import "RBIRCMessage.h"
+
 #import "RBConfigurationKeys.h"
 
 using namespace Cedar::Matchers;
@@ -257,7 +259,13 @@ describe(@"RBServerViewController", ^{
             NSMutableArray *servers = subject.servers;
             RBIRCServer *server = servers[0];
             NSString *msg = @":ik!iank@hide-1664EBC6.iank.org PRIVMSG #foo :how are you?";
-            [server receivedString:msg];
+            
+            RBIRCMessage *message = [[RBIRCMessage alloc] initWithRawMessage:msg onServer:server];
+            RBIRCChannel *channel = server[message.targets[0]];
+            [channel logMessage:message];
+            
+            NSNotification *note = [[NSNotification alloc] initWithName:RBIRCServerHandleMessage object:server userInfo:@{@"message": message}];
+            [subject handleNotification:note]; // directly doing this through RBIRCServer's receivedString: can cause an unallocated RBIRCChannelViewController to crash...
             
             UITableViewCell *cell = [subject tableView:subject.tableView cellForRowAtIndexPath:ip];
             [cell.textLabel.text hasPrefix:@"[1]"] should be_truthy;

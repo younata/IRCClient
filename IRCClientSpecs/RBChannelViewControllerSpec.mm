@@ -36,6 +36,10 @@ describe(@"RBChannelViewController", ^{
         subject.server = server;
     });
     
+    afterEach(^{
+        subject = nil; // really cedar?
+    });
+    
     describe(@"text input", ^{
         describe(@"easily input commands", ^{
             beforeEach(^{
@@ -184,7 +188,7 @@ describe(@"RBChannelViewController", ^{
     
     RBIRCMessage *(^createMessage)() = ^RBIRCMessage*(){
         RBIRCMessage *msg = [[RBIRCMessage alloc] init];
-        msg.message = @"testuser: Hello world";
+        msg.message = @"Hello world";
         msg.from = @"testuser";
         msg.targets = [@[channel] mutableCopy];
         msg.command = IRCMessageTypePrivmsg;

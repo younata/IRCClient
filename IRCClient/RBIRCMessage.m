@@ -449,7 +449,7 @@
 
 -(void)parseStylizedMessages
 {
-    NSString *msg = self.message;
+    NSString *msg = self.attributedMessage.string;
     NSString *(^charToString)(char) = ^NSString *(char c) {
         return [NSString stringWithFormat:@"%c", c];
     };
@@ -474,7 +474,9 @@
         return;
     }
     
-    NSMutableAttributedString *newMsg = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedMessage];
+    NSMutableArray *attributes = [[NSMutableArray alloc] init];
+    
+    NSMutableString *foo = [msg mutableCopy];
     
     if (((flag > styleColor) & 1)) {
         NSMutableDictionary *colors = [@{} mutableCopy];
@@ -484,7 +486,6 @@
             [colors setObject:[UIColor colorWithHexString:colorValues[i]] forKey:[@(i) stringValue]];
         }
 
-        NSString *foo = msg;
         int location = 0;
         
         UIColor *(^getColor)(NSString *, NSString **) = ^UIColor *(NSString *m, NSString **theKey) {
@@ -500,82 +501,98 @@
         while ([foo containsSubstring:colorDelim]) {
             NSMutableDictionary *attribution = [@{} mutableCopy];
             NSRange range = [foo rangeOfString:colorDelim];
-            location += range.location + 1;
+            location = range.location;
             
-            foo = [foo substringFromIndex:range.location + 1]; // now to determine which color...
+            [foo deleteCharactersInRange:range];
+            
             NSString *key = nil;
-            UIColor *foreground = getColor(foo, &key);
-            foo = [foo substringFromIndex:key.length];
-            location += key.length;
+            UIColor *foreground = getColor([foo substringFromIndex:range.location], &key);
+            if (foreground == nil) {
+                break;
+            }
+            range.length = key.length;
+            [foo deleteCharactersInRange:range];
             
             [attribution setObject:foreground forKey:NSForegroundColorAttributeName];
             
             if ([foo hasPrefix:@","]) {
                 key = nil;
-                foo = [foo substringFromIndex:1];
+                range.length = 1;
+                [foo deleteCharactersInRange:range];
                 background = getColor(foo, &key);
-                foo = [foo substringFromIndex:key.length];
-                
-                location += key.length;
+                range.length = key.length;
+                [foo deleteCharactersInRange:range];
             }
             if (background != nil) {
                 [attribution setObject:background forKey:NSBackgroundColorAttributeName];
             }
             
-            NSRange theRange;
-            
-            theRange.location = location;
-            
             if ([foo containsSubstring:colorDelim]) {
-                theRange.length = [foo rangeOfString:colorDelim].location - 1;
+                NSRange to = [foo rangeOfString:colorDelim];
+                range.length = to.location - (location + 1);
             } else {
-                theRange.length = foo.length;
+                range.length = foo.length - location;
             }
             
-            [newMsg addAttributes:attribution range:theRange];
+            [attributes addObject:@[attribution, [NSValue valueWithRange:range]]];
         }
     }
     void (^applyStyle)(NSString *, NSString *, NSArray *) = ^(NSString *foo, NSString *delim, NSArray *atr) {
         int location = 0;
         while ([foo containsSubstring:delim]) {
             NSRange range = [foo rangeOfString:delim];
-            location += range.location + 1;
+            
+            range.location += 1;
+            
+            location += range.location;
             
             foo = [foo substringFromIndex:1];
-            
-            NSRange theRange;
-            theRange.location = location;
+                        
             int length = 0;
             if ([foo containsSubstring:delim]) {
                 length = (int)[foo rangeOfString:delim].location - 1;
+                foo = [foo substringFromIndex:length + 1];
             } else {
                 length = foo.length;
             }
-            theRange.length = length;
-            if ((theRange.location + theRange.length) <= newMsg.length) {
-                [newMsg addAttribute:atr[0] value:atr[1] range:theRange];
+            range.length = length;
+            if ((range.location + range.length) <= foo.length) {
+                [attributes addObject:@[@{atr[0]: atr[1]}, [NSValue valueWithRange:range]]];
             }
         }
     };
     
     if (((flag > styleBold) & 1)) {
-        applyStyle(msg, boldDelim, @[NSStrokeWidthAttributeName, @(-3)]);
+        applyStyle(foo, boldDelim, @[NSStrokeWidthAttributeName, @(-3)]);
     }
     
     if (((flag > styleItalic) & 1)) {
-        applyStyle(msg, italicDelim, @[NSObliquenessAttributeName, @2]);
+        applyStyle(foo, italicDelim, @[NSObliquenessAttributeName, @2]);
     }
     
     if (((flag > styleStrike) & 1)) {
-        applyStyle(msg, strikeDelim, @[NSStrikethroughStyleAttributeName, @1]);
+        applyStyle(foo, strikeDelim, @[NSStrikethroughStyleAttributeName, @1]);
     }
     
     if (((flag > styleUnderline) & 1)) {
-        applyStyle(msg, underDelim, @[NSUnderlineStyleAttributeName, @(NSUnderlineStyleSingle)]);
+        applyStyle(foo, underDelim, @[NSUnderlineStyleAttributeName, @(NSUnderlineStyleSingle)]);
     }
     
     if (((flag > styleDoubleUnderline) & 1)) {
-        applyStyle(msg, underDelim, @[NSUnderlineStyleAttributeName, @(NSUnderlineStyleDouble)]);
+        applyStyle(foo, underDelim, @[NSUnderlineStyleAttributeName, @(NSUnderlineStyleDouble)]);
+    }
+    
+    NSMutableAttributedString *newMsg = [[NSMutableAttributedString alloc] initWithString:foo attributes:[self defaultAttributes]];
+    
+    for (NSArray *atr in attributes) {
+        NSDictionary *attribute = atr[0];
+        NSRange range = [atr[1] rangeValue];
+        
+        if (range.location <= newMsg.length && range.length <= newMsg.length && range.location + range.length <= newMsg.length) {
+            [newMsg addAttributes:attribute range:range];
+        } else {
+            NSLog(@"Range error.");
+        }
     }
     
     self.attributedMessage = newMsg;

@@ -20,4 +20,6 @@
 
 -(RBServerEditorViewController *)editorViewControllerWithOptions:(NSDictionary *)options;
 
+-(void)handleNotification:(NSNotification *)note;
+
 @end

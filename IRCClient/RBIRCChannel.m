@@ -63,6 +63,9 @@
 
 -(void)logMessage:(RBIRCMessage *)message
 {
+    if (message == nil) {
+        return;
+    }
     BOOL shouldResortNames = NO;
     if (message.command == IRCMessageTypeTopic) {
         self.topic = message.message;

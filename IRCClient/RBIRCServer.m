@@ -316,7 +316,8 @@
             NSString *ret = [NSString stringWithFormat:@"NOTICE %@ :%c%@ %@%c\r\n", msg.from, 1, [RBIRCMessage getMessageStringForType:msg.command], msg.extra, 1];
             [self sendCommand:ret];
             RBIRCMessage *a = [[RBIRCMessage alloc] initWithRawMessage:ret];
-            [[self[a.targets[0]] log] addObject:a];
+            RBIRCChannel *channel = self[a.targets[0]];
+            [channel logMessage:a];
             break;
         } default:
             break;
