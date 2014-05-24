@@ -2,7 +2,6 @@
 #import "RBIRCServer.h"
 #import "RBIRCChannel.h"
 #import "RBServerEditorViewController.h"
-#import "RBServerVCDelegate.h"
 #import "RBTextFieldServerCell.h"
 
 #import "RBIRCMessage.h"
@@ -86,13 +85,9 @@ describe(@"RBServerViewController", ^{
             s stub_method("serverName").and_return(@"Test Server");
             s stub_method("channels").and_return(@{@"#foo": c});
             s stub_method("sortedChannelKeys").and_return(@[@"Test Server", RBIRCServerLog, @"#foo"]);
+            s stub_method("objectForKeyedSubscript:").and_return(c);
             subject.servers = [@[s] mutableCopy];
             [subject.tableView reloadData];
-            
-            subject.delegate = nice_fake_for(@protocol(RBServerVCDelegate));
-            subject.delegate stub_method("server:didChangeChannel:").with(s, c);
-            
-            spy_on(subject.delegate);
         });
         
         it(@"should prepend servers to list", ^{
@@ -119,7 +114,6 @@ describe(@"RBServerViewController", ^{
             NSIndexPath *ip = [NSIndexPath indexPathForRow:1 inSection:0];
             [subject tableView:subject.tableView didSelectRowAtIndexPath:ip];
             subject should_not have_received(@selector(presentViewController:animated:completion:));
-            subject.delegate should have_received("server:didChangeChannel:").with(subject.servers[0], Arguments::anything);
             subject.tableView should have_received("deselectRowAtIndexPath:animated:").with(ip, Arguments::anything);
 
         });

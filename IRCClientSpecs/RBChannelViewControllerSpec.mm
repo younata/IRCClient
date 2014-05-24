@@ -3,6 +3,8 @@
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
 
+#import "RBServerViewController.h"
+
 #import "UIActionSheet+allButtonTitles.h"
 
 using namespace Cedar::Matchers;
@@ -204,7 +206,8 @@ describe(@"RBChannelViewController", ^{
             RBIRCChannel *ircChannel = nice_fake_for([RBIRCChannel class]);
             server stub_method("serverName").and_return(@"Test Server");
             ircChannel stub_method("name").and_return(@"#testuser");
-            [subject server:server didChangeChannel:ircChannel];
+            NSNotification *note = [[NSNotification alloc] initWithName:RBServerViewDidChangeChannel object:@{@"server": server, @"channel": ircChannel} userInfo:nil];
+            [subject serverViewChangedChannel:note];
             subject.channel should equal(ircChannel.name);
         });
     });
@@ -222,7 +225,8 @@ describe(@"RBChannelViewController", ^{
         it(@"should still display disconnected on channel change", ^{
             RBIRCChannel *ircChannel = nice_fake_for([RBIRCChannel class]);
             ircChannel stub_method("name").and_return(@"#testchannel");
-            [subject server:subject.server didChangeChannel:ircChannel];
+            NSNotification *note = [[NSNotification alloc] initWithName:RBServerViewDidChangeChannel object:@{@"channel": ircChannel} userInfo:nil];
+            [subject serverViewChangedChannel:note];
             subject.channel should be_nil;
             subject.navigationItem.title should equal(@"Disconnected");
         });

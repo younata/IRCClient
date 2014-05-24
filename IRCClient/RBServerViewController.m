@@ -11,7 +11,6 @@
 #import "RBIRCChannel.h"
 #import "RBIRCMessage.h"
 
-#import "RBServerVCDelegate.h"
 #import "RBServerEditorViewController.h"
 #import "RBTextFieldServerCell.h"
 
@@ -219,14 +218,8 @@ static NSString *textFieldCell = @"textFieldCell";
     RBIRCServer *server = self.servers[section];
     NSInteger row = indexPath.row;
     
-    RBChannelViewController *cvc = (RBChannelViewController *)self.delegate; // should not have to do this.
-    
     if (row == 0) {
-        if ([cvc.server isEqual:server]) {
-            cvc.channel = nil;
-            cvc.server = nil;
-            [cvc performSelector:@selector(disconnect) withObject:nil];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:RBServerViewDidDisconnectServer object:server];
         if ([server connected]) {
             [server quit];
         }
@@ -236,10 +229,7 @@ static NSString *textFieldCell = @"textFieldCell";
         if ([channelName isEqualToString:RBIRCServerLog])
             return;
         
-        if ([cvc.server isEqual:server] && [channelName isEqualToString:cvc.channel]) {
-            cvc.channel = nil;
-            [cvc performSelector:@selector(disconnect) withObject:nil];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:RBServerViewDidDisconnectChannel object:@[server, channelName]];
         
         if (([channelName hasPrefix:@"#"] || [channelName hasPrefix:@"&"])) {
             [server part:channelName];
@@ -264,7 +254,7 @@ static NSString *textFieldCell = @"textFieldCell";
             NSString *ch = channels[row];
             RBIRCChannel *channel = server[ch];
             selectedChannel = channel;
-            [self.delegate server:server didChangeChannel:channel];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RBServerViewDidChangeChannel object:@{@"server": server, @"channel": channel}];
         } else if (row == 0) {
             editor = [self editorViewControllerWithOptions:@{@"server": server}];
         }
@@ -341,7 +331,7 @@ static NSString *textFieldCell = @"textFieldCell";
             RBIRCServer *server = cell.data;
             NSString *str = [tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             [server join:str];
-            [self.delegate server:server didChangeChannel:server[str]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RBServerViewDidChangeChannel object:@{@"server": server, @"channel": server[str]}];
             [self.tableView reloadData];
             
             [self saveServerData];

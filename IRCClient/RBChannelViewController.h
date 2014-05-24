@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RBServerVCDelegate.h"
 
 @class RBIRCServer;
 @class RBIRCMessage;
 @class RBServerViewController;
 @class SWRevealViewController;
 
-@interface RBChannelViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RBServerVCDelegate, UIActionSheetDelegate>
+@interface RBChannelViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIActionSheetDelegate>
 
 @property (nonatomic, strong) UITextField *input;
 @property (nonatomic, strong) UITableView *tableView;
@@ -36,5 +35,8 @@
 
 // for specs.
 -(void)IRCServerConnectionDidDisconnect:(RBIRCServer *)server;
+-(void)serverViewChangedChannel:(NSNotification *)note;
+-(void)serverViewDidDisconnectServer:(NSNotification *)note;
+-(void)serverViewDidDisconnectChannel:(NSNotification *)note;
 
 @end

@@ -297,7 +297,6 @@
 		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
-		896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBServerVCDelegate.h; sourceTree = "<group>"; };
 		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
 		896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
 		896E4749192CCAB700024FF5 /* NSAttributedString+containsAttributions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+containsAttributions.h"; path = "NSAttributedString/NSAttributedString+containsAttributions.h"; sourceTree = "<group>"; };
@@ -790,7 +789,6 @@
 		89C46E441895F8A2006068DC /* Views and Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				896BD17F1895D57500EC91EA /* RBServerVCDelegate.h */,
 				89C46E45189600A9006068DC /* RBTextFieldServerCell.h */,
 				89C46E46189600A9006068DC /* RBTextFieldServerCell.m */,
 				896BD17C1895D30100EC91EA /* RBServerViewController.h */,

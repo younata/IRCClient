@@ -42,7 +42,6 @@
     
     RBServerViewController *serverVC = [[RBServerViewController alloc] initWithStyle:UITableViewStyleGrouped];
     RBChannelViewController *channelVC = [[RBChannelViewController alloc] init];
-    [serverVC setDelegate:channelVC];
     
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:channelVC];
     UINavigationController *otherNC = [[UINavigationController alloc] initWithRootViewController:serverVC];

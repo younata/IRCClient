@@ -34,6 +34,8 @@
 
 #import "RBTextViewCell.h"
 
+#import "RBServerViewController.h"
+
 @interface RBChannelViewController ()
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
@@ -52,6 +54,17 @@ static NSString *CellIdentifier = @"Cell";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverViewChangedChannel:) name:RBServerViewDidChangeChannel object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverViewDidDisconnectServer:) name:RBServerViewDidDisconnectServer object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(serverViewDidDisconnectChannel:) name:RBServerViewDidDisconnectChannel object:nil];
+        
+        for (NSString *str in @[RBIRCServerConnectionDidDisconnect,
+                                RBIRCServerErrorReadingFromStream,
+                                RBIRCServerInvalidCommand,
+                                RBIRCServerHandleMessage,
+                                RBIRCServerUpdateMessage]) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:str object:nil];
+        }
     }
     return self;
 }
@@ -163,14 +176,6 @@ static NSString *CellIdentifier = @"Cell";
     sgr.numberOfTouchesRequired = 2;
     
     [[RBScriptingService sharedInstance] channelViewWasLoaded:self];
-    
-    for (NSString *str in @[RBIRCServerConnectionDidDisconnect,
-                            RBIRCServerErrorReadingFromStream,
-                            RBIRCServerInvalidCommand,
-                            RBIRCServerHandleMessage,
-                            RBIRCServerUpdateMessage]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:str object:nil];
-    }
 }
 
 -(void)handleNotification:(NSNotification *)note
@@ -576,10 +581,13 @@ static NSString *CellIdentifier = @"Cell";
     self.inputCommands.enabled = YES;
 }
 
-#pragma mark - RBServerVCDelegate
+#pragma mark - RBServerView notifications
 
--(void)server:(RBIRCServer *)server didChangeChannel:(RBIRCChannel *)newChannel
+-(void)serverViewChangedChannel:(NSNotification *)note
 {
+    RBIRCServer *server = note.object[@"server"];
+    RBIRCChannel *newChannel = note.object[@"channel"];
+    
     [self.server[self.channel] read];
     [newChannel read];
     self.server = server;
@@ -594,6 +602,34 @@ static NSString *CellIdentifier = @"Cell";
     [[RBScriptingService sharedInstance] channelView:self didSelectChannel:self.server[self.channel] andServer:self.server];
     [(RBNameViewController *)self.revealController.rightViewController setTopic:newChannel.topic];
     [(RBNameViewController *)self.revealController.rightViewController setNames:newChannel.names];
+
+}
+
+-(void)serverViewDidDisconnectServer:(NSNotification *)note
+{
+    RBIRCServer *server = note.object;
+    
+    if (![server isEqual:self.server]) {
+        return;
+    }
+    self.channel = nil;
+    self.server = nil;
+    [self disconnect];
+}
+
+-(void)serverViewDidDisconnectChannel:(NSNotification *)note
+{
+    RBIRCServer *server = [note.object firstObject];
+    NSString *channelName = [note.object lastObject];
+    
+    if (![server isEqual:self.server]) {
+        return;
+    }
+    if (![channelName isEqualToString:self.channel]) {
+        return;
+    }
+    self.channel = nil;
+    [self disconnect];
 }
 
 #pragma mark - RBIRCServerDelegate

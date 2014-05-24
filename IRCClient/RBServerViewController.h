@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "SWRevealViewController.h"
 
-@protocol RBServerVCDelegate;
+#define RBServerViewDidChangeChannel @"RBServerViewDidChangeChannel"
+#define RBServerViewDidDisconnectServer @"RBServerViewDidDisconnectServer"
+#define RBServerViewDidDisconnectChannel @"RBServerViewDidDisconnectChannel"
+
 @class RBServerEditorViewController;
 
 @interface RBServerViewController : UITableViewController <UITextFieldDelegate, SWRevealViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *servers;
-@property (nonatomic, weak) id<RBServerVCDelegate> delegate;
 @property (nonatomic, weak) SWRevealViewController *revealController;
 
 -(RBServerEditorViewController *)editorViewControllerWithOptions:(NSDictionary *)options;
