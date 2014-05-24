@@ -7,6 +7,8 @@
 
 #import "UIActionSheet+allButtonTitles.h"
 
+#import "UITableView+Scroll.h"
+
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
@@ -281,7 +283,8 @@ describe(@"RBChannelViewController", ^{
             [subject IRCServer:subject.server handleMessage:msg];
             [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(i + 1);
             log.count should equal(i+1);
-            subject.tableView should have_received(@selector(scrollToRowAtIndexPath:atScrollPosition:animated:)).with([NSIndexPath indexPathForRow:i inSection:0], UITableViewScrollPositionBottom, YES);
+            subject.tableView should_not have_received(@selector(scrollToBottom));
+            // sufficiently near the bottom...
         });
         
         it(@"should respond to incoming messages when not viewing the top", ^{

@@ -22,6 +22,7 @@
 
 @interface RBAppDelegate ()<SWRevealViewControllerDelegate>
 @property (nonatomic) UIBackgroundTaskIdentifier taskIdentifier;
+@property (nonatomic, strong) UIWindow *secondWindow;
 @end
 
 @implementation RBAppDelegate
@@ -34,6 +35,9 @@
     [self.window makeKeyAndVisible];
     
     self.taskIdentifier = UIBackgroundTaskInvalid;
+    
+    [self checkForExistingScreenAndInitializeIfPresent];
+    [self setUpScreenConnectionNotificationHandlers];
     
     [[RBScriptingService sharedInstance] runEnabledScripts];
     
@@ -117,6 +121,57 @@
     SWRevealViewController *rvc = (SWRevealViewController *)self.window.rootViewController;
     RBServerViewController *svc = (RBServerViewController *)[(UINavigationController *)rvc.rearViewController topViewController];
     return svc.servers;
+}
+
+#pragma mark - Secondary Screen (airplay support!)
+
+-(void)initializeSecondScreen
+{
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:[[RBChannelViewController alloc] init]];
+    
+    self.secondWindow.rootViewController = nc;
+}
+
+-(void)checkForExistingScreenAndInitializeIfPresent
+{
+    if ([[UIScreen screens] count] > 1) {
+        UIScreen *secondScreen = [[UIScreen screens] objectAtIndex:1];
+        CGRect screenBounds = secondScreen.bounds;
+        
+        self.secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
+        self.secondWindow.screen = secondScreen;
+        
+        [self initializeSecondScreen];
+        self.secondWindow.hidden = NO;
+    }
+}
+
+-(void)setUpScreenConnectionNotificationHandlers
+{
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(handleScreenDidConnectNotification:) name:UIScreenDidConnectNotification object:nil];
+    [center addObserver:self selector:@selector(handleScreenDidDisconnectNotification:) name:UIScreenDidDisconnectNotification object:nil];
+}
+
+-(void)handleScreenDidConnectNotification:(NSNotification *)note
+{
+    UIScreen *newScreen = [note object];
+    CGRect screenBounds = newScreen.bounds;
+    
+    if (!self.secondWindow) {
+        self.secondWindow = [[UIWindow alloc] initWithFrame:screenBounds];
+        self.secondWindow.screen = newScreen;
+        [self initializeSecondScreen];
+        self.secondWindow.hidden = NO;
+    }
+}
+
+-(void)handleScreenDidDisconnectNotification:(NSNotification *)note
+{
+    if (self.secondWindow) {
+        self.secondWindow.hidden = YES;
+        self.secondWindow = nil;
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
