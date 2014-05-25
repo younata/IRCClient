@@ -588,7 +588,7 @@
             adjustRangesForDeletion(range);
             [foo deleteCharactersInRange:range];
             
-            location = range.location;
+            location = (int)range.location;
             
             int length = 0;
             if ([foo containsSubstring:delim]) {
@@ -598,7 +598,7 @@
                 adjustRangesForDeletion(range);
                 [foo deleteCharactersInRange:range];
             } else {
-                length = foo.length;
+                length = (int)foo.length;
             }
             range.location = location;
             range.length = length;
@@ -670,14 +670,8 @@
                 
                 __weak RBIRCMessage *theSelf = self;
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                manager.responseSerializer.acceptableContentTypes = [NSSet setWithArray:@[@"image/gif",
-                                                                                          @"image/jpeg",
-                                                                                          @"image/png",
-                                                                                          @"image/tiff",
-                                                                                          @"image/bmp",
-                                                                                          @"image/ico"]];
+                manager.responseSerializer = [AFImageResponseSerializer serializer];
                 [manager GET:img parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    NSLog(@"Recieved image: %@", responseObject);
                     if ([responseObject isKindOfClass:[UIImage class]]) {
                         UIImage *image = (UIImage *)responseObject;
                         NSTextAttachment *attach = [[NSTextAttachment alloc] init];

@@ -10,7 +10,7 @@
 
 @interface RBNameViewController : UITableViewController
 
-@property (nonatomic, strong) NSArray *names;
+@property (nonatomic, strong) NSMutableArray *names;
 @property (nonatomic, copy) NSString *topic;
 
 @end

@@ -15,7 +15,7 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }
 
--(void)setNames:(NSArray *)names
+-(void)setNames:(NSMutableArray *)names
 {
     _names = names;
     [self.tableView reloadData];

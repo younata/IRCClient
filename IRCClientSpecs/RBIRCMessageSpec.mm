@@ -4,6 +4,8 @@
 #import "UIColor+colorWithHexString.h"
 #import "NSAttributedString+attributes.h"
 
+#import "RBConfigurationKeys.h"
+
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
@@ -278,6 +280,70 @@ describe(@"RBIRCMessage", ^{
                 [str containsAttribution:NSStrokeWidthAttributeName value:@(-3) range:NSMakeRange(10, 6)] should be_truthy;
             });
         });
+        
+        /*
+         Bleh, asynch...
+        describe(@"images", ^{
+            beforeEach(^{
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:RBConfigLoadImages];
+            });
+            
+            afterEach(^{
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:RBConfigLoadImages];
+            });
+            
+            fdescribe(@"SFW images", ^{
+                it(@"should append a text attachment for messages with links to images", ^{
+                    // synchronization errors...
+                    RBIRCMessage *msg = stylizedMsg(@"http://i.imgur.com/hjw7z6A.jpg");
+                    
+                    msg.attributedMessage.string should equal(@"ik: http://i.imgur.com/hjw7z6A.jpg");
+                    NSArray *attachments = [msg.attributedMessage rangesForAttribute:NSAttachmentAttributeName];
+                    attachments.count should equal(1);
+                    
+                    NSArray *firstSet = attachments.firstObject;
+                    firstSet.firstObject should be_instance_of([NSTextAttachment class]);
+                });
+            });
+            
+            describe(@"NSFW images", ^{
+                beforeEach(^{
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:RBConfigDontLoadNSFW];
+                });
+                
+                afterEach(^{
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:RBConfigDontLoadNSFW];
+                });
+                
+                it(@"should not append a text attachment for messages with links to nsfw images", ^{
+                    RBIRCMessage *msg = stylizedMsg(@"http://i.imgur.com/NI4MgcK.gif nsfw");
+                    
+                    msg.attributedMessage.string should equal(@"ik: http://i.imgur.com/NI4MgcK.gif nsfw");
+                    [msg.attributedMessage rangesForAttribute:NSAttachmentAttributeName].count should equal(0);
+                });
+                
+                it(@"should append a nsfw image if 'display nsfw images' is checked in configs", ^{
+                    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:RBConfigDontLoadNSFW];
+                    
+                    RBIRCMessage *msg = stylizedMsg(@"http://i.imgur.com/NI4MgcK.gif nsfw");
+                    
+                    msg.attributedMessage.string should equal(@"ik: http://i.imgur.com/NI4MgcK.gif nsfw");
+                    NSArray *attachments = [msg.attributedMessage rangesForAttribute:NSAttachmentAttributeName];
+                    attachments.count should equal(1);
+                    [attachments[0][0] image] should be_instance_of([UIImage class]);
+                });
+            });
+            
+            describe(@"Invalid images", ^{ // that is, links which look like they should be images, but really aren't
+                it(@"should not append a text attachment", ^{
+                    RBIRCMessage *msg = stylizedMsg(@"http://younata.com/image.jpg");
+                    
+                    msg.attributedMessage.string should equal(@"ik: http://younata.com/image.jpg");
+                    [msg.attributedMessage rangesForAttribute:NSAttachmentAttributeName].count should equal(0);
+                });
+            });
+        });
+        */
     });
 });
 

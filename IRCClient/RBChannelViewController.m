@@ -12,6 +12,7 @@
 #import "NSString+isNilOrEmpty.h"
 #import "NSString+contains.h"
 #import "UIView+initWithSuperview.h"
+#import "UITableView+Scroll.h"
 
 #import "RBIRCServer.h"
 #import "RBIRCChannel.h"
@@ -20,28 +21,24 @@
 #import "RBConfigViewController.h"
 #import "RBConfigurationKeys.h"
 
-#import "UITableView+Scroll.h"
-
 #import "RBColorScheme.h"
-
 #import "RBHelp.h"
-
 #import "RBScriptingService.h"
-
 #import "RBNameViewController.h"
-
 #import "RBChordedKeyboard.h"
-
 #import "RBTextViewCell.h"
-
 #import "RBServerViewController.h"
 
-@interface RBChannelViewController ()
+#import "HTAutocompleteTextField.h"
+
+@interface RBChannelViewController () <HTAutocompleteDataSource>
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
 @property (nonatomic) NSLayoutConstraint *keyboardConstraint;
 
 @property (nonatomic, strong) NSMutableDictionary *cells;
+
+@property (nonatomic, strong) NSMutableArray *recentlyUsedNames;
 
 @end
 
@@ -129,7 +126,8 @@ static NSString *CellIdentifier = @"Cell";
     inputView.backgroundColor = [UIColor whiteColor];
     [inputView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(1, 0, 0, 0)];
     
-    self.input = [[UITextField alloc] initForAutoLayoutWithSuperview:inputView];
+    self.input = [[HTAutocompleteTextField alloc] initForAutoLayoutWithSuperview:inputView];
+    self.input.autocompleteDataSource = self;
     self.input.placeholder = NSLocalizedString(@"Message", nil);
     self.input.returnKeyType = UIReturnKeySend;
     self.input.backgroundColor = [UIColor whiteColor];
@@ -545,6 +543,16 @@ static NSString *CellIdentifier = @"Cell";
         addedToLog = YES;
     }
     
+    NSArray *names = [self.server[self.channel] names];
+    for (NSString *word in [textField.text componentsSeparatedByString:@" "]) {
+        if ([names containsObject:word]) {
+            if ([self.recentlyUsedNames containsObject:word]) {
+                [self.recentlyUsedNames removeObject:word];
+            }
+            [self.recentlyUsedNames insertObject:word atIndex:0];
+        }
+    }
+    
     textField.text = @"";
     
     if (addedToLog) {
@@ -571,6 +579,8 @@ static NSString *CellIdentifier = @"Cell";
     self.server = nil;
     
     [self.tableView reloadData];
+    
+    self.recentlyUsedNames = nil;
     
     [[RBScriptingService sharedInstance] channelView:self didDisconnectFromChannel:oldChannel andServer:oldServer];
 }
@@ -602,6 +612,23 @@ static NSString *CellIdentifier = @"Cell";
     [[RBScriptingService sharedInstance] channelView:self didSelectChannel:self.server[self.channel] andServer:self.server];
     [(RBNameViewController *)self.revealController.rightViewController setTopic:newChannel.topic];
     [(RBNameViewController *)self.revealController.rightViewController setNames:newChannel.names];
+    self.recentlyUsedNames = [newChannel.names mutableCopy];
+    NSMutableArray *toReplace = [[NSMutableArray alloc] init];
+    for (NSString *name in self.recentlyUsedNames) {
+        NSUInteger location = [self.recentlyUsedNames indexOfObject:name];
+        for (NSString *prefix in @[@"~", @"&", @"@", @"%", @"+"]) {
+            if ([name hasPrefix:prefix]) {
+                [toReplace addObject:@[@(location), [name substringFromIndex:1]]];
+            }
+        }
+    }
+    
+    for (NSArray *repl in toReplace) {
+        NSNumber *loc = repl.firstObject;
+        NSString *name = repl.lastObject;
+        
+        [self.recentlyUsedNames replaceObjectAtIndex:loc.unsignedIntegerValue withObject:name];
+    }
 
 }
 
@@ -658,6 +685,22 @@ static NSString *CellIdentifier = @"Cell";
         if ([to isEqualToString:self.channel]) {
             if (message.command == IRCMessageTypeTopic) {
                 [(RBNameViewController *)self.revealController.rightViewController setTopic:message.message];
+            }
+            if (message.command == IRCMessageTypeNames) {
+                return;
+            }
+            if ([self.recentlyUsedNames containsObject:message.from]) {
+                [self.recentlyUsedNames removeObject:message.from];
+            }
+            [self.recentlyUsedNames insertObject:message.from atIndex:0];
+            
+            if (message.command == IRCMessageTypeJoin) {
+                [(RBNameViewController *)self.revealController.rightViewController setNames:[self.server[self.channel] names]];
+            }
+            else if (message.command == IRCMessageTypePart || message.command == IRCMessageTypeQuit || message.command == IRCMessageTypeKick) {
+                [(RBNameViewController *)self.revealController.rightViewController setNames:[self.server[self.channel] names]];
+                
+                [self.recentlyUsedNames removeObject:message.from];
             }
             [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:nil numberOfRowsInSection:0] - 1 inSection:0]]
                                   withRowAnimation:UITableViewRowAnimationNone];
@@ -797,5 +840,26 @@ static NSString *CellIdentifier = @"Cell";
     }
     self.input.text = str;
 }
+
+#pragma mark - HTAutocompleteDataSource
+
+-(NSString *)textField:(HTAutocompleteTextField *)textField completionForPrefix:(NSString *)prefix ignoreCase:(BOOL)ignoreCase
+{
+    prefix = [[prefix componentsSeparatedByString:@" "] lastObject];
+    if (ignoreCase) {
+        prefix = [prefix lowercaseString];
+    }
+    for (NSString *name in self.recentlyUsedNames) {
+        NSString *compare = name;
+        if (ignoreCase) {
+            compare = [compare lowercaseString];
+        }
+        if ([compare hasPrefix:prefix]) {
+            return [name substringFromIndex:prefix.length];
+        }
+    }
+    return @"";
+}
+
 
 @end
