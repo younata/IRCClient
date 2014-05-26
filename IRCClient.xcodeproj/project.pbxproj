@@ -137,6 +137,8 @@
 		899CE7AA18D068D6002ABBFE /* RBKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */; };
 		89B56B4B19318A460079D259 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B56B4A19318A460079D259 /* HTAutocompleteTextField.m */; };
 		89B56B4C19318A460079D259 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B56B4A19318A460079D259 /* HTAutocompleteTextField.m */; };
+		89B56B9D1932C0570079D259 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 89B56B9B1932C0570079D259 /* Localizable.stringsdict */; };
+		89B56B9E1932C0570079D259 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 89B56B9B1932C0570079D259 /* Localizable.stringsdict */; };
 		89B5AA1E18C675DC004D4BE8 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B5AA1B18C66189004D4BE8 /* libffi.a */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
@@ -341,6 +343,7 @@
 		89A4579A18AE1DAF003454AC /* IRCNumericReplies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRCNumericReplies.h; sourceTree = "<group>"; };
 		89B56B4919318A460079D259 /* HTAutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTAutocompleteTextField.h; sourceTree = "<group>"; };
 		89B56B4A19318A460079D259 /* HTAutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteTextField.m; sourceTree = "<group>"; };
+		89B56B9C1932C0570079D259 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		89C46E45189600A9006068DC /* RBTextFieldServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextFieldServerCell.h; sourceTree = "<group>"; };
 		89C46E46189600A9006068DC /* RBTextFieldServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextFieldServerCell.m; sourceTree = "<group>"; };
 		89C46E4818960C96006068DC /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
@@ -703,6 +706,7 @@
 			isa = PBXGroup;
 			children = (
 				898132F518A99EDF004AEBE9 /* Localizable.strings */,
+				89B56B9B1932C0570079D259 /* Localizable.stringsdict */,
 			);
 			name = en.lproj;
 			path = ../en.lproj;
@@ -998,6 +1002,7 @@
 				8908DC8118B8B299004DFBAB /* README.md in Resources */,
 				8908DC4A18B7491C004DFBAB /* match.nu in Resources */,
 				893C331918C197F0000279AA /* libffi.xcodeproj in Resources */,
+				89B56B9D1932C0570079D259 /* Localizable.stringsdict in Resources */,
 				8908DC4B18B7491C004DFBAB /* math.nu in Resources */,
 				8908DC4D18B7491C004DFBAB /* nu.nu in Resources */,
 				8908DC4E18B7491C004DFBAB /* template.nu in Resources */,
@@ -1022,6 +1027,7 @@
 				8908DC3618B74913004DFBAB /* beautify.nu in Resources */,
 				89E812E318BFD33300616600 /* hilight.nu in Resources */,
 				8908DC3718B74913004DFBAB /* cblocks.nu in Resources */,
+				89B56B9E1932C0570079D259 /* Localizable.stringsdict in Resources */,
 				8908DC3818B74913004DFBAB /* coredata.nu in Resources */,
 				8908DC3918B74913004DFBAB /* doc.nu in Resources */,
 				8908DC3B18B74913004DFBAB /* generate.nu in Resources */,
@@ -1256,6 +1262,14 @@
 				898132F618A99EDF004AEBE9 /* en */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		89B56B9B1932C0570079D259 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89B56B9C1932C0570079D259 /* en */,
+			);
+			name = Localizable.stringsdict;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

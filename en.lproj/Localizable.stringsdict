@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>%ld new messages\n(Touch to scroll down)</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@ld_new_messages@\n(Touch to scroll down)</string>
+            <key>ld_new_messages</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>ld</string>
+                <key>one</key>
+                <string>%ld new message</string>
+                <key>other</key>
+                <string>%ld new messages</string>
+            </dict>
+        </dict>
+    </dict>
+</plist>

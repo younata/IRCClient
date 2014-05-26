@@ -560,6 +560,7 @@ static NSString *CellIdentifier = @"Cell";
         [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
                               withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView endUpdates];
+        [self.server[self.channel] read];
         [self.tableView scrollToBottom:YES];
     }
     
@@ -720,6 +721,8 @@ static NSString *CellIdentifier = @"Cell";
                 }
                 if (show) {
                     [self notifyUserOfMoreMessages];
+                } else {
+                    [self.server[self.channel] read];
                 }
             }
         } else {
@@ -729,19 +732,14 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)notifyUserOfMoreMessages
 {
-    NSArray *subviews = self.tableView.subviews;
+    NSArray *subviews = self.view.subviews;
     UIButton *button = nil;
-    NSString *txt = @"1 new message\n(Touch to scroll down)";
+    NSString *txt = [NSString localizedStringWithFormat:NSLocalizedString(@"%ld new messages\n(Touch to scroll down)", nil), [[self.server[self.channel] unreadMessages] count]];
     for (UIView *view in subviews) {
         if ([view isKindOfClass:[UIButton class]]) {
             UIButton *b = (UIButton *)view;
             NSAttributedString *as = [b attributedTitleForState:UIControlStateNormal];
             if ([as.string containsSubstring:@"new message"]) {
-                NSArray *substrs = [as.string componentsSeparatedByString:@" "];
-                NSString *str = [substrs firstObject];
-                NSInteger nm = [str integerValue] + 1;
-                
-                txt = [NSString stringWithFormat:@"%ld new messages\n(Touch to scroll down)", (long)nm];
                 button = b;
             }
         }
@@ -773,7 +771,7 @@ static NSString *CellIdentifier = @"Cell";
         [self performSelector:@selector(removeNewMessagesButtonIfThere) withObject:nil afterDelay:5];
         
         button.alpha = 0.0;
-        [self.tableView addSubview:button];
+        [self.view addSubview:button];
         [UIView animateWithDuration:0.1 animations:^{button.alpha = 1.0;}];
         
     } else {
@@ -785,7 +783,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)removeNewMessagesButtonIfThere
 {
-    NSArray *subviews = self.tableView.subviews;
+    NSArray *subviews = self.view.subviews;
     for (UIView *view in subviews) {
         if ([view isKindOfClass:[UIButton class]]) {
             UIButton *b = (UIButton *)view;
