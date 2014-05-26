@@ -256,12 +256,6 @@ static NSString *CellIdentifier = @"Cell";
     }
 }
 
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 -(void)showInputCommands
 {
     self.actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Commands", nil)
@@ -807,7 +801,7 @@ static NSString *CellIdentifier = @"Cell";
         if ([to isEqualToString:self.channel]) {
             NSUInteger i = [[self.server[self.channel] log] indexOfObject:message];
             [self.tableView beginUpdates];
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]
+            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]
                                   withRowAnimation:UITableViewRowAnimationNone];
             [self.tableView endUpdates];
         }
