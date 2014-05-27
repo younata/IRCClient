@@ -18,7 +18,6 @@
 #define RBIRCServerConnectionDidDisconnect @"RBIRCServerConnectionDidDisconnect"
 #define RBIRCServerErrorReadingFromStream @"RBIRCServerErrorReadingFromStream"
 #define RBIRCServerHandleMessage @"RBIRCServerHandleMessage"
-#define RBIRCServerInvalidCommand @"RBIRCServerInvalidCommand"
 #define RBIRCServerUpdateMessage @"RBIRCServerUpdateMessage"
 
 

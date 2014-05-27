@@ -57,7 +57,6 @@ static NSString *CellIdentifier = @"Cell";
         
         for (NSString *str in @[RBIRCServerConnectionDidDisconnect,
                                 RBIRCServerErrorReadingFromStream,
-                                RBIRCServerInvalidCommand,
                                 RBIRCServerHandleMessage,
                                 RBIRCServerUpdateMessage]) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:str object:nil];
@@ -138,16 +137,15 @@ static NSString *CellIdentifier = @"Cell";
         fontName = @"Inconsolata";
         [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:RBConfigFontName];
     }
-    double fontSize = [[NSUserDefaults standardUserDefaults] doubleForKey:RBConfigFontSize];
-    if (fontSize == 0) {
-        fontSize = 14.0;
-        [[NSUserDefaults standardUserDefaults] setDouble:fontSize forKey:RBConfigFontSize];
-    }
+    UIFont *f = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    double fontSize = f.pointSize;
     UIFont *font = [UIFont fontWithName:fontName size:fontSize];
     if (!font) {
         font = [UIFont systemFontOfSize:fontSize];
     }
     self.input.font = font;
+    
+    [self.input autoSetDimension:ALDimensionHeight toSize:fontSize relation:NSLayoutRelationGreaterThanOrEqual];
     
     [self.input autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
     [self.input autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
@@ -183,8 +181,6 @@ static NSString *CellIdentifier = @"Cell";
         [self IRCServerConnectionDidDisconnect:note.object];
     } else if ([name isEqualToString:RBIRCServerErrorReadingFromStream]) {
         [self IRCServer:note.object errorReadingFromStream:note.userInfo[@"error"]];
-    } else if ([name isEqualToString:RBIRCServerInvalidCommand]) {
-        [self IRCServer:note.object invalidCommand:note.userInfo[@"error"]];
     } else if ([name isEqualToString:RBIRCServerHandleMessage]) {
         [self IRCServer:note.object handleMessage:note.userInfo[@"message"]];
     } else if ([name isEqualToString:RBIRCServerUpdateMessage]) {
@@ -443,14 +439,24 @@ static NSString *CellIdentifier = @"Cell";
                 NSString *message = nil;
                 if (c.count > 0)
                     message = c[0];
-                [self.server part:self.channel message:message];
+                @try {
+                    [self.server part:self.channel message:message];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"Exception while parting: %@", exception);
+                }
             }
             case IRCMessageTypePrivmsg:
                 break;
             case IRCMessageTypeNotice:
                 break;
             case IRCMessageTypeMode:
-                [self.server mode:self.channel options:c];
+                @try {
+                    [self.server mode:self.channel options:c];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"Exception while mode'ing: %@", exception);
+                }
                 break;
             case IRCMessageTypeKick: {
                 NSString *target = nil;
@@ -461,11 +467,21 @@ static NSString *CellIdentifier = @"Cell";
                     target = c[0];
                 if (c.count > 1)
                     reason = [str substringFromIndex:target.length + 1];
-                [self.server kick:self.channel target:target reason:reason];
+                @try {
+                    [self.server kick:self.channel target:target reason:reason];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"Exception while kicking: %@", exception);
+                }
                 break;
             }
             case IRCMessageTypeTopic:
-                [self.server topic:self.channel topic:str];
+                @try {
+                    [self.server topic:self.channel topic:str];
+                }
+                @catch (NSException *exception) {
+                    NSLog(@"Exception while topic'ing: %@", exception);
+                }
                 break;
             case IRCMessageTypeNick:
                 if (c.count == 0)
@@ -669,11 +685,6 @@ static NSString *CellIdentifier = @"Cell";
     [self IRCServerConnectionDidDisconnect:server];
 }
 
--(void)IRCServer:(RBIRCServer *)server invalidCommand:(NSError *)error
-{
-    // meh.
-}
-
 -(void)IRCServer:(RBIRCServer *)server handleMessage:(RBIRCMessage *)message
 {
     for (NSString *to in message.targets) {
@@ -800,10 +811,15 @@ static NSString *CellIdentifier = @"Cell";
     for (NSString *to in message.targets) {
         if ([to isEqualToString:self.channel]) {
             NSUInteger i = [[self.server[self.channel] log] indexOfObject:message];
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]
-                                  withRowAnimation:UITableViewRowAnimationNone];
-            [self.tableView endUpdates];
+            @try {
+                [self.tableView beginUpdates];
+                [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:i inSection:0]]
+                                      withRowAnimation:UITableViewRowAnimationNone];
+                [self.tableView endUpdates];
+            }
+            @catch (NSException *exception) {
+                [self.tableView reloadData];
+            }
         }
     }
 }

@@ -207,21 +207,22 @@
         case IRCMessageTypePart:
             self.message = trailing;
             str = [NSString stringWithFormat:@"%@ left [%@]", self.from, trailing];
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
+            self.attributedMessage = [self parseStylizedMessages:str];
             break;
         case IRCMessageTypeNotice:
             self.message = trailing;
             [self parseCTCPResponse];
             [self loadImages];
-            [self parseStylizedMessages];
+            self.attributedMessage = [self parseStylizedMessages];
             self.message = [NSString stringWithFormat:@"%@: %@", self.from, trailing];
             break;
         case IRCMessageTypePrivmsg:
             self.message = trailing;
             [self parseCTCPRequest];
             [self loadImages];
-            [self parseStylizedMessages];
+            self.attributedMessage = [self parseStylizedMessages];
             self.message = [NSString stringWithFormat:@"%@: %@", self.from, trailing];
+            
             break;
         case IRCMessageTypeMode: {
             NSMutableArray *modes = [[NSMutableArray alloc] init];
@@ -229,7 +230,7 @@
                 [params addObject:trailing]; // fucking unrealircd...
             }
             self.message = [NSString stringWithFormat:@"MODE %@ %@", params[params.count - 2], params.lastObject]; // yeah, yeah...
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:self.message attributes:[self defaultAttributes]];
+            self.attributedMessage = [self parseStylizedMessages:self.message];
             
             int i = 1; // params[0] is targets...
             while ([params[i] hasPrefix:@"+"] || [params[i] hasPrefix:@"-"]) {
@@ -249,11 +250,11 @@
             self.extra = @{params[1]: trailing};
             self.message = [NSString stringWithFormat:@"%@ :%@", params[1], trailing];
             str = [NSString stringWithFormat:@"%@ was kicked from %@ by %@ [%@]", params[1], self.targets[0], self.from, trailing];
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
+            self.attributedMessage = [self parseStylizedMessages:str];
             break;
         case IRCMessageTypeTopic:
             self.message = [params componentsJoinedByString:@" "];
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:self.message attributes:[self defaultAttributes]];
+            self.attributedMessage = [self parseStylizedMessages:self.message];
             break;
         case IRCMessageTypeOper: // shouldn't have to handle
             break;
@@ -264,7 +265,7 @@
         case IRCMessageTypeQuit:
             self.message = originalParamsString;
             str = [NSString stringWithFormat:@"%@ has quit [%@]", self.from, self.message];
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
+            self.attributedMessage = [self parseStylizedMessages:str];
             break;
         case IRCMessageTypePing:
             self.message = trailing;
@@ -447,9 +448,13 @@
     }
 }
 
--(void)parseStylizedMessages
+-(NSAttributedString *)parseStylizedMessages
 {
-    NSString *msg = self.attributedMessage.string;
+    return [self parseStylizedMessages:self.attributedMessage.string];
+}
+
+-(NSAttributedString *)parseStylizedMessages:(NSString *)msg
+{
     NSString *(^charToString)(char) = ^NSString *(char c) {
         return [NSString stringWithFormat:@"%c", c];
     };
@@ -471,7 +476,7 @@
         }
     }
     if (flag == 0) {
-        return;
+        return nil;
     }
     
     NSMutableArray *attributes = [[NSMutableArray alloc] init];
@@ -501,7 +506,7 @@
         while ([foo containsSubstring:colorDelim]) {
             NSMutableDictionary *attribution = [@{} mutableCopy];
             NSRange range = [foo rangeOfString:colorDelim];
-            location = range.location;
+            location = (int)range.location;
             
             [foo deleteCharactersInRange:range];
             
@@ -641,7 +646,7 @@
         }
     }
     
-    self.attributedMessage = newMsg;
+    return newMsg;
 }
 
 -(void)loadImages
