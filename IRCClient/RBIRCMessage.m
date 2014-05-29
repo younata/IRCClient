@@ -207,22 +207,24 @@
         case IRCMessageTypePart:
             self.message = trailing;
             str = [NSString stringWithFormat:@"%@ left [%@]", self.from, trailing];
-            self.attributedMessage = [self parseStylizedMessages:str];
+            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]]];
             break;
         case IRCMessageTypeNotice:
             self.message = trailing;
             [self parseCTCPResponse];
             [self loadImages];
             self.attributedMessage = [self parseStylizedMessages];
-            self.message = [NSString stringWithFormat:@"%@: %@", self.from, trailing];
+            self.message = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
             break;
         case IRCMessageTypePrivmsg:
             self.message = trailing;
             [self parseCTCPRequest];
+            if (![self.attributedMessage.string hasPrefix:@"*"]) {
+                self.message = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
+            }
             [self loadImages];
-            self.attributedMessage = [self parseStylizedMessages];
-            self.message = [NSString stringWithFormat:@"%@: %@", self.from, trailing];
-            
+            self.attributedMessage = [self parseStylizedMessages:self.attributedMessage];
+            self.message = self.attributedMessage.string;
             break;
         case IRCMessageTypeMode: {
             NSMutableArray *modes = [[NSMutableArray alloc] init];
@@ -230,7 +232,7 @@
                 [params addObject:trailing]; // fucking unrealircd...
             }
             self.message = [NSString stringWithFormat:@"MODE %@ %@", params[params.count - 2], params.lastObject]; // yeah, yeah...
-            self.attributedMessage = [self parseStylizedMessages:self.message];
+            self.attributedMessage = [self parseStylizedMessages:self.attributedMessage];
             
             int i = 1; // params[0] is targets...
             while ([params[i] hasPrefix:@"+"] || [params[i] hasPrefix:@"-"]) {
@@ -250,11 +252,11 @@
             self.extra = @{params[1]: trailing};
             self.message = [NSString stringWithFormat:@"%@ :%@", params[1], trailing];
             str = [NSString stringWithFormat:@"%@ was kicked from %@ by %@ [%@]", params[1], self.targets[0], self.from, trailing];
-            self.attributedMessage = [self parseStylizedMessages:str];
+            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:str attributes:self.defaultAttributes]];
             break;
         case IRCMessageTypeTopic:
             self.message = [params componentsJoinedByString:@" "];
-            self.attributedMessage = [self parseStylizedMessages:self.message];
+            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:self.message attributes:self.defaultAttributes]];
             break;
         case IRCMessageTypeOper: // shouldn't have to handle
             break;
@@ -265,7 +267,7 @@
         case IRCMessageTypeQuit:
             self.message = originalParamsString;
             str = [NSString stringWithFormat:@"%@ has quit [%@]", self.from, self.message];
-            self.attributedMessage = [self parseStylizedMessages:str];
+            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:str attributes:self.defaultAttributes]];
             break;
         case IRCMessageTypePing:
             self.message = trailing;
@@ -450,11 +452,12 @@
 
 -(NSAttributedString *)parseStylizedMessages
 {
-    return [self parseStylizedMessages:self.attributedMessage.string];
+    return [self parseStylizedMessages:self.attributedMessage];
 }
 
--(NSAttributedString *)parseStylizedMessages:(NSString *)msg
+-(NSAttributedString *)parseStylizedMessages:(NSAttributedString *)message
 {
+    NSString *msg = message.string;
     NSString *(^charToString)(char) = ^NSString *(char c) {
         return [NSString stringWithFormat:@"%c", c];
     };
@@ -476,7 +479,7 @@
         }
     }
     if (flag == 0) {
-        return nil;
+        return message;
     }
     
     NSMutableArray *attributes = [[NSMutableArray alloc] init];
@@ -651,10 +654,14 @@
 
 -(void)loadImages
 {
+    [self loadImages:[self.attributedMessage.string lowercaseString]];
+}
+
+-(void)loadImages:(NSString *)message
+{
     if (![[NSUserDefaults standardUserDefaults] boolForKey:RBConfigLoadImages]) {
         return;
     }
-    NSString *message = [self.message lowercaseString];
     if (![message containsSubstring:@"nsfw"] ||
         [[NSUserDefaults standardUserDefaults] boolForKey:RBConfigDontLoadNSFW]) {
         NSMutableAttributedString *mas = [[NSMutableAttributedString alloc] initWithAttributedString:[self attributedMessage]];

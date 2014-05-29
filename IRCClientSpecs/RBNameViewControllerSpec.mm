@@ -20,7 +20,7 @@ describe(@"RBNameViewController", ^{
     });
     
     it(@"should list the names", ^{
-        subject.names = names;
+        subject.names = [names mutableCopy];
         
         [subject numberOfSectionsInTableView:subject.tableView] should equal(1);
         [subject tableView:subject.tableView numberOfRowsInSection:0] should equal(names.count);

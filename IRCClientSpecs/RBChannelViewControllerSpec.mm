@@ -3,6 +3,8 @@
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
 
+#import "HTAutocompleteTextField.h"
+
 #import "RBServerViewController.h"
 
 #import "UIActionSheet+allButtonTitles.h"
