@@ -274,9 +274,7 @@ describe(@"RBIRCMessage", ^{
                 NSAttributedString *str = msg.attributedMessage;
                 
                 str.string should equal(@"ik: Hello  world");
-                //[str containsAttribution:NSForegroundColorAttributeName value:red range:NSMakeRange(4, 12)] should be_truthy;
-                // you know what's dumb? The above should be passing.
-                // seriously, step through the code. The color has the correct range. :(
+                [str containsAttribution:NSForegroundColorAttributeName value:red range:NSMakeRange(4, 12)] should be_truthy;
                 [str containsAttribution:NSStrokeWidthAttributeName value:@(-3) range:NSMakeRange(10, 6)] should be_truthy;
             });
         });
