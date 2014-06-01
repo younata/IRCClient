@@ -124,8 +124,6 @@
 		898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132ED18A89085004AEBE9 /* UIActionSheet+allButtonTitles.m */; };
 		898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 898132F518A99EDF004AEBE9 /* Localizable.strings */; };
 		898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 898132F518A99EDF004AEBE9 /* Localizable.strings */; };
-		898132FB18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132FA18A9A269004AEBE9 /* UIView+AutoLayout.m */; };
-		898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132FA18A9A269004AEBE9 /* UIView+AutoLayout.m */; };
 		899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */; };
 		899B2A9E189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
 		899B2A9F189913840008FED3 /* NSData+string.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A96189913840008FED3 /* NSData+string.m */; };
@@ -328,8 +326,6 @@
 		898132EC18A89085004AEBE9 /* UIActionSheet+allButtonTitles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+allButtonTitles.h"; sourceTree = "<group>"; };
 		898132ED18A89085004AEBE9 /* UIActionSheet+allButtonTitles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+allButtonTitles.m"; sourceTree = "<group>"; };
 		898132F618A99EDF004AEBE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
-		898132F918A9A269004AEBE9 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AutoLayout.h"; sourceTree = "<group>"; };
-		898132FA18A9A269004AEBE9 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AutoLayout.m"; sourceTree = "<group>"; };
 		899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerEditorViewControllerSpec.mm; sourceTree = "<group>"; };
 		899B2A95189913840008FED3 /* NSData+string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+string.h"; sourceTree = "<group>"; };
 		899B2A96189913840008FED3 /* NSData+string.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+string.m"; sourceTree = "<group>"; };
@@ -427,7 +423,6 @@
 				8908DC7118B8B299004DFBAB /* RBHelp */,
 				8908DBDE18B60FA2004DFBAB /* Nu */,
 				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
-				898132FD18A9A274004AEBE9 /* UIView+AutoLayout */,
 				89B56B4D19318A4D0079D259 /* HTAutocompleteTextField */,
 				899B2A93189913840008FED3 /* RBCategories */,
 				8906F1D018867BEE00042A13 /* IRCClient */,
@@ -710,15 +705,6 @@
 			);
 			name = en.lproj;
 			path = ../en.lproj;
-			sourceTree = "<group>";
-		};
-		898132FD18A9A274004AEBE9 /* UIView+AutoLayout */ = {
-			isa = PBXGroup;
-			children = (
-				898132F918A9A269004AEBE9 /* UIView+AutoLayout.h */,
-				898132FA18A9A269004AEBE9 /* UIView+AutoLayout.m */,
-			);
-			name = "UIView+AutoLayout";
 			sourceTree = "<group>";
 		};
 		899B2A93189913840008FED3 /* RBCategories */ = {
@@ -1130,7 +1116,6 @@
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
-				898132FB18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */,
@@ -1175,7 +1160,6 @@
 				89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */,
 				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
-				898132FC18A9A269004AEBE9 /* UIView+AutoLayout.m in Sources */,
 				8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */,
 				89E812B918B8E78800616600 /* RBColorScheme.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
