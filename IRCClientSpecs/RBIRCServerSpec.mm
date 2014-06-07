@@ -19,22 +19,6 @@ describe(@"RBIRCServer", ^{
     beforeEach(^{
         subject = [[RBIRCServer alloc] init];
         subject.serverName = @"Test server";
-        /* testing the tests
-        delegate stub_method(@selector(IRCServer:handleMessage:)).and_do(^(NSInvocation *inv){
-            id arg1;
-            id arg2;
-            [inv getArgument:&arg1 atIndex:2];
-            [inv getArgument:&arg2 atIndex:3];
-            NSLog(@"received IRCServer:handleMessage: with args '%@', '%@'", arg1, arg2);
-        });
-        delegate stub_method(@selector(IRCServer:invalidCommand:)).and_do(^(NSInvocation *inv){
-            id arg1;
-            id arg2;
-            [inv getArgument:&arg1 atIndex:2];
-            [inv getArgument:&arg2 atIndex:3];
-            NSLog(@"received IRCServer:invalidCommand: with args '%@', '%@'", arg1, arg2);
-        });
-        // */
         spy_on(subject);
         
         msg = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :how are you\r\n"];
@@ -181,6 +165,13 @@ describe(@"RBIRCServer", ^{
         it(@"should notice", ^{
             [subject notice:@"target" contents:@"hello world"];
             checkSend(@"notice target :hello world");
+        });
+        
+        it(@"should break up large messages into multiple messages", ^{
+            [subject privmsg:@"target" contents:@"this is a really long message which means it is more than 512 characters in length. Actually, it just needs to be 512 - 18 = 494 characters in length. We are currently way below that at about 195 characters as of the '195'. We hit 200 at the first 'r' in 'characters', which is not that interesting, I guess. The second season of Orange is the new Black came out today on netflix. I'm like... the only lesbian who doesn't like that show. Piper just annoyed me too much for me to get into it, really. Similarly, I stopped watching The L Word midway through season 1 because Jenny just pissed me off too much. I'm not a bad lesbian, because the only way to be a bad lesbian is to not actually be attracted to women (also known as being a political lesbian), it's just that I'm clearly not a stereotypical lesbian at all. And we're way over 512."];
+            // so, the sent command will be about 818 characters long.
+            checkSend(@"privmsg target:this is a really long message which means it is more than 512 characters in length. Actually, it just needs to be 512 - 16 = 496 characters in length. We are currently way below that at about 195 characters as of the '195'. We hit 200 at the first 'r' in 'characters', which is not that interesting, I guess. The second season of Orange is the new Black came out today on netflix. I'm like... the only lesbian who doesn't like that show. Piper just annoyed me too much for me to get into it, rea");
+            checkSend(@"privmsg target:lly. Similarly, I stopped watching The L Word midway through season 1 because Jenny just pissed me off too much. I'm not a bad lesbian, because the only way to be a bad lesbian is to not actually be attracted to women (also known as being a political lesbian), it's just that I'm clearly not a stereotypical lesbian at all. And we're way over 512.");
         });
     });
     
