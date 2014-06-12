@@ -166,6 +166,17 @@
     if (![command hasSuffix:[NSString stringWithFormat:@"\r\n"]]) {
         command = [command stringByAppendingString:@"\r\n"];
     }
+    if (command.length > 512) {
+        if ([command.lowercaseString hasPrefix:@"privmsg"] || [command.lowercaseString hasPrefix:@"notice"]) {
+            NSString *cmd1 = [command substringToIndex:510];
+            NSString *cmd2 = [command substringFromIndex:510];
+            NSString *prefix = [command substringToIndex:[command rangeOfString:@":"].location + 1];
+            [self sendCommand:cmd1];
+            [self sendCommand:[prefix stringByAppendingString:cmd2]];
+        }
+        return;
+    }
+    
     signed long numBytesWritten = [writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
     if (numBytesWritten < 0) {
         NSError *error = [writeStream streamError];
