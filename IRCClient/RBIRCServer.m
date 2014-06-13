@@ -163,9 +163,6 @@
     if (!self.connected) {
         return;
     }
-    if (![command hasSuffix:[NSString stringWithFormat:@"\r\n"]]) {
-        command = [command stringByAppendingString:@"\r\n"];
-    }
     if (command.length > 512) {
         if ([command.lowercaseString hasPrefix:@"privmsg"] || [command.lowercaseString hasPrefix:@"notice"]) {
             NSString *cmd1 = [command substringToIndex:510];
@@ -175,6 +172,9 @@
             [self sendCommand:[prefix stringByAppendingString:cmd2]];
         }
         return;
+    }
+    if (![command hasSuffix:[NSString stringWithFormat:@"\r\n"]]) {
+        command = [command stringByAppendingString:@"\r\n"];
     }
     
     signed long numBytesWritten = [writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
