@@ -167,12 +167,14 @@ describe(@"RBIRCServer", ^{
             checkSend(@"notice target :hello world");
         });
         
-        it(@"should break up large messages into multiple messages", ^{
+        fit(@"should break up large messages into multiple messages", ^{
+            NSInputStream *read = fake_for([NSInputStream class]);
+            read stub_method(@selector(streamStatus)).and_return(NSStreamStatusOpen);
+            
+            subject.readStream = read;
+            
             [subject privmsg:@"target" contents:@"this is a really long message which means it is more than 512 characters in length. Actually, it just needs to be 512 - 18 = 494 characters in length. We are currently way below that at about 195 characters as of the '195'. We hit 200 at the first 'r' in 'characters', which is not that interesting, I guess. The second season of Orange is the new Black came out today on netflix. I'm like... the only lesbian who doesn't like that show. Piper just annoyed me too much for me to get into it, really. Similarly, I stopped watching The L Word midway through season 1 because Jenny just pissed me off too much. I'm not a bad lesbian, because the only way to be a bad lesbian is to not actually be attracted to women (also known as being a political lesbian), it's just that I'm clearly not a stereotypical lesbian at all. And we're way over 512."];
-            // so, the sent command will be about 818 characters long.
-            // so, as I understand it, there's actually no way this test will ever pass, because server.connected is always going to be false during testing.
-            // and that's checked first at "sendCommand:".
-            // so... ):
+            // the sent command will be about 818 characters long.
             checkSend(@"privmsg target:this is a really long message which means it is more than 512 characters in length. Actually, it just needs to be 512 - 16 = 496 characters in length. We are currently way below that at about 195 characters as of the '195'. We hit 200 at the first 'r' in 'characters', which is not that interesting, I guess. The second season of Orange is the new Black came out today on netflix. I'm like... the only lesbian who doesn't like that show. Piper just annoyed me too much for me to get into it, rea");
             checkSend(@"privmsg target:lly. Similarly, I stopped watching The L Word midway through season 1 because Jenny just pissed me off too much. I'm not a bad lesbian, because the only way to be a bad lesbian is to not actually be attracted to women (also known as being a political lesbian), it's just that I'm clearly not a stereotypical lesbian at all. And we're way over 512.");
         });

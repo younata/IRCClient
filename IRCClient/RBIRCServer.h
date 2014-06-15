@@ -23,9 +23,6 @@
 
 @interface RBIRCServer : NSObject <NSStreamDelegate, NSCoding>
 {
-    NSInputStream *readStream;
-    NSOutputStream *writeStream;
-    
     void (^onConnect)(void);
 }
 

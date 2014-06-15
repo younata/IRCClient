@@ -24,9 +24,6 @@
 
 @implementation RBIRCServer
 
-@synthesize readStream;
-@synthesize writeStream;
-
 @synthesize channels;
 @synthesize nick;
 
@@ -177,14 +174,14 @@
         command = [command stringByAppendingString:@"\r\n"];
     }
     
-    signed long numBytesWritten = [writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
+    signed long numBytesWritten = [self.writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
     if (numBytesWritten < 0) {
-        NSError *error = [writeStream streamError];
+        NSError *error = [self.writeStream streamError];
         NSLog(@"Error Writing to stream: %@", error);
         [self.writeStream close];
         [self.readStream close];
     } else if (numBytesWritten == 0) {
-        if ([writeStream streamStatus] == kCFStreamStatusAtEnd) {
+        if ([self.writeStream streamStatus] == kCFStreamStatusAtEnd) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerConnectionDidDisconnect object:self userInfo:nil];
         }
     } else if (numBytesWritten != [command length]) {
@@ -338,12 +335,12 @@
 -(void)dealloc
 {
     if ([self connected]) {
-        [readStream close];
-        [writeStream close];
+        [self.readStream close];
+        [self.writeStream close];
         [[RBScriptingService sharedInstance] serverDidDisconnect:self];
     }
-    readStream = NULL;
-    writeStream = NULL;
+    self.readStream = NULL;
+    self.writeStream = NULL;
 }
 
 #pragma mark - IRC Commands
@@ -535,7 +532,7 @@
                     printf("%s\n", buffer);
                 }
             } else if (numBytesRead < 0) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [readStream streamError]}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [self.readStream streamError]}];
             }
             break;
         }
