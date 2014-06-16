@@ -25,9 +25,13 @@
 
 @property (nonatomic, readonly, strong) NSArray *unreadMessages;
 
++(BOOL)isNickAUser:(NSString *)nick;
+
 -(instancetype)initWithName:(NSString *)name;
 -(void)logMessage:(RBIRCMessage *)message;
 -(BOOL)isChannel; // or PM...
 -(NSArray *)read;
+
+-(NSAttributedString *)attributedName;
 
 @end

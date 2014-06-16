@@ -42,6 +42,9 @@ typedef enum {
     styleDoubleUnderline = 16,
 } stylizeFlag;
 
+@class RBIRCChannel;
+@class RBIRCServer;
+
 @interface RBIRCMessage : NSObject
 
 @property (nonatomic, strong) NSDate *timestamp; // arrival time
@@ -53,12 +56,12 @@ typedef enum {
 @property (nonatomic) NSInteger commandNumber;
 @property (nonatomic, strong) id extra;
 @property (nonatomic, strong) NSAttributedString *attributedMessage;
-@property (nonatomic, weak) id server;
+@property (nonatomic, weak) RBIRCServer *server;
 
 +(NSString *)getMessageStringForType:(IRCMessageType)messagetype;
 +(IRCMessageType)getMessageTypeForString:(NSString *)messageString;
 -(instancetype)initWithRawMessage:(NSString *)raw;
--(instancetype)initWithRawMessage:(NSString *)raw onServer:(id)server;
+-(instancetype)initWithRawMessage:(NSString *)raw onServer:(RBIRCServer *)server;
 -(NSDictionary *)defaultAttributes;
 
 @end

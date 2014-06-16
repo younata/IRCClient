@@ -8,7 +8,7 @@
 
 #import "RBIRCMessage.h"
 #import "NSString+contains.h"
-#import "RBIRCServer.h" // just for RBIRCServerLog...
+#import "RBIRCServer.h"
 #import "RBConfigurationKeys.h"
 #import "UIDevice+Categories.h"
 
@@ -120,7 +120,7 @@
     return self;
 }
 
--(instancetype)initWithRawMessage:(NSString *)raw onServer:(id)server
+-(instancetype)initWithRawMessage:(NSString *)raw onServer:(RBIRCServer *)server
 {
     if ((self = [super init]) != nil) {
         self.server = server;
