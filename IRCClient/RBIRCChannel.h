@@ -32,6 +32,4 @@
 -(BOOL)isChannel; // or PM...
 -(NSArray *)read;
 
--(NSAttributedString *)attributedName;
-
 @end

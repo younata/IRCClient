@@ -17,24 +17,8 @@
 @interface RBIRCChannel ()
 
 @property (nonatomic, strong) NSMutableArray *unreadMessages;
-@property (nonatomic, strong) UIColor *color;
 
 @end
-
-UIColor *randomColor()
-{
-    NSArray *colors = @[[UIColor grayColor],
-                        [UIColor redColor],
-                        [UIColor greenColor],
-                        [UIColor blueColor],
-                        [UIColor cyanColor],
-                        [UIColor magentaColor],
-                        [UIColor orangeColor],
-                        [UIColor purpleColor],
-                        [UIColor brownColor]
-                        ];
-    return colors[arc4random_uniform(colors.count)];
-}
 
 @implementation RBIRCChannel
 
@@ -49,11 +33,6 @@ UIColor *randomColor()
         _name = name;
         _log = [[NSMutableArray alloc] init];
         _names = [[NSMutableArray alloc] init];
-        if ([RBIRCChannel isNickAUser:name]) {
-            self.color = randomColor();
-        } else {
-            self.color = [UIColor blackColor];
-        }
         self.askedForNames = YES;
         self.connectOnStartup = YES;
         self.unreadMessages = [[NSMutableArray alloc] init];
@@ -80,13 +59,6 @@ UIColor *randomColor()
 {
     [coder encodeObject:self.name forKey:@"name"];
     [coder encodeBool:self.connectOnStartup forKey:@"connectOnStartup"];
-}
-
--(NSAttributedString *)attributedName
-{
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:self.name];
-    [str addAttribute:NSForegroundColorAttributeName value:self.color range:NSMakeRange(0, self.name.length)];
-    return [[NSAttributedString alloc] initWithAttributedString:str];
 }
 
 -(BOOL)isEqual:(id)object

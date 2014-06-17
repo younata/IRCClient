@@ -93,6 +93,14 @@
 		891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */; };
 		891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */; };
 		891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */; };
+		892D137E194FD2F500671081 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 892D137C194FD2F500671081 /* Model.xcdatamodeld */; };
+		892D137F194FD2F500671081 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 892D137C194FD2F500671081 /* Model.xcdatamodeld */; };
+		892D1382194FD4B000671081 /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1381194FD4B000671081 /* Server.m */; };
+		892D1383194FD4B000671081 /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1381194FD4B000671081 /* Server.m */; };
+		892D1386194FD4C100671081 /* Nick.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1385194FD4C100671081 /* Nick.m */; };
+		892D1387194FD4C100671081 /* Nick.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1385194FD4C100671081 /* Nick.m */; };
+		892D138A194FD4F200671081 /* RBDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1389194FD4F200671081 /* RBDataManager.m */; };
+		892D138B194FD4F200671081 /* RBDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1389194FD4F200671081 /* RBDataManager.m */; };
 		893C331918C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
@@ -290,6 +298,13 @@
 		891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBIRCServerSpec.mm; sourceTree = "<group>"; };
 		891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBChannelViewControllerSpec.mm; sourceTree = "<group>"; };
 		891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBServerViewControllerSpec.mm; sourceTree = "<group>"; };
+		892D137D194FD2F500671081 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		892D1380194FD4B000671081 /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Server.h; sourceTree = "<group>"; };
+		892D1381194FD4B000671081 /* Server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Server.m; sourceTree = "<group>"; };
+		892D1384194FD4C100671081 /* Nick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nick.h; sourceTree = "<group>"; };
+		892D1385194FD4C100671081 /* Nick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nick.m; sourceTree = "<group>"; };
+		892D1388194FD4F200671081 /* RBDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBDataManager.h; sourceTree = "<group>"; };
+		892D1389194FD4F200671081 /* RBDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBDataManager.m; sourceTree = "<group>"; };
 		893C331818C197F0000279AA /* libffi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libffi.xcodeproj; path = Pods/../libffi/libffi.xcodeproj; sourceTree = "<group>"; };
 		893C331B18C19855000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
 		893C331D18C19876000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
@@ -785,6 +800,13 @@
 				8906F20718878F1100042A13 /* RBIRCChannel.m */,
 				8906F20918878FAA00042A13 /* RBIRCMessage.h */,
 				8906F20A18878FAA00042A13 /* RBIRCMessage.m */,
+				892D137C194FD2F500671081 /* Model.xcdatamodeld */,
+				892D1380194FD4B000671081 /* Server.h */,
+				892D1381194FD4B000671081 /* Server.m */,
+				892D1384194FD4C100671081 /* Nick.h */,
+				892D1385194FD4C100671081 /* Nick.m */,
+				892D1388194FD4F200671081 /* RBDataManager.h */,
+				892D1389194FD4F200671081 /* RBDataManager.m */,
 				89A4579A18AE1DAF003454AC /* IRCNumericReplies.h */,
 			);
 			name = "IRC Backend";
@@ -1092,12 +1114,15 @@
 				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
+				892D1382194FD4B000671081 /* Server.m in Sources */,
 				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				89DF7E5618D538FA00FED10C /* RBChordedKeyboardQwerty.m in Sources */,
 				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
 				89D4C45C19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
+				892D137E194FD2F500671081 /* Model.xcdatamodeld in Sources */,
 				896E474B192CCAB700024FF5 /* NSAttributedString+containsAttributions.m in Sources */,
+				892D138A194FD4F200671081 /* RBDataManager.m in Sources */,
 				8905344418C93842006DDA8B /* NSString+ranges.m in Sources */,
 				896E4751192D7F6700024FF5 /* UIColor+colorWithHexString.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
@@ -1114,6 +1139,7 @@
 				8908DC7F18B8B299004DFBAB /* RBHelpViewController.m in Sources */,
 				8908DC2918B6105F004DFBAB /* RBScript.m in Sources */,
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
+				892D1386194FD4C100671081 /* Nick.m in Sources */,
 				8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
@@ -1148,6 +1174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				89E812D418BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */,
+				892D137F194FD2F500671081 /* Model.xcdatamodeld in Sources */,
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
 				896E4756192D831D00024FF5 /* NSString+hexValue.m in Sources */,
 				8908DC7C18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
@@ -1157,6 +1184,7 @@
 				89DF7E5718D538FA00FED10C /* RBChordedKeyboardQwerty.m in Sources */,
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
+				892D138B194FD4F200671081 /* RBDataManager.m in Sources */,
 				89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */,
 				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
@@ -1180,6 +1208,7 @@
 				896E4752192D7F6700024FF5 /* UIColor+colorWithHexString.m in Sources */,
 				891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */,
 				89DF7E5518D538FA00FED10C /* RBChordedKeyboardDvorak.m in Sources */,
+				892D1383194FD4B000671081 /* Server.m in Sources */,
 				891B01FF1896546C00B2D848 /* RBServerEditorViewController.m in Sources */,
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
 				8908DC7E18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
@@ -1199,6 +1228,7 @@
 				899B2AA1189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				898132D618A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
 				898132D918A78980004AEBE9 /* RBConfigViewControllerSpec.mm in Sources */,
+				892D1387194FD4C100671081 /* Nick.m in Sources */,
 				896E475B192F9BD500024FF5 /* NSAttributedString+attributes.m in Sources */,
 				898132E218A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				89D4C45D19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
@@ -1530,6 +1560,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		892D137C194FD2F500671081 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				892D137D194FD2F500671081 /* Model.xcdatamodel */,
+			);
+			currentVersion = 892D137D194FD2F500671081 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8906F1BF18867BEE00042A13 /* Project object */;
 }

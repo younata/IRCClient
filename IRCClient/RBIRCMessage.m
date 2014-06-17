@@ -18,6 +18,8 @@
 
 #import "UIColor+colorWithHexString.h"
 
+#import "RBDataManager.h"
+
 @interface RBIRCMessage ()
 {
     NSAttributedString *_attributedMessage;
@@ -199,6 +201,18 @@
     }
     
     NSString *str = nil;
+    
+    __weak RBIRCMessage *theSelf = self;
+    void (^colorNick)(NSMutableAttributedString *) = ^(NSMutableAttributedString *str){
+        NSString *from = theSelf.from;
+        if ([from hasPrefix:@"#"] || [from hasPrefix:@"&"]) {
+            return;
+        }
+        NSString *serverName = theSelf.server.serverName;
+        UIColor *color = [[RBDataManager sharedInstance] colorForNick:from onServer:serverName];
+        [str addAttribute:NSForegroundColorAttributeName value:color range:[str.string rangeOfString:from]];
+    };
+    
     switch (self.command) {
         case IRCMessageTypeJoin:
             str = [NSString stringWithFormat:@"%@ joined", self.from];
@@ -214,6 +228,7 @@
             [self parseCTCPResponse];
             [self loadImages];
             self.attributedMessage = [self parseStylizedMessages];
+            colorNick((NSMutableAttributedString *)self.attributedMessage);
             self.message = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
             break;
         case IRCMessageTypePrivmsg:
@@ -223,7 +238,8 @@
                 self.message = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
             }
             [self loadImages];
-            self.attributedMessage = [self parseStylizedMessages:self.attributedMessage];
+            self.attributedMessage = [self parseStylizedMessages];
+            colorNick((NSMutableAttributedString *)self.attributedMessage);
             self.message = self.attributedMessage.string;
             break;
         case IRCMessageTypeMode: {
