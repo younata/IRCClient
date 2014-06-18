@@ -54,9 +54,7 @@ static NSString *textFieldCell = @"textFieldCell";
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
-    
-    [self.revealController setDelegate:self];
-    
+        
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     
     [[RBScriptingService sharedInstance] serverListWasLoaded:self];
@@ -322,6 +320,9 @@ static NSString *textFieldCell = @"textFieldCell";
 {
     if (textField.text == nil || [textField.text isEqualToString:@""])
         return YES;
+    if (!([textField.text hasPrefix:@"&"] || [textField.text hasPrefix:@"#"])) {
+        return NO;
+    }
     for (UITableViewCell *c in self.tableView.visibleCells) {
         if (![c isKindOfClass:[RBTextFieldServerCell class]])
             continue;
@@ -331,7 +332,7 @@ static NSString *textFieldCell = @"textFieldCell";
             RBIRCServer *server = cell.data;
             NSString *str = [tf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             [server join:str];
-            [[NSNotificationCenter defaultCenter] postNotificationName:RBServerViewDidChangeChannel object:@{@"server": server, @"channel": server[str]}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:RBServerViewDidChangeChannel object:@{@"server": server, @"channel": server[str]}];            
             [self.tableView reloadData];
             
             [self saveServerData];

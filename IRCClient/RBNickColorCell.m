@@ -14,6 +14,7 @@
 
 @interface RBNickColorCell ()
 
+@property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) RSBColorPicker *colorPicker;
 
 @end
@@ -22,12 +23,15 @@
 
 - (void)configureCell
 {
-    UILabel *label = [[UILabel alloc] initForAutoLayout];
-    [self.contentView addSubview:label];
-    [label autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 10, 0, 0) excludingEdge:ALEdgeBottom];
-    [label autoSetDimension:ALDimensionHeight toSize:30];
-    label.text = self.nick.name;
-    label.textColor = self.nick.color;
+    if (self.label) {
+        [self.label removeFromSuperview];
+    }
+    self.label = [[UILabel alloc] initForAutoLayout];
+    [self.contentView addSubview:self.label];
+    [self.label autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 10, 0, 0) excludingEdge:ALEdgeBottom];
+    [self.label autoSetDimension:ALDimensionHeight toSize:30];
+    self.label.text = self.nick.name;
+    self.label.textColor = self.nick.color;
     
     self.colorPicker = [[RSBColorPicker alloc] initForAutoLayout];
     self.colorPicker.color = self.nick.color;
@@ -35,8 +39,10 @@
     self.colorPicker.hidden = YES;
     [self.colorPicker addTarget:self action:@selector(colorPicked) forControlEvents:UIControlEventValueChanged];
     
-    [self.colorPicker autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeTop];
-    [self.colorPicker autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:label withOffset:10];
+    [self.colorPicker autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [self.colorPicker autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+    [self.colorPicker autoSetDimension:ALDimensionHeight toSize:120];
+    [self.colorPicker autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.label withOffset:10];
 }
 
 - (void)colorPicked

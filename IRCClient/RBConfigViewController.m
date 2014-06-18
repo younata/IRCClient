@@ -143,7 +143,6 @@ static NSString *textFieldCell = @"textFieldCell";
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (section == 0) { // reconnect
-        cell.textLabel.textColor = [RBColorScheme secondaryColor];
         cell.textLabel.text = NSLocalizedString(@"Nick Colors", nil);
     } else if (section == 1) { // ctcp
         NSArray *rawStrings = @[@"Finger", @"UserInfo"];

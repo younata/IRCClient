@@ -31,7 +31,7 @@
 
 #import "HTAutocompleteTextField.h"
 
-@interface RBChannelViewController () <HTAutocompleteDataSource>
+@interface RBChannelViewController () <HTAutocompleteDataSource, SWRevealViewControllerDelegate>
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
 @property (nonatomic) NSLayoutConstraint *keyboardConstraint;
@@ -81,13 +81,14 @@ static NSString *CellIdentifier = @"Cell";
     [self.revealController panGestureRecognizer];
     [self.revealController tapGestureRecognizer];
     
+    [self.revealController setDelegate:self];
+    
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon"]
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(revealButtonPressed:)];
     
     
-    //self.navigationItem.leftBarButtonItem.tintColor = [RBColorScheme primaryColor];
     self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
     
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Settings", nil)
@@ -193,28 +194,6 @@ static NSString *CellIdentifier = @"Cell";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)loadExtraKeyboards
-{
-    Class cls = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigKeyboard];
-    if (cls == nil) {
-        self.input.inputView = nil;
-    } else if ([[[cls alloc] init] conformsToProtocol:@protocol(RBChordedKeyboardDelegate)]) {
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad &&
-            UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-            RBChordedKeyboard *keyboard = [[RBChordedKeyboard alloc] init];
-            keyboard.delegate = [[cls alloc] init];
-            self.input.inputView = keyboard;
-        } else {
-            self.input.inputView = nil;
-        }
-    }
-}
-
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self loadExtraKeyboards];
-}
-
 -(void)tapped:(UITapGestureRecognizer *)tgr
 {
     CGRect rect = CGRectInset(self.borderView.frame, 0, -4);
@@ -245,7 +224,6 @@ static NSString *CellIdentifier = @"Cell";
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [self loadExtraKeyboards];
     
     if (!self.server.connected) {
         [self disconnect];
@@ -525,18 +503,20 @@ static NSString *CellIdentifier = @"Cell";
             msg.message = action;
             msg.command = [RBIRCMessage getMessageTypeForString:action];
             msg.rawMessage = cmd;
+            [msg colorNick];
             [[self.server[target] log] addObject:msg];
             addedToLog = YES;
         } else if ([command isEqualToString:@"me"]) {
             NSString *action = [NSString stringWithFormat:@"PRIVMSG %@ :%cACTION %@%c\r\n", self.channel, 1, str, 1];
             [self.server sendCommand:action];
             RBIRCMessage *msg = [[RBIRCMessage alloc] init];
-            msg.from = self.server.nick;
             msg.targets = [@[self.channel] mutableCopy];
             msg.message = [NSString stringWithFormat:@"* %@ %@", self.server.nick, str];
             msg.command = IRCMessageTypePrivmsg;
             msg.rawMessage = str;
             msg.attributedMessage = [[NSAttributedString alloc] initWithString:msg.message attributes:[msg defaultAttributes]];
+            msg.from = self.server.nick;
+            [msg colorNick];
             [[self.server[self.channel] log] addObject:msg];
             addedToLog = YES;
         }
@@ -549,6 +529,7 @@ static NSString *CellIdentifier = @"Cell";
         msg.message = str;
         msg.command = IRCMessageTypePrivmsg;
         msg.rawMessage = [NSString stringWithFormat:@"PRIVMSG %@ %@", msg.targets[0], str];
+        [msg colorNick];
         [[self.server[self.channel] log] addObject:msg];
         addedToLog = YES;
     }
@@ -621,6 +602,7 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView reloadData];
     [self.tableView scrollToBottom:NO];
     [[RBScriptingService sharedInstance] channelView:self didSelectChannel:self.server[self.channel] andServer:self.server];
+    [(RBNameViewController *)self.revealController.rightViewController setServerName:self.server.serverName];
     [(RBNameViewController *)self.revealController.rightViewController setTopic:newChannel.topic];
     [(RBNameViewController *)self.revealController.rightViewController setNames:newChannel.names];
     self.recentlyUsedNames = [newChannel.names mutableCopy];
@@ -701,6 +683,7 @@ static NSString *CellIdentifier = @"Cell";
             [self.recentlyUsedNames insertObject:message.from atIndex:0];
             
             if (message.command == IRCMessageTypeJoin) {
+                [(RBNameViewController *)self.revealController.rightViewController setServerName:self.server.serverName];
                 [(RBNameViewController *)self.revealController.rightViewController setNames:[self.server[self.channel] names]];
             }
             else if (message.command == IRCMessageTypePart || message.command == IRCMessageTypeQuit || message.command == IRCMessageTypeKick) {
@@ -708,8 +691,13 @@ static NSString *CellIdentifier = @"Cell";
                 
                 [self.recentlyUsedNames removeObject:message.from];
             }
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:nil numberOfRowsInSection:0] - 1 inSection:0]]
-                                  withRowAnimation:UITableViewRowAnimationNone];
+            @try {
+                [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:nil numberOfRowsInSection:0] - 1 inSection:0]]
+                                      withRowAnimation:UITableViewRowAnimationNone];
+            }
+            @catch (NSException *exception) {
+                [self.tableView reloadData];
+            }
             if (![self.tableView scrollToBottomIfNear]) {
                 // make a check to make sure that we're not scrolling because the log is short enough to display everything without scrolling...
                 NSInteger sectionNum = [self.tableView numberOfSections] - 1;
@@ -869,5 +857,17 @@ static NSString *CellIdentifier = @"Cell";
     return @"";
 }
 
+#pragma mark - SWRevealControllerDelegate
+
+-(void)revealController:(SWRevealViewController *)revealController willMoveToPosition:(FrontViewPosition)position
+{
+    RBServerViewController *server = (RBServerViewController *)[(UINavigationController *)revealController.rearViewController topViewController];
+    [server revealController:revealController didMoveToPosition:position];
+}
+
+-(void)revealController:(SWRevealViewController *)revealController animateToPosition:(FrontViewPosition)position
+{
+    [self.input resignFirstResponder];
+}
 
 @end

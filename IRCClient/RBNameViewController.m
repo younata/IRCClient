@@ -1,6 +1,13 @@
 #import "RBNameViewController.h"
 
+#import "RBDataManager.h"
+
+#import "Nick.h"
+#import "Server.h"
+
 @interface RBNameViewController ()
+
+@property (nonatomic, strong) Server *server;
 
 @end
 
@@ -15,7 +22,14 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
 }
 
--(void)setNames:(NSMutableArray *)names
+- (void)setServerName:(NSString *)serverName
+{
+    _serverName = serverName.copy;
+    
+    self.server = [[RBDataManager sharedInstance] serverForServerName:serverName];
+}
+
+- (void)setNames:(NSMutableArray *)names
 {
     _names = names;
     [self.tableView reloadData];
@@ -40,12 +54,17 @@ static NSString *CellIdentifier = @"Cell";
     cell.textLabel.text = self.names[indexPath.row];
     cell.textLabel.textAlignment = NSTextAlignmentRight;
     
+    Nick *nick = [[RBDataManager sharedInstance] nick:cell.textLabel.text onServer:self.server];
+    if (nick) {
+        cell.textLabel.textColor = nick.color;
+    }
+    
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }

@@ -63,5 +63,6 @@ typedef enum {
 -(instancetype)initWithRawMessage:(NSString *)raw;
 -(instancetype)initWithRawMessage:(NSString *)raw onServer:(RBIRCServer *)server;
 -(NSDictionary *)defaultAttributes;
+-(void)colorNick;
 
 @end

@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong) NSMutableArray *names;
 @property (nonatomic, copy) NSString *topic;
+@property (nonatomic, copy) NSString *serverName;
 
 @end
