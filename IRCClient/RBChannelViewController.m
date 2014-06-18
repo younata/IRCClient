@@ -138,7 +138,7 @@ static NSString *CellIdentifier = @"Cell";
         [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:RBConfigFontName];
     }
     UIFont *f = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    double fontSize = f.pointSize;
+    double fontSize = f.pointSize + 2;
     UIFont *font = [UIFont fontWithName:fontName size:fontSize];
     if (!font) {
         font = [UIFont systemFontOfSize:fontSize];

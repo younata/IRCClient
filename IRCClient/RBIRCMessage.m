@@ -757,11 +757,8 @@
         fontName = @"Inconsolata";
         [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:RBConfigFontName];
     }
-    double fontSize = [[NSUserDefaults standardUserDefaults] doubleForKey:RBConfigFontSize];
-    if (fontSize == 0) {
-        fontSize = 14.0;
-        [[NSUserDefaults standardUserDefaults] setDouble:fontSize forKey:RBConfigFontSize];
-    }
+    double fontSize = [[UIFont preferredFontForTextStyle:UIFontTextStyleBody] pointSize];
+    
     UIFont *font = [UIFont fontWithName:fontName size:fontSize];
     if (!font) {
         font = [UIFont systemFontOfSize:fontSize];

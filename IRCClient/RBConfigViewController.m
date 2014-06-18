@@ -9,7 +9,7 @@
 #import "RBConfigViewController.h"
 
 #import "RBConfigurationKeys.h"
-#import "RBReconnectViewController.h"
+#import "RBNickColorPickerViewController.h"
 #import "RBKeyboardViewController.h"
 
 #import "UIButton+buttonWithFrame.h"
@@ -92,14 +92,6 @@ static NSString *textFieldCell = @"textFieldCell";
     [self dismiss];
 }
 
--(void)pushReconnect
-{
-    RBReconnectViewController *rvc = [[RBReconnectViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    SWRevealViewController *vc = (SWRevealViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    rvc.servers = [(RBServerViewController *)[(UINavigationController *)[vc rearViewController] topViewController] servers];
-    [self.navigationController pushViewController:rvc animated:YES];
-}
-
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -110,7 +102,7 @@ static NSString *textFieldCell = @"textFieldCell";
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case 0: // reconnect
+        case 0: // nick colors
             return 1;
         case 1: // ctcp, 2 (finger and clientinfo)
             return 2;
@@ -152,7 +144,7 @@ static NSString *textFieldCell = @"textFieldCell";
     
     if (section == 0) { // reconnect
         cell.textLabel.textColor = [RBColorScheme secondaryColor];
-        cell.textLabel.text = NSLocalizedString(@"Connect on Startup", nil);
+        cell.textLabel.text = NSLocalizedString(@"Nick Colors", nil);
     } else if (section == 1) { // ctcp
         NSArray *rawStrings = @[@"Finger", @"UserInfo"];
         NSArray *strings = @[NSLocalizedString(@"Finger", nil), NSLocalizedString(@"UserInfo", nil)];
@@ -172,13 +164,6 @@ static NSString *textFieldCell = @"textFieldCell";
         [s setCustomProperty:key forKey:@"scriptKey"];
         
         cell.textLabel.text = key;
-        
-        //Class cls = [[RBScriptingService sharedInstance] scriptDict][key];
-        /*
-        if ([cls performSelector:@selector(configurationItems)] != nil) {
-            cell.textLabel.textColor = [RBColorScheme secondaryColor];
-        }
-         */
     } else if (section == 3) {
         NSArray *strings = @[NSLocalizedString(@"Display images inline", nil),
                              NSLocalizedString(@"Display NSFW images", nil)];
@@ -218,8 +203,8 @@ static NSString *textFieldCell = @"textFieldCell";
 {
     NSInteger section = indexPath.section;
     if (section == 0) {
-        RBReconnectViewController *rvc = [[RBReconnectViewController alloc] init];
-        [self.navigationController pushViewController:rvc animated:YES];
+        RBNickColorPickerViewController *rncpvc = [[RBNickColorPickerViewController alloc] init];
+        [self.navigationController pushViewController:rncpvc animated:YES];
     } else if (section == 4) {
         NSInteger row = indexPath.row;
         switch (row) {

@@ -153,6 +153,15 @@ describe(@"RBIRCMessage", ^{
             return [NSString stringWithFormat:@"%c", c];
         };
         
+        describe(@"nick colors", ^{
+            it(@"should color nicks the first a message is sent...", ^{
+            });
+            
+            it(@"should persist colors throughout multiple calls.", ^{
+                
+            });
+        });
+        
         describe(@"colors", ^{
             NSString *redStr = @"FF0000";
             NSString *orangeStr = @"FF8000";

@@ -19,4 +19,6 @@
 - (Server *)serverForServerName:(NSString *)serverName; // creates or returns existing...
 - (Nick *)nick:(NSString *)name onServer:(Server *)server; // creates or returns existing...
 
+- (NSArray *)servers;
+
 @end

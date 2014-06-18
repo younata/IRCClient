@@ -101,6 +101,12 @@
 		892D1387194FD4C100671081 /* Nick.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1385194FD4C100671081 /* Nick.m */; };
 		892D138A194FD4F200671081 /* RBDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1389194FD4F200671081 /* RBDataManager.m */; };
 		892D138B194FD4F200671081 /* RBDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1389194FD4F200671081 /* RBDataManager.m */; };
+		892D138E195094FB00671081 /* RBNickColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D138D195094FB00671081 /* RBNickColorPickerViewController.m */; };
+		892D138F195094FB00671081 /* RBNickColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D138D195094FB00671081 /* RBNickColorPickerViewController.m */; };
+		892D1392195097F000671081 /* RBNickColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1391195097F000671081 /* RBNickColorCell.m */; };
+		892D1393195097F000671081 /* RBNickColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1391195097F000671081 /* RBNickColorCell.m */; };
+		892D1396195098FF00671081 /* RSBColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1395195098FF00671081 /* RSBColorPicker.m */; };
+		892D1397195098FF00671081 /* RSBColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1395195098FF00671081 /* RSBColorPicker.m */; };
 		893C331918C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
@@ -305,6 +311,12 @@
 		892D1385194FD4C100671081 /* Nick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nick.m; sourceTree = "<group>"; };
 		892D1388194FD4F200671081 /* RBDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBDataManager.h; sourceTree = "<group>"; };
 		892D1389194FD4F200671081 /* RBDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBDataManager.m; sourceTree = "<group>"; };
+		892D138C195094FB00671081 /* RBNickColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBNickColorPickerViewController.h; sourceTree = "<group>"; };
+		892D138D195094FB00671081 /* RBNickColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNickColorPickerViewController.m; sourceTree = "<group>"; };
+		892D1390195097F000671081 /* RBNickColorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBNickColorCell.h; sourceTree = "<group>"; };
+		892D1391195097F000671081 /* RBNickColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNickColorCell.m; sourceTree = "<group>"; };
+		892D1394195098FF00671081 /* RSBColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBColorPicker.h; sourceTree = "<group>"; };
+		892D1395195098FF00671081 /* RSBColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSBColorPicker.m; sourceTree = "<group>"; };
 		893C331818C197F0000279AA /* libffi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libffi.xcodeproj; path = Pods/../libffi/libffi.xcodeproj; sourceTree = "<group>"; };
 		893C331B18C19855000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
 		893C331D18C19876000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
@@ -437,6 +449,7 @@
 				893C331818C197F0000279AA /* libffi.xcodeproj */,
 				8908DC7118B8B299004DFBAB /* RBHelp */,
 				8908DBDE18B60FA2004DFBAB /* Nu */,
+				892D13981950990600671081 /* RSBColorPicker */,
 				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
 				89B56B4D19318A4D0079D259 /* HTAutocompleteTextField */,
 				899B2A93189913840008FED3 /* RBCategories */,
@@ -658,6 +671,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		892D13981950990600671081 /* RSBColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				892D1394195098FF00671081 /* RSBColorPicker.h */,
+				892D1395195098FF00671081 /* RSBColorPicker.m */,
+			);
+			name = RSBColorPicker;
+			sourceTree = "<group>";
+		};
 		896E474E192CCABC00024FF5 /* NSAttributedString */ = {
 			isa = PBXGroup;
 			children = (
@@ -685,6 +707,10 @@
 				898132D418A787D1004AEBE9 /* RBConfigViewController.m */,
 				898132C918A72264004AEBE9 /* RBReconnectViewController.h */,
 				898132CA18A72264004AEBE9 /* RBReconnectViewController.m */,
+				892D138C195094FB00671081 /* RBNickColorPickerViewController.h */,
+				892D138D195094FB00671081 /* RBNickColorPickerViewController.m */,
+				892D1390195097F000671081 /* RBNickColorCell.h */,
+				892D1391195097F000671081 /* RBNickColorCell.m */,
 				899CE7A718D068D6002ABBFE /* RBKeyboardViewController.h */,
 				899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */,
 				89DF7E3F18D5383400FED10C /* RBChordedKeyboard */,
@@ -1113,6 +1139,7 @@
 				89DF7E5218D538FA00FED10C /* RBChordedKeyboard.m in Sources */,
 				898132E518A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				898132E118A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
+				892D1392195097F000671081 /* RBNickColorCell.m in Sources */,
 				898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */,
 				892D1382194FD4B000671081 /* Server.m in Sources */,
 				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
@@ -1147,8 +1174,10 @@
 				89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */,
 				8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */,
+				892D138E195094FB00671081 /* RBNickColorPickerViewController.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				89E812DF18BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
+				892D1396195098FF00671081 /* RSBColorPicker.m in Sources */,
 				899B2A9E189913840008FED3 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
@@ -1177,6 +1206,7 @@
 				892D137F194FD2F500671081 /* Model.xcdatamodeld in Sources */,
 				891B01F91896546C00B2D848 /* RBAppDelegate.m in Sources */,
 				896E4756192D831D00024FF5 /* NSString+hexValue.m in Sources */,
+				892D1393195097F000671081 /* RBNickColorCell.m in Sources */,
 				8908DC7C18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
 				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
@@ -1192,12 +1222,14 @@
 				89E812B918B8E78800616600 /* RBColorScheme.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
+				892D1397195098FF00671081 /* RSBColorPicker.m in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
 				89E812E018BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
 				891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */,
 				898132D218A77818004AEBE9 /* RBIRCChannelSpec.mm in Sources */,
 				8905344518C93842006DDA8B /* NSString+ranges.m in Sources */,
 				89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */,
+				892D138F195094FB00671081 /* RBNickColorPickerViewController.m in Sources */,
 				8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */,
 				899CE7AA18D068D6002ABBFE /* RBKeyboardViewController.m in Sources */,

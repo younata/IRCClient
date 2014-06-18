@@ -55,25 +55,14 @@ UIColor *randomColor()
 
 - (Server *)serverForServerName:(NSString *)serverName
 {
-    NSManagedObjectContext *ctx = [self managedObjectContext];
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    request.entity = [NSEntityDescription entityForName:@"Server" inManagedObjectContext:ctx];
-    request.predicate = [NSPredicate predicateWithFormat:@"name == %@", serverName];
-    
-    NSError *error = nil;
-    NSArray *ret = [ctx executeFetchRequest:request error:&error];
-    if (!ret) {
-        NSLog(@"Error executing fetch request: %@", error);
-        return nil;
-    }
+    NSArray *ret = [self entities:@"Server" matchingPredicate:[NSPredicate predicateWithFormat:@"name == %@", serverName]];
     
     Server *server = nil;
     
     if (ret.count == 0) {
-        server = [NSEntityDescription insertNewObjectForEntityForName:@"Server" inManagedObjectContext:ctx];
+        server = [NSEntityDescription insertNewObjectForEntityForName:@"Server" inManagedObjectContext:[self managedObjectContext]];
         server.name = serverName;
-        [ctx save:nil];
+        [server.managedObjectContext save:nil];
     } else {
         server = ret[0];
     }
@@ -83,11 +72,35 @@ UIColor *randomColor()
 
 - (Nick *)nick:(NSString *)name onServer:(Server *)server
 {
+    NSArray *nicks = [self entities:@"Nick" matchingPredicate:[NSPredicate predicateWithFormat:@"name == %@ AND server == %@", name, server]];
+    
+    Nick *nick = nil;
+    
+    if (nicks.count == 0) {
+        nick = [NSEntityDescription insertNewObjectForEntityForName:@"Nick" inManagedObjectContext:[self managedObjectContext]];
+        nick.server = server;
+        nick.name = name;
+        nick.color = randomColor();
+        [nick.managedObjectContext save:nil];
+    } else {
+        nick = nicks[0];
+    }
+    
+    return nick;
+}
+
+- (NSArray *)servers
+{
+    return [self entities:@"Server" matchingPredicate:[NSPredicate predicateWithValue:YES]];
+}
+
+- (NSArray *)entities:(NSString *)entity matchingPredicate:(NSPredicate *)predicate
+{
     NSManagedObjectContext *ctx = [self managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    request.entity = [NSEntityDescription entityForName:@"Nick" inManagedObjectContext:ctx];
-    request.predicate = [NSPredicate predicateWithFormat:@"name == %@ AND server == %@", name, server];
+    request.entity = [NSEntityDescription entityForName:entity inManagedObjectContext:ctx];
+    request.predicate = predicate;
     
     NSError *error = nil;
     NSArray *ret = [ctx executeFetchRequest:request error:&error];
@@ -96,19 +109,7 @@ UIColor *randomColor()
         return nil;
     }
     
-    Nick *nick = nil;
-    
-    if (ret.count == 0) {
-        nick = [NSEntityDescription insertNewObjectForEntityForName:@"Nick" inManagedObjectContext:ctx];
-        nick.server = server;
-        nick.name = name;
-        nick.color = randomColor();
-        [ctx save:nil];
-    } else {
-        nick = ret[0];
-    }
-    
-    return nick;
+    return ret;
 }
 
 -(NSManagedObjectContext *)managedObjectContext
