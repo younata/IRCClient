@@ -111,6 +111,8 @@
 		893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
+		895E588719533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
+		895E588819533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
 		896E474B192CCAB700024FF5 /* NSAttributedString+containsAttributions.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E474A192CCAB700024FF5 /* NSAttributedString+containsAttributions.m */; };
@@ -324,6 +326,8 @@
 		893C332118C198A1000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
 		893C332318C19BA2000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = "../../../Library/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug/libffi.a"; sourceTree = "<group>"; };
 		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		895E588519533A32003A56BB /* UINavigationBar+swipeToHide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+swipeToHide.h"; path = "UINavigationBar/UINavigationBar+swipeToHide.h"; sourceTree = "<group>"; };
+		895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+swipeToHide.m"; path = "UINavigationBar/UINavigationBar+swipeToHide.m"; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
 		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
@@ -680,6 +684,15 @@
 			name = RSBColorPicker;
 			sourceTree = "<group>";
 		};
+		895E588A19533A35003A56BB /* UINavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				895E588519533A32003A56BB /* UINavigationBar+swipeToHide.h */,
+				895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */,
+			);
+			name = UINavigationBar;
+			sourceTree = "<group>";
+		};
 		896E474E192CCABC00024FF5 /* NSAttributedString */ = {
 			isa = PBXGroup;
 			children = (
@@ -762,6 +775,7 @@
 				899B2A9A189913840008FED3 /* NSString */,
 				896E474E192CCABC00024FF5 /* NSAttributedString */,
 				899B2A9D189913840008FED3 /* README.md */,
+				895E588A19533A35003A56BB /* UINavigationBar */,
 			);
 			path = RBCategories;
 			sourceTree = "<group>";
@@ -1160,6 +1174,7 @@
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
 				89E812B818B8E78800616600 /* RBColorScheme.m in Sources */,
 				896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */,
+				895E588719533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */,
 				89E812CC18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
@@ -1217,6 +1232,7 @@
 				892D138B194FD4F200671081 /* RBDataManager.m in Sources */,
 				89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */,
+				895E588819533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */,
 				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */,
 				89E812B918B8E78800616600 /* RBColorScheme.m in Sources */,

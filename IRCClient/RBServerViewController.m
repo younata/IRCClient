@@ -61,7 +61,8 @@ static NSString *textFieldCell = @"textFieldCell";
     
     for (NSString *str in @[RBIRCServerDidConnect,
                             RBIRCServerErrorReadingFromStream,
-                            RBIRCServerHandleMessage]) {
+                            RBIRCServerHandleMessage,
+                            RBIRCServerConnectionDidDisconnect]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:str object:nil];
     }
 }
@@ -75,6 +76,8 @@ static NSString *textFieldCell = @"textFieldCell";
         [self IRCServer:note.object errorReadingFromStream:note.userInfo[@"error"]];
     } else if ([name isEqualToString:RBIRCServerHandleMessage]) {
         [self IRCServer:note.object handleMessage:note.userInfo[@"message"]];
+    } else if ([name isEqualToString:RBIRCServerConnectionDidDisconnect]) {
+        [self IRCServerConnectionDidDisconnect:note.object];
     }
 }
 
@@ -362,10 +365,11 @@ static NSString *textFieldCell = @"textFieldCell";
 {
     self.av = [[UIAlertView alloc] initWithTitle:@"Error connecting to server" message:[NSString stringWithFormat:@"Error connecting to %@", server.hostname] delegate:Nil cancelButtonTitle:@"Accept" otherButtonTitles:nil];
     [self.av show];
-    // The only reason the above code isn't in RBChannelViewController is because the channel view controller is not guaranteed to be a server's delegate.
-    // RBServerViewController is.
-    
-    // Additionally, it's ugly from a design perspective to have UI code in the backend, so that's why it's not directly handled by the server.
+}
+
+-(void)IRCServerConnectionDidDisconnect:(RBIRCServer *)server
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark - SWRevealControllerDelegate

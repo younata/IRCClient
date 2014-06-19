@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableString *incompleteMessages;
+@property (nonatomic) NSInteger reconnectDelay;
 
 @end
 
@@ -136,6 +137,8 @@
     [self createServerLog];
     self.incompleteMessages = [[NSMutableString alloc] init];
     
+    self.reconnectDelay = 1;
+    
     self.connectOnStartup = YES;
 }
 
@@ -233,6 +236,7 @@
     
     RBIRCServer *theSelf = (RBIRCServer *)self;
     onConnect = ^{
+        theSelf.reconnectDelay = 1;
         if ([pass hasContent]) {
             [theSelf sendCommand:[@"pass " stringByAppendingString:pass]];
         }
@@ -539,6 +543,8 @@
         case NSStreamEventErrorOccurred:
             [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [aStream streamError]}];
             [[RBScriptingService sharedInstance] serverDidError:self];
+            self.reconnectDelay *= 2; // fairly common retry decay rate...
+            [self performSelector:@selector(connect) withObject:nil afterDelay:self.reconnectDelay];
             break;
         case NSStreamEventEndEncountered:
             [self.writeStream close];

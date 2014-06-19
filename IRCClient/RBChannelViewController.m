@@ -374,7 +374,7 @@ static NSString *CellIdentifier = @"Cell";
         return 40.0;
     }
     
-    CGFloat indentionWidth = 20;
+    CGFloat indentionWidth = 25;
     NSAttributedString *text = [self attributedStringForIndex:indexPath.row];
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
     CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(self.view.frame.size.width - indentionWidth, CGFLOAT_MAX)
@@ -394,6 +394,10 @@ static NSString *CellIdentifier = @"Cell";
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     NSString *str = textField.text;
+    if (self.server.connected == NO) {
+        [self disconnect];
+        return NO;
+    }
     BOOL addedToLog = NO;
     if ([str hasPrefix:@"/"]) {
         
@@ -547,10 +551,15 @@ static NSString *CellIdentifier = @"Cell";
     textField.text = @"";
     
     if (addedToLog) {
-        [self.tableView beginUpdates];
-        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
-                              withRowAnimation:UITableViewRowAnimationNone];
-        [self.tableView endUpdates];
+        @try {
+            [self.tableView beginUpdates];
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
+                                  withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView endUpdates];
+        }
+        @catch (NSException *exception) {
+            [self.tableView reloadData];
+        }
         [self.server[self.channel] read];
         [self.tableView scrollToBottom:YES];
     }
