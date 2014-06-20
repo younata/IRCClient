@@ -68,9 +68,9 @@
 {
     if ([target respondsToSelector:action]) {
         NSMethodSignature *sig = [target methodSignatureForSelector:action];
-        if (sig.numberOfArguments == 1) {
+        if (sig.numberOfArguments == 2) {
             [target performSelector:action withObject:self];
-        } else if (sig.numberOfArguments == 0) {
+        } else if (sig.numberOfArguments == 1) {
             [target performSelector:action];
         }
     }
@@ -79,6 +79,7 @@
 - (void)sliderChanged:(UISlider *)slider
 {
     self.preview.backgroundColor = self.color;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
 - (void)setColor:(UIColor *)color

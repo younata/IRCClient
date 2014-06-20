@@ -48,6 +48,7 @@
 - (void)colorPicked
 {
     self.nick.color = self.colorPicker.color;
+    self.label.textColor = self.colorPicker.color;
     [self.nick.managedObjectContext save:nil];
 }
 
