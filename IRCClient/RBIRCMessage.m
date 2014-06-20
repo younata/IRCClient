@@ -206,11 +206,13 @@
         case IRCMessageTypeJoin:
             str = [NSString stringWithFormat:@"%@ joined", self.from];
             self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
+            [self colorNick];
             break;
         case IRCMessageTypePart:
             self.message = trailing;
             str = [NSString stringWithFormat:@"%@ left [%@]", self.from, trailing];
             self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]]];
+            [self colorNick];
             break;
         case IRCMessageTypeNotice:
             self.message = trailing;
@@ -428,7 +430,7 @@
             self.targets = [@[self.message] mutableCopy];
             self.from = self.targets.firstObject;
             self.message = trailing;
-            NSString *msg = [NSString stringWithFormat:@"Topic for %@, is %@", self.targets.firstObject, self.message];
+            NSString *msg = [NSString stringWithFormat:@"Topic for %@ is: %@", self.targets.firstObject, self.message];
             self.attributedMessage = [[NSAttributedString alloc] initWithString:msg attributes:self.defaultAttributes];
             break;
         }
@@ -457,14 +459,16 @@
 
 -(void)colorNick
 {
-    NSMutableAttributedString *str = (NSMutableAttributedString *)[self attributedMessage];
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithAttributedString:[self attributedMessage]];
     NSString *from = self.from;
-    if ([from hasPrefix:@"#"] || [from hasPrefix:@"&"]) {
+    if ([from hasPrefix:@"#"] || from == nil) {
         return;
     }
     NSString *serverName = self.server.serverName;
     UIColor *color = [[RBDataManager sharedInstance] colorForNick:from onServer:serverName];
     [str addAttribute:NSForegroundColorAttributeName value:color range:[str.string rangeOfString:from]];
+    
+    self.attributedMessage = str;
 };
 
 -(NSAttributedString *)parseStylizedMessages

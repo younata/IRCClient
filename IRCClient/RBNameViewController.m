@@ -54,7 +54,10 @@ static NSString *CellIdentifier = @"Cell";
     cell.textLabel.text = self.names[indexPath.row];
     cell.textLabel.textAlignment = NSTextAlignmentRight;
     
-    Nick *nick = [[RBDataManager sharedInstance] nick:cell.textLabel.text onServer:self.server];
+    // valid nick prefixes: @"~", @"&", @"@", @"%", @"+"
+    NSString *nickName = [cell.textLabel.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"+%@&~"]];
+    
+    Nick *nick = [[RBDataManager sharedInstance] nick:nickName onServer:self.server];
     if (nick) {
         cell.textLabel.textColor = nick.color;
     }

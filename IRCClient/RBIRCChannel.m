@@ -107,7 +107,9 @@
         shouldResortNames = YES;
     } else if (message.command == IRCMessageTypePrivmsg ||
                message.command == IRCMessageTypeNotice || // or CTCP...
-               (message.command >= IRCMessageTypeCTCPFinger && message.command != 255)) {
+               (message.command >= IRCMessageTypeCTCPFinger && message.command != 255) ||
+               message.command == IRCMessageTypeJoin ||
+               message.command == IRCMessageTypePart) {
         [(NSMutableArray *)self.unreadMessages addObject:message];
     }
     

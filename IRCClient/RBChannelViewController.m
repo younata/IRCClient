@@ -507,6 +507,7 @@ static NSString *CellIdentifier = @"Cell";
             msg.message = action;
             msg.command = [RBIRCMessage getMessageTypeForString:action];
             msg.rawMessage = cmd;
+            msg.server = self.server;
             [msg colorNick];
             [[self.server[target] log] addObject:msg];
             addedToLog = YES;
@@ -520,6 +521,7 @@ static NSString *CellIdentifier = @"Cell";
             msg.rawMessage = str;
             msg.attributedMessage = [[NSAttributedString alloc] initWithString:msg.message attributes:[msg defaultAttributes]];
             msg.from = self.server.nick;
+            msg.server = self.server;
             [msg colorNick];
             [[self.server[self.channel] log] addObject:msg];
             addedToLog = YES;
@@ -533,6 +535,7 @@ static NSString *CellIdentifier = @"Cell";
         msg.message = str;
         msg.command = IRCMessageTypePrivmsg;
         msg.rawMessage = [NSString stringWithFormat:@"PRIVMSG %@ %@", msg.targets[0], str];
+        msg.server = self.server;
         [msg colorNick];
         [[self.server[self.channel] log] addObject:msg];
         addedToLog = YES;
@@ -734,6 +737,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)notifyUserOfMoreMessages
 {
+    return; // This is really annoying. I'd rather not have a feature than implement it in a way that annoyed users.
     NSArray *subviews = self.view.subviews;
     UIButton *button = nil;
     NSString *txt = [NSString localizedStringWithFormat:NSLocalizedString(@"%ld new messages\n(Touch to scroll down)", nil), [[self.server[self.channel] unreadMessages] count]];
