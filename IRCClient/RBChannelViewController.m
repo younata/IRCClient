@@ -34,7 +34,9 @@
 @interface RBChannelViewController () <HTAutocompleteDataSource, SWRevealViewControllerDelegate>
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
-@property (nonatomic) NSLayoutConstraint *keyboardConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *keyboardConstraint;
+
+@property (nonatomic, strong) NSLayoutConstraint *inputHeightConstraint;
 
 @property (nonatomic, strong) NSMutableDictionary *cells;
 
@@ -120,7 +122,7 @@ static NSString *CellIdentifier = @"Cell";
     self.keyboardConstraint = [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
     [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
     [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
-    [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight relation:NSLayoutRelationEqual];
+    self.inputHeightConstraint = [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight relation:NSLayoutRelationEqual];
     
     UIView *inputView = [[UIView alloc] initForAutoLayoutWithSuperview:self.borderView];
     inputView.backgroundColor = [UIColor whiteColor];
@@ -146,11 +148,10 @@ static NSString *CellIdentifier = @"Cell";
     }
     self.input.font = font;
     
-    [self.input autoSetDimension:ALDimensionHeight toSize:fontSize relation:NSLayoutRelationGreaterThanOrEqual];
+    //self.inputHeightConstraint.constant = fontSize + 1;
     
-    [self.input autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
-    [self.input autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
-    [self.input autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:4];
+    [self.input autoSetDimension:ALDimensionHeight toSize:fontSize relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.input autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 4, 0, 0) excludingEdge:ALEdgeRight];
     
     self.inputCommands = [UIButton buttonWithType:UIButtonTypeSystem];
     self.inputCommands.translatesAutoresizingMaskIntoConstraints = NO;
@@ -159,7 +160,6 @@ static NSString *CellIdentifier = @"Cell";
     self.inputCommands.titleLabel.font = [UIFont systemFontOfSize:20];
     [self.inputCommands addTarget:self action:@selector(showInputCommands) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
     [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
     [self.inputCommands autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.input];
@@ -390,6 +390,35 @@ static NSString *CellIdentifier = @"Cell";
 }
 
 #pragma mark - UITextFieldDelegate
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    return YES; // the textfield, even when it has vertical space (? need to check this out), wants to scroll horizontally...
+    NSMutableString *mutableString = [[NSMutableString alloc] initWithString:textField.text];
+    [mutableString replaceCharactersInRange:range withString:string];
+    
+    CGFloat baseTextHeight = 40;
+    
+    UIFont *f = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    double fontSize = f.pointSize + 2;
+    NSString *fontName = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigFontName];
+    UIFont *font = [UIFont fontWithName:fontName size:fontSize];
+    if (!font) {
+        font = [UIFont systemFontOfSize:fontSize];
+    }
+    
+    NSAttributedString *text = [[NSAttributedString alloc] initWithString:mutableString attributes:@{NSFontAttributeName: font}];
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(textField.frame.size.width, CGFLOAT_MAX)
+                                             options:options
+                                             context:nil];
+    
+    NSInteger numLines = boundingRect.size.height / fontSize;
+    numLines = numLines == 0 ? 1 : numLines;
+    self.inputHeightConstraint.constant = baseTextHeight * numLines;
+    
+    return YES;
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {

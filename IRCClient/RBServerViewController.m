@@ -13,6 +13,7 @@
 
 #import "RBServerEditorViewController.h"
 #import "RBTextFieldServerCell.h"
+#import "RBServerCell.h"
 
 #import "RBConfigurationKeys.h"
 
@@ -52,7 +53,7 @@ static NSString *textFieldCell = @"textFieldCell";
     
     self.navigationController.navigationBar.tintColor = [RBColorScheme secondaryColor];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView registerClass:[RBServerCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
         
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
@@ -165,6 +166,7 @@ static NSString *textFieldCell = @"textFieldCell";
             
             if (row == 0) {
                 cell.textLabel.textColor = [RBColorScheme primaryColor];
+                [(RBServerCell *)cell setServer:server];
                 [[RBScriptingService sharedInstance] serverList:self didCreateServerCell:cell forServer:server];
             } else if ([server[channels[row]] isChannel]) {
                 cell.textLabel.textColor = [RBColorScheme secondaryColor];

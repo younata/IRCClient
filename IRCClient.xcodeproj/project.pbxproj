@@ -36,35 +36,11 @@
 		8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBD18B5B3B1004DFBAB /* UIDevice-Reachability.m */; };
 		8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
 		8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
-		8908DC2418B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		8908DC2518B60FB0004DFBAB /* Nu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBF918B60FB0004DFBAB /* Nu.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8908DC2918B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
 		8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
 		8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
 		8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
 		8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */; };
-		8908DC3618B74913004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
-		8908DC3718B74913004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
-		8908DC3818B74913004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
-		8908DC3918B74913004DFBAB /* doc.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEC18B60FB0004DFBAB /* doc.nu */; };
-		8908DC3B18B74913004DFBAB /* generate.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEE18B60FB0004DFBAB /* generate.nu */; };
-		8908DC3C18B74913004DFBAB /* help.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEF18B60FB0004DFBAB /* help.nu */; };
-		8908DC3D18B74913004DFBAB /* match.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF018B60FB0004DFBAB /* match.nu */; };
-		8908DC3E18B74913004DFBAB /* math.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF118B60FB0004DFBAB /* math.nu */; };
-		8908DC4018B74913004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
-		8908DC4118B74913004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
-		8908DC4218B74913004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
-		8908DC4318B7491C004DFBAB /* beautify.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE618B60FB0004DFBAB /* beautify.nu */; };
-		8908DC4418B7491C004DFBAB /* cblocks.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBE818B60FB0004DFBAB /* cblocks.nu */; };
-		8908DC4518B7491C004DFBAB /* coredata.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEB18B60FB0004DFBAB /* coredata.nu */; };
-		8908DC4618B7491C004DFBAB /* doc.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEC18B60FB0004DFBAB /* doc.nu */; };
-		8908DC4818B7491C004DFBAB /* generate.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEE18B60FB0004DFBAB /* generate.nu */; };
-		8908DC4918B7491C004DFBAB /* help.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBEF18B60FB0004DFBAB /* help.nu */; };
-		8908DC4A18B7491C004DFBAB /* match.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF018B60FB0004DFBAB /* match.nu */; };
-		8908DC4B18B7491C004DFBAB /* math.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF118B60FB0004DFBAB /* math.nu */; };
-		8908DC4D18B7491C004DFBAB /* nu.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF418B60FB0004DFBAB /* nu.nu */; };
-		8908DC4E18B7491C004DFBAB /* template.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF518B60FB0004DFBAB /* template.nu */; };
-		8908DC4F18B7491C004DFBAB /* test.nu in Resources */ = {isa = PBXBuildFile; fileRef = 8908DBF618B60FB0004DFBAB /* test.nu */; };
 		8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
 		8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
 		8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7418B8B299004DFBAB /* RBHelpArrayViewController.m */; };
@@ -107,12 +83,12 @@
 		892D1393195097F000671081 /* RBNickColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1391195097F000671081 /* RBNickColorCell.m */; };
 		892D1396195098FF00671081 /* RSBColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1395195098FF00671081 /* RSBColorPicker.m */; };
 		892D1397195098FF00671081 /* RSBColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1395195098FF00671081 /* RSBColorPicker.m */; };
-		893C331918C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
-		893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */ = {isa = PBXBuildFile; fileRef = 893C331818C197F0000279AA /* libffi.xcodeproj */; };
 		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
 		895E588719533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
 		895E588819533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
+		895E589219567A7C003A56BB /* RBServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E589119567A7C003A56BB /* RBServerCell.m */; };
+		895E589319567A7C003A56BB /* RBServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E589119567A7C003A56BB /* RBServerCell.m */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		896BD1821895EDE100EC91EA /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD1811895EDE100EC91EA /* RBServerEditorViewController.m */; };
 		896E474B192CCAB700024FF5 /* NSAttributedString+containsAttributions.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E474A192CCAB700024FF5 /* NSAttributedString+containsAttributions.m */; };
@@ -153,11 +129,9 @@
 		89B56B4C19318A460079D259 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B56B4A19318A460079D259 /* HTAutocompleteTextField.m */; };
 		89B56B9D1932C0570079D259 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 89B56B9B1932C0570079D259 /* Localizable.stringsdict */; };
 		89B56B9E1932C0570079D259 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 89B56B9B1932C0570079D259 /* Localizable.stringsdict */; };
-		89B5AA1E18C675DC004D4BE8 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B5AA1B18C66189004D4BE8 /* libffi.a */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		89C46E4A18960C96006068DC /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4818960C96006068DC /* reveal-icon.png */; };
 		89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 89C46E4918960C96006068DC /* reveal-icon@2x.png */; };
-		89C99BE3192052E900922FC6 /* libffi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B5AA1B18C66189004D4BE8 /* libffi.a */; };
 		89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
 		89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66418CFFC3600891116 /* RBNameViewController.m */; };
 		89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */; };
@@ -187,12 +161,8 @@
 		89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812CB18BB530900616600 /* UIView+initWithSuperview.m */; };
 		89E812D318BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */; };
 		89E812D418BCE7CC00616600 /* UIButton+buttonWithTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */; };
-		89E812DB18BCF0E000616600 /* reconnectButton.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812DA18BCF0E000616600 /* reconnectButton.nu */; };
-		89E812DC18BCF0E000616600 /* reconnectButton.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812DA18BCF0E000616600 /* reconnectButton.nu */; };
 		89E812DF18BCF5FE00616600 /* NSObject+customProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */; };
 		89E812E018BCF5FE00616600 /* NSObject+customProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */; };
-		89E812E218BFD33300616600 /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812E118BFD33300616600 /* hilight.nu */; };
-		89E812E318BFD33300616600 /* hilight.nu in Resources */ = {isa = PBXBuildFile; fileRef = 89E812E118BFD33300616600 /* hilight.nu */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,27 +172,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8906F1C618867BEE00042A13;
 			remoteInfo = IRCClient;
-		};
-		89B5AA1A18C66189004D4BE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 893C331818C197F0000279AA /* libffi.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DB13B1661849DF1E0010F42D;
-			remoteInfo = "libffi-iOS";
-		};
-		89B5AA1C18C66189004D4BE8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 893C331818C197F0000279AA /* libffi.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DB13B1911849DF510010F42D;
-			remoteInfo = "libffi-Mac";
-		};
-		89C99BE11920524500922FC6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 893C331818C197F0000279AA /* libffi.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = DB13B1651849DF1E0010F42D;
-			remoteInfo = "libffi-iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -267,19 +216,6 @@
 		8908DBC818B5B3CC004DFBAB /* UIDevice+Categories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Categories.h"; sourceTree = "<group>"; };
 		8908DBC918B5B3E8004DFBAB /* wwanconnect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wwanconnect.c; sourceTree = "<group>"; };
 		8908DBCA18B5B3E8004DFBAB /* wwanconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wwanconnect.h; sourceTree = "<group>"; };
-		8908DBE618B60FB0004DFBAB /* beautify.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = beautify.nu; sourceTree = "<group>"; };
-		8908DBE818B60FB0004DFBAB /* cblocks.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cblocks.nu; sourceTree = "<group>"; };
-		8908DBEB18B60FB0004DFBAB /* coredata.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coredata.nu; sourceTree = "<group>"; };
-		8908DBEC18B60FB0004DFBAB /* doc.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doc.nu; sourceTree = "<group>"; };
-		8908DBEE18B60FB0004DFBAB /* generate.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = generate.nu; sourceTree = "<group>"; };
-		8908DBEF18B60FB0004DFBAB /* help.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = help.nu; sourceTree = "<group>"; };
-		8908DBF018B60FB0004DFBAB /* match.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = match.nu; sourceTree = "<group>"; };
-		8908DBF118B60FB0004DFBAB /* math.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = math.nu; sourceTree = "<group>"; };
-		8908DBF418B60FB0004DFBAB /* nu.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = nu.nu; sourceTree = "<group>"; };
-		8908DBF518B60FB0004DFBAB /* template.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = template.nu; sourceTree = "<group>"; };
-		8908DBF618B60FB0004DFBAB /* test.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.nu; sourceTree = "<group>"; };
-		8908DBF818B60FB0004DFBAB /* Nu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nu.h; sourceTree = "<group>"; };
-		8908DBF918B60FB0004DFBAB /* Nu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Nu.m; sourceTree = "<group>"; };
 		8908DC2718B6105F004DFBAB /* RBScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScript.h; sourceTree = "<group>"; };
 		8908DC2818B6105F004DFBAB /* RBScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScript.m; sourceTree = "<group>"; };
 		8908DC2B18B615EE004DFBAB /* RBScriptingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptingService.h; sourceTree = "<group>"; };
@@ -319,7 +255,6 @@
 		892D1391195097F000671081 /* RBNickColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNickColorCell.m; sourceTree = "<group>"; };
 		892D1394195098FF00671081 /* RSBColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBColorPicker.h; sourceTree = "<group>"; };
 		892D1395195098FF00671081 /* RSBColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSBColorPicker.m; sourceTree = "<group>"; };
-		893C331818C197F0000279AA /* libffi.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libffi.xcodeproj; path = Pods/../libffi/libffi.xcodeproj; sourceTree = "<group>"; };
 		893C331B18C19855000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
 		893C331D18C19876000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		893C331F18C19879000279AA /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
@@ -328,6 +263,8 @@
 		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		895E588519533A32003A56BB /* UINavigationBar+swipeToHide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+swipeToHide.h"; path = "UINavigationBar/UINavigationBar+swipeToHide.h"; sourceTree = "<group>"; };
 		895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+swipeToHide.m"; path = "UINavigationBar/UINavigationBar+swipeToHide.m"; sourceTree = "<group>"; };
+		895E589019567A7C003A56BB /* RBServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerCell.h; sourceTree = "<group>"; };
+		895E589119567A7C003A56BB /* RBServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerCell.m; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
 		896BD17D1895D30100EC91EA /* RBServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerViewController.m; sourceTree = "<group>"; };
 		896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
@@ -400,10 +337,8 @@
 		89E812CB18BB530900616600 /* UIView+initWithSuperview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+initWithSuperview.m"; path = "RBCategories/UIView/UIView+initWithSuperview.m"; sourceTree = SOURCE_ROOT; };
 		89E812D118BCE7CC00616600 /* UIButton+buttonWithTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+buttonWithTitle.h"; sourceTree = "<group>"; };
 		89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+buttonWithTitle.m"; sourceTree = "<group>"; };
-		89E812DA18BCF0E000616600 /* reconnectButton.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = reconnectButton.nu; path = scripts/reconnectButton.nu; sourceTree = "<group>"; };
 		89E812DD18BCF5FE00616600 /* NSObject+customProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+customProperty.h"; path = "NSObject/NSObject+customProperty.h"; sourceTree = "<group>"; };
 		89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+customProperty.m"; path = "NSObject/NSObject+customProperty.m"; sourceTree = "<group>"; };
-		89E812E118BFD33300616600 /* hilight.nu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = hilight.nu; path = scripts/hilight.nu; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -411,7 +346,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89C99BE3192052E900922FC6 /* libffi.a in Frameworks */,
 				8906F1FF18867F1F00042A13 /* CoreFoundation.framework in Frameworks */,
 				8906F1FD18867DC200042A13 /* CFNetwork.framework in Frameworks */,
 				8906F1CD18867BEE00042A13 /* CoreGraphics.framework in Frameworks */,
@@ -436,7 +370,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				893C331E18C19876000279AA /* libPods.a in Frameworks */,
-				89B5AA1E18C675DC004D4BE8 /* libffi.a in Frameworks */,
 				891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */,
 				891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */,
 				897D8F621903775300410BE4 /* Cedar-iOS.framework in Frameworks */,
@@ -450,9 +383,7 @@
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
-				893C331818C197F0000279AA /* libffi.xcodeproj */,
 				8908DC7118B8B299004DFBAB /* RBHelp */,
-				8908DBDE18B60FA2004DFBAB /* Nu */,
 				892D13981950990600671081 /* RSBColorPicker */,
 				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
 				89B56B4D19318A4D0079D259 /* HTAutocompleteTextField */,
@@ -557,42 +488,6 @@
 			name = "UIDevice Categories";
 			sourceTree = "<group>";
 		};
-		8908DBDE18B60FA2004DFBAB /* Nu */ = {
-			isa = PBXGroup;
-			children = (
-				8908DBE518B60FB0004DFBAB /* nu */,
-				8908DBF718B60FB0004DFBAB /* objc */,
-			);
-			name = Nu;
-			sourceTree = "<group>";
-		};
-		8908DBE518B60FB0004DFBAB /* nu */ = {
-			isa = PBXGroup;
-			children = (
-				8908DBE618B60FB0004DFBAB /* beautify.nu */,
-				8908DBE818B60FB0004DFBAB /* cblocks.nu */,
-				8908DBEB18B60FB0004DFBAB /* coredata.nu */,
-				8908DBEC18B60FB0004DFBAB /* doc.nu */,
-				8908DBEE18B60FB0004DFBAB /* generate.nu */,
-				8908DBEF18B60FB0004DFBAB /* help.nu */,
-				8908DBF018B60FB0004DFBAB /* match.nu */,
-				8908DBF118B60FB0004DFBAB /* math.nu */,
-				8908DBF418B60FB0004DFBAB /* nu.nu */,
-				8908DBF518B60FB0004DFBAB /* template.nu */,
-				8908DBF618B60FB0004DFBAB /* test.nu */,
-			);
-			path = nu;
-			sourceTree = "<group>";
-		};
-		8908DBF718B60FB0004DFBAB /* objc */ = {
-			isa = PBXGroup;
-			children = (
-				8908DBF818B60FB0004DFBAB /* Nu.h */,
-				8908DBF918B60FB0004DFBAB /* Nu.m */,
-			);
-			path = objc;
-			sourceTree = "<group>";
-		};
 		8908DC2618B61047004DFBAB /* Scripting */ = {
 			isa = PBXGroup;
 			children = (
@@ -604,18 +499,8 @@
 				8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */,
 				8908DC2B18B615EE004DFBAB /* RBScriptingService.h */,
 				8908DC2C18B615EE004DFBAB /* RBScriptingService.m */,
-				8908DC3118B61FA0004DFBAB /* Built In Scripts */,
 			);
 			name = Scripting;
-			sourceTree = "<group>";
-		};
-		8908DC3118B61FA0004DFBAB /* Built In Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				89E812E118BFD33300616600 /* hilight.nu */,
-				89E812DA18BCF0E000616600 /* reconnectButton.nu */,
-			);
-			name = "Built In Scripts";
 			sourceTree = "<group>";
 		};
 		8908DC5C18B88856004DFBAB /* UITableView */ = {
@@ -822,15 +707,6 @@
 			name = HTAutocompleteTextField;
 			sourceTree = "<group>";
 		};
-		89B5AA1618C6617A004D4BE8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				89B5AA1B18C66189004D4BE8 /* libffi.a */,
-				89B5AA1D18C66189004D4BE8 /* ffi.dylib */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		89C46E431895F89A006068DC /* IRC Backend */ = {
 			isa = PBXGroup;
 			children = (
@@ -857,6 +733,8 @@
 			children = (
 				89C46E45189600A9006068DC /* RBTextFieldServerCell.h */,
 				89C46E46189600A9006068DC /* RBTextFieldServerCell.m */,
+				895E589019567A7C003A56BB /* RBServerCell.h */,
+				895E589119567A7C003A56BB /* RBServerCell.m */,
 				896BD17C1895D30100EC91EA /* RBServerViewController.h */,
 				896BD17D1895D30100EC91EA /* RBServerViewController.m */,
 				896BD1801895EDE100EC91EA /* RBServerEditorViewController.h */,
@@ -922,7 +800,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				89C99BE21920524500922FC6 /* PBXTargetDependency */,
 			);
 			name = IRCClient;
 			productName = IRCClient;
@@ -992,12 +869,6 @@
 			mainGroup = 8906F1BE18867BEE00042A13;
 			productRefGroup = 8906F1C818867BEE00042A13 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 89B5AA1618C6617A004D4BE8 /* Products */;
-					ProjectRef = 893C331818C197F0000279AA /* libffi.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8906F1C618867BEE00042A13 /* IRCClient */,
@@ -1006,23 +877,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		89B5AA1B18C66189004D4BE8 /* libffi.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libffi.a;
-			remoteRef = 89B5AA1A18C66189004D4BE8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		89B5AA1D18C66189004D4BE8 /* ffi.dylib */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.dylib";
-			path = ffi.dylib;
-			remoteRef = 89B5AA1C18C66189004D4BE8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8906F1C518867BEE00042A13 /* Resources */ = {
@@ -1037,24 +891,10 @@
 				8906F1DD18867BEE00042A13 /* Images.xcassets in Resources */,
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
 				89E812C418BA1B6A00616600 /* icon@2x.png in Resources */,
-				8908DC4318B7491C004DFBAB /* beautify.nu in Resources */,
-				89E812DB18BCF0E000616600 /* reconnectButton.nu in Resources */,
-				89E812E218BFD33300616600 /* hilight.nu in Resources */,
-				8908DC4418B7491C004DFBAB /* cblocks.nu in Resources */,
-				8908DC4518B7491C004DFBAB /* coredata.nu in Resources */,
-				8908DC4618B7491C004DFBAB /* doc.nu in Resources */,
-				8908DC4818B7491C004DFBAB /* generate.nu in Resources */,
-				8908DC4918B7491C004DFBAB /* help.nu in Resources */,
 				89E812C018BA1B6A00616600 /* icon-iPad.png in Resources */,
 				89E812C718BB367300616600 /* Inconsolata.otf in Resources */,
 				8908DC8118B8B299004DFBAB /* README.md in Resources */,
-				8908DC4A18B7491C004DFBAB /* match.nu in Resources */,
-				893C331918C197F0000279AA /* libffi.xcodeproj in Resources */,
 				89B56B9D1932C0570079D259 /* Localizable.stringsdict in Resources */,
-				8908DC4B18B7491C004DFBAB /* math.nu in Resources */,
-				8908DC4D18B7491C004DFBAB /* nu.nu in Resources */,
-				8908DC4E18B7491C004DFBAB /* template.nu in Resources */,
-				8908DC4F18B7491C004DFBAB /* test.nu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1072,26 +912,12 @@
 				89E812BB18B98A6200616600 /* help.json in Resources */,
 				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
-				8908DC3618B74913004DFBAB /* beautify.nu in Resources */,
-				89E812E318BFD33300616600 /* hilight.nu in Resources */,
-				8908DC3718B74913004DFBAB /* cblocks.nu in Resources */,
 				89B56B9E1932C0570079D259 /* Localizable.stringsdict in Resources */,
-				8908DC3818B74913004DFBAB /* coredata.nu in Resources */,
-				8908DC3918B74913004DFBAB /* doc.nu in Resources */,
-				8908DC3B18B74913004DFBAB /* generate.nu in Resources */,
 				89E812C518BA1B6A00616600 /* icon@2x.png in Resources */,
-				8908DC3C18B74913004DFBAB /* help.nu in Resources */,
-				89E812DC18BCF0E000616600 /* reconnectButton.nu in Resources */,
-				893C331A18C197F0000279AA /* libffi.xcodeproj in Resources */,
-				8908DC3D18B74913004DFBAB /* match.nu in Resources */,
-				8908DC3E18B74913004DFBAB /* math.nu in Resources */,
 				89E812C818BB367300616600 /* Inconsolata.otf in Resources */,
-				8908DC4018B74913004DFBAB /* nu.nu in Resources */,
 				8908DC8218B8B299004DFBAB /* README.md in Resources */,
 				89E812C118BA1B6A00616600 /* icon-iPad.png in Resources */,
 				89E812C318BA1B6A00616600 /* icon-iPad@2x.png in Resources */,
-				8908DC4118B74913004DFBAB /* template.nu in Resources */,
-				8908DC4218B74913004DFBAB /* test.nu in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,6 +1004,7 @@
 				89E812CC18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */,
 				8906F1DB18867BEE00042A13 /* RBAppDelegate.m in Sources */,
+				895E589219567A7C003A56BB /* RBServerCell.m in Sources */,
 				8908DC7F18B8B299004DFBAB /* RBHelpViewController.m in Sources */,
 				8908DC2918B6105F004DFBAB /* RBScript.m in Sources */,
 				899B2AA2189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
@@ -1196,7 +1023,6 @@
 				899B2A9E189913840008FED3 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
-				8908DC2418B60FB0004DFBAB /* Nu.m in Sources */,
 				896E4755192D831D00024FF5 /* NSString+hexValue.m in Sources */,
 				89B56B4B19318A460079D259 /* HTAutocompleteTextField.m in Sources */,
 				899B2AA0189913840008FED3 /* NSStream+remoteHost.m in Sources */,
@@ -1225,6 +1051,7 @@
 				8908DC7C18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
 				891B01FA1896546C00B2D848 /* RBIRCServer.m in Sources */,
 				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
+				895E589319567A7C003A56BB /* RBServerCell.m in Sources */,
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
 				89DF7E5718D538FA00FED10C /* RBChordedKeyboardQwerty.m in Sources */,
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
@@ -1261,7 +1088,6 @@
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
 				8908DC7E18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
 				89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */,
-				8908DC2518B60FB0004DFBAB /* Nu.m in Sources */,
 				8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */,
 				898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				89B56B4C19318A460079D259 /* HTAutocompleteTextField.m in Sources */,
@@ -1293,11 +1119,6 @@
 			isa = PBXTargetDependency;
 			target = 8906F1C618867BEE00042A13 /* IRCClient */;
 			targetProxy = 8906F1E718867BEE00042A13 /* PBXContainerItemProxy */;
-		};
-		89C99BE21920524500922FC6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "libffi-iOS";
-			targetProxy = 89C99BE11920524500922FC6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

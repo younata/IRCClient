@@ -10,8 +10,6 @@
 #import "RBScript.h"
 #import "RBConfigurationKeys.h"
 
-#import "Nu.h"
-
 @interface RBScriptingService ()
 {
     dispatch_queue_t queue;
@@ -37,15 +35,8 @@
         _scriptsLoaded = NO;
         queue = dispatch_queue_create("scripts", NULL);
         self.runScriptsConcurrently = NO;
-        [self loadNu];
     }
     return self;
-}
-
--(void)loadNu
-{
-    NuInit();
-    [[Nu sharedParser] parseEval:@"(load \"nu\")"];
 }
 
 -(void)loadScripts
@@ -56,16 +47,6 @@
     self.scriptSet = [[NSMutableSet alloc] init];
     self.scriptDict = [[NSMutableDictionary alloc] init];
     
-    NSString *bundleRoot = [[NSBundle mainBundle] bundlePath];
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSDirectoryEnumerator *direnum = [manager enumeratorAtPath:bundleRoot];
-    
-    NSString *filename;
-    while ((filename = [direnum nextObject])) {
-        if ([filename hasSuffix:@".nu"]) {
-            [self loadNuScript:[bundleRoot stringByAppendingPathComponent:filename]];
-        }
-    }
     _scriptsLoaded = YES;
 }
 
@@ -74,28 +55,6 @@
     NSString *desc = [script description];
     if (desc && self.scriptDict[desc] == nil) {
         [self.scriptDict setObject:script forKey:desc];
-    }
-}
-
--(void)loadNuScript:(NSString *)location
-{
-    NSError *err = nil;
-    NSString *filename = [location lastPathComponent];
-    NSString *file = [NSString stringWithContentsOfFile:location encoding:NSUTF8StringEncoding error:&err];
-    if (file == nil) {
-        NSLog(@"Error reading nu script at %@\n: %@", filename, err);
-    } else {
-        @try {
-            NuCell *cell = [[Nu sharedParser] parse:file];
-            if ([cell isKindOfClass:[NSNull class]]) {
-                NSLog(@"%@ - Ill formed Nu Script", filename);
-            }
-            [[Nu sharedParser] eval:cell];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"Recieved exception from Nu parser:\n'%@'\n when loading file '%@'", exception, filename);
-            @throw exception;
-        }
     }
 }
 

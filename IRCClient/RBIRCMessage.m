@@ -201,7 +201,7 @@
     }
     
     NSString *str = nil;
-    
+        
     switch (self.command) {
         case IRCMessageTypeJoin:
             str = [NSString stringWithFormat:@"%@ joined", self.from];
@@ -220,6 +220,7 @@
             [self loadImages];
             self.attributedMessage = [self parseStylizedMessages];
             [self colorNick];
+            [self colorUser];
             self.message = [NSString stringWithFormat:@"%@: %@", self.from, self.message];
             break;
         case IRCMessageTypePrivmsg:
@@ -231,6 +232,7 @@
             [self loadImages];
             self.attributedMessage = [self parseStylizedMessages];
             [self colorNick];
+            [self colorUser];
             self.message = self.attributedMessage.string;
             break;
         case IRCMessageTypeMode: {
@@ -459,8 +461,18 @@
 
 -(void)colorNick
 {
+    [self colorNick:self.from];
+};
+
+-(void)colorUser
+{
+    [self colorNick:self.server.nick];
+    // user can set their nick color to black if they don't want to be highlighted.
+}
+
+-(void)colorNick:(NSString *)from
+{
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithAttributedString:[self attributedMessage]];
-    NSString *from = self.from;
     if ([from hasPrefix:@"#"] || from == nil) {
         return;
     }
@@ -469,7 +481,7 @@
     [str addAttribute:NSForegroundColorAttributeName value:color range:[str.string rangeOfString:from]];
     
     self.attributedMessage = str;
-};
+}
 
 -(NSAttributedString *)parseStylizedMessages
 {

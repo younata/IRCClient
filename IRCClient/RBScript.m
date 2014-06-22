@@ -9,8 +9,6 @@
 #import "RBScript.h"
 #import "RBScriptingService.h"
 
-#import "Nu.h"
-
 @implementation RBScript
 
 +(NSString *)description
@@ -21,12 +19,6 @@
 +(NSDictionary *)configurationItems
 {
     return nil;
-}
-
-+(id)inheritedByClass:(NuClass *)newClass
-{
-    [[RBScriptingService sharedInstance] registerScript:[newClass wrappedClass]];
-    return [[self superclass] inheritedByClass:newClass];
 }
 
 -(void)serverDidConnect:(RBIRCServer *)server{}
