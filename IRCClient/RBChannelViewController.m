@@ -438,6 +438,9 @@ static NSString *CellIdentifier = @"Cell";
         if (c.count == 1 && [c[0] isEqualToString:@""]) {
             c = @[];
         }
+        if ([command isEqualToString:@"msg"]) {
+            command = @"privmsg";
+        }
         switch ([RBIRCMessage getMessageTypeForString:command]) {
             case IRCMessageTypeJoin:
                 if (c.count > 1) {
@@ -457,10 +460,18 @@ static NSString *CellIdentifier = @"Cell";
                     NSLog(@"Exception while parting: %@", exception);
                 }
             }
-            case IRCMessageTypePrivmsg:
+            case IRCMessageTypePrivmsg: {
+                NSString *target = c[0];
+                NSString *msg = [[c subarrayWithRange:NSMakeRange(1, c.count - 1)] componentsJoinedByString:@" "];
+                [self.server privmsg:target contents:msg];
                 break;
-            case IRCMessageTypeNotice:
+            }
+            case IRCMessageTypeNotice: {
+                NSString *target = c[0];
+                NSString *msg = [[c subarrayWithRange:NSMakeRange(1, c.count - 1)] componentsJoinedByString:@" "];
+                [self.server notice:target contents:msg];
                 break;
+            }
             case IRCMessageTypeMode:
                 @try {
                     [self.server mode:self.channel options:c];

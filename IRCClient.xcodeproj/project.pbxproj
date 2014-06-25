@@ -569,6 +569,20 @@
 			name = RSBColorPicker;
 			sourceTree = "<group>";
 		};
+		89592FFD19574C9100B1D84F /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				892D137C194FD2F500671081 /* Model.xcdatamodeld */,
+				892D1380194FD4B000671081 /* Server.h */,
+				892D1381194FD4B000671081 /* Server.m */,
+				892D1384194FD4C100671081 /* Nick.h */,
+				892D1385194FD4C100671081 /* Nick.m */,
+				892D1388194FD4F200671081 /* RBDataManager.h */,
+				892D1389194FD4F200671081 /* RBDataManager.m */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 		895E588A19533A35003A56BB /* UINavigationBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -716,13 +730,7 @@
 				8906F20718878F1100042A13 /* RBIRCChannel.m */,
 				8906F20918878FAA00042A13 /* RBIRCMessage.h */,
 				8906F20A18878FAA00042A13 /* RBIRCMessage.m */,
-				892D137C194FD2F500671081 /* Model.xcdatamodeld */,
-				892D1380194FD4B000671081 /* Server.h */,
-				892D1381194FD4B000671081 /* Server.m */,
-				892D1384194FD4C100671081 /* Nick.h */,
-				892D1385194FD4C100671081 /* Nick.m */,
-				892D1388194FD4F200671081 /* RBDataManager.h */,
-				892D1389194FD4F200671081 /* RBDataManager.m */,
+				89592FFD19574C9100B1D84F /* Core Data */,
 				89A4579A18AE1DAF003454AC /* IRCNumericReplies.h */,
 			);
 			name = "IRC Backend";

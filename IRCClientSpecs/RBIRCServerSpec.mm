@@ -167,7 +167,7 @@ describe(@"RBIRCServer", ^{
             checkSend(@"notice target :hello world");
         });
         
-        fit(@"should break up large messages into multiple messages", ^{
+        it(@"should break up large messages into multiple messages", ^{
             NSInputStream *read = fake_for([NSInputStream class]);
             read stub_method(@selector(streamStatus)).and_return(NSStreamStatusOpen);
             

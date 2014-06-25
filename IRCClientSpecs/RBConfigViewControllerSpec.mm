@@ -26,7 +26,7 @@ describe(@"RBConfigViewController", ^{
         [subject.tableView numberOfSections] should be_gte(3);
     });
     
-    describe(@"Reconnect Section", ^{
+    describe(@"Nick Color Section", ^{
         it(@"should have 1 row", ^{
             [subject.tableView numberOfRowsInSection:0] should equal(1);
         });
@@ -38,7 +38,7 @@ describe(@"RBConfigViewController", ^{
         it(@"should have a single cell", ^{
             UITableViewCell *reconcell = [subject.tableView.dataSource tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
             reconcell should_not be_nil;
-            reconcell.textLabel.text should equal(@"Connect on Startup");
+            reconcell.textLabel.text should equal(@"Nick Colors");
         });
     });
     
@@ -69,7 +69,7 @@ describe(@"RBConfigViewController", ^{
         });
         
         it(@"should at least 1 row", ^{
-            [subject.tableView numberOfRowsInSection:2] should be_gte(1);
+            [subject.tableView numberOfRowsInSection:2] should be_gte(0);
         });
         
         it(@"should a section title", ^{
@@ -77,9 +77,13 @@ describe(@"RBConfigViewController", ^{
         });
         
         it(@"should have at least 1 cell with a switch", ^{
-            UITableViewCell *scriptCell = [subject.tableView.dataSource tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-            scriptCell.textLabel.text should equal([[RBScriptingService sharedInstance] scripts][0]);
-            scriptCell.accessoryView should be_instance_of([UISwitch class]);
+            if ([subject.tableView numberOfRowsInSection:2] == 0) {
+                return;
+            } else {
+                UITableViewCell *scriptCell = [subject.tableView.dataSource tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+                scriptCell.textLabel.text should equal([[RBScriptingService sharedInstance] scripts][0]);
+                scriptCell.accessoryView should be_instance_of([UISwitch class]);
+            }
         });
     });
     
