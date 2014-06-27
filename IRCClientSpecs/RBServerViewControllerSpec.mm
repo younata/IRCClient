@@ -136,8 +136,10 @@ describe(@"RBServerViewController", ^{
         });
         
         describe(@"joining", ^{
-            static NSString *chName = @"#foo";
-            beforeEach(^{
+            static NSString *channelName = @"#foo";
+            static NSString *userName = @"foo";
+            
+            void (^joinChannel)(NSString *) = ^(NSString *channel){
                 [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
                 RBTextFieldServerCell *cell;
                 for (UITableViewCell *c in subject.tableView.visibleCells) {
@@ -145,24 +147,50 @@ describe(@"RBServerViewController", ^{
                         continue;
                     cell = (RBTextFieldServerCell*)c;
                 }
-                cell.textField.text = chName;
+                cell.textField.text = channel;
                 [subject textFieldShouldReturn:cell.textField];
-            });
+            };
             
             it(@"should actually join", ^{
-                server should have_received("join:").with(chName);
+                joinChannel(channelName);
+                server should have_received("join:").with(channelName);
                 server.channels.count should be_gte(1);
-                serverContainsChannel(server, chName) should be_truthy;
+                NSInteger i = server.channels.count;
+                serverContainsChannel(server, channelName) should be_truthy;
+                
+                [(id<CedarDouble>)server reset_sent_messages];
+                
+                joinChannel(userName);
+                server should_not have_received("join:").with(userName);
+                server.channels.count should equal(i);
+                serverContainsChannel(server, userName) should be_truthy;
             });
             
             it(@"should save the change to the internal database", ^{
+                joinChannel(channelName);
+                
                 NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
                 d should_not be_nil;
                 NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
                 servers.count should be_gte(1);
-                BOOL actuallyDidSave = YES;
+                BOOL actuallyDidSave = NO;
                 for (RBIRCServer *s in servers) {
-                    actuallyDidSave = serverContainsChannel(s, chName);
+                    actuallyDidSave = serverContainsChannel(s, channelName);
+                    if (actuallyDidSave)
+                        break;
+                }
+                actuallyDidSave should be_truthy;
+                
+                [(id<CedarDouble>)server reset_sent_messages];
+                
+                joinChannel(userName);
+                d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+                d should_not be_nil;
+                servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+                servers.count should be_gte(1);
+                actuallyDidSave = NO;
+                for (RBIRCServer *s in servers) {
+                    actuallyDidSave = serverContainsChannel(s, userName);
                     if (actuallyDidSave)
                         break;
                 }
