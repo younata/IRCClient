@@ -169,32 +169,25 @@ describe(@"RBServerViewController", ^{
             it(@"should save the change to the internal database", ^{
                 joinChannel(channelName);
                 
-                NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
-                d should_not be_nil;
-                NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
-                servers.count should be_gte(1);
-                BOOL actuallyDidSave = NO;
-                for (RBIRCServer *s in servers) {
-                    actuallyDidSave = serverContainsChannel(s, channelName);
-                    if (actuallyDidSave)
-                        break;
-                }
-                actuallyDidSave should be_truthy;
+                void (^savedChannelName)(NSString *) = ^(NSString *name) {
+                    NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+                    d should_not be_nil;
+                    NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+                    servers.count should be_gte(1);
+                    BOOL actuallyDidSave = NO;
+                    for (RBIRCServer *s in servers) {
+                        actuallyDidSave = serverContainsChannel(s, name);
+                        if (actuallyDidSave)
+                            break;
+                    }
+                    actuallyDidSave should be_truthy;
+                };
+                
+                savedChannelName(channelName);
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 
-                joinChannel(userName);
-                d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
-                d should_not be_nil;
-                servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
-                servers.count should be_gte(1);
-                actuallyDidSave = NO;
-                for (RBIRCServer *s in servers) {
-                    actuallyDidSave = serverContainsChannel(s, userName);
-                    if (actuallyDidSave)
-                        break;
-                }
-                actuallyDidSave should be_truthy;
+                savedChannelName(userName);
             });
         });
     });
