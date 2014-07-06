@@ -125,8 +125,6 @@
 		899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 899B2A9C189913840008FED3 /* NSString+isNilOrEmpty.m */; };
 		899CE7A918D068D6002ABBFE /* RBKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */; };
 		899CE7AA18D068D6002ABBFE /* RBKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */; };
-		89B56B4B19318A460079D259 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B56B4A19318A460079D259 /* HTAutocompleteTextField.m */; };
-		89B56B4C19318A460079D259 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B56B4A19318A460079D259 /* HTAutocompleteTextField.m */; };
 		89B56B9D1932C0570079D259 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 89B56B9B1932C0570079D259 /* Localizable.stringsdict */; };
 		89B56B9E1932C0570079D259 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 89B56B9B1932C0570079D259 /* Localizable.stringsdict */; };
 		89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
@@ -305,8 +303,6 @@
 		899CE7A718D068D6002ABBFE /* RBKeyboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBKeyboardViewController.h; sourceTree = "<group>"; };
 		899CE7A818D068D6002ABBFE /* RBKeyboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBKeyboardViewController.m; sourceTree = "<group>"; };
 		89A4579A18AE1DAF003454AC /* IRCNumericReplies.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRCNumericReplies.h; sourceTree = "<group>"; };
-		89B56B4919318A460079D259 /* HTAutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTAutocompleteTextField.h; sourceTree = "<group>"; };
-		89B56B4A19318A460079D259 /* HTAutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteTextField.m; sourceTree = "<group>"; };
 		89B56B9C1932C0570079D259 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		89C46E45189600A9006068DC /* RBTextFieldServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextFieldServerCell.h; sourceTree = "<group>"; };
 		89C46E46189600A9006068DC /* RBTextFieldServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextFieldServerCell.m; sourceTree = "<group>"; };
@@ -386,7 +382,6 @@
 				8908DC7118B8B299004DFBAB /* RBHelp */,
 				892D13981950990600671081 /* RSBColorPicker */,
 				8908DBB318B5B39D004DFBAB /* UIDevice Categories */,
-				89B56B4D19318A4D0079D259 /* HTAutocompleteTextField */,
 				899B2A93189913840008FED3 /* RBCategories */,
 				8906F1D018867BEE00042A13 /* IRCClient */,
 				891B01E6189650DA00B2D848 /* IRCClientSpecs */,
@@ -712,15 +707,6 @@
 			path = NSString;
 			sourceTree = "<group>";
 		};
-		89B56B4D19318A4D0079D259 /* HTAutocompleteTextField */ = {
-			isa = PBXGroup;
-			children = (
-				89B56B4919318A460079D259 /* HTAutocompleteTextField.h */,
-				89B56B4A19318A460079D259 /* HTAutocompleteTextField.m */,
-			);
-			name = HTAutocompleteTextField;
-			sourceTree = "<group>";
-		};
 		89C46E431895F89A006068DC /* IRC Backend */ = {
 			isa = PBXGroup;
 			children = (
@@ -1032,7 +1018,6 @@
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
 				896E4755192D831D00024FF5 /* NSString+hexValue.m in Sources */,
-				89B56B4B19318A460079D259 /* HTAutocompleteTextField.m in Sources */,
 				899B2AA0189913840008FED3 /* NSStream+remoteHost.m in Sources */,
 				898132F218A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				8906F1FB18867DA000042A13 /* RBIRCServer.m in Sources */,
@@ -1098,7 +1083,6 @@
 				89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */,
 				8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */,
 				898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
-				89B56B4C19318A460079D259 /* HTAutocompleteTextField.m in Sources */,
 				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
 				8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				898132CF18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm in Sources */,

@@ -1,5 +1,8 @@
 platform :ios, '7.0'
 
 pod "AFNetworking", "~> 2.0"
-pod "UIView+AutoLayout"
+pod "PureLayout"
 pod 'AHKSlider'
+
+pod "HTAutocompleteTextField", :git => "https://github.com/younata/HTAutocompleteTextField", :commit => "cf328643b0db81391ef9196185b1ec450e1cd24e"
+

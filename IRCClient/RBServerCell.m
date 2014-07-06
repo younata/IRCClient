@@ -8,7 +8,7 @@
 
 #import "RBServerCell.h"
 
-#import "UIView+AutoLayout.h"
+#import "PureLayout.h"
 
 #import "RBIRCServer.h"
 
