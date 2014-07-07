@@ -7,7 +7,7 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-    #import <Cedar-iOS/SpecHelper.h>
+    #import "SpecHelper.h"
     #import "PureLayout.h"
     #import "NSString+isNilOrEmpty.h"
     #import "UIView+initWithSuperview.h"

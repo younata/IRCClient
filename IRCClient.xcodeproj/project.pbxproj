@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		445046ABB6EB4642B8948DFE /* libPods-IRCClientSpecs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E83F1310CE48ACBD3C16A1 /* libPods-IRCClientSpecs.a */; };
 		8905344418C93842006DDA8B /* NSString+ranges.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344318C93842006DDA8B /* NSString+ranges.m */; };
 		8905344518C93842006DDA8B /* NSString+ranges.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344318C93842006DDA8B /* NSString+ranges.m */; };
 		8905344A18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */; };
@@ -83,7 +84,6 @@
 		892D1393195097F000671081 /* RBNickColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1391195097F000671081 /* RBNickColorCell.m */; };
 		892D1396195098FF00671081 /* RSBColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1395195098FF00671081 /* RSBColorPicker.m */; };
 		892D1397195098FF00671081 /* RSBColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1395195098FF00671081 /* RSBColorPicker.m */; };
-		893C331E18C19876000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C331D18C19876000279AA /* libPods.a */; };
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
 		895E588719533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
 		895E588819533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
@@ -99,7 +99,6 @@
 		896E4756192D831D00024FF5 /* NSString+hexValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4754192D831D00024FF5 /* NSString+hexValue.m */; };
 		896E475A192F9BD500024FF5 /* NSAttributedString+attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4759192F9BD500024FF5 /* NSAttributedString+attributes.m */; };
 		896E475B192F9BD500024FF5 /* NSAttributedString+attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 896E4759192F9BD500024FF5 /* NSAttributedString+attributes.m */; };
-		897D8F621903775300410BE4 /* Cedar-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897D8F611903775300410BE4 /* Cedar-iOS.framework */; };
 		898132CB18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CC18A72264004AEBE9 /* RBReconnectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 898132CA18A72264004AEBE9 /* RBReconnectViewController.m */; };
 		898132CF18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */; };
@@ -174,6 +173,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02E83F1310CE48ACBD3C16A1 /* libPods-IRCClientSpecs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IRCClientSpecs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		760C7BDD99964E4E8C71C3C7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8905344218C93842006DDA8B /* NSString+ranges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ranges.h"; sourceTree = "<group>"; };
@@ -253,11 +253,7 @@
 		892D1391195097F000671081 /* RBNickColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNickColorCell.m; sourceTree = "<group>"; };
 		892D1394195098FF00671081 /* RSBColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBColorPicker.h; sourceTree = "<group>"; };
 		892D1395195098FF00671081 /* RSBColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSBColorPicker.m; sourceTree = "<group>"; };
-		893C331B18C19855000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
-		893C331D18C19876000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		893C331F18C19879000279AA /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
-		893C332118C198A1000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = libffi/build/Debug/libffi.a; sourceTree = "<group>"; };
-		893C332318C19BA2000279AA /* libffi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libffi.a; path = "../../../Library/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug/libffi.a"; sourceTree = "<group>"; };
 		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		895E588519533A32003A56BB /* UINavigationBar+swipeToHide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+swipeToHide.h"; path = "UINavigationBar/UINavigationBar+swipeToHide.h"; sourceTree = "<group>"; };
 		895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+swipeToHide.m"; path = "UINavigationBar/UINavigationBar+swipeToHide.m"; sourceTree = "<group>"; };
@@ -275,7 +271,6 @@
 		896E4754192D831D00024FF5 /* NSString+hexValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+hexValue.m"; sourceTree = "<group>"; };
 		896E4758192F9BD500024FF5 /* NSAttributedString+attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+attributes.h"; sourceTree = "<group>"; };
 		896E4759192F9BD500024FF5 /* NSAttributedString+attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+attributes.m"; sourceTree = "<group>"; };
-		897D8F611903775300410BE4 /* Cedar-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Cedar-iOS.framework"; path = "Frameworks/Cedar-iOS.framework"; sourceTree = "<group>"; };
 		898132C918A72264004AEBE9 /* RBReconnectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBReconnectViewController.h; sourceTree = "<group>"; };
 		898132CA18A72264004AEBE9 /* RBReconnectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBReconnectViewController.m; sourceTree = "<group>"; };
 		898132CD18A7227E004AEBE9 /* RBReconnectViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBReconnectViewControllerSpec.mm; sourceTree = "<group>"; };
@@ -335,6 +330,7 @@
 		89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+buttonWithTitle.m"; sourceTree = "<group>"; };
 		89E812DD18BCF5FE00616600 /* NSObject+customProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+customProperty.h"; path = "NSObject/NSObject+customProperty.h"; sourceTree = "<group>"; };
 		89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+customProperty.m"; path = "NSObject/NSObject+customProperty.m"; sourceTree = "<group>"; };
+		B43A971B222F481796509873 /* Pods-IRCClientSpecs.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRCClientSpecs.xcconfig"; path = "Pods/Pods-IRCClientSpecs.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -365,11 +361,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				893C331E18C19876000279AA /* libPods.a in Frameworks */,
 				891B01E5189650DA00B2D848 /* CoreGraphics.framework in Frameworks */,
 				891B01E3189650DA00B2D848 /* UIKit.framework in Frameworks */,
-				897D8F621903775300410BE4 /* Cedar-iOS.framework in Frameworks */,
 				891B01E4189650DA00B2D848 /* Foundation.framework in Frameworks */,
+				445046ABB6EB4642B8948DFE /* libPods-IRCClientSpecs.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +383,7 @@
 				8906F1C918867BEE00042A13 /* Frameworks */,
 				8906F1C818867BEE00042A13 /* Products */,
 				6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */,
+				B43A971B222F481796509873 /* Pods-IRCClientSpecs.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -405,11 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				893C332518C19BAD000279AA /* libPods.a */,
-				893C332318C19BA2000279AA /* libffi.a */,
-				893C332118C198A1000279AA /* libffi.a */,
 				893C331F18C19879000279AA /* libPods-AFNetworking.a */,
-				893C331D18C19876000279AA /* libPods.a */,
-				893C331B18C19855000279AA /* libffi.a */,
 				8906F1FE18867F1F00042A13 /* CoreFoundation.framework */,
 				8906F1FC18867DC200042A13 /* CFNetwork.framework */,
 				8906F1CA18867BEE00042A13 /* Foundation.framework */,
@@ -417,6 +409,7 @@
 				8906F1CE18867BEE00042A13 /* UIKit.framework */,
 				8906F1E318867BEE00042A13 /* XCTest.framework */,
 				760C7BDD99964E4E8C71C3C7 /* libPods.a */,
+				02E83F1310CE48ACBD3C16A1 /* libPods-IRCClientSpecs.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -527,7 +520,6 @@
 			isa = PBXGroup;
 			children = (
 				891B01EF189650DA00B2D848 /* Rakefile */,
-				897D8F611903775300410BE4 /* Cedar-iOS.framework */,
 				898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */,
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */,
@@ -822,9 +814,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 891B01F6189650DB00B2D848 /* Build configuration list for PBXNativeTarget "IRCClientSpecs" */;
 			buildPhases = (
+				D9972A9838694E8EBBBA36C7 /* Check Pods Manifest.lock */,
 				891B01DE189650DA00B2D848 /* Sources */,
 				891B01DF189650DA00B2D848 /* Frameworks */,
 				891B01E0189650DA00B2D848 /* Resources */,
+				C7FEECCBB4144699A9B6F470 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -946,7 +940,37 @@
 			shellPath = /bin/sh;
 			shellScript = "# increment version number whenever it's archived.\nVERSIONNUM=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nNEWSUBVERSION=`echo $VERSIONNUM | awk -F \".\" '{print $3}'`\nNEWSUBVERSION=$(($NEWSUBVERSION + 1))\nNEWVERSIONSTRING=`echo $VERSIONNUM | awk -F \".\" '{print $1 \".\" $2 \".'$NEWSUBVERSION'\" }'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $NEWVERSIONSTRING\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
+		C7FEECCBB4144699A9B6F470 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-IRCClientSpecs-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D7FA4626809F4F1285E153D9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D9972A9838694E8EBBBA36C7 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1312,6 +1336,7 @@
 		};
 		891B01F4189650DB00B2D848 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B43A971B222F481796509873 /* Pods-IRCClientSpecs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1349,6 +1374,7 @@
 		};
 		891B01F5189650DB00B2D848 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B43A971B222F481796509873 /* Pods-IRCClientSpecs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

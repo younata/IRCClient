@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import <Cedar-iOS/Cedar-iOS.h>
+#import "Cedar-iOS.h"
 
-int main(int argc, const char * argv[])
+int main(int argc, char * argv[])
 {
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, @"CedarApplicationDelegate");
