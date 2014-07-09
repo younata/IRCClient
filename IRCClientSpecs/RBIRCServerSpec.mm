@@ -84,6 +84,27 @@ describe(@"RBIRCServer", ^{
             subject should have_received("sendCommand:").with(@"join #foo bar");
         });
         
+        it(@"should parse comma-separated channels as different channels", ^{
+            [subject join:@"#0,0"];
+            subject should have_received("sendCommand:").with(@"join #0 #0");
+            
+            [(id<CedarDouble>)subject reset_sent_messages];
+            [subject join:@"#0,0,#0"];
+            subject should have_received("sendCommand:").with(@"join #0 #0 #0");
+            
+            [(id<CedarDouble>)subject reset_sent_messages];
+            [subject join:@"#0,#0,0"];
+            subject should have_received("sendCommand:").with(@"join #0 #0 #0");
+            
+            [(id<CedarDouble>)subject reset_sent_messages];
+            [subject join:@"0,#0"];
+            subject should have_received("sendCommand:").with(@"join #0 #0");
+            
+            [(id<CedarDouble>)subject reset_sent_messages];
+            [subject join:@"0"];
+            subject should have_received("sendCommand:").with(@"join 0");
+        });
+        
         void (^checkNotSent)(void) = ^{
             subject should_not have_received(@selector(sendCommand:)).with(Arguments::anything);
         };

@@ -383,6 +383,21 @@
     RBIRCChannel *c = [[RBIRCChannel alloc] initWithName:channelName];
     c.server = self;
     [channels setObject:c forKey:channelName];
+    
+    NSArray *comps = [channelName componentsSeparatedByString:@","];
+    if (comps.count > 1) {
+        channelName = @"";
+        for (NSString *n in comps) {
+            NSString *name = n;
+            if (![n hasPrefix:@"#"]) {
+                name = [@"#" stringByAppendingString:n];
+            }
+            channelName = [channelName stringByAppendingFormat:@"%@ ", name];
+        }
+    }
+    
+    channelName = [channelName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
     NSString *msg = [NSString stringWithFormat:@"join %@", channelName];
     if (pass != nil && pass.length > 0) {
         msg = [NSString stringWithFormat:@"%@ %@", msg, pass];
