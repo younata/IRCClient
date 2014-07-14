@@ -25,7 +25,6 @@
 #import "RBHelp.h"
 #import "RBScriptingService.h"
 #import "RBNameViewController.h"
-#import "RBChordedKeyboard.h"
 #import "RBTextViewCell.h"
 #import "RBServerViewController.h"
 
@@ -654,9 +653,12 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView reloadData];
     [self.tableView scrollToBottom:NO];
     [[RBScriptingService sharedInstance] channelView:self didSelectChannel:self.server[self.channel] andServer:self.server];
-    [(RBNameViewController *)self.revealController.rightViewController setServerName:self.server.serverName];
-    [(RBNameViewController *)self.revealController.rightViewController setTopic:newChannel.topic];
-    [(RBNameViewController *)self.revealController.rightViewController setNames:newChannel.names];
+    RBNameViewController *nameController = (RBNameViewController *)self.revealController.rightViewController;
+    [nameController setServerName:self.server.serverName];
+    [nameController setTopic:newChannel.topic];
+    [nameController setNames:newChannel.names];
+    nameController.server = self.server;
+    
     self.recentlyUsedNames = [newChannel.names mutableCopy];
     NSMutableArray *toReplace = [[NSMutableArray alloc] init];
     for (NSString *name in self.recentlyUsedNames) {
@@ -735,8 +737,9 @@ static NSString *CellIdentifier = @"Cell";
             [self.recentlyUsedNames insertObject:message.from atIndex:0];
             
             if (message.command == IRCMessageTypeJoin) {
-                [(RBNameViewController *)self.revealController.rightViewController setServerName:self.server.serverName];
-                [(RBNameViewController *)self.revealController.rightViewController setNames:[self.server[self.channel] names]];
+                RBNameViewController *nameController = (RBNameViewController *)self.revealController.rightViewController;
+                [nameController setServerName:self.server.serverName];
+                [nameController setNames:[self.server[self.channel] names]];
             }
             else if (message.command == IRCMessageTypePart || message.command == IRCMessageTypeQuit || message.command == IRCMessageTypeKick) {
                 [(RBNameViewController *)self.revealController.rightViewController setNames:[self.server[self.channel] names]];

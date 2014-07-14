@@ -19,8 +19,6 @@
 
 #import "RBScriptingService.h"
 
-#import "RBChordedKeyboard.h"
-
 @interface RBServerEditorViewController ()
 
 @property (nonatomic) CGRect originalFrame;
@@ -50,7 +48,6 @@
     self.scrollView = [[UIScrollView alloc] initForAutoLayoutWithSuperview:self.view];
     [self.scrollView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
     UIScrollView *sv = self.scrollView;
-    //sv.frame = self.view.frame;
     self.scrollView.scrollEnabled = YES;
     
     
@@ -87,7 +84,6 @@
     [self.serverName autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20];
     [self.serverName autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20];
     [self.serverName autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:sv withOffset:-40];
-    //[self.serverName autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20];
     
     self.serverHostname = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
     self.serverHostname.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -171,34 +167,6 @@
     [super updateViewConstraints];
 }
 
--(void)loadExtraKeyboards
-{
-    Class cls = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigKeyboard];
-    NSArray *inputs = @[self.serverName,
-                        self.serverHostname,
-                        self.serverPort,
-                        self.serverNick,
-                        self.serverRealName,
-                        self.serverPassword];
-    UIView *input = nil;
-    if ([[[cls alloc] init] conformsToProtocol:@protocol(RBChordedKeyboardDelegate)]) {
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad &&
-            UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-            RBChordedKeyboard *keyboard = [[RBChordedKeyboard alloc] init];
-            keyboard.delegate = [[cls alloc] init];
-            input = keyboard;
-        }
-    }
-    for (UITextField *tf in inputs) {
-        tf.inputView = input;
-    }
-}
-
--(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    [self loadExtraKeyboards];
-}
-
 -(void)showHelp
 {
     UINavigationController *nc = [[UINavigationController alloc] init];
@@ -211,8 +179,6 @@
     [super viewDidAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
-    [self loadExtraKeyboards];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -241,7 +207,7 @@
     self.server.nick = self.serverNick.text;
     if (![self.server.nick hasContent]) {
         self.serverNick.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"A username is required", nil) attributes:@{NSForegroundColorAttributeName: [UIColor redColor]}];
-        return; // need a nick.
+        return;
     }
     
     if (![self.server.serverName hasContent]) {

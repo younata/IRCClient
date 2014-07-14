@@ -152,18 +152,11 @@ describe(@"RBServerViewController", ^{
             };
             
             it(@"should actually join", ^{
+                NSInteger count = server.channels.count;
                 joinChannel(channelName);
                 server should have_received("join:").with(channelName);
-                server.channels.count should be_gte(1);
-                NSInteger i = server.channels.count;
+                server.channels.count should equal(count + 1);
                 serverContainsChannel(server, channelName) should be_truthy;
-                
-                [(id<CedarDouble>)server reset_sent_messages];
-                
-                joinChannel(userName);
-                server should_not have_received("join:").with(userName);
-                server.channels.count should equal(i);
-                serverContainsChannel(server, userName) should be_truthy;
             });
             
             it(@"should save the change to the internal database", ^{
@@ -184,10 +177,6 @@ describe(@"RBServerViewController", ^{
                 };
                 
                 savedChannelName(channelName);
-                
-                [(id<CedarDouble>)server reset_sent_messages];
-                
-                savedChannelName(userName);
             });
         });
     });

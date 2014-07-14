@@ -1,6 +1,5 @@
 #import "RBConfigViewController.h"
 
-#import "RBReconnectViewController.h"
 #import "RBScriptingService.h"
 
 #import "NSString+isNilOrEmpty.h"
@@ -96,31 +95,8 @@ describe(@"RBConfigViewController", ^{
             [subject tableView:subject.tableView titleForHeaderInSection:4] should equal(@"Experimental");
         });
         
-        it(@"should have at least 1 row", ^{
-            [subject tableView:subject.tableView numberOfRowsInSection:4] should be_gte(1);
-        });
-        
-        describe(@"first cell", ^{
-            __block UITableViewCell *cell;
-            beforeEach(^{
-                cell = [subject tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]];
-            });
-            
-            it(@"should be for keyboards", ^{
-                cell.textLabel.text should equal(@"Keyboards");
-            });
-
-            
-            it(@"should be disabled on iPhones", ^{
-                if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-                    cell.textLabel.textColor should equal([UIColor lightGrayColor]);
-                    [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]];
-                    // still no idea how to describe a LACK of behavior...
-                } else {
-                    [subject tableView:subject.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]];
-                    // should present a new view controller...
-                }
-            });
+        it(@"should be empty (for now)", ^{
+            [subject tableView:subject.tableView numberOfRowsInSection:4] should equal(0);
         });
     });
 });

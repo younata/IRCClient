@@ -10,7 +10,6 @@
 
 #import "RBConfigurationKeys.h"
 #import "RBNickColorPickerViewController.h"
-#import "RBKeyboardViewController.h"
 
 #import "UIButton+buttonWithFrame.h"
 
@@ -111,7 +110,7 @@ static NSString *textFieldCell = @"textFieldCell";
         case 3:
             return 2; // display inline, display nsfw
         case 4:
-            return 1;
+            return 0;
         default:
             return 0;
     }
@@ -186,13 +185,6 @@ static NSString *textFieldCell = @"textFieldCell";
         [s setCustomProperty:key forKey:@"scriptKey"];
         cell.accessoryView = s;
     } else if (section == 4) {
-        NSArray *strings = @[NSLocalizedString(@"Keyboards", nil)];
-        cell.textLabel.text = strings[row];
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-            cell.textLabel.textColor = [UIColor lightGrayColor];
-        } else {
-            cell.textLabel.textColor = [RBColorScheme secondaryColor];
-        }
     }
     
     return cell;
@@ -204,18 +196,6 @@ static NSString *textFieldCell = @"textFieldCell";
     if (section == 0) {
         RBNickColorPickerViewController *rncpvc = [[RBNickColorPickerViewController alloc] init];
         [self.navigationController pushViewController:rncpvc animated:YES];
-    } else if (section == 4) {
-        NSInteger row = indexPath.row;
-        switch (row) {
-            case 0:
-                if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-                    RBKeyboardViewController *kvc = [[RBKeyboardViewController alloc] init];
-                    [self.navigationController pushViewController:kvc animated:YES];
-                }
-                break;
-            default:
-                break;
-        }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }

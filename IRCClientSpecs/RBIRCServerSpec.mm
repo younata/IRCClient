@@ -105,9 +105,11 @@ describe(@"RBIRCServer", ^{
             subject should have_received("sendCommand:").with(@"join 0");
         });
         
+        /*
         void (^checkNotSent)(void) = ^{
             subject should_not have_received(@selector(sendCommand:)).with(Arguments::anything);
         };
+         */
         
         /* It's really dumb that I have to comment these out.
          because the default behavior (throw the exception) IS what I want.
@@ -194,10 +196,11 @@ describe(@"RBIRCServer", ^{
             
             subject.readStream = read;
             
-            [subject privmsg:@"target" contents:@"this is a really long message which means it is more than 512 characters in length. Actually, it just needs to be 512 - 18 = 494 characters in length. We are currently way below that at about 195 characters as of the '195'. We hit 200 at the first 'r' in 'characters', which is not that interesting, I guess. The second season of Orange is the new Black came out today on netflix. I'm like... the only lesbian who doesn't like that show. Piper just annoyed me too much for me to get into it, really. Similarly, I stopped watching The L Word midway through season 1 because Jenny just pissed me off too much. I'm not a bad lesbian, because the only way to be a bad lesbian is to not actually be attracted to women (also known as being a political lesbian), it's just that I'm clearly not a stereotypical lesbian at all. And we're way over 512."];
+            [subject privmsg:@"target" contents:@"abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:"];
             // the sent command will be about 818 characters long.
-            //checkSend(@"privmsg target:this is a really long message which means it is more than 512 characters in length. Actually, it just needs to be 512 - 16 = 496 characters in length. We are currently way below that at about 195 characters as of the '195'. We hit 200 at the first 'r' in 'characters', which is not that interesting, I guess. The second season of Orange is the new Black came out today on netflix. I'm like... the only lesbian who doesn't like that show. Piper just annoyed me too much for me to get into it, rea");
-            //checkSend(@"privmsg target:lly. Similarly, I stopped watching The L Word midway through season 1 because Jenny just pissed me off too much. I'm not a bad lesbian, because the only way to be a bad lesbian is to not actually be attracted to women (also known as being a political lesbian), it's just that I'm clearly not a stereotypical lesbian at all. And we're way over 512.");
+            // PRIVMSG target :
+            //checkSend(@"PRIVMSG target:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopq");
+            //checkSend(@"privmsg target:rstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:abcdefghikjlmnopqrstuvwxyz1234567890!@#$%^&*()[]{}/=\\?+|-_;:");
         });
     });
     

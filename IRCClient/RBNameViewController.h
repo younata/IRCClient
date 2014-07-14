@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RBNameViewController : UITableViewController
+@class RBIRCServer;
+
+@interface RBNameViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (nonatomic, strong) NSMutableArray *names;
 @property (nonatomic, copy) NSString *topic;
 @property (nonatomic, copy) NSString *serverName;
+@property (nonatomic, strong) RBIRCServer *server;
+@property (nonatomic, strong) UIActionSheet *actionSheet;
 
 @end

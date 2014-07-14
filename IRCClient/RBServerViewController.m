@@ -203,12 +203,14 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *disconnect = NSLocalizedString(@"Disconnect", nil);
+    NSString *part = NSLocalizedString(@"Part", nil);
     if (indexPath.row == 0)
-        return NSLocalizedString(@"Disconnect", nil);
+        return disconnect;
     RBIRCServer *server = self.servers[indexPath.section];
     RBIRCChannel *channel = server[server.sortedChannelKeys[indexPath.row]];
-    return channel.isChannel ? NSLocalizedString(@"Part", nil) : NSLocalizedString(@"Delete", nil);
-    return indexPath.row == 0 ? @"Disconnect" : @"Part";
+    return channel.isChannel ? part : NSLocalizedString(@"Delete", nil);
+    return indexPath.row == 0 ? disconnect : part;
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -321,6 +323,17 @@ static NSString *textFieldCell = @"textFieldCell";
 
 #pragma mark - UITextFieldDelegate
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *currentText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if ([currentText hasPrefix:@"&"] || [currentText hasPrefix:@"#"]) {
+        textField.textColor = [UIColor blackColor];
+    } else {
+        textField.textColor = [UIColor redColor];
+    }
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if (textField.text == nil || [textField.text isEqualToString:@""])
@@ -365,7 +378,9 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(void)IRCServer:(RBIRCServer *)server errorReadingFromStream:(NSError *)error
 {
-    self.av = [[UIAlertView alloc] initWithTitle:@"Error connecting to server" message:[NSString stringWithFormat:@"Error connecting to %@", server.hostname] delegate:Nil cancelButtonTitle:@"Accept" otherButtonTitles:nil];
+    NSString *title = NSLocalizedString(@"Error connecting to server", nil);
+    NSString *message = [NSString localizedStringWithFormat:NSLocalizedString(@"Error connecting to %@, will reconnect", nil), server.hostname];
+    self.av = [[UIAlertView alloc] initWithTitle:title message:message delegate:Nil cancelButtonTitle:@"Accept" otherButtonTitles:nil];
     [self.av show];
 }
 
