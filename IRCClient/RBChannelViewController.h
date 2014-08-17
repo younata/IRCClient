@@ -13,11 +13,9 @@
 @class RBServerViewController;
 @class SWRevealViewController;
 
-@class HTAutocompleteTextField;
+@interface RBChannelViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIActionSheetDelegate>
 
-@interface RBChannelViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIActionSheetDelegate>
-
-@property (nonatomic, strong) HTAutocompleteTextField *input;
+@property (nonatomic, strong) UITextView *input;
 @property (nonatomic, strong) UITableView *tableView;
 
 @property (nonatomic, strong) UIButton *inputCommands;

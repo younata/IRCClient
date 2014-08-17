@@ -28,9 +28,7 @@
 #import "RBTextViewCell.h"
 #import "RBServerViewController.h"
 
-#import "HTAutocompleteTextField.h"
-
-@interface RBChannelViewController () <HTAutocompleteDataSource, SWRevealViewControllerDelegate>
+@interface RBChannelViewController () <SWRevealViewControllerDelegate>
 @property (nonatomic) CGRect originalFrame;
 @property (nonatomic, strong) UIView *borderView;
 @property (nonatomic, strong) NSLayoutConstraint *keyboardConstraint;
@@ -121,15 +119,14 @@ static NSString *CellIdentifier = @"Cell";
     self.keyboardConstraint = [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
     [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
     [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
-    self.inputHeightConstraint = [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight relation:NSLayoutRelationEqual];
+    self.inputHeightConstraint = [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight];
     
     UIView *inputView = [[UIView alloc] initForAutoLayoutWithSuperview:self.borderView];
     inputView.backgroundColor = [UIColor whiteColor];
     [inputView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(1, 0, 0, 0)];
     
-    self.input = [[HTAutocompleteTextField alloc] initForAutoLayoutWithSuperview:inputView];
-    self.input.autocompleteDataSource = self;
-    self.input.placeholder = NSLocalizedString(@"Message", nil);
+    self.input = [[UITextView alloc] initForAutoLayoutWithSuperview:inputView];
+    self.input.scrollEnabled = NO;
     self.input.returnKeyType = UIReturnKeySend;
     self.input.backgroundColor = [UIColor whiteColor];
     self.input.delegate = self;
@@ -147,9 +144,6 @@ static NSString *CellIdentifier = @"Cell";
     }
     self.input.font = font;
     
-    //self.inputHeightConstraint.constant = fontSize + 1;
-    
-    [self.input autoSetDimension:ALDimensionHeight toSize:fontSize relation:NSLayoutRelationGreaterThanOrEqual];
     [self.input autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 4, 0, 0) excludingEdge:ALEdgeRight];
     
     self.inputCommands = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -161,6 +155,7 @@ static NSString *CellIdentifier = @"Cell";
     
     [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
     [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+    [self.inputCommands autoSetDimension:ALDimensionWidth toSize:20];
     [self.inputCommands autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.input];
     
     [self revealButtonPressed:nil];
@@ -388,15 +383,17 @@ static NSString *CellIdentifier = @"Cell";
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark - UITextViewDelegate
 
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)string
 {
-    return YES; // the textfield, even when it has vertical space (? need to check this out), wants to scroll horizontally...
-    NSMutableString *mutableString = [[NSMutableString alloc] initWithString:textField.text];
+    NSMutableString *mutableString = [[NSMutableString alloc] initWithString:textView.text];
     [mutableString replaceCharactersInRange:range withString:string];
     
-    CGFloat baseTextHeight = 40;
+    if ([string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location != NSNotFound &&
+        [self textViewShouldReturn:textView]) {
+        mutableString = [@"" mutableCopy];
+    }
     
     UIFont *f = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     double fontSize = f.pointSize + 2;
@@ -408,20 +405,20 @@ static NSString *CellIdentifier = @"Cell";
     
     NSAttributedString *text = [[NSAttributedString alloc] initWithString:mutableString attributes:@{NSFontAttributeName: font}];
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(textField.frame.size.width, CGFLOAT_MAX)
+    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(textView.frame.size.width - 10, CGFLOAT_MAX)
                                              options:options
                                              context:nil];
     
-    NSInteger numLines = boundingRect.size.height / fontSize;
-    numLines = numLines == 0 ? 1 : numLines;
-    self.inputHeightConstraint.constant = baseTextHeight * numLines;
+    self.inputHeightConstraint.constant = ceil(boundingRect.size.height) + 20;
+    
+    [self.view layoutIfNeeded];
     
     return YES;
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField
+-(BOOL)textViewShouldReturn:(UITextView *)textView
 {
-    NSString *str = textField.text;
+    NSString *str = textView.text;
     if (self.server.connected == NO) {
         [self disconnect];
         return NO;
@@ -581,7 +578,7 @@ static NSString *CellIdentifier = @"Cell";
     }
     
     NSArray *names = [self.server[self.channel] names];
-    for (NSString *word in [textField.text componentsSeparatedByString:@" "]) {
+    for (NSString *word in [textView.text componentsSeparatedByString:@" "]) {
         if ([names containsObject:word]) {
             if ([self.recentlyUsedNames containsObject:word]) {
                 [self.recentlyUsedNames removeObject:word];
@@ -590,7 +587,7 @@ static NSString *CellIdentifier = @"Cell";
         }
     }
     
-    textField.text = @"";
+    textView.text = @"";
     
     if (addedToLog) {
         @try {
@@ -612,7 +609,7 @@ static NSString *CellIdentifier = @"Cell";
 -(void)disconnect
 {
     self.navigationItem.title = @"Disconnected";
-    self.input.enabled = NO;
+    //self.input.enabled = NO;
     self.inputCommands.enabled = NO;
     
     RBIRCChannel *oldChannel = self.server[self.channel];
@@ -630,7 +627,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)connect
 {
-    self.input.enabled = YES;
+    //self.input.enabled = YES;
     self.inputCommands.enabled = YES;
 }
 
@@ -891,26 +888,6 @@ static NSString *CellIdentifier = @"Cell";
         str = [NSString stringWithFormat:@"/ctcp %@", title];
     }
     self.input.text = str;
-}
-
-#pragma mark - HTAutocompleteDataSource
-
--(NSString *)textField:(HTAutocompleteTextField *)textField completionForPrefix:(NSString *)prefix ignoreCase:(BOOL)ignoreCase
-{
-    prefix = [[prefix componentsSeparatedByString:@" "] lastObject];
-    if (ignoreCase) {
-        prefix = [prefix lowercaseString];
-    }
-    for (NSString *name in self.recentlyUsedNames) {
-        NSString *compare = name;
-        if (ignoreCase) {
-            compare = [compare lowercaseString];
-        }
-        if ([compare hasPrefix:prefix]) {
-            return [name substringFromIndex:prefix.length];
-        }
-    }
-    return @"";
 }
 
 #pragma mark - SWRevealControllerDelegate
