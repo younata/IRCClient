@@ -107,64 +107,75 @@ static NSString *CellIdentifier = @"Cell";
     self.tableView.dataSource = self;
     [self.tableView registerClass:[RBTextViewCell class] forCellReuseIdentifier:CellIdentifier];
     
-    // bunch of view shit to make the interface look not-shit.
-    self.borderView = [[UIView alloc] initForAutoLayoutWithSuperview:self.view];
-    self.borderView.backgroundColor = [UIColor blackColor];
+    BOOL isMainWindow = [self.view.window isEqual:[[[UIApplication sharedApplication] delegate] window]];
     
+    if (isMainWindow) {
+    // bunch of view shit to make the interface look not-shit.
+        self.borderView = [[UIView alloc] initForAutoLayout];
+        [self.view addSubview:self.borderView];
+        self.borderView.backgroundColor = [UIColor blackColor];
+    }
+
     [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
     [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
     [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
-    [self.tableView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.borderView];
-    
-    self.keyboardConstraint = [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
-    [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
-    [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
-    self.inputHeightConstraint = [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight];
-    
-    UIView *inputView = [[UIView alloc] initForAutoLayoutWithSuperview:self.borderView];
-    inputView.backgroundColor = [UIColor whiteColor];
-    [inputView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(1, 0, 0, 0)];
-    
-    self.input = [[UITextView alloc] initForAutoLayoutWithSuperview:inputView];
-    self.input.scrollEnabled = NO;
-    self.input.returnKeyType = UIReturnKeySend;
-    self.input.backgroundColor = [UIColor whiteColor];
-    self.input.delegate = self;
-    
-    NSString *fontName = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigFontName];
-    if (!fontName) {
-        fontName = @"Inconsolata";
-        [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:RBConfigFontName];
+    if (isMainWindow) {
+        [self.tableView autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.borderView];
+    } else {
+        [self.tableView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
     }
-    UIFont *f = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    double fontSize = f.pointSize + 2;
-    UIFont *font = [UIFont fontWithName:fontName size:fontSize];
-    if (!font) {
-        font = [UIFont systemFontOfSize:fontSize];
+    
+    if (isMainWindow) {
+        self.keyboardConstraint = [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+        [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+        [self.borderView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+        self.inputHeightConstraint = [self.borderView autoSetDimension:ALDimensionHeight toSize:inputHeight];
+        
+        UIView *inputView = [[UIView alloc] initForAutoLayoutWithSuperview:self.borderView];
+        inputView.backgroundColor = [UIColor whiteColor];
+        [inputView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(1, 0, 0, 0)];
+        
+        self.input = [[UITextView alloc] initForAutoLayoutWithSuperview:inputView];
+        self.input.scrollEnabled = NO;
+        self.input.returnKeyType = UIReturnKeySend;
+        self.input.backgroundColor = [UIColor whiteColor];
+        self.input.delegate = self;
+        
+        NSString *fontName = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigFontName];
+        if (!fontName) {
+            fontName = @"Inconsolata";
+            [[NSUserDefaults standardUserDefaults] setObject:fontName forKey:RBConfigFontName];
+        }
+        UIFont *f = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        double fontSize = f.pointSize + 2;
+        UIFont *font = [UIFont fontWithName:fontName size:fontSize];
+        if (!font) {
+            font = [UIFont systemFontOfSize:fontSize];
+        }
+        self.input.font = font;
+        
+        [self.input autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 4, 0, 0) excludingEdge:ALEdgeRight];
+        
+        self.inputCommands = [UIButton buttonWithType:UIButtonTypeSystem];
+        self.inputCommands.translatesAutoresizingMaskIntoConstraints = NO;
+        [inputView addSubview:self.inputCommands];
+        [self.inputCommands setTitle:@"+" forState:UIControlStateNormal];
+        self.inputCommands.titleLabel.font = [UIFont systemFontOfSize:20];
+        [self.inputCommands addTarget:self action:@selector(showInputCommands) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+        [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+        [self.inputCommands autoSetDimension:ALDimensionWidth toSize:20];
+        [self.inputCommands autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.input];
+        
+        UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+        [self.view addGestureRecognizer:tgr];
+        
+        UISwipeGestureRecognizer *sgr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipe:)];
+        sgr.numberOfTouchesRequired = 2;
+        
+        [self revealButtonPressed:nil];
     }
-    self.input.font = font;
-    
-    [self.input autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 4, 0, 0) excludingEdge:ALEdgeRight];
-    
-    self.inputCommands = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.inputCommands.translatesAutoresizingMaskIntoConstraints = NO;
-    [inputView addSubview:self.inputCommands];
-    [self.inputCommands setTitle:@"+" forState:UIControlStateNormal];
-    self.inputCommands.titleLabel.font = [UIFont systemFontOfSize:20];
-    [self.inputCommands addTarget:self action:@selector(showInputCommands) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
-    [self.inputCommands autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
-    [self.inputCommands autoSetDimension:ALDimensionWidth toSize:20];
-    [self.inputCommands autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.input];
-    
-    [self revealButtonPressed:nil];
-    
-    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
-    [self.view addGestureRecognizer:tgr];
-    
-    UISwipeGestureRecognizer *sgr = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerSwipe:)];
-    sgr.numberOfTouchesRequired = 2;
     
     [[RBScriptingService sharedInstance] channelViewWasLoaded:self];
 }
@@ -216,8 +227,13 @@ static NSString *CellIdentifier = @"Cell";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    if ([self.view.window isEqual:[[[UIApplication sharedApplication] delegate] window]]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    } else {
+        [self.navigationController setNavigationBarHidden:YES];
+    }
     
     if (!self.server.connected) {
         [self disconnect];
@@ -591,13 +607,11 @@ static NSString *CellIdentifier = @"Cell";
     
     if (addedToLog) {
         @try {
-            [self.tableView beginUpdates];
             [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
                                   withRowAnimation:UITableViewRowAnimationNone];
-            [self.tableView endUpdates];
         }
         @catch (NSException *exception) {
-            [self.tableView reloadData];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         [self.server[self.channel] read];
         [self.tableView scrollToBottom:YES];
@@ -609,7 +623,7 @@ static NSString *CellIdentifier = @"Cell";
 -(void)disconnect
 {
     self.navigationItem.title = @"Disconnected";
-    //self.input.enabled = NO;
+    self.input.editable = NO;
     self.inputCommands.enabled = NO;
     
     RBIRCChannel *oldChannel = self.server[self.channel];
@@ -627,7 +641,7 @@ static NSString *CellIdentifier = @"Cell";
 
 -(void)connect
 {
-    //self.input.enabled = YES;
+    self.input.editable = YES;
     self.inputCommands.enabled = YES;
 }
 
