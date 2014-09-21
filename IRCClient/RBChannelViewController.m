@@ -107,7 +107,7 @@ static NSString *CellIdentifier = @"Cell";
     self.tableView.dataSource = self;
     [self.tableView registerClass:[RBTextViewCell class] forCellReuseIdentifier:CellIdentifier];
     
-    BOOL isMainWindow = [self.view.window isEqual:[[[UIApplication sharedApplication] delegate] window]];
+    BOOL isMainWindow = self.revealController != nil;
     
     if (isMainWindow) {
     // bunch of view shit to make the interface look not-shit.
@@ -139,6 +139,7 @@ static NSString *CellIdentifier = @"Cell";
         self.input.scrollEnabled = NO;
         self.input.returnKeyType = UIReturnKeySend;
         self.input.backgroundColor = [UIColor whiteColor];
+        self.input.autocapitalizationType = UITextAutocapitalizationTypeNone;
         self.input.delegate = self;
         
         NSString *fontName = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigFontName];
@@ -434,9 +435,13 @@ static NSString *CellIdentifier = @"Cell";
 
 -(BOOL)textViewShouldReturn:(UITextView *)textView
 {
-    NSString *str = textView.text;
+    NSString *str = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     if (self.server.connected == NO) {
         [self disconnect];
+        return NO;
+    }
+    if (str.length == 0) {
+        textView.text = @"";
         return NO;
     }
     BOOL addedToLog = NO;

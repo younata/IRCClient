@@ -158,39 +158,42 @@
     return NO;
 }
 
--(void)sendCommand:(NSString *)command
+-(void)sendCommand:(NSString *)cmd
 {
     if (!self.connected) {
         return;
     }
-    if (command.length > 512) {
-        if ([command.lowercaseString hasPrefix:@"privmsg"] || [command.lowercaseString hasPrefix:@"notice"]) {
-            NSString *cmd1 = [command substringToIndex:510];
-            NSString *cmd2 = [command substringFromIndex:510];
-            NSString *prefix = [command substringToIndex:[command rangeOfString:@":"].location + 1];
-            [self sendCommand:cmd1];
-            [self sendCommand:[prefix stringByAppendingString:cmd2]];
+    dispatch_async([RBIRCServer queue], ^{
+        NSString *command = cmd;
+        if (command.length > 512) {
+            if ([command.lowercaseString hasPrefix:@"privmsg"] || [command.lowercaseString hasPrefix:@"notice"]) {
+                NSString *cmd1 = [command substringToIndex:510];
+                NSString *cmd2 = [command substringFromIndex:510];
+                NSString *prefix = [command substringToIndex:[command rangeOfString:@":"].location + 1];
+                [self sendCommand:cmd1];
+                [self sendCommand:[prefix stringByAppendingString:cmd2]];
+            }
+            return;
         }
-        return;
-    }
-    if (![command hasSuffix:[NSString stringWithFormat:@"\r\n"]]) {
-        command = [command stringByAppendingString:@"\r\n"];
-    }
-    
-    signed long numBytesWritten = [self.writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
-    if (numBytesWritten < 0) {
-        NSError *error = [self.writeStream streamError];
-        NSLog(@"Error Writing to stream: %@", error);
-        [self.writeStream close];
-        [self.readStream close];
-    } else if (numBytesWritten == 0) {
-        if ([self.writeStream streamStatus] == kCFStreamStatusAtEnd) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerConnectionDidDisconnect object:self userInfo:nil];
+        if (![command hasSuffix:[NSString stringWithFormat:@"\r\n"]]) {
+            command = [command stringByAppendingString:@"\r\n"];
         }
-    } else if (numBytesWritten != [command length]) {
-        NSString *cmd = [command substringWithRange:NSMakeRange(numBytesWritten, [command length] - (2 + numBytesWritten))];
-        [self sendCommand:cmd];
-    }
+        
+        signed long numBytesWritten = [self.writeStream write:(const unsigned char *)[command UTF8String] maxLength:[command length]];
+        if (numBytesWritten < 0) {
+            NSError *error = [self.writeStream streamError];
+            NSLog(@"Error Writing to stream: %@", error);
+            [self.writeStream close];
+            [self.readStream close];
+        } else if (numBytesWritten == 0) {
+            if ([self.writeStream streamStatus] == kCFStreamStatusAtEnd) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerConnectionDidDisconnect object:self userInfo:nil];
+            }
+        } else if (numBytesWritten != [command length]) {
+            NSString *cmd = [command substringWithRange:NSMakeRange(numBytesWritten, [command length] - (2 + numBytesWritten))];
+            [self sendCommand:cmd];
+        }
+    });
 }
 
 -(void)connect
@@ -252,6 +255,9 @@
 
 -(void)receivedString:(NSString *)str
 {
+#ifdef DEBUG
+    printf("%s\n", [[str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] UTF8String]);
+#endif
     if ([str hasPrefix:@"ERROR"])
         return;
     RBIRCMessage *msg;
@@ -315,7 +321,9 @@
         [ch logMessage:msg];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerHandleMessage object:self userInfo:@{@"message": msg}];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerHandleMessage object:self userInfo:@{@"message": msg}];
+    });
     
     switch (msg.command) {
         case IRCMessageTypeCTCPFinger:
@@ -558,22 +566,30 @@
                     printf("%s\n", buffer);
                 }
             } else if (numBytesRead < 0) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [self.readStream streamError]}];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [self.readStream streamError]}];
+                });
             }
             break;
         }
-        case NSStreamEventErrorOccurred:
-            [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [aStream streamError]}];
+        case NSStreamEventErrorOccurred: {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [aStream streamError]}];
+            });
             [[RBScriptingService sharedInstance] serverDidError:self];
             self.reconnectDelay *= 2; // fairly common retry decay rate...
             [self performSelector:@selector(connect) withObject:nil afterDelay:self.reconnectDelay];
             break;
-        case NSStreamEventEndEncountered:
+        }
+        case NSStreamEventEndEncountered: {
             [self.writeStream close];
             [self.readStream close];
-            [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerConnectionDidDisconnect object:self userInfo:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerConnectionDidDisconnect object:self userInfo:nil];
+            });
             [[RBScriptingService sharedInstance] serverDidDisconnect:self];
             break;
+        }
         default:
             break;
     }

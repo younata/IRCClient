@@ -18,6 +18,7 @@
         // Initialization code
         
         self.textField = [[UITextField alloc] initForAutoLayoutWithSuperview:self.contentView];
+        self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         [self.textField autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 1 * self.indentationWidth, 0, 0)];
         [self.contentView addSubview:self.textField];
     }

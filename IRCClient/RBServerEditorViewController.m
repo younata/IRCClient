@@ -143,8 +143,6 @@
     self.serverRealName.text = self.server.realname;
     self.serverPassword.text = self.server.password;
     
-    [self.serverHostname setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-    
     for (UITextField *tf in @[self.serverName,
                               self.serverHostname,
                               self.serverPort,
@@ -152,6 +150,7 @@
                               self.serverRealName,
                               self.serverPassword]) {
         [tf setBorderStyle:UITextBorderStyleLine];
+        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
         [tf setDelegate:self];
     }
     
