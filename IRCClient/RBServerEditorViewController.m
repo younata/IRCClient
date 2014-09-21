@@ -99,7 +99,7 @@
     
     [sslLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.serverSSL withOffset:20];
     [self.serverSSL autoAlignAxis:ALAxisHorizontal toSameAxisOfView:sslLabel];
-    [[self.serverSSL autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20] setPriority:UILayoutPriorityRequired];
+    [self.serverSSL autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20];
     
     self.serverNick = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
     
@@ -118,7 +118,7 @@
     [connectOnStartupLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.serverConnectOnStartup withOffset:20];
     [connectOnStartupLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20];
     [self.serverConnectOnStartup autoAlignAxis:ALAxisHorizontal toSameAxisOfView:connectOnStartupLabel];
-    [[self.serverConnectOnStartup autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20] setPriority:UILayoutPriorityRequired];
+    [self.serverConnectOnStartup autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20];
     
     NSArray *views = @[self.serverName, self.serverHostname, self.serverPort, sslLabel, self.serverNick, self.serverRealName, self.serverPassword, connectOnStartupLabel];
     [views autoDistributeViewsAlongAxis:ALAxisVertical withFixedSpacing:20 alignment:NSLayoutFormatAlignAllLeft];

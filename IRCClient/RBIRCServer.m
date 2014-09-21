@@ -525,10 +525,17 @@
 
 -(void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
 {
+    dispatch_async([RBIRCServer queue], ^{
+        [self handleStream:aStream withEvent:eventCode];
+    });
+}
+
+- (void)handleStream:(NSStream *)aStream withEvent:(NSStreamEvent)eventCode
+{
     switch (eventCode) {
         case NSStreamEventOpenCompleted:
             if ([aStream isKindOfClass:[NSOutputStream class]]) {
-                dispatch_async([RBIRCServer queue], onConnect);
+                onConnect();
             }
             break;
         case NSStreamEventHasBytesAvailable: {

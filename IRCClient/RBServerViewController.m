@@ -120,6 +120,11 @@ static NSString *textFieldCell = @"textFieldCell";
     return [server sortedChannelKeys].count + 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell;
@@ -287,6 +292,13 @@ static NSString *textFieldCell = @"textFieldCell";
     }
     if (server) {
         [editor setServer:server];
+        
+        editor.serverNick.text = server.nick;
+        editor.serverPassword.text = server.password;
+        editor.serverPassword.text = server.port;
+        editor.serverHostname.text = server.hostname;
+        editor.serverName.text = server.serverName;
+        editor.serverSSL.on = server.useSSL;
         
         if (![self.servers containsObject:server]) {
             [self.servers addObject:server];

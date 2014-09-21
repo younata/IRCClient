@@ -1208,7 +1208,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug",
 				);
 				PRODUCT_NAME = rIRC;
-				PROVISIONING_PROFILE = "39FC714B-1EE0-4CBE-8A09-F639CBF88690";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/libffi/darwin_common/include/ $(SRCROOT)/libffi/**";
 				WRAPPER_EXTENSION = app;
@@ -1233,7 +1233,7 @@
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug",
 				);
 				PRODUCT_NAME = rIRC;
-				PROVISIONING_PROFILE = "39FC714B-1EE0-4CBE-8A09-F639CBF88690";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/libffi/darwin_common/include/ $(SRCROOT)/libffi/**";
 				WRAPPER_EXTENSION = app;
