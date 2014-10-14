@@ -39,4 +39,6 @@
 -(void)serverViewDidDisconnectServer:(NSNotification *)note;
 -(void)serverViewDidDisconnectChannel:(NSNotification *)note;
 
+-(BOOL)textViewShouldReturn:(UITextView *)textView;
+
 @end

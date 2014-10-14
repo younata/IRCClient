@@ -163,7 +163,7 @@
 
 /* Begin PBXFileReference section */
 		02E83F1310CE48ACBD3C16A1 /* libPods-IRCClientSpecs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IRCClientSpecs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		67B80146231C9EB2F120C548 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		760C7BDD99964E4E8C71C3C7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8905344218C93842006DDA8B /* NSString+ranges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ranges.h"; sourceTree = "<group>"; };
 		8905344318C93842006DDA8B /* NSString+ranges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ranges.m"; sourceTree = "<group>"; };
@@ -307,7 +307,9 @@
 		89E812D218BCE7CC00616600 /* UIButton+buttonWithTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+buttonWithTitle.m"; sourceTree = "<group>"; };
 		89E812DD18BCF5FE00616600 /* NSObject+customProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+customProperty.h"; path = "NSObject/NSObject+customProperty.h"; sourceTree = "<group>"; };
 		89E812DE18BCF5FE00616600 /* NSObject+customProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+customProperty.m"; path = "NSObject/NSObject+customProperty.m"; sourceTree = "<group>"; };
-		B43A971B222F481796509873 /* Pods-IRCClientSpecs.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRCClientSpecs.xcconfig"; path = "Pods/Pods-IRCClientSpecs.xcconfig"; sourceTree = "<group>"; };
+		8EF815F09F37318A42C9E93F /* Pods-IRCClientSpecs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRCClientSpecs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IRCClientSpecs/Pods-IRCClientSpecs.debug.xcconfig"; sourceTree = "<group>"; };
+		B0303489FD950FEF27754321 /* Pods-IRCClientSpecs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IRCClientSpecs.release.xcconfig"; path = "Pods/Target Support Files/Pods-IRCClientSpecs/Pods-IRCClientSpecs.release.xcconfig"; sourceTree = "<group>"; };
+		F5EE041B9FC9111FE322F841 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -348,6 +350,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F07F648D7FB059D0B595150 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F5EE041B9FC9111FE322F841 /* Pods.debug.xcconfig */,
+				67B80146231C9EB2F120C548 /* Pods.release.xcconfig */,
+				8EF815F09F37318A42C9E93F /* Pods-IRCClientSpecs.debug.xcconfig */,
+				B0303489FD950FEF27754321 /* Pods-IRCClientSpecs.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		8906F1BE18867BEE00042A13 = {
 			isa = PBXGroup;
 			children = (
@@ -359,8 +372,7 @@
 				891B01E6189650DA00B2D848 /* IRCClientSpecs */,
 				8906F1C918867BEE00042A13 /* Frameworks */,
 				8906F1C818867BEE00042A13 /* Products */,
-				6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */,
-				B43A971B222F481796509873 /* Pods-IRCClientSpecs.xcconfig */,
+				4F07F648D7FB059D0B595150 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -881,7 +893,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8908DBCD18B5F29C004DFBAB /* ShellScript */ = {
@@ -909,7 +921,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-IRCClientSpecs-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IRCClientSpecs/Pods-IRCClientSpecs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D7FA4626809F4F1285E153D9 /* Check Pods Manifest.lock */ = {
@@ -1192,7 +1204,7 @@
 		};
 		8906F1F418867BEE00042A13 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */;
+			baseConfigurationReference = F5EE041B9FC9111FE322F841 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1217,7 +1229,7 @@
 		};
 		8906F1F518867BEE00042A13 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E585D8BE2DA47A8BA0F3C15 /* Pods.xcconfig */;
+			baseConfigurationReference = 67B80146231C9EB2F120C548 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1282,7 +1294,7 @@
 		};
 		891B01F4189650DB00B2D848 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B43A971B222F481796509873 /* Pods-IRCClientSpecs.xcconfig */;
+			baseConfigurationReference = 8EF815F09F37318A42C9E93F /* Pods-IRCClientSpecs.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1291,6 +1303,7 @@
 					/Users/you/Desktop/dev/IRCClient/IRCClientSpecs/Frameworks,
 					"$(PROJECT_DIR)/IRCClientSpecs",
 					"$(PROJECT_DIR)/IRCClientSpecs/Frameworks",
+					"$(PODS_ROOT)/**",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1300,7 +1313,7 @@
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)/**",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.8.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "IRCClientSpecs/IRCClientSpecs-Info.plist";
@@ -1320,7 +1333,7 @@
 		};
 		891B01F5189650DB00B2D848 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B43A971B222F481796509873 /* Pods-IRCClientSpecs.xcconfig */;
+			baseConfigurationReference = B0303489FD950FEF27754321 /* Pods-IRCClientSpecs.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1329,12 +1342,13 @@
 					/Users/you/Desktop/dev/IRCClient/IRCClientSpecs/Frameworks,
 					"$(PROJECT_DIR)/IRCClientSpecs",
 					"$(PROJECT_DIR)/IRCClientSpecs/Frameworks",
+					"$(PODS_ROOT)/**",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IRCClientSpecs/IRCClientSpecs-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)/**",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.8.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = "IRCClientSpecs/IRCClientSpecs-Info.plist";

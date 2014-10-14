@@ -3,8 +3,6 @@
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
 
-#import "HTAutocompleteTextField.h"
-
 #import "RBServerViewController.h"
 
 #import "UIActionSheet+allButtonTitles.h"
@@ -105,7 +103,7 @@ describe(@"RBChannelViewController", ^{
             
             void (^addTextAndSend)(NSString *) = ^(NSString *msg){
                 subject.input.text = msg;
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
             };
             it(@"should ACTION", ^{
                 addTextAndSend(@"/me codes.");
@@ -131,90 +129,90 @@ describe(@"RBChannelViewController", ^{
         describe(@"basic commands", ^{
             it(@"should nick", ^{
                 subject.input.text = @"/nick";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should_not have_received("nick:");
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 subject.input.text = @"/nick foobar";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("nick:").with(@"foobar");
             });
             
             it(@"should oper", ^{
                 subject.input.text = @"/oper foo";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should_not have_received("oper:password:");
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 subject.input.text = @"/oper foo bar";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("oper:password:").with(@"foo", @"bar");
             });
             
             it(@"should quit", ^{
                 subject.input.text = @"/quit";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("quit:").with(subject.server.nick);
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 subject.input.text = @"/quit foobar";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("quit:").with(@"foobar");
             });
             
             it(@"should mode", ^{
                 subject.input.text = @"/mode +b ik";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("mode:options:").with(channel, @[@"+b", @"ik"]);
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 subject.input.text = @"/mode +b ik";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("mode:options:").with(channel, @[@"+b", @"ik"]);
             });
             
             it(@"should kick", ^{
                 subject.input.text = @"/kick ik";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("kick:target:reason:").with(channel, @"ik", subject.server.nick);
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 subject.input.text = @"/kick ik reason";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("kick:target:reason:").with(channel, @"ik", @"reason");
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 subject.input.text = @"/kick";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should_not have_received("kick:target:");
                 server should_not have_received("kick:target:reason:");
             });
             
             it(@"should privmsg", ^{
                 subject.input.text = @"hello world";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("privmsg:contents:").with(channel, @"hello world");
             });
             
             it(@"should privmsg as /msg", ^{
                 subject.input.text = @"/msg #foo hello world";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("privmsg:contents:").with(channel, @"hello world");
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 subject.input.text = @"/msg ik hello world";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received("privmsg:contents:").with(@"ik", @"hello world");
             });
             
             it(@"should notice", ^{
                 subject.input.text = @"/notice #foo hello world";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received(@selector(notice:contents:)).with(channel, @"hello world");
                 
                 [(id<CedarDouble>)server reset_sent_messages];
                 subject.input.text = @"/notice ik hello world";
-                [subject textFieldShouldReturn:subject.input];
+                [subject textViewShouldReturn:subject.input];
                 server should have_received(@selector(notice:contents:)).with(@"ik", @"hello world");
             });
         });
@@ -264,7 +262,7 @@ describe(@"RBChannelViewController", ^{
         });
         
         it(@"should disable text input", ^{
-            subject.input.enabled should be_falsy;
+            subject.input.editable should be_falsy;
             subject.inputCommands.enabled should be_falsy;
         });
     });
