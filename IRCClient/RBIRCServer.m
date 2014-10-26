@@ -221,13 +221,10 @@
     [self.writeStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
     if (self.useSSL) {
-        NSDictionary *settings = @{(__bridge_transfer NSString *)kCFStreamSSLAllowsAnyRoot: @(YES),
-                                   (__bridge_transfer NSString *)kCFStreamSSLAllowsExpiredCertificates: @(YES),
-                                   (__bridge_transfer NSString *)kCFStreamSSLAllowsExpiredRoots: @(YES)};
         [self.readStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
         [self.writeStream setProperty:NSStreamSocketSecurityLevelNegotiatedSSL forKey:NSStreamSocketSecurityLevelKey];
-        CFReadStreamSetProperty((__bridge_retained CFReadStreamRef)self.readStream, kCFStreamPropertySSLSettings, (__bridge_retained CFDictionaryRef)settings);
-        CFWriteStreamSetProperty((__bridge_retained CFWriteStreamRef)self.writeStream, kCFStreamPropertySSLSettings, (__bridge_retained CFDictionaryRef)settings);
+        CFReadStreamSetProperty((__bridge_retained CFReadStreamRef)self.readStream, kCFStreamPropertySSLSettings, nil);
+        CFWriteStreamSetProperty((__bridge_retained CFWriteStreamRef)self.writeStream, kCFStreamPropertySSLSettings, nil);
 
     }
     
