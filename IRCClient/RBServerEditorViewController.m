@@ -121,7 +121,7 @@
     [self.serverConnectOnStartup autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20];
     
     NSArray *views = @[self.serverName, self.serverHostname, self.serverPort, sslLabel, self.serverNick, self.serverRealName, self.serverPassword, connectOnStartupLabel];
-    [views autoDistributeViewsAlongAxis:ALAxisVertical withFixedSpacing:20 alignment:NSLayoutFormatAlignAllLeft];
+    [views autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeLeft withFixedSize:20];
     [@[self.serverName, self.serverHostname, self.serverPort, self.serverNick, self.serverRealName, self.serverPassword] autoMatchViewsDimension:ALDimensionWidth];
     NSArray *switches = @[self.serverSSL, self.serverConnectOnStartup];
     [switches autoAlignViewsToEdge:ALEdgeRight];

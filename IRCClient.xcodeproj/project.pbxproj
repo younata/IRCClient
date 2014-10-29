@@ -1219,7 +1219,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug",
 				);
-				PODS_ROOT = "${SRCROOT}/Pods";
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_NAME = rIRC;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1245,7 +1245,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/IRCClient-auvglgloctmuwhedkfhawzjzjzna/Build/Products/Debug",
 				);
-				PODS_ROOT = "${SRCROOT}/Pods";
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_NAME = rIRC;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1320,12 +1320,27 @@
 				);
 				INFOPLIST_FILE = "IRCClientSpecs/IRCClientSpecs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/AHKSlider\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/Cedar\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/PureLayout\"",
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 					"-lstdc++",
+					"$(inherited)",
 				);
-				PODS_ROOT = "${SRCROOT}/Pods";
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
@@ -1355,13 +1370,17 @@
 				);
 				INFOPLIST_FILE = "IRCClientSpecs/IRCClientSpecs-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 					"-lstdc++",
+					"$(inherited)",
 				);
-				PODS_ROOT = "${SRCROOT}/Pods";
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";

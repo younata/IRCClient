@@ -137,7 +137,7 @@
     switch (colorStyle) {
         case RSBColorPickerStyleRGB: {
             NSArray *sliders = @[self.redSlider, self.greenSlider, self.blueSlider];
-            [sliders autoDistributeViewsAlongAxis:ALAxisVertical withFixedSize:20 alignment:NSLayoutFormatAlignAllLeft];
+            [sliders autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeLeft withFixedSize:20];
             for (UIView *v in sliders) {
                 [v autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
                 [v autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.preview withOffset:8];
@@ -146,7 +146,7 @@
             break;
         } case RSBColorPickerStyleRGBA: {
             NSArray *sliders = @[self.redSlider, self.greenSlider, self.blueSlider, self.alphaSlider];
-            [sliders autoDistributeViewsAlongAxis:ALAxisVertical withFixedSize:20 alignment:NSLayoutFormatAlignAllLeft];
+            [sliders autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeLeft withFixedSize:20];
             for (UIView *v in sliders) {
                 [v autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
                 [v autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.preview withOffset:8];
