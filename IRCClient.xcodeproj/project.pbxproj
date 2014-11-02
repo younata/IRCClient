@@ -84,6 +84,7 @@
 		892D1393195097F000671081 /* RBNickColorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1391195097F000671081 /* RBNickColorCell.m */; };
 		892D1396195098FF00671081 /* RSBColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1395195098FF00671081 /* RSBColorPicker.m */; };
 		892D1397195098FF00671081 /* RSBColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 892D1395195098FF00671081 /* RSBColorPicker.m */; };
+		893448D51A06A2EA00F5D528 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 893448D41A06A2EA00F5D528 /* LaunchScreen.xib */; };
 		893C332618C19BAD000279AA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 893C332518C19BAD000279AA /* libPods.a */; };
 		895E588719533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
 		895E588819533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
@@ -242,6 +243,7 @@
 		892D1391195097F000671081 /* RBNickColorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBNickColorCell.m; sourceTree = "<group>"; };
 		892D1394195098FF00671081 /* RSBColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSBColorPicker.h; sourceTree = "<group>"; };
 		892D1395195098FF00671081 /* RSBColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSBColorPicker.m; sourceTree = "<group>"; };
+		893448D41A06A2EA00F5D528 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		893C331F18C19879000279AA /* libPods-AFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-AFNetworking.a"; path = "Pods/build/Debug-iphoneos/libPods-AFNetworking.a"; sourceTree = "<group>"; };
 		893C332518C19BAD000279AA /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		895E588519533A32003A56BB /* UINavigationBar+swipeToHide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+swipeToHide.h"; path = "UINavigationBar/UINavigationBar+swipeToHide.h"; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				89E812BA18B8EB9400616600 /* help.json */,
 				8906F1D618867BEE00042A13 /* main.m */,
 				8906F1D818867BEE00042A13 /* IRCClient-Prefix.pch */,
+				893448D41A06A2EA00F5D528 /* LaunchScreen.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -849,6 +852,7 @@
 				89C46E4A18960C96006068DC /* reveal-icon.png in Resources */,
 				89E812C418BA1B6A00616600 /* icon@2x.png in Resources */,
 				89E812C018BA1B6A00616600 /* icon-iPad.png in Resources */,
+				893448D51A06A2EA00F5D528 /* LaunchScreen.xib in Resources */,
 				89E812C718BB367300616600 /* Inconsolata.otf in Resources */,
 				8908DC8118B8B299004DFBAB /* README.md in Resources */,
 				89B56B9D1932C0570079D259 /* Localizable.stringsdict in Resources */,
