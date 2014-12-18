@@ -253,7 +253,7 @@
 -(CGFloat)getKeyboardHeight:(NSNotification *)notification
 {
     NSDictionary* keyboardInfo = [notification userInfo];
-    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
     CGFloat keyboardHeight;
     if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {

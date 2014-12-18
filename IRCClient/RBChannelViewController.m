@@ -141,6 +141,7 @@ static NSString *CellIdentifier = @"Cell";
         self.input.backgroundColor = [UIColor whiteColor];
         self.input.autocapitalizationType = UITextAutocapitalizationTypeNone;
         self.input.delegate = self;
+        self.input.contentInset = UIEdgeInsetsMake(0, 8, 0, 0);
         
         NSString *fontName = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigFontName];
         if (!fontName) {
@@ -306,7 +307,8 @@ static NSString *CellIdentifier = @"Cell";
 -(CGFloat)getKeyboardHeight:(NSNotification *)notification
 {
     NSDictionary* keyboardInfo = [notification userInfo];
-    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    NSLog(@"%@", keyboardInfo);
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
     CGFloat keyboardHeight;
     if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
@@ -406,10 +408,13 @@ static NSString *CellIdentifier = @"Cell";
 {
     NSMutableString *mutableString = [[NSMutableString alloc] initWithString:textView.text];
     [mutableString replaceCharactersInRange:range withString:string];
+    if (mutableString.length == 0) {
+        mutableString = [@"blah" mutableCopy];
+    }
     
     if ([string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location != NSNotFound &&
         [self textViewShouldReturn:textView]) {
-        mutableString = [@"" mutableCopy];
+        mutableString = [@"blah" mutableCopy];
     }
     
     UIFont *f = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -421,12 +426,15 @@ static NSString *CellIdentifier = @"Cell";
     }
     
     NSAttributedString *text = [[NSAttributedString alloc] initWithString:mutableString attributes:@{NSFontAttributeName: font}];
+    CGFloat horizontalInset = textView.contentInset.left + textView.contentInset.right + 4;
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
-    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(textView.frame.size.width - 10, CGFLOAT_MAX)
+    CGRect boundingRect = [text boundingRectWithSize:CGSizeMake(textView.frame.size.width - horizontalInset, CGFLOAT_MAX)
                                              options:options
                                              context:nil];
     
-    self.inputHeightConstraint.constant = ceil(boundingRect.size.height) + 20;
+    CGFloat verticalInset = textView.contentInset.top + textView.contentInset.bottom;
+
+    self.inputHeightConstraint.constant = ceil(boundingRect.size.height) + verticalInset + 20;
     
     [self.view layoutIfNeeded];
     
@@ -612,8 +620,7 @@ static NSString *CellIdentifier = @"Cell";
     
     if (addedToLog) {
         @try {
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self tableView:self.tableView numberOfRowsInSection:0] - 1 inSection:0]]
-                                  withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         @catch (NSException *exception) {
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -666,8 +673,6 @@ static NSString *CellIdentifier = @"Cell";
     if (!self.server.connected) {
         [self disconnect];
     }
-    [self.tableView reloadData];
-    [self.tableView scrollToBottom:NO];
     [[RBScriptingService sharedInstance] channelView:self didSelectChannel:self.server[self.channel] andServer:self.server];
     RBNameViewController *nameController = (RBNameViewController *)self.revealController.rightViewController;
     [nameController setServerName:self.server.serverName];
@@ -692,7 +697,9 @@ static NSString *CellIdentifier = @"Cell";
         
         [self.recentlyUsedNames replaceObjectAtIndex:loc.unsignedIntegerValue withObject:name];
     }
-
+    
+    [self.tableView reloadData];
+    [self.tableView scrollToBottom:NO];
 }
 
 -(void)serverViewDidDisconnectServer:(NSNotification *)note

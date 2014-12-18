@@ -252,9 +252,6 @@
 
 -(void)receivedString:(NSString *)str
 {
-#ifdef DEBUG
-    printf("%s\n", [[str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] UTF8String]);
-#endif
     if ([str hasPrefix:@"ERROR"])
         return;
     RBIRCMessage *msg;
@@ -560,7 +557,7 @@
                         [self receivedString:str];
                     }
                 } else {
-                    printf("%s\n", buffer);
+                    //printf("%s\n", buffer);
                 }
             } else if (numBytesRead < 0) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -594,6 +591,9 @@
 
 -(NSArray *)sortedChannelKeys
 {
+    if (self.serverName == nil) {
+        return nil;
+    }
     NSMutableArray *theChannels = [self.channels.allKeys mutableCopy];
     [theChannels removeObject:RBIRCServerLog];
     NSArray *ret = [theChannels sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2){

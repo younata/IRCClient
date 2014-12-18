@@ -22,9 +22,12 @@ describe(@"RBChannelViewController", ^{
 
     beforeEach(^{
         subject = [[RBChannelViewController alloc] init];
+        subject.revealController = nice_fake_for([SWRevealViewController class]);
         [subject view];
         
         subject.channel = channel;
+        
+        spy_on(subject);
 
         server = nice_fake_for([RBIRCServer class]);
         server stub_method("nick").and_return(@"testnick");
@@ -53,14 +56,17 @@ describe(@"RBChannelViewController", ^{
             beforeEach(^{
                 // UIActionSheets have exceptions with this... :/
                 @try {
-                    [subject.inputCommands sendActionsForControlEvents:UIControlEventTouchUpInside];
+                    [subject.inputCommands sendActionsForControlEvents:UIControlEventAllTouchEvents];
                 } @catch (NSException *e) {
                     ; // nope
                 }
             });
             
+            it(@"should have received showInputCommands", ^{
+                subject should have_received("showInputCommands");
+            });
+            
             it(@"should have a button which brings up a menu for possible commands", ^{
-                // I actually don't think this will ever actually show..
                 subject.actionSheet should_not be_nil;
             });
             
