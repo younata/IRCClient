@@ -1,59 +1,38 @@
 //
-//  RBServerEditorViewController.m
+//  RBServerEditorController.m
 //  IRCClient
 //
-//  Created by Rachel Brindle on 1/26/14.
+//  Created by Rachel Brindle on 12/17/14.
 //  Copyright (c) 2014 Rachel Brindle. All rights reserved.
 //
 
 #import "RBServerEditorViewController.h"
 
-#import "RBConfigurationKeys.h"
-
 #import "RBIRCServer.h"
-#import "NSString+isNilOrEmpty.h"
-
 #import "RBColorScheme.h"
-
-#import "RBHelp.h"
-
 #import "RBScriptingService.h"
-
-@interface RBServerEditorViewController ()
-
-@property (nonatomic) CGRect originalFrame;
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic) NSLayoutConstraint *keyboardConstraint;
-
-
-@end
+#import "RBHelp.h"
+#import "RBConfigurationKeys.h"
+#import "RBTextFieldServerCell.h"
+#import "RBSwitchCell.h"
 
 @implementation RBServerEditorViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)setServer:(RBIRCServer *)server
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    _server = server;
+    
+    self.name = server.serverName;
+    self.hostname = server.hostname;
+    self.port = server.port;
+    self.nick = server.nick;
+    self.realname = server.realname;
+    self.password = server.password;
+    self.ssl = server.useSSL;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.originalFrame = self.view.frame;
-    
-    self.scrollView = [[UIScrollView alloc] initForAutoLayoutWithSuperview:self.view];
-    [self.scrollView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-    UIScrollView *sv = self.scrollView;
-    self.scrollView.scrollEnabled = YES;
-    
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.scrollView.contentSize = self.view.frame.size;
-    }
     
     self.navigationItem.title = NSLocalizedString(@"New Server", nil);
     if ([self.server.serverName hasContent]) {
@@ -63,107 +42,27 @@
     self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
     
     self.helpButton = [[UIBarButtonItem alloc] initWithTitle:@"?"
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:@selector(showHelp)];
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(showHelp)];
     
     self.saveButton = [[UIBarButtonItem alloc] initWithTitle:self.server.connected ? NSLocalizedString(@"Save", nil) : NSLocalizedString(@"Connect", nil)
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:@selector(save)];
+                                                       style:UIBarButtonItemStylePlain
+                                                      target:self
+                                                      action:@selector(save)];
     
     self.cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil)
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(dismiss)];
+                                                         style:UIBarButtonItemStylePlain
+                                                        target:self
+                                                        action:@selector(dismiss)];
     
     self.navigationItem.rightBarButtonItems = @[self.saveButton, self.helpButton];
     self.navigationItem.leftBarButtonItem = self.cancelButton;
     
-    self.serverName = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
-    [self.serverName autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20];
-    [self.serverName autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20];
-    [self.serverName autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:sv withOffset:-40];
+    [self validateInfo];
     
-    self.serverHostname = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
-    self.serverHostname.autocorrectionType = UITextAutocorrectionTypeNo;
-    
-    self.serverPort = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
-    
-    UILabel *sslLabel = [[UILabel alloc] initForAutoLayoutWithSuperview:sv];
-    sslLabel.text = NSLocalizedString(@"Use SSL?", nil);
-    sslLabel.textAlignment = NSTextAlignmentLeft;
-    
-    self.serverSSL = [[UISwitch alloc] initForAutoLayoutWithSuperview:sv];
-    self.serverSSL.on = NO;
-    
-    [sslLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.serverSSL withOffset:20];
-    [self.serverSSL autoAlignAxis:ALAxisHorizontal toSameAxisOfView:sslLabel];
-    [self.serverSSL autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20];
-    
-    self.serverNick = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
-    
-    self.serverRealName = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
-
-    self.serverPassword = [[UITextField alloc] initForAutoLayoutWithSuperview:sv];
-    self.serverPassword.secureTextEntry = YES;
-    
-    self.serverConnectOnStartup = [[UISwitch alloc] initForAutoLayoutWithSuperview:sv];
-    self.serverConnectOnStartup.on = self.server.connectOnStartup;
-    
-    UILabel *connectOnStartupLabel = [[UILabel alloc] initForAutoLayoutWithSuperview:sv];
-    connectOnStartupLabel.text = NSLocalizedString(@"Connect on startup?", nil);
-    connectOnStartupLabel.textAlignment = NSTextAlignmentLeft;
-    
-    [connectOnStartupLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.serverConnectOnStartup withOffset:20];
-    [connectOnStartupLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20];
-    [self.serverConnectOnStartup autoAlignAxis:ALAxisHorizontal toSameAxisOfView:connectOnStartupLabel];
-    [self.serverConnectOnStartup autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:-20];
-    
-    NSArray *views = @[self.serverName, self.serverHostname, self.serverPort, sslLabel, self.serverNick, self.serverRealName, self.serverPassword, connectOnStartupLabel];
-    [views autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeLeft withFixedSize:20];
-    [@[self.serverName, self.serverHostname, self.serverPort, self.serverNick, self.serverRealName, self.serverPassword] autoMatchViewsDimension:ALDimensionWidth];
-    NSArray *switches = @[self.serverSSL, self.serverConnectOnStartup];
-    [switches autoAlignViewsToEdge:ALEdgeRight];
-    for (UIView *v in switches) {
-        [v autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.serverName];
-    }
-    
-    self.serverName.placeholder = NSLocalizedString(@"ServerName", nil);
-    self.serverHostname.placeholder = @"irc.freenode.net";
-    self.serverPort.placeholder = @"6667";
-    self.serverNick.placeholder = NSLocalizedString(@"username", nil);
-    self.serverRealName.placeholder = NSLocalizedString(@"realname", nil);
-    self.serverPassword.placeholder = NSLocalizedString(@"server password", nil);
-    
-    self.serverName.text = self.server.serverName;
-    self.serverHostname.text = self.server.hostname;
-    self.serverPort.text = self.server.port;
-    self.serverNick.text = self.server.nick;
-    self.serverRealName.text = self.server.realname;
-    self.serverPassword.text = self.server.password;
-    
-    for (UITextField *tf in @[self.serverName,
-                              self.serverHostname,
-                              self.serverPort,
-                              self.serverNick,
-                              self.serverRealName,
-                              self.serverPassword]) {
-        [tf setBorderStyle:UITextBorderStyleLine];
-        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        [tf setDelegate:self];
-    }
-    
-    self.keyboardConstraint = [self.scrollView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
-    
-    [self.view layoutSubviews];
-    
-    [[RBScriptingService sharedInstance] serverEditorWasLoaded:self];
-}
-
--(void)updateViewConstraints
-{
-    [super updateViewConstraints];
+    [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[RBSwitchCell class] forCellReuseIdentifier:@"switch"];
 }
 
 -(void)showHelp
@@ -173,27 +72,17 @@
     [self presentViewController:nc animated:YES completion:nil];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 -(void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:self.onCancel];
-    [[RBScriptingService sharedInstance] serverEditorWillBeDismissed:self];
+    [[RBScriptingService sharedInstance] serverEditorWillBeDismissed:(RBServerEditorViewController*)self]; // FIXME: update RBScriptingService
 }
 
--(void)save
+- (void)save
 {
+    if (self.saveButton.enabled == NO) {
+        return;
+    }
     NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers]];
     NSMutableArray *marr = [[NSMutableArray alloc] init];
     for (RBIRCServer *s in arr) {
@@ -202,91 +91,237 @@
         }
     }
     
-    self.server.serverName = self.serverName.text;
-    self.server.nick = self.serverNick.text;
-    if (![self.server.nick hasContent]) {
-        self.serverNick.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"A username is required", nil) attributes:@{NSForegroundColorAttributeName: [UIColor redColor]}];
-        return;
+    if (![self.realname hasContent]) {
+        self.realname = self.nick;
+    }
+    if (![self.port hasContent]) {
+        self.port = @"6667";
+    }
+    if (![self.hostname hasContent]) {
+        self.hostname = @"irc.freenode.net";
+    }
+    if (![self.name hasContent]) {
+        self.name = self.hostname;
     }
     
-    if (![self.server.serverName hasContent]) {
-        self.server.serverName = self.serverHostname.text;
-        if (![self.server.serverName hasContent]) {
-            self.server.serverName = self.serverHostname.placeholder;
-        }
-    }
-    
-    self.server.hostname = self.serverHostname.text;
-    self.server.port = self.serverPort.text;
-    self.server.useSSL = self.serverSSL.on;
-    self.server.realname = self.serverRealName.text;
-    self.server.password = self.serverPassword.text;
-    
-    if (![self.server.hostname hasContent]) {
-        self.server.hostname = self.serverHostname.placeholder;
-    }
-    if (![self.server.port hasContent]) {
-        self.server.port = self.serverPort.placeholder;
-    }
-    if (![self.server.realname hasContent]) {
-        self.server.realname = self.serverRealName.placeholder;
-    }
+    self.server.serverName = self.name;
+    self.server.nick = self.nick;
+    self.server.hostname = self.hostname;
+    self.server.port = self.port;
+    self.server.useSSL = self.ssl;
+    self.server.realname = self.realname;
+    self.server.password = self.password;
     
     if (!self.server.connected) {
         [self.server connect];
     } else {
-        [self.server quit:@"Reloading settings"];
+        [self.server quit:@"Reloading Settings"];
         [self.server connect];
     }
     
-    [[RBScriptingService sharedInstance] serverEditor:self didMakeChangesToServer:self.server];
+    [[RBScriptingService sharedInstance] serverEditor:(RBServerEditorViewController*)self didMakeChangesToServer:self.server];
     
     [marr addObject:self.server];
     NSData *d = [NSKeyedArchiver archivedDataWithRootObject:marr];
     [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
-    
+
     [self dismiss];
 }
 
-
-
--(CGFloat)getKeyboardHeight:(NSNotification *)notification
+- (BOOL)validateInfo
 {
-    NSDictionary* keyboardInfo = [notification userInfo];
-    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
-    CGFloat keyboardHeight;
-    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-        keyboardHeight = keyboardFrameBeginRect.size.width;
-    } else {
-        keyboardHeight = keyboardFrameBeginRect.size.height;
+    BOOL isValid = YES;
+    NSCharacterSet *set = [NSCharacterSet characterSetWithRange:NSMakeRange(0x21, 0x7F - 0x21)];
+    
+    self.hostname = self.hostname ?: @"";
+    self.nick = self.nick ?: @"";
+    self.realname = self.realname ?: @"";
+    self.password = self.password ?: @"";
+    for (NSString *text in @[self.nick, self.realname, self.password]) {
+        if ([[text stringByTrimmingCharactersInSet:set] hasContent]) {
+            isValid = NO;
+            break;
+        }
     }
-    return keyboardHeight;
+    if (!self.nick.hasContent) {
+        isValid = NO;
+    }
+    if (self.port.integerValue > 65535 || self.port.integerValue < 1) {
+        isValid = NO;
+    }
+    self.saveButton.enabled = isValid;
+    
+    return isValid;
 }
 
--(void)keyboardWillHide:(NSNotification *)notification
-{
-    self.keyboardConstraint.constant = 0;
-    [self.view setNeedsUpdateConstraints];
-    NSDictionary *info = [notification userInfo];
-    NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.view layoutIfNeeded];
-    } completion:nil];
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 7;
 }
 
--(void)keyboardWillShow:(NSNotification *)notification
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    CGFloat kh = [self getKeyboardHeight:notification];
-    NSDictionary *info = [notification userInfo];
-    NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    self.keyboardConstraint.constant = -kh;
-    [self.view setNeedsUpdateConstraints];
+    switch (section) {
+        case 0:
+            return NSLocalizedString(@"Server Name", nil);
+        case 1:
+            return NSLocalizedString(@"Hostname to connect to", nil);
+        case 2:
+            return NSLocalizedString(@"Port to connect to", nil);
+        case 3:
+            return NSLocalizedString(@"Use Secure Connection?", nil);
+        case 4:
+            return NSLocalizedString(@"Username", nil);
+        case 5:
+            return NSLocalizedString(@"realname (leave blank to use username)", nil);
+        case 6:
+            return NSLocalizedString(@"password (if required)", nil);
+    }
+    return @"";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 32;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSInteger section = indexPath.section;
+    if (section == 3) {
+        RBSwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:@"switch" forIndexPath:indexPath];
+        cell.onSwitchChange = ^(BOOL change){self.ssl = change;};
+        cell.theSwitch.on = self.ssl;
+        cell.textLabel.text = NSLocalizedString(@"Use SSL/TLS?", nil);
+        [cell.contentView bringSubviewToFront:cell.theSwitch];
+        return cell;
+    } else {
+        RBTextFieldServerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+        
+        cell.textField.backgroundColor = [UIColor clearColor];
+        cell.textField.placeholder = @"";
+        cell.textField.text = @"";
+        cell.onTextChange = ^(NSString *text) {};
+        
+        __weak RBTextFieldServerCell *theCell = cell;
+        
+        UIColor *invalidColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
+        
+        void (^invalidate)() = ^{
+            theCell.textField.backgroundColor = invalidColor;
+            self.saveButton.enabled = NO;
+        };
+        void (^checkForValid)() = ^{
+            [self validateInfo];
+        };
+        
+        switch (section) {
+            case 0: {
+                cell.textField.text = self.name;
+                cell.textField.placeholder = NSLocalizedString(@"ServerName", nil);
+                cell.onTextChange = ^(NSString *text) {
+                    // No need to validate!
+                    self.name = text;
+                };
+                break;
+            } case 1: {
+                cell.textField.text = self.hostname;
+                cell.textField.placeholder = @"irc.freenode.net";
+                cell.onTextChange = ^(NSString *text) {
+                    // validate (how do?)
+                    self.hostname = text;
+                };
+                break;
+            } case 2: {
+                cell.textField.text = self.port;
+                cell.textField.placeholder = @"6667";
+                cell.onTextChange = ^(NSString *text) {
+                    // validate (must be an unsigned number less than 65536)
+                    self.port = [NSString stringWithFormat:@"%ld", (long)text.integerValue];
+                    if (text.integerValue > 65535 || text.integerValue < 1) {
+                        checkForValid();
+                    } else {
+                        invalidate();
+                    }
+                };
+                break;
+            } case 4: {
+                cell.textField.text = self.nick;
+                cell.textField.placeholder = NSLocalizedString(@"username", nil);
+                cell.onTextChange = ^(NSString *text) {
+                    // validate (characters must be between 0x21 and 0x7F, inclusive)
+                    self.nick = text;
+                    if (!text.hasContent) {
+                        invalidate();
+                        return;
+                    }
+                    NSCharacterSet *set = [NSCharacterSet characterSetWithRange:NSMakeRange(0x21, 0x7F - 0x21)];
+                    if (![[text stringByTrimmingCharactersInSet:set] hasContent]) {
+                        checkForValid();
+                    } else {
+                        invalidate();
+                    }
+                };
+                break;
+            } case 5: {
+                cell.textField.text = self.realname;
+                cell.textField.placeholder = NSLocalizedString(@"realname", nil);
+                cell.onTextChange = ^(NSString *text) {
+                    // validate (characters must be between 0x21 and 0x7F, inclusive)
+                    self.realname = text;
+                    NSCharacterSet *set = [NSCharacterSet characterSetWithRange:NSMakeRange(0x21, 0x7F - 0x21)];
+                    if (![[text stringByTrimmingCharactersInSet:set] hasContent]) {
+                        checkForValid();
+                    } else {
+                        invalidate();
+                    }
+                };
+                break;
+            } case 6: {
+                cell.textField.text = self.password;
+                cell.textField.placeholder = NSLocalizedString(@"server password", nil);
+                cell.onTextChange = ^(NSString *text) {
+                    // validate (characters must be between 0x21 and 0x7F, inclusive)
+                    self.password = text;
+                    NSCharacterSet *set = [NSCharacterSet characterSetWithRange:NSMakeRange(0x21, 0x7F - 0x21)];
+                    if (![[text stringByTrimmingCharactersInSet:set] hasContent]) {
+                        checkForValid();
+                    } else {
+                        invalidate();
+                    }
+                };
+                break;
+            } default:
+                break;
+        }
+        
+        return cell;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.view layoutIfNeeded];
-    } completion:nil];
+    UITableViewCell *cell = nil;
+    for (UITableViewCell *c in tableView.visibleCells) {
+        if ([[tableView indexPathForCell:c] isEqual:indexPath]) {
+            cell = c;
+            break;
+        }
+    }
+    
+    if (indexPath.section == 3) {
+        RBSwitchCell *sw = (RBSwitchCell *)cell;
+        sw.theSwitch.on = !sw.theSwitch.on;
+    } else {
+        RBTextFieldServerCell *tf = (RBTextFieldServerCell *)cell;
+        [tf.textField becomeFirstResponder];
+    }
 }
 
 @end

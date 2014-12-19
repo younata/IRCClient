@@ -13,4 +13,6 @@
 @property (nonatomic, weak) id data;
 @property (nonatomic, strong) UITextField *textField;
 
+@property (nonatomic, strong) void (^onTextChange)(NSString *);
+
 @end

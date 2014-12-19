@@ -15,12 +15,13 @@ describe(@"RBServerEditorViewController", ^{
         SEL act = [bbi action];
         id target = [bbi target];
         [target performSelector:act withObject:bbi];
-
     };
 
     beforeEach(^{
         subject = [[RBServerEditorViewController alloc] init];
         server = nice_fake_for([RBIRCServer class]);
+        server.writeStream = nice_fake_for([NSOutputStream class]);
+        server.readStream = nice_fake_for([NSInputStream class]);
         subject.server = server;
         
         spy_on(subject);
@@ -28,14 +29,13 @@ describe(@"RBServerEditorViewController", ^{
     
     it(@"should name things correctly", ^{
         [subject view];
-        [subject.cancelButton title] should equal(@"Cancel");
+        subject.cancelButton.title should equal(@"Cancel");
     });
     
-    it(@"should always enable servername, nick, and connectOnStartup", ^{
+    it(@"should be invalid", ^{
         [subject view];
-        subject.serverName.enabled should be_truthy;
-        subject.serverName.enabled should be_truthy;
-        subject.serverConnectOnStartup.enabled should be_truthy;
+        subject.validateInfo should be_falsy;
+        subject.saveButton.enabled should be_falsy;
     });
     
     it(@"should do nothing on cancel", ^{
@@ -76,11 +76,6 @@ describe(@"RBServerEditorViewController", ^{
         });
         
         it(@"should enable everything", ^{
-            subject.serverHostname.enabled should be_truthy;
-            subject.serverPort.enabled should be_truthy;
-            subject.serverSSL.enabled should be_truthy;
-            subject.serverRealName.enabled should be_truthy;
-            subject.serverPassword.enabled should be_truthy;
             [subject.saveButton title] should equal(@"Connect");
         });
         
@@ -92,6 +87,8 @@ describe(@"RBServerEditorViewController", ^{
         
         it(@"should connect on save", ^{
             server stub_method("nick").and_return(@"testusername");
+            subject.server = subject.server;
+            subject.saveButton.enabled = true;
             sendTarget(subject.saveButton);
             subject should have_received("save");
             server should have_received("connect");

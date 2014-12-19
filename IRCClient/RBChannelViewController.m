@@ -307,7 +307,6 @@ static NSString *CellIdentifier = @"Cell";
 -(CGFloat)getKeyboardHeight:(NSNotification *)notification
 {
     NSDictionary* keyboardInfo = [notification userInfo];
-    NSLog(@"%@", keyboardInfo);
     NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
     CGFloat keyboardHeight;

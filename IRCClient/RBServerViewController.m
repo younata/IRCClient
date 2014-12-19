@@ -209,9 +209,9 @@ static NSString *textFieldCell = @"textFieldCell";
 -(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *disconnect = NSLocalizedString(@"Disconnect", nil);
-    NSString *part = NSLocalizedString(@"Part", nil);
     if (indexPath.row == 0)
         return disconnect;
+    NSString *part = NSLocalizedString(@"Part", nil);
     RBIRCServer *server = self.servers[indexPath.section];
     RBIRCChannel *channel = server[server.sortedChannelKeys[indexPath.row]];
     return channel.isChannel ? part : NSLocalizedString(@"Delete", nil);
@@ -282,7 +282,7 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(RBServerEditorViewController *)editorViewControllerWithOptions:(NSDictionary *)options
 {
-    RBServerEditorViewController *editor = [[RBServerEditorViewController alloc] init];
+    RBServerEditorViewController *editor = [[RBServerEditorViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
     [editor view];
     
@@ -293,32 +293,25 @@ static NSString *textFieldCell = @"textFieldCell";
     if (server) {
         [editor setServer:server];
         
-        editor.serverNick.text = server.nick;
-        editor.serverPassword.text = server.password;
-        editor.serverPort.text = server.port;
-        editor.serverHostname.text = server.hostname;
-        editor.serverName.text = server.serverName;
-        editor.serverSSL.on = server.useSSL;
-        
         if (![self.servers containsObject:server]) {
             [self.servers addObject:server];
         }
     }
     if (options[@"username"]) {
-        editor.serverNick.text = options[@"username"];
+        editor.nick = options[@"username"];
     }
     if (options[@"password"]) {
-        editor.serverPassword.text = options[@"password"];
+        editor.password = options[@"password"];
     }
     if (options[@"port"]) {
-        editor.serverPort.text = options[@"port"];
+        editor.port = options[@"port"];
     }
     if (options[@"hostname"]) {
-        editor.serverHostname.text = options[@"hostname"];
-        editor.serverName.placeholder = options[@"hostname"];
+        editor.hostname = options[@"hostname"];
+        editor.name = options[@"hostname"];
     }
     if (options[@"ssl"]) {
-        editor.serverSSL.on = [options[@"ssl"] boolValue];
+        editor.ssl = [options[@"ssl"] boolValue];
     }
     
     __weak RBServerViewController *theSelf = self;

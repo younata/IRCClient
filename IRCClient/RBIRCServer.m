@@ -556,13 +556,7 @@
                         [self.incompleteMessages deleteCharactersInRange:[self.incompleteMessages rangeOfString:str]];
                         [self receivedString:str];
                     }
-                } else {
-                    //printf("%s\n", buffer);
                 }
-            } else if (numBytesRead < 0) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [self.readStream streamError]}];
-                });
             }
             break;
         }

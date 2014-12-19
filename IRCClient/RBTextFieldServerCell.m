@@ -9,6 +9,10 @@
 #import "RBTextFieldServerCell.h"
 #import "UIView+initWithSuperview.h"
 
+@interface RBTextFieldServerCell () <UITextFieldDelegate>
+
+@end
+
 @implementation RBTextFieldServerCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -20,7 +24,8 @@
         self.textField = [[UITextField alloc] initForAutoLayoutWithSuperview:self.contentView];
         self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         [self.textField autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 1 * self.indentationWidth, 0, 0)];
-        [self.contentView addSubview:self.textField];
+        
+        self.textField.delegate = self;
     }
     return self;
 }
@@ -28,6 +33,15 @@
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"TextFieldServerCell with data '%@' and textfield '%@'", self.data, self.textField];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *txt = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    self.onTextChange(txt);
+    return true;
 }
 
 @end
