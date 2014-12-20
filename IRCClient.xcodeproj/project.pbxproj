@@ -89,6 +89,10 @@
 		895E588819533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */; };
 		895E589219567A7C003A56BB /* RBServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E589119567A7C003A56BB /* RBServerCell.m */; };
 		895E589319567A7C003A56BB /* RBServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 895E589119567A7C003A56BB /* RBServerCell.m */; };
+		896191BE1A4558D900AE7B13 /* reveal-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */; };
+		896191BF1A4558D900AE7B13 /* reveal-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */; };
+		896191C11A4559E300AE7B13 /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191C01A4559E300AE7B13 /* icon@3x.png */; };
+		896191C21A4559E300AE7B13 /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191C01A4559E300AE7B13 /* icon@3x.png */; };
 		8967DA0C1A426210000424F4 /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */; };
 		8967DA0D1A426210000424F4 /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
@@ -252,6 +256,8 @@
 		895E588619533A32003A56BB /* UINavigationBar+swipeToHide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+swipeToHide.m"; path = "UINavigationBar/UINavigationBar+swipeToHide.m"; sourceTree = "<group>"; };
 		895E589019567A7C003A56BB /* RBServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerCell.h; sourceTree = "<group>"; };
 		895E589119567A7C003A56BB /* RBServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerCell.m; sourceTree = "<group>"; };
+		896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@3x.png"; sourceTree = "<group>"; };
+		896191C01A4559E300AE7B13 /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = SOURCE_ROOT; };
 		8967DA0A1A426210000424F4 /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
 		8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
@@ -425,6 +431,7 @@
 				89E812BE18BA1B6A00616600 /* icon-iPad@2x.png */,
 				89E812BD18BA1B6A00616600 /* icon-iPad.png */,
 				89E812BF18BA1B6A00616600 /* icon@2x.png */,
+				896191C01A4559E300AE7B13 /* icon@3x.png */,
 				8906F1D118867BEE00042A13 /* Supporting Files */,
 			);
 			path = IRCClient;
@@ -452,6 +459,7 @@
 				8906F211188799C000042A13 /* SWRevealViewController.m */,
 				89C46E4818960C96006068DC /* reveal-icon.png */,
 				89C46E4918960C96006068DC /* reveal-icon@2x.png */,
+				896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */,
 			);
 			path = SWRevealViewController;
 			sourceTree = "<group>";
@@ -850,6 +858,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				89E812BC18B98A8000616600 /* help.json in Resources */,
+				896191BE1A4558D900AE7B13 /* reveal-icon@3x.png in Resources */,
+				896191C11A4559E300AE7B13 /* icon@3x.png in Resources */,
 				89E812C218BA1B6A00616600 /* icon-iPad@2x.png in Resources */,
 				89C46E4B18960C96006068DC /* reveal-icon@2x.png in Resources */,
 				898132F718A99EDF004AEBE9 /* Localizable.strings in Resources */,
@@ -877,6 +887,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				89E812BB18B98A6200616600 /* help.json in Resources */,
+				896191BF1A4558D900AE7B13 /* reveal-icon@3x.png in Resources */,
+				896191C21A4559E300AE7B13 /* icon@3x.png in Resources */,
 				898132F818A99EDF004AEBE9 /* Localizable.strings in Resources */,
 				891B01EB189650DA00B2D848 /* InfoPlist.strings in Resources */,
 				89B56B9E1932C0570079D259 /* Localizable.stringsdict in Resources */,
