@@ -201,20 +201,27 @@
     }
     
     NSString *str = nil;
-        
+    NSMutableDictionary *mattr = [[self defaultAttributes] mutableCopy];
+
     switch (self.command) {
-        case IRCMessageTypeJoin:
+        case IRCMessageTypeJoin: {
             str = [NSString stringWithFormat:@"%@ joined", self.from];
-            self.attributedMessage = [[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]];
+            mattr[NSForegroundColorAttributeName] = [UIColor greenColor];
+            NSMutableAttributedString *astr = [[NSMutableAttributedString alloc] initWithString:@"--> " attributes:mattr];
+            [astr appendAttributedString:[[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]]];
+            self.attributedMessage = [[NSAttributedString alloc] initWithAttributedString:astr];
             [self colorNick];
             break;
-        case IRCMessageTypePart:
+        } case IRCMessageTypePart: {
             self.message = trailing;
             str = [NSString stringWithFormat:@"%@ left [%@]", self.from, trailing];
-            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]]];
+            mattr[NSForegroundColorAttributeName] = [UIColor redColor];
+            NSMutableAttributedString *astr = [[NSMutableAttributedString alloc] initWithString:@"<-- " attributes:mattr];
+            [astr appendAttributedString:[[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]]];
+            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithAttributedString:astr]];
             [self colorNick];
             break;
-        case IRCMessageTypeNotice:
+        } case IRCMessageTypeNotice:
             self.message = trailing;
             [self parseCTCPResponse];
             [self loadImages];
@@ -257,13 +264,17 @@
             }
             break;
         }
-        case IRCMessageTypeKick:
+        case IRCMessageTypeKick: {
             self.extra = @{params[1]: trailing};
             self.message = [NSString stringWithFormat:@"%@ :%@", params[1], trailing];
             str = [NSString stringWithFormat:@"%@ was kicked from %@ by %@ [%@]", params[1], self.targets[0], self.from, trailing];
-            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:str attributes:self.defaultAttributes]];
+            
+            mattr[NSForegroundColorAttributeName] = [UIColor redColor];
+            NSMutableAttributedString *astr = [[NSMutableAttributedString alloc] initWithString:@"<-- " attributes:mattr];
+            [astr appendAttributedString:[[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]]];
+            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithAttributedString:astr]];
             break;
-        case IRCMessageTypeTopic:
+        } case IRCMessageTypeTopic:
             self.message = [params componentsJoinedByString:@" "];
             self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:self.message attributes:self.defaultAttributes]];
             break;
@@ -273,12 +284,15 @@
             self.message = [NSString stringWithFormat:@"%@ is now known as %@", self.from, trailing]; // hopcount is server...
             self.extra = trailing;
             break;
-        case IRCMessageTypeQuit:
+        case IRCMessageTypeQuit: {
             self.message = originalParamsString;
             str = [NSString stringWithFormat:@"%@ has quit [%@]", self.from, self.message];
-            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithString:str attributes:self.defaultAttributes]];
+            mattr[NSForegroundColorAttributeName] = [UIColor redColor];
+            NSMutableAttributedString *astr = [[NSMutableAttributedString alloc] initWithString:@"<-- " attributes:mattr];
+            [astr appendAttributedString:[[NSAttributedString alloc] initWithString:str attributes:[self defaultAttributes]]];
+            self.attributedMessage = [self parseStylizedMessages:[[NSAttributedString alloc] initWithAttributedString:astr]];
             break;
-        case IRCMessageTypePing:
+        } case IRCMessageTypePing:
             self.message = trailing;
             break;
         case IRCMessageTypeNames:

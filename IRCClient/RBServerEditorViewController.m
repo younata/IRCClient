@@ -216,6 +216,7 @@
             self.saveButton.enabled = NO;
         };
         void (^checkForValid)() = ^{
+            theCell.textField.backgroundColor = [UIColor clearColor];
             [self validateInfo];
         };
         

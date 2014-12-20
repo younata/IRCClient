@@ -31,7 +31,8 @@
 
 @end
 
-static NSString *CellIdentifier = @"Cell";
+static NSString *tableCell = @"tableViewCell";
+static NSString *serverCell = @"serverCell";
 static NSString *textFieldCell = @"textFieldCell";
 
 @implementation RBServerViewController
@@ -53,7 +54,8 @@ static NSString *textFieldCell = @"textFieldCell";
     
     self.navigationController.navigationBar.tintColor = [RBColorScheme secondaryColor];
     
-    [self.tableView registerClass:[RBServerCell class] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:tableCell];
+    [self.tableView registerClass:[RBServerCell class] forCellReuseIdentifier:serverCell];
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
         
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
@@ -141,8 +143,10 @@ static NSString *textFieldCell = @"textFieldCell";
     
     if (server != nil && row == channels.count) {
         cell = [tableView dequeueReusableCellWithIdentifier:textFieldCell forIndexPath:indexPath];
+    } else if (server != nil && row == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:serverCell forIndexPath:indexPath];
     } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell = [tableView dequeueReusableCellWithIdentifier:tableCell forIndexPath:indexPath];
     }
     
     if (!server) {

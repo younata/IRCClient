@@ -34,6 +34,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    [UIBarButtonItem appearance].tintColor = [RBColorScheme primaryColor];
+    
     self.taskIdentifier = UIBackgroundTaskInvalid;
     
     [self checkForExistingScreenAndInitializeIfPresent];

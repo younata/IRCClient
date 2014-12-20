@@ -105,6 +105,7 @@ static NSString *CellIdentifier = @"Cell";
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerClass:[RBTextViewCell class] forCellReuseIdentifier:CellIdentifier];
     
     BOOL isMainWindow = self.revealController != nil;
