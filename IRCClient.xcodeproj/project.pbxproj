@@ -582,6 +582,41 @@
 			name = UINavigationBar;
 			sourceTree = "<group>";
 		};
+		896191C31A455D6700AE7B13 /* Chennal View */ = {
+			isa = PBXGroup;
+			children = (
+				8906F2031887562600042A13 /* RBChannelViewController.h */,
+				8906F2041887562600042A13 /* RBChannelViewController.m */,
+				89D4C45A19108EB900E8E4C7 /* RBTextViewCell.h */,
+				89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */,
+			);
+			name = "Chennal View";
+			sourceTree = "<group>";
+		};
+		896191C41A455D7400AE7B13 /* Server Editor */ = {
+			isa = PBXGroup;
+			children = (
+				8967DA0A1A426210000424F4 /* RBServerEditorViewController.h */,
+				8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */,
+				89709F761A433745006E0327 /* RBSwitchCell.h */,
+				89709F771A433745006E0327 /* RBSwitchCell.m */,
+			);
+			name = "Server Editor";
+			sourceTree = "<group>";
+		};
+		896191C51A455D8000AE7B13 /* Server List */ = {
+			isa = PBXGroup;
+			children = (
+				89C46E45189600A9006068DC /* RBTextFieldServerCell.h */,
+				89C46E46189600A9006068DC /* RBTextFieldServerCell.m */,
+				895E589019567A7C003A56BB /* RBServerCell.h */,
+				895E589119567A7C003A56BB /* RBServerCell.m */,
+				896BD17C1895D30100EC91EA /* RBServerViewController.h */,
+				896BD17D1895D30100EC91EA /* RBServerViewController.m */,
+			);
+			name = "Server List";
+			sourceTree = "<group>";
+		};
 		896E474E192CCABC00024FF5 /* NSAttributedString */ = {
 			isa = PBXGroup;
 			children = (
@@ -715,20 +750,9 @@
 		89C46E441895F8A2006068DC /* Views and Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				89C46E45189600A9006068DC /* RBTextFieldServerCell.h */,
-				89C46E46189600A9006068DC /* RBTextFieldServerCell.m */,
-				895E589019567A7C003A56BB /* RBServerCell.h */,
-				895E589119567A7C003A56BB /* RBServerCell.m */,
-				896BD17C1895D30100EC91EA /* RBServerViewController.h */,
-				896BD17D1895D30100EC91EA /* RBServerViewController.m */,
-				8967DA0A1A426210000424F4 /* RBServerEditorViewController.h */,
-				8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */,
-				89709F761A433745006E0327 /* RBSwitchCell.h */,
-				89709F771A433745006E0327 /* RBSwitchCell.m */,
-				8906F2031887562600042A13 /* RBChannelViewController.h */,
-				8906F2041887562600042A13 /* RBChannelViewController.m */,
-				89D4C45A19108EB900E8E4C7 /* RBTextViewCell.h */,
-				89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */,
+				896191C51A455D8000AE7B13 /* Server List */,
+				896191C41A455D7400AE7B13 /* Server Editor */,
+				896191C31A455D6700AE7B13 /* Chennal View */,
 				89D4B66318CFFC3600891116 /* RBNameViewController.h */,
 				89D4B66418CFFC3600891116 /* RBNameViewController.m */,
 				898132D718A787E9004AEBE9 /* Config */,
