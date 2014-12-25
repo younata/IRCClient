@@ -11,4 +11,5 @@
     #import "PureLayout.h"
     #import "NSString+isNilOrEmpty.h"
     #import "UIView+initWithSuperview.h"
+    #import "RBDataManager.h"
 #endif

@@ -46,7 +46,7 @@ describe(@"RBServerEditorViewController", ^{
     });
     
     it(@"should write any changes to standard user defaults", ^{
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers]; // FIXME
+        [[RBDataManager sharedInstance] removeEverything];
         server = [[RBIRCServer alloc] initWithHostname:@"localhost"
                                                    ssl:YES
                                                   port:@"6697"
@@ -56,11 +56,7 @@ describe(@"RBServerEditorViewController", ^{
         subject.server = server;
         [subject view];
         [subject save];
-        NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
-        NSArray *a = [NSKeyedUnarchiver unarchiveObjectWithData:d];
-        a should_not be_empty;
-        RBIRCServer *s = a.firstObject;
-        [server isEqual:s] should be_truthy;
+        [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"].name should equal(server.serverName);
     });
     
     describe(@"when connecting to a new server", ^{

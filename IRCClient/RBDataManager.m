@@ -148,6 +148,23 @@ UIColor *randomColor()
     return [self entities:@"Server" matchingPredicate:[NSPredicate predicateWithValue:YES]];
 }
 
+- (void)removeEverything
+{
+    NSManagedObjectContext *ctx = [self managedObjectContext];
+    for (Server *server in self.servers) {
+        for (Channel *channel in server.channels) {
+            [server removeChannelsObject:channel];
+            [ctx deleteObject:channel];
+        }
+        for (Nick *nick in server.nicks) {
+            [server removeNicksObject:nick];
+            [ctx deleteObject:nick];
+        }
+        [ctx deleteObject:server];
+    }
+    [ctx save:nil];
+}
+
 - (NSManagedObject *)managedObject:(NSString *)objectName withProperty:(id)property propertyName:(NSString *)propertyName
 {
     NSArray *ret = [self entities:objectName matchingPredicate:[NSPredicate predicateWithFormat:@"%@ == %@", propertyName, property]];

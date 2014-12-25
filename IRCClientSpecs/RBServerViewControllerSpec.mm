@@ -33,6 +33,11 @@ describe(@"RBServerViewController", ^{
         
         spy_on(subject.tableView);
         spy_on(subject);
+        [[RBDataManager sharedInstance] removeEverything];
+    });
+    
+    afterEach(^{
+        [[RBDataManager sharedInstance] removeEverything];
     });
     
     it(@"should have 1 default cell, for a new server.", ^{
@@ -136,7 +141,6 @@ describe(@"RBServerViewController", ^{
         
         describe(@"joining", ^{
             static NSString *channelName = @"#foo";
-            static NSString *userName = @"foo";
             
             void (^joinChannel)(NSString *) = ^(NSString *channel){
                 RBTextFieldServerCell *cell;
@@ -161,13 +165,16 @@ describe(@"RBServerViewController", ^{
                 joinChannel(channelName);
                 
                 void (^savedChannelName)(NSString *) = ^(NSString *name) {
-                    NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
-                    d should_not be_nil;
-                    NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+                    NSArray *servers = [[RBDataManager sharedInstance] servers];
                     servers.count should be_gte(1);
                     BOOL actuallyDidSave = NO;
-                    for (RBIRCServer *s in servers) {
-                        actuallyDidSave = serverContainsChannel(s, name);
+                    for (Server *s in servers) {
+                        for (Channel *channel in s.channels) {
+                            if ([channel.name isEqualToString:name]) {
+                                actuallyDidSave = YES;
+                                break;
+                            }
+                        }
                         if (actuallyDidSave)
                             break;
                     }
@@ -187,10 +194,9 @@ describe(@"RBServerViewController", ^{
             RBIRCChannel *channel = [[RBIRCChannel alloc] initWithName:chName];
             [server.channels setObject:channel forKey:chName];
             
-            NSMutableArray *arr = [@[server] mutableCopy];
-            NSData *d = [NSKeyedArchiver archivedDataWithRootObject:arr];
-            [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
-            subject.servers = arr;
+            [[RBDataManager sharedInstance] serverMatchingIRCServer:server];
+            
+            subject.servers = [@[server] mutableCopy];
             [subject.tableView reloadData];
             NSIndexPath *indexPath = nil;
             for (int i = 1; i < [subject tableView:subject.tableView numberOfRowsInSection:0]; i++) {
@@ -219,13 +225,16 @@ describe(@"RBServerViewController", ^{
         });
         
         it(@"should remove the channel from the internal database", ^{
-            NSData *d = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
-            d should_not be_nil;
-            NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:d];
+            NSArray *servers = [[RBDataManager sharedInstance] servers];
             servers.count should be_gte(1);
             BOOL actuallyDidSave = YES;
-            for (RBIRCServer *s in servers) {
-                actuallyDidSave = serverContainsChannel(s, chName);
+            for (Server *s in servers) {
+                for (Channel *channel in s.channels) {
+                    if ([channel.name isEqualToString:chName]) {
+                        actuallyDidSave = YES;
+                        break;
+                    }
+                }
                 if (actuallyDidSave)
                     break;
             }

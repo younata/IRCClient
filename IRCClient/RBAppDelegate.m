@@ -87,7 +87,7 @@
         for (Server *server in servers) {
             [serversList addObject:[[RBIRCServer alloc] initFromServer:server]];
         }
-        svc.servers = [NSArray arrayWithArray:serversList];
+        svc.servers = serversList;
     }
 }
 

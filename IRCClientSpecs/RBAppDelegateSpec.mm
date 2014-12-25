@@ -20,12 +20,12 @@ describe(@"RBAppDelegate", ^{
     });
     
     afterEach(^{
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers]; // FIXME
+        [[RBDataManager sharedInstance] removeEverything];
     });
     
     describe(@"Initial startup", ^{
         beforeEach(^{
-            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers]; // FIXME
+            [[RBDataManager sharedInstance] removeEverything];
             [subject application:nil didFinishLaunchingWithOptions:nil];
         });
         
@@ -42,12 +42,27 @@ describe(@"RBAppDelegate", ^{
         beforeEach(^{
             server = [[RBIRCServer alloc] initWithHostname:@"test" ssl:YES port:@"6697" nick:@"test" realname:@"test" password:nil];
             server.serverName = @"test";
+        });
+        
+        it(@"should convert from NSUserDefaults persistance to core data persistence", ^{
             NSData *d = [NSKeyedArchiver archivedDataWithRootObject:@[server]];
-            [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+            NSString *key = @"RBConfigKeyServers";
+            [[NSUserDefaults standardUserDefaults] setObject:d forKey:key];
             [subject application:nil didFinishLaunchingWithOptions:nil];
+            
+            [[NSUserDefaults standardUserDefaults] objectForKey:key] should be_nil;
+            
+            [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"].name should equal(server.serverName);
+            
+            SWRevealViewController *vc = (SWRevealViewController *)subject.window.rootViewController;
+            RBServerViewController *ser = (RBServerViewController *)[(UINavigationController *)vc.rearViewController topViewController];
+            ser.servers should_not be_empty;
         });
         
         it(@"should launch servers", ^{
+            [[RBDataManager sharedInstance] serverMatchingIRCServer:server];
+            [subject application:nil didFinishLaunchingWithOptions:nil];
+
             SWRevealViewController *vc = (SWRevealViewController *)subject.window.rootViewController;
             RBServerViewController *ser = (RBServerViewController *)[(UINavigationController *)vc.rearViewController topViewController];
             ser.servers should_not be_empty;

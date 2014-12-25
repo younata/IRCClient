@@ -247,7 +247,7 @@ describe(@"RBIRCServer", ^{
             NSString *str = [NSString stringWithFormat:@"PING %f", firstTimeStamp];
             [subject receivedString:createCTCPMessage(str)];
             subject should have_received("sendCommand:").with(createCTCPResponse(str));
-            RBIRCMessage *msg = [[subject[@"ik"] log] lastObject];
+            RBIRCMessage *msg = [[(RBIRCChannel *)subject[@"ik"] log] lastObject];
             [msg.attributedMessage.string hasPrefix:@"CTCP Ping reply: "] should be_truthy;
             [msg.attributedMessage.string hasSuffix:@"seconds"] should be_truthy;
             NSInteger loc =[@"CTCP Ping reply: " length];

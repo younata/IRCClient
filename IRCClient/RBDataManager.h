@@ -13,6 +13,7 @@
 #import "Channel.h"
 
 @class RBIRCServer;
+@class RBIRCChannel;
 
 @interface RBDataManager : NSObject
 
@@ -26,5 +27,7 @@
 - (Nick *)nick:(NSString *)name onServer:(Server *)server; // creates or returns existing...
 
 - (NSArray *)servers;
+
+- (void)removeEverything; // Testing.
 
 @end
