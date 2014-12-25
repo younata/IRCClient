@@ -10,6 +10,9 @@
 
 #import "Nick.h"
 #import "Server.h"
+#import "Channel.h"
+
+@class RBIRCServer;
 
 @interface RBDataManager : NSObject
 
@@ -17,6 +20,9 @@
 
 - (UIColor *)colorForNick:(NSString *)nick onServer:(NSString *)serverName; // creates or returns existing...
 - (Server *)serverForServerName:(NSString *)serverName; // creates or returns existing...
+- (Server *)serverWithProperty:(id)property propertyName:(NSString *)propertyName;
+- (Server *)serverMatchingIRCServer:(RBIRCServer *)server;
+- (Channel *)channelMatchingIRCChannel:(RBIRCChannel *)ircChannel;
 - (Nick *)nick:(NSString *)name onServer:(Server *)server; // creates or returns existing...
 
 - (NSArray *)servers;

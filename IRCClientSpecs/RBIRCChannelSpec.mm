@@ -14,15 +14,10 @@ describe(@"RBIRCChannel", ^{
         subject = [[RBIRCChannel alloc] initWithName:name];
     });
     
-    it(@"should default to connect on startup", ^{
-        subject.connectOnStartup should be_truthy;
-    });
-    
     it(@"should handle loading from NSUserDefaults correctly", ^{
         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:subject];
         RBIRCChannel *c = [NSKeyedUnarchiver unarchiveObjectWithData:d];
         [c isEqual:subject] should be_truthy;
-        c.connectOnStartup should equal(subject.connectOnStartup);
     });
     
     describe(@"unread messages", ^{

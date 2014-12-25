@@ -16,6 +16,8 @@
 #import "RBTextFieldServerCell.h"
 #import "RBSwitchCell.h"
 
+#import "RBDataManager.h"
+
 @implementation RBServerEditorViewController
 
 - (void)setServer:(RBIRCServer *)server
@@ -83,13 +85,6 @@
     if (self.saveButton.enabled == NO) {
         return;
     }
-    NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers]];
-    NSMutableArray *marr = [[NSMutableArray alloc] init];
-    for (RBIRCServer *s in arr) {
-        if (![self.server isEqual:s]) {
-            [marr addObject:s];
-        }
-    }
     
     if (![self.realname hasContent]) {
         self.realname = self.nick;
@@ -119,11 +114,9 @@
         [self.server connect];
     }
     
-    [[RBScriptingService sharedInstance] serverEditor:(RBServerEditorViewController*)self didMakeChangesToServer:self.server];
+    [[RBDataManager sharedInstance] serverMatchingIRCServer:self.server];
     
-    [marr addObject:self.server];
-    NSData *d = [NSKeyedArchiver archivedDataWithRootObject:marr];
-    [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+    [[RBScriptingService sharedInstance] serverEditor:(RBServerEditorViewController*)self didMakeChangesToServer:self.server];
 
     [self dismiss];
 }

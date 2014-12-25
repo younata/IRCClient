@@ -11,6 +11,7 @@
 #import <CFNetwork/CFNetwork.h>
 
 @class RBIRCMessage;
+@class Server;
 
 #define RBIRCServerLog @"ServerLog"
 
@@ -41,8 +42,7 @@
 @property (nonatomic) BOOL useSSL;
 @property (nonatomic, readonly) BOOL connected;
 
-@property (nonatomic) BOOL connectOnStartup;
-
+-(instancetype)initFromServer:(Server *)server;
 -(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname password:(NSString *)password;
 -(void)sendCommand:(NSString *)command;
 

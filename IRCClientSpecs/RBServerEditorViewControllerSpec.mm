@@ -46,7 +46,7 @@ describe(@"RBServerEditorViewController", ^{
     });
     
     it(@"should write any changes to standard user defaults", ^{
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers]; // FIXME
         server = [[RBIRCServer alloc] initWithHostname:@"localhost"
                                                    ssl:YES
                                                   port:@"6697"

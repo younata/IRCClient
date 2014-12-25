@@ -22,6 +22,8 @@
 #import "RBColorScheme.h"
 #import "RBScriptingService.h"
 
+#import "RBDataManager.h"
+
 @interface RBServerViewController ()
 {
     RBIRCChannel *selectedChannel;
@@ -89,7 +91,7 @@ static NSString *textFieldCell = @"textFieldCell";
     [super viewWillAppear:animated];
     
     for (RBIRCServer *server in self.servers) {
-        if ([server connectOnStartup] && ![server connected] && [server.nick hasContent]) {
+        if (![server connected] && [server.nick hasContent]) {
             [server reconnect];
         }
     }
@@ -97,8 +99,9 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(void)saveServerData
 {
-    NSData *d = [NSKeyedArchiver archivedDataWithRootObject:self.servers];
-    [[NSUserDefaults standardUserDefaults] setObject:d forKey:RBConfigServers];
+    for (RBIRCServer *server in self.servers) {
+        [[RBDataManager sharedInstance] serverMatchingIRCServer:server];
+    }
 }
 
 -(void)dealloc
@@ -237,6 +240,8 @@ static NSString *textFieldCell = @"textFieldCell";
         if ([server connected]) {
             [server quit];
         }
+        Server *theServer = [[RBDataManager sharedInstance] serverMatchingIRCServer:server];
+        [[theServer managedObjectContext] deleteObject:theServer];
         [self.servers removeObject:server];
     } else {
         NSString *channelName = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];

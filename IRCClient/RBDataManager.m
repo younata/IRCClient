@@ -8,6 +8,9 @@
 
 #import "RBDataManager.h"
 
+#import "RBIRCServer.h"
+#import "RBIRCChannel.h"
+
 @interface RBDataManager ()
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -31,7 +34,7 @@ UIColor *randomColor()
                         [UIColor purpleColor],
                         [UIColor brownColor]
                         ];
-    return colors[arc4random_uniform(colors.count)];
+    return colors[arc4random_uniform((int)colors.count)];
 }
 
 @implementation RBDataManager
@@ -70,6 +73,57 @@ UIColor *randomColor()
     return server;
 }
 
+- (Server *)serverWithProperty:(id)property propertyName:(NSString *)propertyName
+{
+    return (Server *)[self managedObject:@"Server" withProperty:property propertyName:propertyName];
+}
+
+- (Server *)serverMatchingIRCServer:(RBIRCServer *)ircServer
+{
+    Server *server = [self serverWithProperty:ircServer.hostname propertyName:@"host"];
+    server.name = ircServer.hostname;
+    server.nick = ircServer.nick;
+    server.port = ircServer.port;
+    server.realname = ircServer.realname;
+    server.password = ircServer.password;
+    server.ssl = @(ircServer.useSSL);
+    NSMutableSet *existingChannels = [server.channels mutableCopy];
+    NSMutableSet *newChannels = [[NSMutableSet alloc] initWithCapacity:ircServer.channels.allValues.count];
+    for (RBIRCChannel *channel in ircServer.channels.allValues) {
+        Channel *theChannel = [self channelMatchingIRCChannel:channel];
+        [newChannels addObject:theChannel];
+    }
+    NSMutableSet *toAdd = [newChannels mutableCopy];
+    [toAdd minusSet:existingChannels]; // Removes every channel in toAdd that's wasn't in server previously
+    [existingChannels minusSet:newChannels]; // removes every channel in existingChannels that isn't currently in ircServer
+    [server removeChannels:existingChannels]; // removes from the Server object every channel that isn't in the ircServer object
+    [server addChannels:toAdd]; // adds to the Server object every new channel.
+    for (Channel *channel in existingChannels) {
+        [[channel managedObjectContext] deleteObject:channel];
+    }
+    
+    return server;
+}
+
+- (Channel *)channelMatchingIRCChannel:(RBIRCChannel *)ircChannel
+{
+    Server *server = [self serverMatchingIRCServer:ircChannel.server];
+    NSArray *channels = [self entities:@"Channel" matchingPredicate:[NSPredicate predicateWithFormat:@"name == %@ AND server == %@", ircChannel.name, server]];
+    
+    Channel *channel = nil;
+    
+    if (channels.count == 0) {
+        channel = [NSEntityDescription insertNewObjectForEntityForName:@"Nick" inManagedObjectContext:[self managedObjectContext]];
+        channel.server = server;
+        channel.name = ircChannel.name;
+        [channel.managedObjectContext save:nil];
+    } else {
+        channel = channels[0];
+    }
+    
+    return channel;
+}
+
 - (Nick *)nick:(NSString *)name onServer:(Server *)server
 {
     NSArray *nicks = [self entities:@"Nick" matchingPredicate:[NSPredicate predicateWithFormat:@"name == %@ AND server == %@", name, server]];
@@ -92,6 +146,23 @@ UIColor *randomColor()
 - (NSArray *)servers
 {
     return [self entities:@"Server" matchingPredicate:[NSPredicate predicateWithValue:YES]];
+}
+
+- (NSManagedObject *)managedObject:(NSString *)objectName withProperty:(id)property propertyName:(NSString *)propertyName
+{
+    NSArray *ret = [self entities:objectName matchingPredicate:[NSPredicate predicateWithFormat:@"%@ == %@", propertyName, property]];
+    
+    NSManagedObject *val = nil;
+    
+    if (ret.count == 0) {
+        val = [NSEntityDescription insertNewObjectForEntityForName:@"Server" inManagedObjectContext:[self managedObjectContext]];
+        [val setValue:property forKey:propertyName];
+        [val.managedObjectContext save:nil];
+    } else {
+        val = ret.firstObject;
+    }
+    
+    return val;
 }
 
 - (NSArray *)entities:(NSString *)entity matchingPredicate:(NSPredicate *)predicate

@@ -93,6 +93,8 @@
 		896191BF1A4558D900AE7B13 /* reveal-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */; };
 		896191C11A4559E300AE7B13 /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191C01A4559E300AE7B13 /* icon@3x.png */; };
 		896191C21A4559E300AE7B13 /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191C01A4559E300AE7B13 /* icon@3x.png */; };
+		89678DA91A4B77EB00581A24 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89678DA81A4B77EB00581A24 /* Channel.m */; };
+		89678DAA1A4B77EB00581A24 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89678DA81A4B77EB00581A24 /* Channel.m */; };
 		8967DA0C1A426210000424F4 /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */; };
 		8967DA0D1A426210000424F4 /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */; };
 		896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
@@ -258,6 +260,9 @@
 		895E589119567A7C003A56BB /* RBServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerCell.m; sourceTree = "<group>"; };
 		896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@3x.png"; sourceTree = "<group>"; };
 		896191C01A4559E300AE7B13 /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = SOURCE_ROOT; };
+		89678DA61A4B75E800581A24 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
+		89678DA71A4B77EB00581A24 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
+		89678DA81A4B77EB00581A24 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
 		8967DA0A1A426210000424F4 /* RBServerEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerEditorViewController.h; sourceTree = "<group>"; };
 		8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerEditorViewController.m; sourceTree = "<group>"; };
 		896BD17C1895D30100EC91EA /* RBServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBServerViewController.h; sourceTree = "<group>"; };
@@ -565,6 +570,8 @@
 				892D137C194FD2F500671081 /* Model.xcdatamodeld */,
 				892D1380194FD4B000671081 /* Server.h */,
 				892D1381194FD4B000671081 /* Server.m */,
+				89678DA71A4B77EB00581A24 /* Channel.h */,
+				89678DA81A4B77EB00581A24 /* Channel.m */,
 				892D1384194FD4C100671081 /* Nick.h */,
 				892D1385194FD4C100671081 /* Nick.m */,
 				892D1388194FD4F200671081 /* RBDataManager.h */,
@@ -1029,6 +1036,7 @@
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
 				89E812B818B8E78800616600 /* RBColorScheme.m in Sources */,
 				895E588719533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */,
+				89678DA91A4B77EB00581A24 /* Channel.m in Sources */,
 				8967DA0C1A426210000424F4 /* RBServerEditorViewController.m in Sources */,
 				89E812CC18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */,
@@ -1093,6 +1101,7 @@
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				892D1397195098FF00671081 /* RSBColorPicker.m in Sources */,
+				89678DAA1A4B77EB00581A24 /* Channel.m in Sources */,
 				891B01FC1896546C00B2D848 /* RBIRCMessage.m in Sources */,
 				8967DA0D1A426210000424F4 /* RBServerEditorViewController.m in Sources */,
 				89E812E018BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
@@ -1481,6 +1490,7 @@
 		892D137C194FD2F500671081 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				89678DA61A4B75E800581A24 /* Model 2.xcdatamodel */,
 				892D137D194FD2F500671081 /* Model.xcdatamodel */,
 			);
 			currentVersion = 892D137D194FD2F500671081 /* Model.xcdatamodel */;

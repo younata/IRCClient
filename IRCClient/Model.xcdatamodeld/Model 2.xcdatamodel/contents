@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Channel" representedClassName="Channel" syncable="YES">
+        <attribute name="log" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="server" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Server" syncable="YES"/>
+    </entity>
+    <entity name="Nick" representedClassName="Nick" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="server" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Server" inverseName="nicks" inverseEntity="Server" syncable="YES"/>
+    </entity>
+    <entity name="Server" representedClassName="Server" syncable="YES">
+        <attribute name="host" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nick" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="port" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="realname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ssl" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="channels" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Channel" syncable="YES"/>
+        <relationship name="nicks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Nick" inverseName="server" inverseEntity="Nick" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Nick" positionX="-18" positionY="45" width="128" height="88"/>
+        <element name="Server" positionX="-261" positionY="-9" width="128" height="178"/>
+        <element name="Channel" positionX="-126" positionY="63" width="128" height="88"/>
+    </elements>
+</model>

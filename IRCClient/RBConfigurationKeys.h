@@ -9,7 +9,6 @@
 #ifndef IRCClient_RBConfigurationKeys_h
 #define IRCClient_RBConfigurationKeys_h
 
-#define RBConfigServers @"RBConfigKeyServers"
 #define RBCTCPFinger @"RBCTCPFinger"
 #define RBCTCPVersion @"RBCTCPVersion"
 #define RBCTCPUserInfo @"RBCTCPUserInfo"

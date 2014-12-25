@@ -24,10 +24,6 @@ describe(@"RBIRCServer", ^{
         msg = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :how are you\r\n"];
     });
     
-    it(@"should default to reconnect on startup", ^{
-        subject.connectOnStartup should be_truthy;
-    });
-    
     it(@"should handle loading from NSUserDefaults correctly", ^{
         RBIRCServer *server = [[RBIRCServer alloc] initWithHostname:@"testServer" ssl:YES port:@"6697" nick:@"testnick" realname:@"testnick" password:@""];
         server.nick = @"testnick";
@@ -35,7 +31,6 @@ describe(@"RBIRCServer", ^{
         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:server];
         RBIRCServer *s = [NSKeyedUnarchiver unarchiveObjectWithData:d];
         [s isEqual:server] should be_truthy;
-        s.connectOnStartup should equal(server.connectOnStartup);
     });
     
     it(@"should handle stream events", ^{

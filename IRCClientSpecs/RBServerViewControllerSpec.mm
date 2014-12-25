@@ -28,7 +28,6 @@ describe(@"RBServerViewController", ^{
     };
 
     beforeEach(^{
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
         subject = [[RBServerViewController alloc] init];
         [subject view];
         
@@ -140,7 +139,6 @@ describe(@"RBServerViewController", ^{
             static NSString *userName = @"foo";
             
             void (^joinChannel)(NSString *) = ^(NSString *channel){
-                [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
                 RBTextFieldServerCell *cell;
                 for (UITableViewCell *c in subject.tableView.visibleCells) {
                     if (![c isKindOfClass:[RBTextFieldServerCell class]])

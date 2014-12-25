@@ -14,6 +14,8 @@
 
 #import "RBScriptingService.h"
 
+#import "Channel.h"
+
 @interface RBIRCChannel ()
 
 @property (nonatomic, strong) NSMutableArray *unreadMessages;
@@ -27,6 +29,19 @@
     return !([nick hasPrefix:@"#"] || [nick hasPrefix:@"&"]);
 }
 
+-(instancetype)initFromChannel:(Channel *)channel
+{
+    if ((self = [super init]) != nil) {
+        _name = channel.name;
+        _log = [[NSMutableArray alloc] init];
+        _names = [[NSMutableArray alloc] init];
+        self.askedForNames = YES;
+        self.unreadMessages = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
+
 -(instancetype)initWithName:(NSString *)name
 {
     if ((self = [super init]) != nil) {
@@ -34,7 +49,6 @@
         _log = [[NSMutableArray alloc] init];
         _names = [[NSMutableArray alloc] init];
         self.askedForNames = YES;
-        self.connectOnStartup = YES;
         self.unreadMessages = [[NSMutableArray alloc] init];
     }
     return self;
@@ -49,7 +63,6 @@
         
         self.server = nil;
         self.topic = nil;
-        self.connectOnStartup = [decoder decodeBoolForKey:@"connectOnStartup"];
         self.unreadMessages = [[NSMutableArray alloc] init];
     }
     return self;
@@ -58,7 +71,6 @@
 -(void)encodeWithCoder:(NSCoder *)coder
 {
     [coder encodeObject:self.name forKey:@"name"];
-    [coder encodeBool:self.connectOnStartup forKey:@"connectOnStartup"];
 }
 
 -(BOOL)isEqual:(id)object
@@ -161,7 +173,7 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"%@: connect: %@", self.name, self.connectOnStartup ? @"YES" : @"NO"];
+    return [NSString stringWithFormat:@"%@", self.name];
 }
 
 @end

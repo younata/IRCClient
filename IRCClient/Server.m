@@ -15,4 +15,11 @@
 @dynamic host;
 @dynamic nicks;
 
+@dynamic nick;
+@dynamic password;
+@dynamic port;
+@dynamic realname;
+@dynamic ssl;
+@dynamic channels;
+
 @end

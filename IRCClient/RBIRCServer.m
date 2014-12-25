@@ -15,6 +15,10 @@
 
 #import "RBScriptingService.h"
 
+#import "Server.h"
+#import "Channel.h"
+#import "RBDataManager.h"
+
 @interface RBIRCServer ()
 
 @property (nonatomic, strong) NSMutableArray *commandQueue;
@@ -32,6 +36,25 @@
 {
     if ((self = [super init])) {
         [self commonInit];
+    }
+    return self;
+}
+
+-(instancetype)initFromServer:(Server *)server
+{
+    if ((self = [super init]) != nil) {
+        self.nick = server.nick;
+        self.serverName = server.name;
+        self.hostname = server.host;
+        self.password = server.password;
+        self.port = server.port;
+        self.realname = server.realname;
+        self.useSSL = server.ssl.boolValue;
+        NSMutableDictionary *theChannels = [[NSMutableDictionary alloc] init];
+        for (Channel *channel in server.channels) {
+            theChannels[channel.name] = [[RBIRCChannel alloc] initFromChannel:channel];
+        }
+        channels = theChannels;
     }
     return self;
 }
@@ -62,7 +85,6 @@
         self.realname = [decoder decodeObjectForKey:@"realname"];
         self.password = [decoder decodeObjectForKey:@"password"];
         
-        self.connectOnStartup = [decoder decodeBoolForKey:@"connectOnStartup"];
         channels = [decoder decodeObjectForKey:@"channels"];
         
         self.commandQueue = [[NSMutableArray alloc] init];
@@ -70,10 +92,6 @@
         self.incompleteMessages = [[NSMutableString alloc] init];
         
         [self createServerLog];
-        
-        if (self.connectOnStartup) {
-            [self reconnect];
-        }
     }
     return self;
 }
@@ -88,11 +106,10 @@
     [coder encodeObject:self.realname forKey:@"realname"];
     [coder encodeObject:self.password forKey:@"password"];
     
-    [coder encodeBool:self.connectOnStartup forKey:@"connectOnStartup"];
     NSMutableDictionary *channelsToSave = [[NSMutableDictionary alloc] init];
     for (NSString *key in self.channels.allKeys) {
         RBIRCChannel *channel = self.channels[key];
-        if (channel.isChannel && channel.connectOnStartup) {
+        if (channel.isChannel) {
             channelsToSave[key] = channel;
         }
     }
@@ -107,7 +124,7 @@
             continue;
         }
         RBIRCChannel *channel = self.channels[key];
-        if (channel.connectOnStartup && channel.isChannel) {
+        if (channel.isChannel) {
             NSString *s = [NSString stringWithFormat:@"join %@", key];
             if ([channel.password hasContent]) {
                 s = [NSString stringWithFormat:@"%@ %@", s, channel.password];
@@ -138,8 +155,6 @@
     self.incompleteMessages = [[NSMutableString alloc] init];
     
     self.reconnectDelay = 1;
-    
-    self.connectOnStartup = YES;
 }
 
 -(BOOL)isEqual:(id)object
@@ -418,7 +433,11 @@
         @throw [NSError errorWithDomain:@"Invalid Part Command" code:1 userInfo:nil];
     }
     [self sendCommand:[NSString stringWithFormat:@"part %@ :%@", channel, message]];
+    RBIRCChannel *ircChannel = channels[channel];
     [channels removeObjectForKey:channel];
+    Channel *theChannel = [[RBDataManager sharedInstance] channelMatchingIRCChannel:ircChannel];
+    [theChannel.server removeChannelsObject:theChannel];
+    [theChannel.managedObjectContext deleteObject:theChannel];
 }
 
 -(void)mode:(NSString *)target options:(NSArray *)options

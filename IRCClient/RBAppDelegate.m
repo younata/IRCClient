@@ -20,6 +20,9 @@
 #import "RBScriptingService.h"
 #import "RBConfigurationKeys.h"
 
+#import "RBDataManager.h"
+#import "Server.h"
+
 @interface RBAppDelegate ()<SWRevealViewControllerDelegate>
 @property (nonatomic) UIBackgroundTaskIdentifier taskIdentifier;
 @property (nonatomic, strong) UIWindow *secondWindow;
@@ -60,20 +63,32 @@
     [serverVC setRevealController:viewController];
     [channelVC setRevealController:viewController];
     
-    NSData *serverData = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
+    NSData *serverData = [[NSUserDefaults standardUserDefaults] objectForKey:@"RBConfigKeyServers"];
     if (serverData) {
         NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:serverData];
         for (RBIRCServer *server in servers) {
-            if (!server.connectOnStartup) {
-                [servers removeObject:server];
-            }
+            [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"];
         }
-        serverVC.servers = servers;
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"RBConfigKeyServers"];
     }
+    
+    [self setServersForServerVC:serverVC];
     
     self.window.rootViewController = viewController;
     
     return YES;
+}
+
+- (void)setServersForServerVC:(RBServerViewController *)svc
+{
+    NSArray *servers = [[RBDataManager sharedInstance] servers];
+    if ([servers count] != 0) {
+        NSMutableArray *serversList = [[NSMutableArray alloc] initWithCapacity:servers.count];
+        for (Server *server in servers) {
+            [serversList addObject:[[RBIRCServer alloc] initFromServer:server]];
+        }
+        svc.servers = [NSArray arrayWithArray:serversList];
+    }
 }
 
 -(BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -217,16 +232,7 @@
     SWRevealViewController *rvc = (SWRevealViewController *)self.window.rootViewController;
     RBServerViewController *svc = (RBServerViewController *)[(UINavigationController *)rvc.rearViewController topViewController];
     
-    NSData *serverData = [[NSUserDefaults standardUserDefaults] objectForKey:RBConfigServers];
-    if (serverData) {
-        NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:serverData];
-        for (RBIRCServer *server in servers) {
-            if (!server.connectOnStartup) {
-                [servers removeObject:server];
-            }
-        }
-        svc.servers = servers;
-    }
+    [self setServersForServerVC:svc];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

@@ -20,12 +20,12 @@ describe(@"RBAppDelegate", ^{
     });
     
     afterEach(^{
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers]; // FIXME
     });
     
     describe(@"Initial startup", ^{
         beforeEach(^{
-            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers];
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:RBConfigServers]; // FIXME
             [subject application:nil didFinishLaunchingWithOptions:nil];
         });
         
