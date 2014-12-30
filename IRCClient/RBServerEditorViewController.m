@@ -114,7 +114,7 @@
         [self.server connect];
     }
     
-    [[RBDataManager sharedInstance] serverMatchingIRCServer:self.server];
+    [[[[RBDataManager sharedInstance] serverMatchingIRCServer:self.server] managedObjectContext] save:nil];
     
     [[RBScriptingService sharedInstance] serverEditor:(RBServerEditorViewController*)self didMakeChangesToServer:self.server];
 

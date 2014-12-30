@@ -14,7 +14,6 @@
 @interface Channel : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * log;
 @property (nonatomic, retain) Server *server;
 
 @end

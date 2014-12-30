@@ -81,7 +81,8 @@ UIColor *randomColor()
 - (Server *)serverMatchingIRCServer:(RBIRCServer *)ircServer
 {
     Server *server = [self serverWithProperty:ircServer.hostname propertyName:@"host"];
-    server.name = ircServer.hostname;
+    server.name = ircServer.serverName;
+    server.host = ircServer.hostname;
     server.nick = ircServer.nick;
     server.port = ircServer.port;
     server.realname = ircServer.realname;
@@ -90,7 +91,7 @@ UIColor *randomColor()
     NSMutableSet *existingChannels = [server.channels mutableCopy];
     NSMutableSet *newChannels = [[NSMutableSet alloc] initWithCapacity:ircServer.channels.allValues.count];
     for (RBIRCChannel *channel in ircServer.channels.allValues) {
-        Channel *theChannel = [self channelMatchingIRCChannel:channel];
+        Channel *theChannel = [self channelMatchingIRCChannel:channel onServer:server];
         [newChannels addObject:theChannel];
     }
     NSMutableSet *toAdd = [newChannels mutableCopy];
@@ -105,9 +106,8 @@ UIColor *randomColor()
     return server;
 }
 
-- (Channel *)channelMatchingIRCChannel:(RBIRCChannel *)ircChannel
+- (Channel *)channelMatchingIRCChannel:(RBIRCChannel *)ircChannel onServer:(Server *)server
 {
-    Server *server = [self serverMatchingIRCServer:ircChannel.server];
     NSArray *channels = [self entities:@"Channel" matchingPredicate:[NSPredicate predicateWithFormat:@"name == %@ AND server == %@", ircChannel.name, server]];
     
     Channel *channel = nil;
@@ -152,14 +152,23 @@ UIColor *randomColor()
 {
     NSManagedObjectContext *ctx = [self managedObjectContext];
     for (Server *server in self.servers) {
+        NSMutableArray *toRemove = [[NSMutableArray alloc] init];
         for (Channel *channel in server.channels) {
+            [toRemove addObject:channel];
+        }
+        for (Channel *channel in toRemove) {
             [server removeChannelsObject:channel];
             [ctx deleteObject:channel];
         }
+        [toRemove removeAllObjects];
         for (Nick *nick in server.nicks) {
+            [toRemove addObject:nick];
+        }
+        for (Nick *nick in toRemove) {
             [server removeNicksObject:nick];
             [ctx deleteObject:nick];
         }
+        [toRemove removeAllObjects];
         [ctx deleteObject:server];
     }
     [ctx save:nil];

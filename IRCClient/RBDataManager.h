@@ -23,7 +23,7 @@
 - (Server *)serverForServerName:(NSString *)serverName; // creates or returns existing...
 - (Server *)serverWithProperty:(id)property propertyName:(NSString *)propertyName;
 - (Server *)serverMatchingIRCServer:(RBIRCServer *)server;
-- (Channel *)channelMatchingIRCChannel:(RBIRCChannel *)ircChannel;
+- (Channel *)channelMatchingIRCChannel:(RBIRCChannel *)ircChannel onServer:(Server *)server;
 - (Nick *)nick:(NSString *)name onServer:(Server *)server; // creates or returns existing...
 
 - (NSArray *)servers;

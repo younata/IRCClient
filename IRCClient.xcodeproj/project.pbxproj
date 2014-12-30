@@ -1493,7 +1493,7 @@
 				89678DA61A4B75E800581A24 /* Model 2.xcdatamodel */,
 				892D137D194FD2F500671081 /* Model.xcdatamodel */,
 			);
-			currentVersion = 892D137D194FD2F500671081 /* Model.xcdatamodel */;
+			currentVersion = 89678DA61A4B75E800581A24 /* Model 2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

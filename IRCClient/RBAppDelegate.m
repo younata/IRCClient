@@ -67,7 +67,7 @@
     if (serverData) {
         NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:serverData];
         for (RBIRCServer *server in servers) {
-            [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"];
+            [[[[RBDataManager sharedInstance] serverMatchingIRCServer:server] managedObjectContext] save:nil];
         }
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"RBConfigKeyServers"];
     }

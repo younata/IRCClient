@@ -227,7 +227,7 @@ describe(@"RBServerViewController", ^{
         it(@"should remove the channel from the internal database", ^{
             NSArray *servers = [[RBDataManager sharedInstance] servers];
             servers.count should be_gte(1);
-            BOOL actuallyDidSave = YES;
+            BOOL actuallyDidSave = NO;
             for (Server *s in servers) {
                 for (Channel *channel in s.channels) {
                     if ([channel.name isEqualToString:chName]) {

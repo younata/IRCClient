@@ -55,8 +55,11 @@ describe(@"RBServerEditorViewController", ^{
                                               password:nil];
         subject.server = server;
         [subject view];
+        [subject viewDidLoad];
+        subject.saveButton.enabled = YES;
         [subject save];
-        [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"].name should equal(server.serverName);
+        Server *theServer = [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"];
+        theServer.nick should equal(server.nick);
     });
     
     describe(@"when connecting to a new server", ^{

@@ -435,7 +435,7 @@
     [self sendCommand:[NSString stringWithFormat:@"part %@ :%@", channel, message]];
     RBIRCChannel *ircChannel = channels[channel];
     [channels removeObjectForKey:channel];
-    Channel *theChannel = [[RBDataManager sharedInstance] channelMatchingIRCChannel:ircChannel];
+    Channel *theChannel = [[RBDataManager sharedInstance] channelMatchingIRCChannel:ircChannel onServer:[[RBDataManager sharedInstance] serverMatchingIRCServer:self]];
     [theChannel.server removeChannelsObject:theChannel];
     [theChannel.managedObjectContext deleteObject:theChannel];
 }

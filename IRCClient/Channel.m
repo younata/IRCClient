@@ -13,7 +13,6 @@
 @implementation Channel
 
 @dynamic name;
-@dynamic log;
 @dynamic server;
 
 @end

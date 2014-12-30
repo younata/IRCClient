@@ -16,6 +16,7 @@ describe(@"RBAppDelegate", ^{
     __block RBAppDelegate *subject;
 
     beforeEach(^{
+        [[RBDataManager sharedInstance] removeEverything];
         subject = [[RBAppDelegate alloc] init];
     });
     
@@ -42,6 +43,8 @@ describe(@"RBAppDelegate", ^{
         beforeEach(^{
             server = [[RBIRCServer alloc] initWithHostname:@"test" ssl:YES port:@"6697" nick:@"test" realname:@"test" password:nil];
             server.serverName = @"test";
+            server.readStream = nice_fake_for([NSInputStream class]);
+            server.writeStream = nice_fake_for([NSOutputStream class]);
         });
         
         it(@"should convert from NSUserDefaults persistance to core data persistence", ^{
@@ -52,7 +55,8 @@ describe(@"RBAppDelegate", ^{
             
             [[NSUserDefaults standardUserDefaults] objectForKey:key] should be_nil;
             
-            [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"].name should equal(server.serverName);
+            Server *theServer = [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"];
+            theServer.name should equal(server.serverName);
             
             SWRevealViewController *vc = (SWRevealViewController *)subject.window.rootViewController;
             RBServerViewController *ser = (RBServerViewController *)[(UINavigationController *)vc.rearViewController topViewController];
