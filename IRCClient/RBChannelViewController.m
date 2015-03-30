@@ -23,7 +23,6 @@
 
 #import "RBColorScheme.h"
 #import "RBHelp.h"
-#import "RBScriptingService.h"
 #import "RBNameViewController.h"
 #import "RBTextViewCell.h"
 #import "RBServerViewController.h"
@@ -179,8 +178,6 @@ static NSString *CellIdentifier = @"Cell";
         
         [self revealButtonPressed:nil];
     }
-    
-    [[RBScriptingService sharedInstance] channelViewWasLoaded:self];
 }
 
 -(void)handleNotification:(NSNotification *)note
@@ -647,8 +644,6 @@ static NSString *CellIdentifier = @"Cell";
     [self.tableView reloadData];
     
     self.recentlyUsedNames = nil;
-    
-    [[RBScriptingService sharedInstance] channelView:self didDisconnectFromChannel:oldChannel andServer:oldServer];
 }
 
 -(void)connect
@@ -673,7 +668,6 @@ static NSString *CellIdentifier = @"Cell";
     if (!self.server.connected) {
         [self disconnect];
     }
-    [[RBScriptingService sharedInstance] channelView:self didSelectChannel:self.server[self.channel] andServer:self.server];
     RBNameViewController *nameController = (RBNameViewController *)self.revealController.rightViewController;
     [nameController setServerName:self.server.serverName];
     [nameController setTopic:newChannel.topic];

@@ -19,8 +19,6 @@
 
 #import "RBColorScheme.h"
 
-#import "RBScriptingService.h"
-
 #import "NSObject+customProperty.h"
 
 static NSString *CellIdentifier = @"Cell";
@@ -48,9 +46,6 @@ static NSString *textFieldCell = @"textFieldCell";
 	// Do any additional setup after loading the view.
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    
-    [[RBScriptingService sharedInstance] runEnabledScripts];
-    
     self.navigationItem.title = NSLocalizedString(@"Configure", nil);
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dismiss)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Save", nil) style:UIBarButtonItemStylePlain target:self action:@selector(save)];
@@ -58,14 +53,6 @@ static NSString *textFieldCell = @"textFieldCell";
     self.navigationController.navigationBar.tintColor = [RBColorScheme primaryColor];
     
     self.values = [[NSMutableDictionary alloc] init];
-    for (NSString *key in [[RBScriptingService sharedInstance] scripts]) {
-        NSNumber *val = [[NSUserDefaults standardUserDefaults] objectForKey:key];
-        if (val == nil) {
-            val = @(NO);
-            [[NSUserDefaults standardUserDefaults] setObject:val forKey:key];
-        }
-        [self.values setObject:val forKey:key];
-    }
 }
 
 -(void)dismiss
@@ -78,8 +65,6 @@ static NSString *textFieldCell = @"textFieldCell";
     for (NSString *key in self.values.allKeys) {
         [[NSUserDefaults standardUserDefaults] setObject:self.values[key] forKey:key];
     }
-    
-    [[RBScriptingService sharedInstance] runEnabledScripts];
     
     SWRevealViewController *rvc = (SWRevealViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
     RBServerViewController *svc = (RBServerViewController *)[(UINavigationController *)[rvc rearViewController] topViewController];
@@ -95,7 +80,7 @@ static NSString *textFieldCell = @"textFieldCell";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;//5; // reconnect, ctcp, scripts, images, experimental (disabled)
+    return 3;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -106,11 +91,7 @@ static NSString *textFieldCell = @"textFieldCell";
         case 1: // ctcp, 2 (finger and clientinfo)
             return 2;
         case 2:
-            return [[[RBScriptingService sharedInstance] scripts] count];
-        case 3:
-            return 2; // display inline, display nsfw
-        case 4:
-            return 0;
+            return 2;
         default:
             return 0;
     }
@@ -153,16 +134,7 @@ static NSString *textFieldCell = @"textFieldCell";
         
         cell.accessoryView = tf;
         [cell layoutSubviews];
-    } else if (section == 2) { // scripts
-        UISwitch *s = [[UISwitch alloc] initWithFrame:CGRectZero];
-        cell.accessoryView = s;
-        NSString *key = self.values.allKeys[row];
-        s.on = [self.values[key] boolValue];
-        [s addTarget:self action:@selector(setScript:) forControlEvents:UIControlEventValueChanged];
-        [s setCustomProperty:key forKey:@"scriptKey"];
-        
-        cell.textLabel.text = key;
-    } else if (section == 3) {
+    } else if (section == 2) {
         NSArray *strings = @[NSLocalizedString(@"Display images inline", nil),
                              NSLocalizedString(@"Display NSFW images", nil)];
         cell.textLabel.text = strings[row];
@@ -184,7 +156,6 @@ static NSString *textFieldCell = @"textFieldCell";
         [s addTarget:self action:@selector(setScript:) forControlEvents:UIControlEventValueChanged];
         [s setCustomProperty:key forKey:@"scriptKey"];
         cell.accessoryView = s;
-    } else if (section == 4) {
     }
     
     return cell;

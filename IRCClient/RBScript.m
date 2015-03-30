@@ -7,7 +7,6 @@
 //
 
 #import "RBScript.h"
-#import "RBScriptingService.h"
 
 @implementation RBScript
 

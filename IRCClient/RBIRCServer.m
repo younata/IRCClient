@@ -13,8 +13,6 @@
 #import "NSString+isNilOrEmpty.h"
 #import "NSString+contains.h"
 
-#import "RBScriptingService.h"
-
 #import "Server.h"
 #import "Channel.h"
 #import "RBDataManager.h"
@@ -260,8 +258,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerDidConnect object:theSelf userInfo:nil];
         if (theSelf.debugLock)
             [theSelf.debugLock unlock];
-        
-        [[RBScriptingService sharedInstance] serverDidConnect:theSelf];
     };
 }
 
@@ -301,9 +297,6 @@
             [self.commandQueue removeLastObject];
         }
     }
-    
-    [[RBScriptingService sharedInstance] server:self didReceiveMessage:msg];
-    
     RBIRCChannel *ch;
     for (int i = 0; i < msg.targets.count; i++) {
         NSString *to = msg.targets[i];
@@ -358,7 +351,6 @@
     if ([self connected]) {
         [self.readStream close];
         [self.writeStream close];
-        [[RBScriptingService sharedInstance] serverDidDisconnect:self];
     }
     self.readStream = NULL;
     self.writeStream = NULL;
@@ -583,7 +575,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [aStream streamError]}];
             });
-            [[RBScriptingService sharedInstance] serverDidError:self];
             self.reconnectDelay *= 2; // fairly common retry decay rate...
             [self performSelector:@selector(connect) withObject:nil afterDelay:self.reconnectDelay];
             break;
@@ -594,7 +585,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerConnectionDidDisconnect object:self userInfo:nil];
             });
-            [[RBScriptingService sharedInstance] serverDidDisconnect:self];
             break;
         }
         default:

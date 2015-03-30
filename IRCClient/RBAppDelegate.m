@@ -17,7 +17,6 @@
 #import "RBHelp.h"
 #import "RBColorScheme.h"
 
-#import "RBScriptingService.h"
 #import "RBConfigurationKeys.h"
 
 #import "RBDataManager.h"
@@ -43,9 +42,6 @@
     
     [self checkForExistingScreenAndInitializeIfPresent];
     [self setUpScreenConnectionNotificationHandlers];
-    
-    [[RBScriptingService sharedInstance] runEnabledScripts];
-    
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme primaryColor]] forKey:RBHelpTintColor];
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme secondaryColor]] forKey:RBHelpLinkColor];
     

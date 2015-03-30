@@ -20,7 +20,6 @@
 #import "RBChannelViewController.h" // shouldn't have to do this...
 
 #import "RBColorScheme.h"
-#import "RBScriptingService.h"
 
 #import "RBDataManager.h"
 
@@ -61,9 +60,6 @@ static NSString *textFieldCell = @"textFieldCell";
     [self.tableView registerClass:[RBTextFieldServerCell class] forCellReuseIdentifier:textFieldCell];
         
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    
-    [[RBScriptingService sharedInstance] serverListWasLoaded:self];
-    
     for (NSString *str in @[RBIRCServerDidConnect,
                             RBIRCServerErrorReadingFromStream,
                             RBIRCServerHandleMessage,
@@ -155,7 +151,6 @@ static NSString *textFieldCell = @"textFieldCell";
     if (!server) {
         cell.textLabel.text = [@"+ " stringByAppendingString:NSLocalizedString(@"New Server", nil)];
         cell.textLabel.textColor = [RBColorScheme primaryColor];
-        [[RBScriptingService sharedInstance] serverList:self didCreateNewServerCell:cell];
     } else {
         cell.textLabel.textColor = server.connected ? [UIColor darkTextColor] : [[UIColor darkTextColor] colorWithAlphaComponent:0.5];
         if (row == channels.count) {
@@ -165,7 +160,6 @@ static NSString *textFieldCell = @"textFieldCell";
             c.textField.delegate = self;
             [c layoutSubviews];
             cell = c;
-            [[RBScriptingService sharedInstance] serverList:self didCreateNewChannelCell:c];
         } else {
             cell.textLabel.text = channels[row];
             RBIRCChannel *channel = server[channels[row]];
@@ -179,13 +173,10 @@ static NSString *textFieldCell = @"textFieldCell";
             if (row == 0) {
                 cell.textLabel.textColor = [RBColorScheme primaryColor];
                 [(RBServerCell *)cell setServer:server];
-                [[RBScriptingService sharedInstance] serverList:self didCreateServerCell:cell forServer:server];
             } else if ([server[channels[row]] isChannel]) {
                 cell.textLabel.textColor = [RBColorScheme secondaryColor];
-                [[RBScriptingService sharedInstance] serverList:self didCreateChannelCell:cell forChannel:server[channels[row]]];
             } else {
                 cell.textLabel.textColor = [RBColorScheme tertiaryColor];
-                [[RBScriptingService sharedInstance] serverList:self didCreatePrivateCell:cell forPrivateConversation:server[channels[row]]];
             }
         }
     }

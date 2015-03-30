@@ -10,8 +10,6 @@
 		445046ABB6EB4642B8948DFE /* libPods-IRCClientSpecs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E83F1310CE48ACBD3C16A1 /* libPods-IRCClientSpecs.a */; };
 		8905344418C93842006DDA8B /* NSString+ranges.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344318C93842006DDA8B /* NSString+ranges.m */; };
 		8905344518C93842006DDA8B /* NSString+ranges.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344318C93842006DDA8B /* NSString+ranges.m */; };
-		8905344A18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */; };
-		8905344B18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */; };
 		8906F1CB18867BEE00042A13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CA18867BEE00042A13 /* Foundation.framework */; };
 		8906F1CD18867BEE00042A13 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CC18867BEE00042A13 /* CoreGraphics.framework */; };
 		8906F1CF18867BEE00042A13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8906F1CE18867BEE00042A13 /* UIKit.framework */; };
@@ -39,9 +37,6 @@
 		8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBC918B5B3E8004DFBAB /* wwanconnect.c */; };
 		8908DC2918B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
 		8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2818B6105F004DFBAB /* RBScript.m */; };
-		8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
-		8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC2C18B615EE004DFBAB /* RBScriptingService.m */; };
-		8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */; };
 		8908DC5F18B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
 		8908DC6018B88897004DFBAB /* UITableView+Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */; };
 		8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DC7418B8B299004DFBAB /* RBHelpArrayViewController.m */; };
@@ -138,8 +133,6 @@
 		89D4B66B18CFFDAB00891116 /* RBNameViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */; };
 		89D4C45C19108EB900E8E4C7 /* RBTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */; };
 		89D4C45D19108EB900E8E4C7 /* RBTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */; };
-		89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
-		89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B318B8CB7400616600 /* RBScriptHelpers.m */; };
 		89E812B818B8E78800616600 /* RBColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B718B8E78800616600 /* RBColorScheme.m */; };
 		89E812B918B8E78800616600 /* RBColorScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E812B718B8E78800616600 /* RBColorScheme.m */; };
 		89E812BB18B98A6200616600 /* help.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E812BA18B8EB9400616600 /* help.json */; };
@@ -176,8 +169,6 @@
 		760C7BDD99964E4E8C71C3C7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8905344218C93842006DDA8B /* NSString+ranges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ranges.h"; sourceTree = "<group>"; };
 		8905344318C93842006DDA8B /* NSString+ranges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ranges.m"; sourceTree = "<group>"; };
-		8905344818C9AEB4006DDA8B /* UIButton+serverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+serverButton.h"; sourceTree = "<group>"; };
-		8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+serverButton.m"; sourceTree = "<group>"; };
 		8906F1C718867BEE00042A13 /* rIRC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rIRC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8906F1CA18867BEE00042A13 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8906F1CC18867BEE00042A13 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -214,9 +205,6 @@
 		8908DBCA18B5B3E8004DFBAB /* wwanconnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wwanconnect.h; sourceTree = "<group>"; };
 		8908DC2718B6105F004DFBAB /* RBScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScript.h; sourceTree = "<group>"; };
 		8908DC2818B6105F004DFBAB /* RBScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScript.m; sourceTree = "<group>"; };
-		8908DC2B18B615EE004DFBAB /* RBScriptingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptingService.h; sourceTree = "<group>"; };
-		8908DC2C18B615EE004DFBAB /* RBScriptingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptingService.m; sourceTree = "<group>"; };
-		8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBScriptingServiceSpec.mm; sourceTree = "<group>"; };
 		8908DC5D18B88897004DFBAB /* UITableView+Scroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITableView+Scroll.h"; path = "UITableView/UITableView+Scroll.h"; sourceTree = "<group>"; };
 		8908DC5E18B88897004DFBAB /* UITableView+Scroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITableView+Scroll.m"; path = "UITableView/UITableView+Scroll.m"; sourceTree = "<group>"; };
 		8908DC7218B8B299004DFBAB /* RBHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBHelp.h; sourceTree = "<group>"; };
@@ -309,8 +297,6 @@
 		89D4B66918CFFDAB00891116 /* RBNameViewControllerSpec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RBNameViewControllerSpec.mm; sourceTree = "<group>"; };
 		89D4C45A19108EB900E8E4C7 /* RBTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBTextViewCell.h; sourceTree = "<group>"; };
 		89D4C45B19108EB900E8E4C7 /* RBTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBTextViewCell.m; sourceTree = "<group>"; };
-		89E812B218B8CB7400616600 /* RBScriptHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBScriptHelpers.h; sourceTree = "<group>"; };
-		89E812B318B8CB7400616600 /* RBScriptHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBScriptHelpers.m; sourceTree = "<group>"; };
 		89E812B618B8E78800616600 /* RBColorScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBColorScheme.h; sourceTree = "<group>"; };
 		89E812B718B8E78800616600 /* RBColorScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBColorScheme.m; sourceTree = "<group>"; };
 		89E812BA18B8EB9400616600 /* help.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = help.json; sourceTree = "<group>"; };
@@ -490,12 +476,6 @@
 			children = (
 				8908DC2718B6105F004DFBAB /* RBScript.h */,
 				8908DC2818B6105F004DFBAB /* RBScript.m */,
-				89E812B218B8CB7400616600 /* RBScriptHelpers.h */,
-				89E812B318B8CB7400616600 /* RBScriptHelpers.m */,
-				8905344818C9AEB4006DDA8B /* UIButton+serverButton.h */,
-				8905344918C9AEB4006DDA8B /* UIButton+serverButton.m */,
-				8908DC2B18B615EE004DFBAB /* RBScriptingService.h */,
-				8908DC2C18B615EE004DFBAB /* RBScriptingService.m */,
 			);
 			name = Scripting;
 			sourceTree = "<group>";
@@ -533,7 +513,6 @@
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */,
 				891B01F71896510000B2D848 /* RBIRCMessageSpec.mm */,
-				8908DC3218B72F07004DFBAB /* RBScriptingServiceSpec.mm */,
 				891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */,
 				891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */,
 				899B2A721898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm */,
@@ -1030,7 +1009,6 @@
 				8905344418C93842006DDA8B /* NSString+ranges.m in Sources */,
 				896E4751192D7F6700024FF5 /* UIColor+colorWithHexString.m in Sources */,
 				89C46E47189600A9006068DC /* RBTextFieldServerCell.m in Sources */,
-				8905344A18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
 				8908DC7D18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
 				8906F2051887562600042A13 /* RBChannelViewController.m in Sources */,
 				8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */,
@@ -1050,10 +1028,8 @@
 				8908DBC618B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				8908DBCB18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
-				8908DC2D18B615EE004DFBAB /* RBScriptingService.m in Sources */,
 				89D4B66518CFFC3600891116 /* RBNameViewController.m in Sources */,
 				8908DC7B18B8B299004DFBAB /* RBHelpArrayViewController.m in Sources */,
-				89E812B418B8CB7400616600 /* RBScriptHelpers.m in Sources */,
 				892D138E195094FB00671081 /* RBNickColorPickerViewController.m in Sources */,
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				89E812DF18BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
@@ -1095,8 +1071,6 @@
 				89E812CD18BB530900616600 /* UIView+initWithSuperview.m in Sources */,
 				89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */,
 				895E588819533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */,
-				8908DC2E18B615EE004DFBAB /* RBScriptingService.m in Sources */,
-				8908DC3318B72F08004DFBAB /* RBScriptingServiceSpec.mm in Sources */,
 				89E812B918B8E78800616600 /* RBColorScheme.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
@@ -1121,7 +1095,6 @@
 				892D1383194FD4B000671081 /* Server.m in Sources */,
 				891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */,
 				8908DC7E18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
-				89E812B518B8CB7400616600 /* RBScriptHelpers.m in Sources */,
 				8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */,
 				898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
 				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
@@ -1137,7 +1110,6 @@
 				896E475B192F9BD500024FF5 /* NSAttributedString+attributes.m in Sources */,
 				898132E218A78ABC004AEBE9 /* UIButton+buttonWithFrame.m in Sources */,
 				89D4C45D19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
-				8905344B18C9AEB4006DDA8B /* UIButton+serverButton.m in Sources */,
 				899B2A731898C8AD0008FED3 /* RBServerEditorViewControllerSpec.mm in Sources */,
 				896E474C192CCAB700024FF5 /* NSAttributedString+containsAttributions.m in Sources */,
 			);

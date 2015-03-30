@@ -10,7 +10,6 @@
 
 #import "RBIRCServer.h"
 #import "RBColorScheme.h"
-#import "RBScriptingService.h"
 #import "RBHelp.h"
 #import "RBConfigurationKeys.h"
 #import "RBTextFieldServerCell.h"
@@ -77,7 +76,6 @@
 -(void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:self.onCancel];
-    [[RBScriptingService sharedInstance] serverEditorWillBeDismissed:(RBServerEditorViewController*)self]; // FIXME: update RBScriptingService
 }
 
 - (void)save
@@ -116,8 +114,6 @@
     
     [[[[RBDataManager sharedInstance] serverMatchingIRCServer:self.server] managedObjectContext] save:nil];
     
-    [[RBScriptingService sharedInstance] serverEditor:(RBServerEditorViewController*)self didMakeChangesToServer:self.server];
-
     [self dismiss];
 }
 

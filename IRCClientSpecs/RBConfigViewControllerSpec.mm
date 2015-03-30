@@ -1,7 +1,5 @@
 #import "RBConfigViewController.h"
 
-#import "RBScriptingService.h"
-
 #import "NSString+isNilOrEmpty.h"
 
 using namespace Cedar::Matchers;
@@ -12,8 +10,6 @@ SPEC_BEGIN(RBConfigViewControllerSpec)
 describe(@"RBConfigViewController", ^{
     __block RBConfigViewController *subject;
     __block UINavigationController *navController;
-    
-    [[RBScriptingService sharedInstance] loadScripts];
 
     beforeEach(^{
         subject = [[RBConfigViewController alloc] init];
@@ -59,30 +55,6 @@ describe(@"RBConfigViewController", ^{
             ctcpcellUserinfo.textLabel.text should equal(@"UserInfo");
             ctcpcellFinger.accessoryView should be_instance_of([UITextField class]);
 
-        });
-    });
-    
-    describe(@"Scripting secton", ^{
-        beforeEach(^{
-            [[RBScriptingService sharedInstance] runEnabledScripts];
-        });
-        
-        it(@"should at least 1 row", ^{
-            [subject.tableView numberOfRowsInSection:2] should be_gte(0);
-        });
-        
-        it(@"should a section title", ^{
-            [subject.tableView.dataSource tableView:subject.tableView titleForHeaderInSection:2] should equal(@"Extensions");
-        });
-        
-        it(@"should have at least 1 cell with a switch", ^{
-            if ([subject.tableView numberOfRowsInSection:2] == 0) {
-                return;
-            } else {
-                UITableViewCell *scriptCell = [subject.tableView.dataSource tableView:subject.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-                scriptCell.textLabel.text should equal([[RBScriptingService sharedInstance] scripts][0]);
-                scriptCell.accessoryView should be_instance_of([UISwitch class]);
-            }
         });
     });
     
