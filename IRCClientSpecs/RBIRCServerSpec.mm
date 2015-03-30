@@ -2,6 +2,10 @@
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
 #import "NSData+string.h"
+
+#import <Blindside/Blindside.h>
+#import "SpecApplicationModule.h"
+
 #include <string.h>
 #include <semaphore.h>
 
@@ -13,25 +17,17 @@ SPEC_BEGIN(RBIRCServerSpec)
 describe(@"RBIRCServer", ^{
     __block RBIRCServer *subject;
     __block NSString *msg;
+    __block id<BSInjector> injector;
     
     NSString *channel = @"#foo";
 
     beforeEach(^{
-        subject = [[RBIRCServer alloc] init];
+        injector = [Blindside injectorWithModule:[[SpecApplicationModule alloc] init]];
+        subject = [injector getInstance:[RBIRCServer class]];
         subject.serverName = @"Test server";
         spy_on(subject);
         
         msg = [NSString stringWithFormat:@":ik!iank@hide-1664EBC6.iank.org PRIVMSG #boats :how are you\r\n"];
-    });
-    
-    it(@"should handle loading from NSUserDefaults correctly", ^{
-        RBIRCServer *server = [[RBIRCServer alloc] init];
-        [server configureWithHostname:@"testServer" ssl:YES port:@"6697" nick:@"testnick" realname:@"testnick" password:@""];
-        server.nick = @"testnick";
-        server.serverName = @"server";
-        NSData *d = [NSKeyedArchiver archivedDataWithRootObject:server];
-        RBIRCServer *s = [NSKeyedUnarchiver unarchiveObjectWithData:d];
-        [s isEqual:server] should be_truthy;
     });
     
     it(@"should handle stream events", ^{

@@ -10,6 +10,7 @@
 #import <Blindside/Blindside.h>
 
 extern NSString *const kMainOperationQueue;
+extern NSString *const kBackgroundOperationQueue;
 
 @interface ApplicationModule : NSObject <BSModule>
 

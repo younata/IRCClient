@@ -1,3 +1,5 @@
+#import <Blindside/Blindside.h>
+
 #import "RBNameViewController.h"
 
 #import "RBDataManager.h"
@@ -11,11 +13,25 @@
 @property (nonatomic, strong) Server *dataServer;
 @property (nonatomic, strong) NSDictionary *buttonTitles;
 
+@property (nonatomic, strong) RBDataManager *dataManager;
+
 @end
 
 static NSString *CellIdentifier = @"Cell";
 
 @implementation RBNameViewController
+
++ (BSInitializer *)bsInitializer {
+    return [BSInitializer initializerWithClass:self selector:@selector(initWithDataManager:) argumentKeys:[RBDataManager class], nil];
+}
+
+- (instancetype)initWithDataManager:(RBDataManager *)dataManager
+{
+    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
+        self.dataManager = dataManager;
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -28,7 +44,7 @@ static NSString *CellIdentifier = @"Cell";
 {
     _serverName = serverName.copy;
     
-    self.dataServer = [[RBDataManager sharedInstance] serverForServerName:serverName];
+    self.dataServer = [self.dataManager serverForServerName:serverName];
 }
 
 - (void)setNames:(NSMutableArray *)names
@@ -61,7 +77,7 @@ static NSString *CellIdentifier = @"Cell";
     cell.textLabel.text = nickName;
     cell.textLabel.textAlignment = NSTextAlignmentRight;
     
-    Nick *nick = [[RBDataManager sharedInstance] nick:nickName onServer:self.dataServer];
+    Nick *nick = [self.dataManager nick:nickName onServer:self.dataServer];
     if (nick) {
         cell.textLabel.textColor = nick.color;
     }

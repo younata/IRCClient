@@ -1,3 +1,6 @@
+#import <Blindside/Blindside.h>
+#import "SpecApplicationModule.h"
+
 #import "RBServerViewController.h"
 #import "RBIRCServer.h"
 #import "RBIRCChannel.h"
@@ -16,9 +19,11 @@ SPEC_BEGIN(RBServerViewControllerSpec)
 describe(@"RBServerViewController", ^{
     __block RBServerViewController *subject;
     __block RBIRCServer *server;
+    __block id<BSInjector> injector;
+    __block RBDataManager *dataManager;
     
     RBIRCServer *(^newServer)(void) = ^RBIRCServer*{
-        RBIRCServer *s = [[RBIRCServer alloc] init];
+        RBIRCServer *s = [injector getInstance:[RBIRCServer class]];
         [s configureWithHostname:@"localhost" ssl:NO port:@"6667" nick:@"testnick" realname:@"testname" password:nil];
         s.serverName = @"test server";
         return s;
@@ -31,14 +36,17 @@ describe(@"RBServerViewController", ^{
     beforeEach(^{
         subject = [[RBServerViewController alloc] init];
         [subject view];
-        
+
+        injector = [Blindside injectorWithModule:[[SpecApplicationModule alloc] init]];
+        dataManager = [injector getInstance:[RBDataManager class]];
+
         spy_on(subject.tableView);
         spy_on(subject);
-        [[RBDataManager sharedInstance] removeEverything];
+        [dataManager removeEverything];
     });
     
     afterEach(^{
-        [[RBDataManager sharedInstance] removeEverything];
+        [dataManager removeEverything];
     });
     
     it(@"should have 1 default cell, for a new server.", ^{
@@ -166,7 +174,7 @@ describe(@"RBServerViewController", ^{
                 joinChannel(channelName);
                 
                 void (^savedChannelName)(NSString *) = ^(NSString *name) {
-                    NSArray *servers = [[RBDataManager sharedInstance] servers];
+                    NSArray *servers = [dataManager servers];
                     servers.count should be_gte(1);
                     BOOL actuallyDidSave = NO;
                     for (Server *s in servers) {
@@ -195,7 +203,7 @@ describe(@"RBServerViewController", ^{
             RBIRCChannel *channel = [[RBIRCChannel alloc] initWithName:chName];
             [server.channels setObject:channel forKey:chName];
             
-            [[RBDataManager sharedInstance] serverMatchingIRCServer:server];
+            [dataManager serverMatchingIRCServer:server];
             
             subject.servers = [@[server] mutableCopy];
             [subject.tableView reloadData];
@@ -226,7 +234,7 @@ describe(@"RBServerViewController", ^{
         });
         
         it(@"should remove the channel from the internal database", ^{
-            NSArray *servers = [[RBDataManager sharedInstance] servers];
+            NSArray *servers = [dataManager servers];
             servers.count should be_gte(1);
             BOOL actuallyDidSave = NO;
             for (Server *s in servers) {

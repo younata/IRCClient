@@ -7,6 +7,7 @@
 //
 
 #import <Blindside/Blindside.h>
+#import "ApplicationModule.h"
 
 #import "RBIRCServer.h"
 #import "RBIRCMessage.h"
@@ -26,9 +27,30 @@
 @property (nonatomic) NSInteger reconnectDelay;
 @property (nonatomic, strong) id<BSInjector> injector;
 
+@property (nonatomic, strong) NSOperationQueue *mainQueue;
+@property (nonatomic, strong) NSOperationQueue *backgroundQueue;
+@property (nonatomic, strong) RBDataManager *dataManager;
+
 @end
 
 @implementation RBIRCServer
+
++(BSInitializer *)bsInitializer
+{
+    return [BSInitializer initializerWithClass:self
+                                      selector:@selector(initWithMainQueue:backgroundQueue:dataManager:)
+                                  argumentKeys:kMainOperationQueue, kBackgroundOperationQueue, [RBDataManager class], nil];
+}
+
+-(instancetype)initWithMainQueue:(NSOperationQueue *)mainQueue backgroundQueue:(NSOperationQueue *)backgroundQueue dataManager:(RBDataManager *)dataManager
+{
+    if ((self = [super init])) {
+        self.mainQueue = mainQueue;
+        self.backgroundQueue = backgroundQueue;
+        self.dataManager = dataManager;
+    }
+    return self;
+}
 
 -(void)configureWithHostname:(NSString *)hostname
                          ssl:(BOOL)useSSL
@@ -117,7 +139,7 @@
     if (!self.connected) {
         return;
     }
-    dispatch_async([RBIRCServer queue], ^{
+    [self.backgroundQueue addOperationWithBlock:^{
         NSString *command = cmd;
         if (command.length > 512) {
             if ([command.lowercaseString hasPrefix:@"privmsg"] || [command.lowercaseString hasPrefix:@"notice"]) {
@@ -147,7 +169,7 @@
             NSString *cmd = [command substringWithRange:NSMakeRange(numBytesWritten, [command length] - (2 + numBytesWritten))];
             [self sendCommand:cmd];
         }
-    });
+    }];
 }
 
 -(void)connect
@@ -263,10 +285,10 @@
         }
         [ch logMessage:msg];
     }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+
+    [self.mainQueue addOperationWithBlock: ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerHandleMessage object:self userInfo:@{@"message": msg}];
-    });
+    }];
     
     switch (msg.command) {
         case IRCMessageTypeCTCPFinger:
@@ -368,7 +390,9 @@
     [self sendCommand:[NSString stringWithFormat:@"part %@ :%@", channel, message]];
     RBIRCChannel *ircChannel = self.channels[channel];
     [self.channels removeObjectForKey:channel];
-    Channel *theChannel = [[RBDataManager sharedInstance] channelMatchingIRCChannel:ircChannel onServer:[[RBDataManager sharedInstance] serverMatchingIRCServer:self]];
+
+    Server *server = [self.dataManager serverMatchingIRCServer:self];
+    Channel *theChannel = [self.dataManager channelMatchingIRCChannel:ircChannel onServer:server];
     [theChannel.server removeChannelsObject:theChannel];
     [theChannel.managedObjectContext deleteObject:theChannel];
 }
@@ -479,9 +503,9 @@
 
 -(void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
 {
-    dispatch_async([RBIRCServer queue], ^{
+    [self.backgroundQueue addOperationWithBlock:^{
         [self handleStream:aStream withEvent:eventCode];
-    });
+    }];
 }
 
 - (void)handleStream:(NSStream *)aStream withEvent:(NSStreamEvent)eventCode
@@ -513,9 +537,9 @@
             break;
         }
         case NSStreamEventErrorOccurred: {
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mainQueue addOperationWithBlock:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerErrorReadingFromStream object:self userInfo:@{@"error": [aStream streamError]}];
-            });
+            }];
             self.reconnectDelay *= 2; // fairly common retry decay rate...
             [self performSelector:@selector(connect) withObject:nil afterDelay:self.reconnectDelay];
             break;
@@ -523,9 +547,9 @@
         case NSStreamEventEndEncountered: {
             [self.writeStream close];
             [self.readStream close];
-            dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mainQueue addOperationWithBlock:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:RBIRCServerConnectionDidDisconnect object:self userInfo:nil];
-            });
+            }];
             break;
         }
         default:

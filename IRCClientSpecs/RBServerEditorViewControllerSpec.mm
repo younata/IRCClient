@@ -2,6 +2,9 @@
 #import "RBIRCServer.h"
 #import "RBConfigurationKeys.h"
 
+#import <Blindside/Blindside.h>
+#import "SpecApplicationModule.h"
+
 using namespace Cedar::Matchers;
 using namespace Cedar::Doubles;
 
@@ -10,6 +13,7 @@ SPEC_BEGIN(RBServerEditorViewControllerSpec)
 describe(@"RBServerEditorViewController", ^{
     __block RBServerEditorViewController *subject;
     __block RBIRCServer *server;
+    __block id<BSInjector> injector;
     
     void (^sendTarget)(UIBarButtonItem *) = ^(UIBarButtonItem *bbi) {
         SEL act = [bbi action];
@@ -23,6 +27,8 @@ describe(@"RBServerEditorViewController", ^{
         server.writeStream = nice_fake_for([NSOutputStream class]);
         server.readStream = nice_fake_for([NSInputStream class]);
         subject.server = server;
+
+        injector = [Blindside injectorWithModule:[[SpecApplicationModule alloc] init]];
         
         spy_on(subject);
     });
@@ -47,7 +53,7 @@ describe(@"RBServerEditorViewController", ^{
     
     it(@"should write any changes to standard user defaults", ^{
         [[RBDataManager sharedInstance] removeEverything];
-        server = [[RBIRCServer alloc] init];
+        server = [injector getInstance:[RBIRCServer class]];
         [server configureWithHostname:@"localhost"
                                   ssl:YES
                                  port:@"6697"

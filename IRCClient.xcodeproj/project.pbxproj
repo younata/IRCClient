@@ -26,7 +26,6 @@
 		8906F2051887562600042A13 /* RBChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F2041887562600042A13 /* RBChannelViewController.m */; };
 		8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20718878F1100042A13 /* RBIRCChannel.m */; };
 		8906F20B18878FAA00042A13 /* RBIRCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F20A18878FAA00042A13 /* RBIRCMessage.m */; };
-		8906F212188799C000042A13 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
 		8908DBC018B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBB718B5B3B1004DFBAB /* UIDevice-Hardware.m */; };
 		8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBB718B5B3B1004DFBAB /* UIDevice-Hardware.m */; };
 		8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8908DBBB18B5B3B1004DFBAB /* UIDevice-Orientation.m */; };
@@ -60,7 +59,6 @@
 		891B01FD1896546C00B2D848 /* RBTextFieldServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89C46E46189600A9006068DC /* RBTextFieldServerCell.m */; };
 		891B01FE1896546C00B2D848 /* RBServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 896BD17D1895D30100EC91EA /* RBServerViewController.m */; };
 		891B02001896546C00B2D848 /* RBChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F2041887562600042A13 /* RBChannelViewController.m */; };
-		891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8906F211188799C000042A13 /* SWRevealViewController.m */; };
 		891B02031896D3F400B2D848 /* RBIRCServerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */; };
 		891B020A18974A6200B2D848 /* RBChannelViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020918974A6200B2D848 /* RBChannelViewControllerSpec.mm */; };
 		891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */ = {isa = PBXBuildFile; fileRef = 891B020B1897700700B2D848 /* RBServerViewControllerSpec.mm */; };
@@ -90,6 +88,7 @@
 		896191C21A4559E300AE7B13 /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191C01A4559E300AE7B13 /* icon@3x.png */; };
 		896777641AC903A50057A89C /* ApplicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 896777631AC903A50057A89C /* ApplicationModule.m */; };
 		896777651AC903A50057A89C /* ApplicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 896777631AC903A50057A89C /* ApplicationModule.m */; };
+		896777681AC908D70057A89C /* SpecApplicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 896777671AC908D70057A89C /* SpecApplicationModule.m */; };
 		89678DA91A4B77EB00581A24 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89678DA81A4B77EB00581A24 /* Channel.m */; };
 		89678DAA1A4B77EB00581A24 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89678DA81A4B77EB00581A24 /* Channel.m */; };
 		8967DA0C1A426210000424F4 /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */; };
@@ -194,8 +193,6 @@
 		8906F20718878F1100042A13 /* RBIRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCChannel.m; sourceTree = "<group>"; };
 		8906F20918878FAA00042A13 /* RBIRCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RBIRCMessage.h; sourceTree = "<group>"; };
 		8906F20A18878FAA00042A13 /* RBIRCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBIRCMessage.m; sourceTree = "<group>"; };
-		8906F210188799C000042A13 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		8906F211188799C000042A13 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		8908DBB618B5B3B1004DFBAB /* UIDevice-Hardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Hardware.h"; sourceTree = "<group>"; };
 		8908DBB718B5B3B1004DFBAB /* UIDevice-Hardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice-Hardware.m"; sourceTree = "<group>"; };
 		8908DBBA18B5B3B1004DFBAB /* UIDevice-Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice-Orientation.h"; sourceTree = "<group>"; };
@@ -252,6 +249,8 @@
 		896191C01A4559E300AE7B13 /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = SOURCE_ROOT; };
 		896777621AC903A50057A89C /* ApplicationModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationModule.h; sourceTree = "<group>"; };
 		896777631AC903A50057A89C /* ApplicationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationModule.m; sourceTree = "<group>"; };
+		896777661AC908D70057A89C /* SpecApplicationModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpecApplicationModule.h; sourceTree = "<group>"; };
+		896777671AC908D70057A89C /* SpecApplicationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpecApplicationModule.m; sourceTree = "<group>"; };
 		89678DA61A4B75E800581A24 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 		89678DA71A4B77EB00581A24 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
 		89678DA81A4B77EB00581A24 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
@@ -452,8 +451,6 @@
 		8906F20F188799C000042A13 /* SWRevealViewController */ = {
 			isa = PBXGroup;
 			children = (
-				8906F210188799C000042A13 /* SWRevealViewController.h */,
-				8906F211188799C000042A13 /* SWRevealViewController.m */,
 				89C46E4818960C96006068DC /* reveal-icon.png */,
 				89C46E4918960C96006068DC /* reveal-icon@2x.png */,
 				896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */,
@@ -515,6 +512,8 @@
 			isa = PBXGroup;
 			children = (
 				891B01EF189650DA00B2D848 /* Rakefile */,
+				896777661AC908D70057A89C /* SpecApplicationModule.h */,
+				896777671AC908D70057A89C /* SpecApplicationModule.m */,
 				898132E718A86E0B004AEBE9 /* RBAppDelegateSpec.mm */,
 				891B02021896D3F400B2D848 /* RBIRCServerSpec.mm */,
 				898132D118A77818004AEBE9 /* RBIRCChannelSpec.mm */,
@@ -1006,7 +1005,6 @@
 				892D1392195097F000671081 /* RBNickColorCell.m in Sources */,
 				892D1382194FD4B000671081 /* Server.m in Sources */,
 				898132D518A787D1004AEBE9 /* RBConfigViewController.m in Sources */,
-				8906F212188799C000042A13 /* SWRevealViewController.m in Sources */,
 				8906F20818878F1100042A13 /* RBIRCChannel.m in Sources */,
 				89D4C45C19108EB900E8E4C7 /* RBTextViewCell.m in Sources */,
 				892D137E194FD2F500671081 /* Model.xcdatamodeld in Sources */,
@@ -1080,6 +1078,7 @@
 				89D4B66618CFFC3600891116 /* RBNameViewController.m in Sources */,
 				895E588819533A32003A56BB /* UINavigationBar+swipeToHide.m in Sources */,
 				89E812B918B8E78800616600 /* RBColorScheme.m in Sources */,
+				896777681AC908D70057A89C /* SpecApplicationModule.m in Sources */,
 				891B020C1897700700B2D848 /* RBServerViewControllerSpec.mm in Sources */,
 				8908DBC118B5B3B1004DFBAB /* UIDevice-Hardware.m in Sources */,
 				892D1397195098FF00671081 /* RSBColorPicker.m in Sources */,
@@ -1105,7 +1104,6 @@
 				8908DC7E18B8B299004DFBAB /* RBHelpTextViewController.m in Sources */,
 				8908DC2A18B6105F004DFBAB /* RBScript.m in Sources */,
 				898132F318A89085004AEBE9 /* UIActionSheet+allButtonTitles.m in Sources */,
-				891B02011896546C00B2D848 /* SWRevealViewController.m in Sources */,
 				8908DBCC18B5B3E8004DFBAB /* wwanconnect.c in Sources */,
 				891B01F81896510000B2D848 /* RBIRCMessageSpec.mm in Sources */,
 				89709F791A433745006E0327 /* RBSwitchCell.m in Sources */,

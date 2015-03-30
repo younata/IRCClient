@@ -7,6 +7,7 @@
 //
 
 #import <Blindside/Blindside.h>
+#import <RESideMenu/RESideMenu.h>
 
 #import "RBAppDelegate.h"
 #import "SWRevealViewController.h"
@@ -30,6 +31,7 @@
 @property (nonatomic) UIBackgroundTaskIdentifier taskIdentifier;
 @property (nonatomic, strong) UIWindow *secondWindow;
 @property (nonatomic, strong) id<BSInjector> injector;
+@property (nonatomic, strong) RBDataManager *dataManager;
 @end
 
 @implementation RBAppDelegate
@@ -52,39 +54,39 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme primaryColor]] forKey:RBHelpTintColor];
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:[RBColorScheme secondaryColor]] forKey:RBHelpLinkColor];
     
-    RBServerViewController *serverVC = [[RBServerViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    RBChannelViewController *channelVC = [[RBChannelViewController alloc] init];
+    RBServerViewController *serverVC = [self.injector getInstance:[RBServerViewController class]];
+    RBChannelViewController *channelVC = [self.injector getInstance:[RBChannelViewController class]];
     
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:channelVC];
-    UINavigationController *otherNC = [[UINavigationController alloc] initWithRootViewController:serverVC];
-    RBNameViewController *names = [[RBNameViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    
-    SWRevealViewController *viewController = [[SWRevealViewController alloc] initWithRearViewController:otherNC
-                                                                                    frontViewController:nc];
-    viewController.rightViewController = names;
-    
-    [serverVC setRevealController:viewController];
-    [channelVC setRevealController:viewController];
-    
+    UINavigationController *channelViewController = [[UINavigationController alloc] initWithRootViewController:channelVC];
+    UINavigationController *serverViewController = [[UINavigationController alloc] initWithRootViewController:serverVC];
+    RBNameViewController *namesViewController = [self.injector getInstance:[RBNameViewController class]];
+
+    RESideMenu *sideMenuController = [[RESideMenu alloc] initWithContentViewController:channelViewController
+                                                      leftMenuViewController:serverViewController
+                                                     rightMenuViewController:namesViewController];
+
     NSData *serverData = [[NSUserDefaults standardUserDefaults] objectForKey:@"RBConfigKeyServers"];
+
+    self.dataManager = [self.injector getInstance:[RBDataManager class]];
+
     if (serverData) {
         NSMutableArray *servers = [NSKeyedUnarchiver unarchiveObjectWithData:serverData];
         for (RBIRCServer *server in servers) {
-            [[[[RBDataManager sharedInstance] serverMatchingIRCServer:server] managedObjectContext] save:nil];
+            [[[self.dataManager serverMatchingIRCServer:server] managedObjectContext] save:nil];
         }
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"RBConfigKeyServers"];
     }
     
     [self setServersForServerVC:serverVC];
     
-    self.window.rootViewController = viewController;
+    self.window.rootViewController = sideMenuController;
     
     return YES;
 }
 
 - (void)setServersForServerVC:(RBServerViewController *)svc
 {
-    NSArray *servers = [[RBDataManager sharedInstance] servers];
+    NSArray *servers = [self.dataManager servers];
     if ([servers count] != 0) {
         NSMutableArray *serversList = [[NSMutableArray alloc] initWithCapacity:servers.count];
         for (Server *server in servers) {

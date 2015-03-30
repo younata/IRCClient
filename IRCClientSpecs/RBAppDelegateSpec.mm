@@ -1,6 +1,10 @@
 #import "RBAppDelegate.h"
 #import "RBConfigurationKeys.h"
 
+#import <Blindside/Blindside.h>
+#import "SpecApplicationModule.h"
+
+
 #import "SWRevealViewController.h"
 #import "RBServerViewController.h"
 #import "RBChannelViewController.h"
@@ -14,19 +18,24 @@ SPEC_BEGIN(RBAppDelegateSpec)
 
 describe(@"RBAppDelegate", ^{
     __block RBAppDelegate *subject;
+    __block id<BSInjector> injector;
+    __block RBDataManager *dataManager;
 
     beforeEach(^{
-        [[RBDataManager sharedInstance] removeEverything];
+        injector = [Blindside injectorWithModule:[[SpecApplicationModule alloc] init]];
+        dataManager = [injector getInstance:[RBDataManager class]];
+
+        [dataManager removeEverything];
         subject = [[RBAppDelegate alloc] init];
+        [subject setValue:injector forKey:@"injector"];
     });
     
     afterEach(^{
-        [[RBDataManager sharedInstance] removeEverything];
+        [dataManager removeEverything];
     });
     
     describe(@"Initial startup", ^{
         beforeEach(^{
-            [[RBDataManager sharedInstance] removeEverything];
             [subject application:nil didFinishLaunchingWithOptions:nil];
         });
         
@@ -41,7 +50,7 @@ describe(@"RBAppDelegate", ^{
         __block RBIRCServer *server;
         
         beforeEach(^{
-            server = [[RBIRCServer alloc] init];
+            server = [injector getInstance:[RBIRCServer class]];
             [server configureWithHostname:@"test" ssl:YES port:@"6697" nick:@"test" realname:@"test" password:nil];
             server.serverName = @"test";
             server.readStream = nice_fake_for([NSInputStream class]);
@@ -56,7 +65,7 @@ describe(@"RBAppDelegate", ^{
             
             [[NSUserDefaults standardUserDefaults] objectForKey:key] should be_nil;
             
-            Server *theServer = [[RBDataManager sharedInstance] serverWithProperty:server.hostname propertyName:@"host"];
+            Server *theServer = [dataManager serverWithProperty:server.hostname propertyName:@"host"];
             theServer.name should equal(server.serverName);
             
             SWRevealViewController *vc = (SWRevealViewController *)subject.window.rootViewController;
@@ -65,7 +74,7 @@ describe(@"RBAppDelegate", ^{
         });
         
         it(@"should launch servers", ^{
-            [[RBDataManager sharedInstance] serverMatchingIRCServer:server];
+            [dataManager serverMatchingIRCServer:server];
             [subject application:nil didFinishLaunchingWithOptions:nil];
 
             SWRevealViewController *vc = (SWRevealViewController *)subject.window.rootViewController;

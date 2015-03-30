@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Rachel Brindle. All rights reserved.
 //
 
+#import <Blindside/Blindside.h>
+
 #import "RBServerViewController.h"
 #import "RBIRCServer.h"
 #import "RBIRCChannel.h"
@@ -29,6 +31,8 @@
 }
 
 @property (nonatomic, strong) UIAlertView *av;
+@property (nonatomic, strong) id<BSInjector> injector;
+@property (nonatomic, strong) RBDataManager *dataManager;
 
 @end
 
@@ -38,11 +42,16 @@ static NSString *textFieldCell = @"textFieldCell";
 
 @implementation RBServerViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
++ (BSInitializer *)bsInitializer
 {
-    self = [super initWithStyle:style];
-    if (self) {
+    return [BSInitializer initializerWithClass:self selector:@selector(initWithDataManager:) argumentKeys:[RBDataManager class], nil];
+}
+
+- (instancetype)initWithDataManager:(RBDataManager *)dataManager
+{
+    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         self.servers = [[NSMutableArray alloc] init];
+        self.dataManager = dataManager;
     }
     return self;
 }
@@ -96,7 +105,7 @@ static NSString *textFieldCell = @"textFieldCell";
 -(void)saveServerData
 {
     for (RBIRCServer *server in self.servers) {
-        [[RBDataManager sharedInstance] serverMatchingIRCServer:server];
+        [self.dataManager serverMatchingIRCServer:server];
     }
 }
 
@@ -231,7 +240,7 @@ static NSString *textFieldCell = @"textFieldCell";
         if ([server connected]) {
             [server quit];
         }
-        Server *theServer = [[RBDataManager sharedInstance] serverMatchingIRCServer:server];
+        Server *theServer = [self.dataManager serverMatchingIRCServer:server];
         [[theServer managedObjectContext] deleteObject:theServer];
         [self.servers removeObject:server];
     } else {
@@ -269,7 +278,7 @@ static NSString *textFieldCell = @"textFieldCell";
             editor = [self editorViewControllerWithOptions:@{@"server": server}];
         }
     } else {
-        RBIRCServer *newServer = [[RBIRCServer alloc] init];
+        RBIRCServer *newServer = [self.injector getInstance:[RBIRCServer class]];
         [self.servers addObject:newServer];
         editor = [self editorViewControllerWithOptions:@{@"server": newServer}];
     }
@@ -288,14 +297,12 @@ static NSString *textFieldCell = @"textFieldCell";
     
     RBIRCServer *server = options[@"server"];
     if (!server) {
-        server = [[RBIRCServer alloc] init];
+        server = [self.injector getInstance:[RBIRCServer class]];
     }
-    if (server) {
-        [editor setServer:server];
-        
-        if (![self.servers containsObject:server]) {
-            [self.servers addObject:server];
-        }
+    [editor setServer:server];
+
+    if (![self.servers containsObject:server]) {
+        [self.servers addObject:server];
     }
     if (options[@"username"]) {
         editor.nick = options[@"username"];
