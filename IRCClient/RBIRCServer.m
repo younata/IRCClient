@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Rachel Brindle. All rights reserved.
 //
 
+#import <Blindside/Blindside.h>
+
 #import "RBIRCServer.h"
 #import "RBIRCMessage.h"
 #import "RBIRCChannel.h"
@@ -22,96 +24,50 @@
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableString *incompleteMessages;
 @property (nonatomic) NSInteger reconnectDelay;
+@property (nonatomic, strong) id<BSInjector> injector;
 
 @end
 
 @implementation RBIRCServer
 
-@synthesize channels;
-@synthesize nick;
-
--(instancetype)init
+-(void)configureWithHostname:(NSString *)hostname
+                         ssl:(BOOL)useSSL
+                        port:(NSString *)port
+                        nick:(NSString *)nick
+                    realname:(NSString *)realname
+                    password:(NSString *)password
 {
-    if ((self = [super init])) {
-        [self commonInit];
-    }
-    return self;
+    self.nick = nick;
+    self.hostname = hostname;
+    self.port = port;
+    self.useSSL = useSSL;
+    self.realname = realname;
+    self.password = password;
+
+    _channels = [[NSMutableDictionary alloc] init];
+
+    RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
+    [self.channels setObject:serverLog forKey:RBIRCServerLog];
+
+    self.incompleteMessages = [[NSMutableString alloc] init];
+
+    self.reconnectDelay = 1;
 }
 
--(instancetype)initFromServer:(Server *)server
+-(void)configureWithServer:(Server *)server
 {
-    if ((self = [super init]) != nil) {
-        self.nick = server.nick;
-        self.serverName = server.name;
-        self.hostname = server.host;
-        self.password = server.password;
-        self.port = server.port;
-        self.realname = server.realname;
-        self.useSSL = server.ssl.boolValue;
-        NSMutableDictionary *theChannels = [[NSMutableDictionary alloc] init];
-        for (Channel *channel in server.channels) {
-            theChannels[channel.name] = [[RBIRCChannel alloc] initFromChannel:channel];
-        }
-        channels = theChannels;
+    self.nick = server.nick;
+    self.serverName = server.name;
+    self.hostname = server.host;
+    self.password = server.password;
+    self.port = server.port;
+    self.realname = server.realname;
+    self.useSSL = server.ssl.boolValue;
+    NSMutableDictionary *theChannels = [[NSMutableDictionary alloc] init];
+    for (Channel *channel in server.channels) {
+        theChannels[channel.name] = [[RBIRCChannel alloc] initFromChannel:channel];
     }
-    return self;
-}
-
--(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nickname realname:(NSString *)realname password:(NSString *)password
-{
-    if ((self = [super init]) != nil) {
-        self.nick = nickname;
-        self.hostname = hostname;
-        self.port = port;
-        self.useSSL = useSSL;
-        self.realname = realname;
-        self.password = password;
-        
-        [self commonInit];
-    }
-    return self;
-}
-
--(instancetype)initWithCoder:(NSCoder *)decoder
-{
-    if ((self = [super init]) != nil) {
-        self.serverName = [decoder decodeObjectForKey:@"serverName"];
-        self.nick = [decoder decodeObjectForKey:@"nickname"];
-        self.hostname = [decoder decodeObjectForKey:@"hostname"];
-        self.port = [decoder decodeObjectForKey:@"port"];
-        self.useSSL = [decoder decodeBoolForKey:@"useSSL"];
-        self.realname = [decoder decodeObjectForKey:@"realname"];
-        self.password = [decoder decodeObjectForKey:@"password"];
-        
-        channels = [decoder decodeObjectForKey:@"channels"];
-        
-        self.commandQueue = [[NSMutableArray alloc] init];
-        
-        self.incompleteMessages = [[NSMutableString alloc] init];
-        
-        [self createServerLog];
-    }
-    return self;
-}
-
--(void)encodeWithCoder:(NSCoder *)coder
-{
-    [coder encodeObject:self.serverName forKey:@"serverName"];
-    [coder encodeObject:self.nick forKey:@"nickname"];
-    [coder encodeObject:self.hostname forKey:@"hostname"];
-    [coder encodeObject:self.port forKey:@"port"];
-    [coder encodeBool:self.useSSL forKey:@"useSSL"];
-    [coder encodeObject:self.realname forKey:@"realname"];
-    [coder encodeObject:self.password forKey:@"password"];
-    
-    NSMutableDictionary *channelsToSave = [[NSMutableDictionary alloc] init];
-    for (NSString *key in self.channels.allKeys) {
-        RBIRCChannel *channel = self.channels[key];
-        if (channel.isChannel) {
-            channelsToSave[key] = channel;
-        }
-    }
-    [coder encodeObject:channelsToSave forKey:@"channels"];
+    _channels = theChannels;
 }
 
 -(void)reconnect
@@ -138,21 +94,6 @@
     if (self.readStream == nil)
         return NO;
     return 1 <= self.readStream.streamStatus <= 4;
-}
-
--(void)createServerLog
-{
-    RBIRCChannel *serverLog = [[RBIRCChannel alloc] initWithName:RBIRCServerLog];
-    [channels setObject:serverLog forKey:RBIRCServerLog];
-}
-
--(void)commonInit
-{
-    channels = [[NSMutableDictionary alloc] init];
-    [self createServerLog];
-    self.incompleteMessages = [[NSMutableString alloc] init];
-    
-    self.reconnectDelay = 1;
 }
 
 -(BOOL)isEqual:(id)object
@@ -307,16 +248,16 @@
             to = nil;
         }
         if (![to hasContent] || [to isEqualToString:@"*"] || [to isEqualToString:@"AUTH"] || [to containsSubstring:superDomain]) {
-            ch = [channels objectForKey:RBIRCServerLog];
+            ch = [self.channels objectForKey:RBIRCServerLog];
             msg.message = msg.rawMessage;
             to = RBIRCServerLog;
             msg.targets[i] = to;
         } else {
-            if (channels[to] != nil) {
-                ch = channels[to];
+            if (self.channels[to] != nil) {
+                ch = self.channels[to];
             } else {
                 ch = [[RBIRCChannel alloc] initWithName:to];
-                [channels setObject:ch forKey:to];
+                [self.channels setObject:ch forKey:to];
                 ch.server = self;
             }
         }
@@ -386,12 +327,12 @@
 
 -(void)join:(NSString *)channelName Password:(NSString *)pass
 {
-    if (channels[channelName] != nil) {
+    if (self.channels[channelName] != nil) {
         return;
     }
     RBIRCChannel *c = [[RBIRCChannel alloc] initWithName:channelName];
     c.server = self;
-    [channels setObject:c forKey:channelName];
+    [self.channels setObject:c forKey:channelName];
     
     NSArray *comps = [channelName componentsSeparatedByString:@","];
     if (comps.count > 1) {
@@ -421,12 +362,12 @@
 
 -(void)part:(NSString *)channel message:(NSString *)message
 {
-    if (channels[channel] == nil) {
+    if (self.channels[channel] == nil) {
         @throw [NSError errorWithDomain:@"Invalid Part Command" code:1 userInfo:nil];
     }
     [self sendCommand:[NSString stringWithFormat:@"part %@ :%@", channel, message]];
-    RBIRCChannel *ircChannel = channels[channel];
-    [channels removeObjectForKey:channel];
+    RBIRCChannel *ircChannel = self.channels[channel];
+    [self.channels removeObjectForKey:channel];
     Channel *theChannel = [[RBDataManager sharedInstance] channelMatchingIRCChannel:ircChannel onServer:[[RBDataManager sharedInstance] serverMatchingIRCServer:self]];
     [theChannel.server removeChannelsObject:theChannel];
     [theChannel.managedObjectContext deleteObject:theChannel];
@@ -435,7 +376,7 @@
 -(void)mode:(NSString *)target options:(NSArray *)options
 {
     if ([target hasPrefix:@"#"] || [target hasPrefix:@"&"]) {
-        if (channels[target] == nil) {
+        if (self.channels[target] == nil) {
             @throw [NSError errorWithDomain:@"Invalid Mode Command" code:1 userInfo:nil];
         }
     }
@@ -453,7 +394,7 @@
 
 -(void)kick:(NSString *)channel target:(NSString *)target reason:(NSString *)reason
 {
-    if (channels[channel] == nil) {
+    if (self.channels[channel] == nil) {
         @throw [NSError errorWithDomain:@"Invalid Kick Command" code:1 userInfo:nil];
     }
     NSString *msg = [NSString stringWithFormat:@"kick %@ %@ :%@", channel, target, reason];
@@ -462,7 +403,7 @@
 
 -(void)topic:(NSString *)channel topic:(NSString *)topic
 {
-    if (channels[channel] == nil) {
+    if (self.channels[channel] == nil) {
         @throw [NSError errorWithDomain:@"Invalid Topic Command" code:1 userInfo:nil];
     }
     [self sendCommand:[NSString stringWithFormat:@"topic %@ :%@", channel, topic]];

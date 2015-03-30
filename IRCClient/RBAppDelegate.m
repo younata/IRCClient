@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Rachel Brindle. All rights reserved.
 //
 
+#import <Blindside/Blindside.h>
+
 #import "RBAppDelegate.h"
 #import "SWRevealViewController.h"
 #import "RBServerViewController.h"
@@ -22,9 +24,12 @@
 #import "RBDataManager.h"
 #import "Server.h"
 
+#import "ApplicationModule.h"
+
 @interface RBAppDelegate ()<SWRevealViewControllerDelegate>
 @property (nonatomic) UIBackgroundTaskIdentifier taskIdentifier;
 @property (nonatomic, strong) UIWindow *secondWindow;
+@property (nonatomic, strong) id<BSInjector> injector;
 @end
 
 @implementation RBAppDelegate
@@ -35,6 +40,8 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
+    self.injector = [Blindside injectorWithModule:[[ApplicationModule alloc] init]];
     
     [UIBarButtonItem appearance].tintColor = [RBColorScheme primaryColor];
     
@@ -81,7 +88,9 @@
     if ([servers count] != 0) {
         NSMutableArray *serversList = [[NSMutableArray alloc] initWithCapacity:servers.count];
         for (Server *server in servers) {
-            [serversList addObject:[[RBIRCServer alloc] initFromServer:server]];
+            RBIRCServer *ircServer = [self.injector getInstance:[RBIRCServer class]];
+            [ircServer configureWithServer:server];
+            [serversList addObject:ircServer];
         }
         svc.servers = serversList;
     }

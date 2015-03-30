@@ -25,7 +25,8 @@ describe(@"RBIRCServer", ^{
     });
     
     it(@"should handle loading from NSUserDefaults correctly", ^{
-        RBIRCServer *server = [[RBIRCServer alloc] initWithHostname:@"testServer" ssl:YES port:@"6697" nick:@"testnick" realname:@"testnick" password:@""];
+        RBIRCServer *server = [[RBIRCServer alloc] init];
+        [server configureWithHostname:@"testServer" ssl:YES port:@"6697" nick:@"testnick" realname:@"testnick" password:@""];
         server.nick = @"testnick";
         server.serverName = @"server";
         NSData *d = [NSKeyedArchiver archivedDataWithRootObject:server];

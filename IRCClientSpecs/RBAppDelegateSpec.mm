@@ -41,7 +41,8 @@ describe(@"RBAppDelegate", ^{
         __block RBIRCServer *server;
         
         beforeEach(^{
-            server = [[RBIRCServer alloc] initWithHostname:@"test" ssl:YES port:@"6697" nick:@"test" realname:@"test" password:nil];
+            server = [[RBIRCServer alloc] init];
+            [server configureWithHostname:@"test" ssl:YES port:@"6697" nick:@"test" realname:@"test" password:nil];
             server.serverName = @"test";
             server.readStream = nice_fake_for([NSInputStream class]);
             server.writeStream = nice_fake_for([NSOutputStream class]);

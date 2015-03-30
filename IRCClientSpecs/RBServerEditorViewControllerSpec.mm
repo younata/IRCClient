@@ -47,12 +47,13 @@ describe(@"RBServerEditorViewController", ^{
     
     it(@"should write any changes to standard user defaults", ^{
         [[RBDataManager sharedInstance] removeEverything];
-        server = [[RBIRCServer alloc] initWithHostname:@"localhost"
-                                                   ssl:YES
-                                                  port:@"6697"
-                                                  nick:@"testnick"
-                                              realname:@"testnick"
-                                              password:nil];
+        server = [[RBIRCServer alloc] init];
+        [server configureWithHostname:@"localhost"
+                                  ssl:YES
+                                 port:@"6697"
+                                 nick:@"testnick"
+                             realname:@"testnick"
+                             password:nil];
         subject.server = server;
         [subject view];
         [subject viewDidLoad];

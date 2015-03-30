@@ -22,7 +22,7 @@
 #define RBIRCServerUpdateMessage @"RBIRCServerUpdateMessage"
 
 
-@interface RBIRCServer : NSObject <NSStreamDelegate, NSCoding>
+@interface RBIRCServer : NSObject <NSStreamDelegate>
 {
     void (^onConnect)(void);
 }
@@ -42,8 +42,9 @@
 @property (nonatomic) BOOL useSSL;
 @property (nonatomic, readonly) BOOL connected;
 
--(instancetype)initFromServer:(Server *)server;
--(instancetype)initWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname password:(NSString *)password;
+-(void)configureWithServer:(Server *)server;
+-(void)configureWithHostname:(NSString *)hostname ssl:(BOOL)useSSL port:(NSString *)port nick:(NSString *)nick realname:(NSString *)realname password:(NSString *)password;
+
 -(void)sendCommand:(NSString *)command;
 
 -(void)reconnect;

@@ -88,6 +88,8 @@
 		896191BF1A4558D900AE7B13 /* reveal-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */; };
 		896191C11A4559E300AE7B13 /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191C01A4559E300AE7B13 /* icon@3x.png */; };
 		896191C21A4559E300AE7B13 /* icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 896191C01A4559E300AE7B13 /* icon@3x.png */; };
+		896777641AC903A50057A89C /* ApplicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 896777631AC903A50057A89C /* ApplicationModule.m */; };
+		896777651AC903A50057A89C /* ApplicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 896777631AC903A50057A89C /* ApplicationModule.m */; };
 		89678DA91A4B77EB00581A24 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89678DA81A4B77EB00581A24 /* Channel.m */; };
 		89678DAA1A4B77EB00581A24 /* Channel.m in Sources */ = {isa = PBXBuildFile; fileRef = 89678DA81A4B77EB00581A24 /* Channel.m */; };
 		8967DA0C1A426210000424F4 /* RBServerEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8967DA0B1A426210000424F4 /* RBServerEditorViewController.m */; };
@@ -248,6 +250,8 @@
 		895E589119567A7C003A56BB /* RBServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RBServerCell.m; sourceTree = "<group>"; };
 		896191BD1A4558D900AE7B13 /* reveal-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@3x.png"; sourceTree = "<group>"; };
 		896191C01A4559E300AE7B13 /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = SOURCE_ROOT; };
+		896777621AC903A50057A89C /* ApplicationModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationModule.h; sourceTree = "<group>"; };
+		896777631AC903A50057A89C /* ApplicationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationModule.m; sourceTree = "<group>"; };
 		89678DA61A4B75E800581A24 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 		89678DA71A4B77EB00581A24 /* Channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Channel.h; sourceTree = "<group>"; };
 		89678DA81A4B77EB00581A24 /* Channel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Channel.m; sourceTree = "<group>"; };
@@ -411,6 +415,8 @@
 			children = (
 				8906F1D918867BEE00042A13 /* RBAppDelegate.h */,
 				8906F1DA18867BEE00042A13 /* RBAppDelegate.m */,
+				896777621AC903A50057A89C /* ApplicationModule.h */,
+				896777631AC903A50057A89C /* ApplicationModule.m */,
 				898132D018A74F19004AEBE9 /* RBConfigurationKeys.h */,
 				89E812B618B8E78800616600 /* RBColorScheme.h */,
 				89E812B718B8E78800616600 /* RBColorScheme.m */,
@@ -1034,6 +1040,7 @@
 				896BD17E1895D30100EC91EA /* RBServerViewController.m in Sources */,
 				89E812DF18BCF5FE00616600 /* NSObject+customProperty.m in Sources */,
 				892D1396195098FF00671081 /* RSBColorPicker.m in Sources */,
+				896777641AC903A50057A89C /* ApplicationModule.m in Sources */,
 				899B2A9E189913840008FED3 /* NSData+string.m in Sources */,
 				8906F1D718867BEE00042A13 /* main.m in Sources */,
 				8908DBC418B5B3B1004DFBAB /* UIDevice-Orientation.m in Sources */,
@@ -1065,6 +1072,7 @@
 				8908DBC718B5B3B1004DFBAB /* UIDevice-Reachability.m in Sources */,
 				895E589319567A7C003A56BB /* RBServerCell.m in Sources */,
 				899B2AA3189913840008FED3 /* NSString+isNilOrEmpty.m in Sources */,
+				896777651AC903A50057A89C /* ApplicationModule.m in Sources */,
 				898132E618A78B10004AEBE9 /* NSString+contains.m in Sources */,
 				891B01FB1896546C00B2D848 /* RBIRCChannel.m in Sources */,
 				892D138B194FD4F200671081 /* RBDataManager.m in Sources */,

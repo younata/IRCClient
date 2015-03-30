@@ -18,7 +18,8 @@ describe(@"RBServerViewController", ^{
     __block RBIRCServer *server;
     
     RBIRCServer *(^newServer)(void) = ^RBIRCServer*{
-        RBIRCServer *s = [[RBIRCServer alloc] initWithHostname:@"localhost" ssl:NO port:@"6667" nick:@"testnick" realname:@"testname" password:nil];
+        RBIRCServer *s = [[RBIRCServer alloc] init];
+        [s configureWithHostname:@"localhost" ssl:NO port:@"6667" nick:@"testnick" realname:@"testname" password:nil];
         s.serverName = @"test server";
         return s;
     };
