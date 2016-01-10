@@ -1,4 +1,7 @@
 ###iOS IRC Client
+
+Abandoned. Doesn't work on iOS 8+. Don't use this.
+
 ***
 A less shitty IRC Client for iOS devices.
 
